@@ -6,7 +6,7 @@ A self-contained, offline study app that **forces a daily study habit** for the
 AFIT Kaduna Post-UTME screening. Built for the 28 Jun → 1 Aug sprint window
 (exam: 3–7 Aug).
 
-**Live site:** once hosted, it runs at `https://ojohpeters.github.io/afit-prep/`
+**Live site:** once GitHub Pages is on → `https://ojohpeters.github.io/my-afit-preps/`
 
 ## How to open
 Just double-click **`index.html`** — it runs in any browser, fully offline.
