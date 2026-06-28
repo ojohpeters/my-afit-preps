@@ -88,8 +88,8 @@ function vDashboard(){
   var html=''+
   '<div class="hero"><div class="hero-ring"></div>'+
     '<h1>'+greeting()+' Let\'s get you into AFIT. ✈️</h1>'+
-    '<p>You scored <b>228</b> in UTME — strong. The screening is a CBT in Maths, English, Physics, Chemistry and General Knowledge. '+
-    'This sprint turns the next <b>'+daysLeft+' days</b> into a daily habit so nothing is left to chance. One mission a day. No skipping.</p>'+
+    '<p>The AFIT screening is a CBT in Maths, English, Physics, Chemistry and General Knowledge. '+
+    'This sprint turns the next <b>'+daysLeft+' days</b> into a daily study habit so nothing is left to chance. One mission a day. No skipping.</p>'+
     '<div class="hero-cta">'+
       '<button class="btn btn-pri" data-go="today">▶ Start Today\'s Mission (Day '+fi+')</button>'+
       '<button class="btn btn-ghost" data-go="plan">View full plan</button>'+
@@ -277,12 +277,18 @@ function vPractice(){
   var counts={};QS.forEach(function(q){counts[q.topic]=(counts[q.topic]||0)+1;});
   var bySub={Maths:[],Physics:[],Chemistry:[],English:[],General:[]};
   Object.keys(counts).forEach(function(t){var q=QS.find(function(x){return x.topic===t;});if(q)bySub[q.subject].push(t);});
-  var html='<div class="page-h">Practice by Topic</div><div class="page-sub">Free practice — drill any topic with instant feedback and explanations. No pass mark, just learning.</div>';
+  var total=QS.length;
+  var html='<div class="page-h">Practice by Topic</div><div class="page-sub">Free practice — drill any topic with instant feedback and explanations. No pass mark, just learning. <b>'+total+'</b> questions in the bank.</div>';
   ["Maths","Physics","Chemistry","English","General"].forEach(function(s){
     if(!bySub[s].length)return;
-    html+='<div class="section-t">'+s+' &nbsp;<button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" data-subject="'+s+'">Mix all '+s+'</button></div><div class="topic-grid">';
+    // sort topics by question count (most first) and compute the subject total
+    bySub[s].sort(function(a,b){return counts[b]-counts[a];});
+    var subTotal=bySub[s].reduce(function(n,t){return n+counts[t];},0);
+    html+='<div class="section-t">'+s+' <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:600">· '+subTotal+' questions</span> &nbsp;'+
+      '<button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" data-subject="'+s+'">Mix all '+subTotal+' →</button></div><div class="topic-grid">';
     bySub[s].forEach(function(t){
-      html+='<div class="topic-card" data-topic="'+t+'"><h4>'+(LABELS[t]||t)+'</h4><p>'+counts[t]+' questions →</p></div>';});
+      var n=counts[t];
+      html+='<div class="topic-card" data-topic="'+t+'"><h4>'+(LABELS[t]||t)+'</h4><p>'+n+' question'+(n===1?'':'s')+' →</p></div>';});
     html+='</div>';
   });
   setTimeout(function(){
