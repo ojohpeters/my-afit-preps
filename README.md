@@ -29,7 +29,7 @@ the browser (localStorage) on this computer.
 
 ## The deal
 Do **one mission every day**. Keep the 🔥 streak alive. If you fall behind the
-calendar, the dashboard tells you how many days to catch up. 195 questions with
+calendar, the dashboard tells you how many days to catch up. 350+ questions with
 worked explanations, covering the full UTME/AFIT syllabus for EEE.
 
 ## Customising
