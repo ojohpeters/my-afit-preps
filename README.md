@@ -1,4 +1,4 @@
-# AFIT Prep — Post-UTME Study Sprint (Electrical Engineering)
+# AFIT Prep — Post-UTME Study Sprint (Engineering & Sciences)
 
 > **Built by Ojochegbe Peter Ojoh** — for fellow AFIT Kaduna aspirants. ✦
 
@@ -30,7 +30,7 @@ the browser (localStorage) on this computer.
 ## The deal
 Do **one mission every day**. Keep the 🔥 streak alive. If you fall behind the
 calendar, the dashboard tells you how many days to catch up. 350+ questions with
-worked explanations, covering the full UTME/AFIT syllabus for EEE.
+worked explanations, covering the full UTME/AFIT syllabus for AFIT engineering & science courses.
 
 ## Customising
 - Questions live in `js/data-questions.js` (add more — keep the same format).

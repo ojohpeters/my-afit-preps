@@ -45,7 +45,7 @@
   <!-- main title -->
   <g font-family="'Sora','DejaVu Sans',sans-serif">
     <text x="80" y="290" font-size="86" font-weight="800" fill="url(#title)">Post-UTME Study Sprint</text>
-    <text x="80" y="356" font-size="34" font-weight="600" fill="#c8d2ee">Electrical Engineering · 35-day daily-mission plan</text>
+    <text x="80" y="356" font-size="34" font-weight="600" fill="#c8d2ee">Engineering &amp; Sciences · 35-day daily-mission plan</text>
   </g>
 
   <!-- feature pills -->

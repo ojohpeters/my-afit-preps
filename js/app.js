@@ -7,7 +7,7 @@
 
 /* ---------- State ---------- */
 var KEY="afit_prep_v1";
-var DEFAULT={progress:{},stats:{},topicStats:{},streak:0,lastStudy:null,mockScores:[]};
+var DEFAULT={profile:null,progress:{},stats:{},topicStats:{},missed:{},streak:0,mockScores:[]};
 function load(){try{return Object.assign({},DEFAULT,JSON.parse(localStorage.getItem(KEY))||{});}catch(e){return Object.assign({},DEFAULT);}}
 function save(){localStorage.setItem(KEY,JSON.stringify(S));}
 var S=load();
@@ -29,12 +29,49 @@ var EXAM=new Date(window.EXAM_DATE), START=new Date(window.SPRINT_START+"T00:00:
 var WA_NUMBER="2348153304439"; // +234 815 330 4439
 function waLink(msg){return "https://wa.me/"+WA_NUMBER+(msg?"?text="+encodeURIComponent(msg):"");}
 
-/* which plan day should the user be on (calendar based), clamped */
-function calendarDay(){var n=daysBetween(START,new Date())+1;return Math.max(1,Math.min(35,n));}
-function firstIncomplete(){for(var i=0;i<PLAN.length;i++){if(!(S.progress[PLAN[i].d]&&S.progress[PLAN[i].d].done))return PLAN[i].d;}return 35;}
-function dayDone(d){return !!(S.progress[d]&&S.progress[d].done);}
-function dayUnlocked(d){return d===1||dayDone(d-1)||d<=calendarDay();}
+function esc(s){return (s==null?"":""+s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+/* ----- strict calendar gating ----- */
+/* calendarDay() = the single plan-day that is OPEN today (clamped 1..35). It
+   advances automatically at midnight because it is derived from the date. */
+function rawCalendarDay(){return daysBetween(START,new Date())+1;}
+function calendarDay(){return Math.max(1,Math.min(35,rawCalendarDay()));}
+function sprintOver(){return rawCalendarDay()>35;}
+function dateForDay(d){var x=new Date(START);x.setDate(x.getDate()+(d-1));return x;}
+function fmtDate(x){try{return x.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});}catch(e){return "";}}
 function planByDay(d){for(var i=0;i<PLAN.length;i++)if(PLAN[i].d===d)return PLAN[i];return null;}
+function dayDone(d){return !!(S.progress[d]&&S.progress[d].done);}
+function dayLate(d){return !!(S.progress[d]&&S.progress[d].late);}
+/* state of a day: done | redeemed | today | missed | future */
+function dayState(d){
+  if(dayDone(d))return dayLate(d)?"redeemed":"done";
+  var a=calendarDay();
+  if(d>a)return "future";
+  if(d===a&&!sprintOver())return "today";
+  return "missed"; // its calendar day has passed and it was not completed
+}
+/* record newly-missed days (run at load + at midnight rollover); returns new ones */
+function reconcileMisses(){
+  var a=calendarDay(),over=sprintOver(),end=over?35:a-1,changed=false,newly=[];
+  for(var d=1;d<=end;d++){
+    if(d===a&&!over)continue;
+    if(!dayDone(d)&&!S.missed[d]){S.missed[d]={on:dayStr(dateForDay(d))};changed=true;newly.push(d);}
+  }
+  if(changed)save();
+  return newly;
+}
+/* strikes = past days not completed on time (missed OR redeemed late) — permanent */
+function strikes(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,n=0;for(var d=1;d<=end;d++){if(d===a&&!over)continue;if(!(dayDone(d)&&!dayLate(d)))n++;}return n;}
+function missedOpen(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,list=[];for(var d=1;d<=end;d++){if(d===a&&!over)continue;if(!dayDone(d))list.push(d);}return list;}
+function dueDays(){var a=calendarDay();return sprintOver()?35:a-1;}
+function discipline(){var due=dueDays();if(due<=0)return 100;return Math.max(0,Math.round((due-strikes())/due*100));}
+function deriveStreak(){var d=calendarDay(),n=0;if(!(dayDone(d)&&!dayLate(d)))d--;while(d>=1&&dayDone(d)&&!dayLate(d)){n++;d--;}return n;}
+
+/* ----- profile ----- */
+function hasProfile(){return !!(S.profile&&S.profile.name);}
+function firstName(){return hasProfile()?(S.profile.name||"").trim().split(/\s+/)[0]:"";}
+function courseName(){return (S.profile&&S.profile.course)?S.profile.course:"AFIT";}
+function courseShort(){var c=courseName();return c.length>24?c.slice(0,22)+"…":c;}
 
 /* ---------- Question pool ---------- */
 function poolForTopics(topics,desired){
@@ -60,13 +97,6 @@ function recordAnswer(q,correct){
   tt.total++; if(correct)tt.correct++;
 }
 function totals(){var c=0,t=0;for(var k in S.stats){c+=S.stats[k].correct;t+=S.stats[k].total;}return{c:c,t:t};}
-function bumpStreak(){
-  var today=dayStr();
-  if(S.lastStudy===today)return;
-  var y=new Date();y.setDate(y.getDate()-1);
-  S.streak=(S.lastStudy===dayStr(y))?S.streak+1:1;
-  S.lastStudy=today;
-}
 
 /* ---------- Top bar / sidebar refresh ---------- */
 function refreshChrome(){
@@ -78,51 +108,65 @@ function refreshChrome(){
   $("#tb-accuracy").textContent=pct(T.c,T.t)+"%";
   var done=PLAN.filter(function(p){return dayDone(p.d);}).length;
   $("#tb-done").textContent=done+"/35";
+  S.streak=deriveStreak();save();
   $("#streak-count").textContent=S.streak;
+  var bs=$("#brand-sub");if(bs)bs.textContent=(hasProfile()?courseShort():"Post-UTME")+" · AFIT Kaduna";
 }
 
 /* ============================================================
    VIEWS
    ============================================================ */
 function vDashboard(){
-  var cd=calendarDay(), fi=firstIncomplete(), today=planByDay(fi), behind=fi<cd;
-  var done=PLAN.filter(function(p){return dayDone(p.d);}).length;
-  var T=totals();
-  var daysLeft=Math.max(0,daysBetween(new Date(),EXAM));
-  var html=''+
-  '<div class="hero"><div class="hero-ring"></div>'+
-    '<h1>'+greeting()+' Let\'s get you into AFIT. ✈️</h1>'+
-    '<p>The AFIT screening is a CBT in Maths, English, Physics, Chemistry and General Knowledge. '+
-    'This sprint turns the next <b>'+daysLeft+' days</b> into a daily study habit so nothing is left to chance. One mission a day. No skipping.</p>'+
-    '<div class="hero-cta">'+
-      '<button class="btn btn-pri" data-go="today">▶ Start Today\'s Mission (Day '+fi+')</button>'+
-      '<button class="btn btn-ghost" data-go="plan">View full plan</button>'+
-    '</div>'+
+  var a=calendarDay(), p=planByDay(a), over=sprintOver();
+  var done=PLAN.filter(function(x){return dayDone(x.d);}).length;
+  var T=totals(), daysLeft=Math.max(0,daysBetween(new Date(),EXAM));
+  var miss=missedOpen(), str=strikes(), disc=discipline(), name=firstName(), todayDone=dayDone(a);
+  var discColor=disc>=80?"#22c55e":disc>=50?"#f59e0b":"#ef4444";
+
+  var cta = over ? '<button class="btn btn-pri" data-go="mock">Take a final mock →</button>'
+    : todayDone ? '<button class="btn btn-ghost" data-go="today">✓ Today done — revise</button>'
+    : '<button class="btn btn-pri" data-go="today">▶ Start Today\'s Mission (Day '+a+')</button>';
+
+  var html='<div class="hero"><div class="hero-ring"></div>'+
+    '<h1>'+greeting()+(name?' '+esc(name)+'.':'')+' Let\'s get you into AFIT. ✈️</h1>'+
+    '<p>Your goal: <b>'+esc(courseName())+'</b> at AFIT Kaduna. The screening is a CBT in Maths, English, Physics, Chemistry and General Knowledge. '+
+    'One mission unlocks each calendar day — finish it before <b>midnight</b> or it locks as a <b>miss</b>. '+daysLeft+' days to go.</p>'+
+    '<div class="hero-cta">'+cta+'<button class="btn btn-ghost" data-go="plan">Full plan</button></div>'+
     '<div class="made-by">✦ Crafted by <b>Ojochegbe Peter Ojoh</b> — for fellow AFIT aspirants</div>'+
   '</div>';
 
-  if(behind){
-    html+='<div class="card" style="border-color:#f59e0b;margin-bottom:18px"><b style="color:#fcd34d">⚠ Catch-up needed.</b> '+
-    'By the calendar you should be on <b>Day '+cd+'</b>, but you\'re on <b>Day '+fi+'</b>. Try to clear '+(cd-fi+1)+' day(s) to get back on track.</div>';
+  // Risk / miss alert
+  if(miss.length){
+    html+='<div class="card alert-miss"><div><b>⚠ '+miss.length+' missed day'+(miss.length>1?'s':'')+'.</b> '+
+      'Day '+miss.join(', Day ')+' closed without completion. A miss is a permanent <b>strike</b> — but you can still <b>redeem</b> the day to catch up the material (the strike stays, your streak won\'t).</div>'+
+      '<button class="btn btn-ghost" data-go="plan">Redeem in plan →</button></div>';
   }
 
-  html+='<div class="grid g4">'+
-    statCard(daysLeft,"days to exam")+
+  // Dedication stats
+  html+='<div class="section-t">Your dedication</div>'+
+  '<div class="grid g4">'+
+    statCard('🔥 '+S.streak,"day streak")+
+    statCard(str,"strikes (missed)",str>0?"#f87171":null)+
+    statCard(disc+"%","discipline",discColor)+
     statCard(done+"/35","missions done")+
-    statCard(T.t,"questions answered")+
-    statCard(pct(T.c,T.t)+"%","overall accuracy")+
   '</div>';
 
   // Today preview
-  if(today){
-    html+='<div class="section-t">Today — Day '+today.d+'</div>'+
-    '<div class="card">'+
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
-        '<div><div style="font-size:18px;font-weight:700">'+today.title+'</div>'+
-        '<div class="muted" style="font-size:13px;margin-top:4px">'+focusTags(today)+'</div></div>'+
-        '<button class="btn btn-pri" data-go="today">Open mission →</button>'+
-      '</div>'+
-    '</div>';
+  if(p&&!over){
+    if(todayDone){
+      html+='<div class="section-t">Today — Day '+a+' ✓</div>'+
+      '<div class="card done-banner"><b style="color:#86efac">✓ Today\'s mission complete'+(S.progress[a]?' — '+S.progress[a].score+'%':'')+'.</b> '+
+      (a<35?'Next: <b>Day '+(a+1)+'</b> unlocks '+fmtDate(dateForDay(a+1))+' (at midnight). Rest, or revise below.':'That was the final day — well done! 🎉')+'</div>';
+    } else {
+      html+='<div class="section-t">Today — Day '+a+'</div>'+
+      '<div class="card">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
+          '<div><div style="font-size:18px;font-weight:700">'+p.title+'</div>'+
+          '<div class="muted" style="font-size:13px;margin-top:4px">'+fmtDate(dateForDay(a))+' • '+focusTags(p)+'</div></div>'+
+          '<button class="btn btn-pri" data-go="today">Open mission →</button>'+
+        '</div>'+
+      '</div>';
+    }
   }
 
   // Overall progress bar
@@ -149,11 +193,19 @@ function vDashboard(){
     '<button class="btn btn-wa" data-go="group">Ask Ojochegbe →</button>'+
   '</div>';
 
+  // More resources (PrepsIQ)
+  html+='<div class="section-t">More prep resources</div>'+
+  '<div class="card resource-card">'+
+    '<div><div style="font-size:16px;font-weight:700">↗ PrepsIQ</div>'+
+    '<div class="muted" style="font-size:13px;margin-top:4px">Another Post-UTME prep platform I built — extra practice and more coverage. Worth a look.</div></div>'+
+    '<a class="btn btn-ghost" href="https://prepsiq.vercel.app/" target="_blank" rel="noopener">Visit PrepsIQ →</a>'+
+  '</div>';
+
   setTimeout(function(){var b=$("#go-about");if(b)b.onclick=function(){openNote("about-afit");};},0);
   return html;
 }
 function greeting(){var h=new Date().getHours();return h<12?"Good morning.":h<17?"Good afternoon.":"Good evening.";}
-function statCard(v,l){return '<div class="card stat-card"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>';}
+function statCard(v,l,color){return '<div class="card stat-card"><div class="v"'+(color?' style="color:'+color+'"':'')+'>'+v+'</div><div class="l">'+l+'</div></div>';}
 function focusTags(p){return (p.focus||[]).map(function(f){var s=f==="Mixed"?"general":subjClass(f);return '<span class="tag tag-'+s+'">'+f+'</span>';}).join(" ");}
 function subjectBars(){
   var subs=["Maths","Physics","Chemistry","English","General"],h='<div class="card">';
@@ -166,17 +218,15 @@ function subjectBars(){
 }
 
 function vToday(){
-  var fi=firstIncomplete(), p=planByDay(fi);
-  if(!p)return '<div class="empty">All missions complete! 🎉</div>';
-  if(p.d>1&&!dayDone(p.d-1)&&p.d>calendarDay()){
-    return '<div class="empty">🔒 Day '+p.d+' is locked. Finish Day '+(p.d-1)+' first.</div>';
-  }
-  var prog=S.progress[p.d];
-  var html='<div class="page-h">Day '+p.d+' — '+p.title+'</div>'+
-  '<div class="page-sub">'+focusTags(p)+(p.mock?' &nbsp;•&nbsp; This is a timed mock checkpoint.':'')+'</div>';
+  if(sprintOver())return '<div class="empty"><h2>🏁 Sprint complete!</h2><p class="muted" style="max-width:480px;margin:8px auto">All 35 days are behind you. Keep sharp with mock exams and topic practice right up to exam day.</p><button class="btn btn-pri" data-go="mock" style="margin-top:14px">Take a mock →</button></div>';
+  var a=calendarDay(), p=planByDay(a), prog=S.progress[a];
+  var html='<div class="page-h">Day '+a+' — '+p.title+'</div>'+
+  '<div class="page-sub">'+fmtDate(dateForDay(a))+' &nbsp;•&nbsp; '+focusTags(p)+(p.mock?' &nbsp;•&nbsp; timed mock checkpoint':'')+'</div>';
 
   if(prog&&prog.done){
-    html+='<div class="card" style="border-color:#22c55e;margin-bottom:16px"><b style="color:#86efac">✓ Completed</b> — you scored '+prog.score+'%. You can revise the notes or retake the quiz anytime below.</div>';
+    html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%.</b> '+
+      (a<35?'Come back tomorrow for <b>Day '+(a+1)+'</b> (unlocks '+fmtDate(dateForDay(a+1))+' at midnight).':'That was the final day — superb! 🎉')+
+      ' You can still revise the lesson or retake below.</div>';
   }
 
   // Lessons
@@ -209,44 +259,49 @@ function vToday(){
 }
 
 function vPlan(){
-  var fi=firstIncomplete();
   var html='<div class="page-h">35-Day Study Plan</div>'+
-  '<div class="page-sub">A full sprint from 28 Jun → 1 Aug, with weekly mock checkpoints. Days unlock as you complete them. Exam window: 3–7 Aug.</div>';
+  '<div class="page-sub">One mission unlocks each calendar day (28 Jun → 1 Aug) and <b>locks at midnight</b>. Finish on time or it becomes a <b style="color:#f87171">miss</b> (a permanent strike). Missed days can be <b>redeemed</b> to study late, but the strike — and the broken streak — stay. Exam: 3–7 Aug.</div>';
   var wk=0;
   PLAN.forEach(function(p){
     if(p.week!==wk){wk=p.week;html+='<div class="section-t">Week '+wk+(wk===5?' — Final consolidation':'')+'</div>';}
-    var done=dayDone(p.d), today=(p.d===fi), unlocked=dayUnlocked(p.d);
-    var cls='day-card'+(done?' done':'')+(today?' today':'');
-    var status=done?('<span class="day-status" style="color:#86efac">✓ '+(S.progress[p.d].score)+'%</span>')
-      :(today?'<span class="day-status" style="color:#67e8f9">● TODAY</span>'
-      :(unlocked?'<span class="day-status muted">○ open</span>':'<span class="day-status locked">🔒 locked</span>'));
-    html+='<div class="'+cls+'" data-day="'+p.d+'" '+(unlocked?'style="cursor:pointer"':'')+'>'+
-      '<div class="day-num">'+(done?'✓':p.d)+'</div>'+
+    var st=dayState(p.d), date=fmtDate(dateForDay(p.d)), sc=S.progress[p.d]?S.progress[p.d].score:0;
+    var num=(st==="done"||st==="redeemed")?"✓":(st==="missed"?"✗":p.d);
+    var status, clickable=true;
+    if(st==="done")status='<span class="day-status" style="color:#86efac">✓ '+sc+'%</span>';
+    else if(st==="redeemed")status='<span class="day-status" style="color:#fcd34d">↺ '+sc+'% · late</span>';
+    else if(st==="today")status='<span class="day-status" style="color:#67e8f9">● TODAY</span>';
+    else if(st==="missed")status='<span class="day-status" style="color:#f87171">✗ MISSED · redeem</span>';
+    else {status='<span class="day-status locked">🔒 '+date+'</span>';clickable=false;}
+    html+='<div class="day-card state-'+st+'" data-day="'+p.d+'" data-state="'+st+'" '+(clickable?'style="cursor:pointer"':'')+'>'+
+      '<div class="day-num">'+num+'</div>'+
       '<div class="day-body"><div class="day-title">'+p.title+(p.mock?' <span class="tag tag-general">MOCK</span>':'')+'</div>'+
-      '<div class="day-tags">'+focusTags(p)+'</div></div>'+status+'</div>';
+      '<div class="day-tags">'+focusTags(p)+' <span class="day-date">'+date+'</span></div></div>'+status+'</div>';
   });
   setTimeout(function(){
     document.querySelectorAll(".day-card").forEach(function(c){
       var d=+c.getAttribute("data-day");
-      if(dayUnlocked(d))c.onclick=function(){openDay(d);};
+      c.onclick=function(){openDay(d);};
     });
   },0);
   return html;
 }
 function openDay(d){
-  var p=planByDay(d);
-  // Build a focused view for an arbitrary day (study + quiz)
-  var qcount=p.mock?(p.final?40:18):12;
+  var st=dayState(d);
+  if(st==="future"){toast("🔒 Day "+d+" unlocks "+fmtDate(dateForDay(d))+" (at midnight).");return;}
+  if(st==="missed"){
+    if(!confirm("⚠ Day "+d+" was MISSED — its day has already passed.\n\nYou can still study it to catch up, but it stays on your record as a strike and will NOT restore your streak.\n\nRedeem and study Day "+d+" now?"))return;
+  }
   CURRENT_OPEN=d;
   go("today-day");
 }
 var CURRENT_OPEN=null;
 function vTodayDay(){ // viewing a specific chosen day from the plan
   var p=planByDay(CURRENT_OPEN);if(!p)return vToday();
-  var prog=S.progress[p.d];
+  var st=dayState(p.d), prog=S.progress[p.d];
   var html='<button class="btn btn-ghost" data-go="plan" style="margin-bottom:16px">← Back to plan</button>'+
-  '<div class="page-h">Day '+p.d+' — '+p.title+'</div><div class="page-sub">'+focusTags(p)+'</div>';
-  if(prog&&prog.done)html+='<div class="card" style="border-color:#22c55e;margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%</b></div>';
+  '<div class="page-h">Day '+p.d+' — '+p.title+'</div><div class="page-sub">'+fmtDate(dateForDay(p.d))+' &nbsp;•&nbsp; '+focusTags(p)+'</div>';
+  if(st==="missed")html+='<div class="card alert-miss" style="margin-bottom:16px"><div><b>↺ Redeeming a missed day.</b> Study and pass it to learn the material — but note this still counts as a strike and won\'t restore your streak.</div></div>';
+  if(prog&&prog.done)html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%'+(prog.late?' (late)':'')+'</b></div>';
   if(p.notes&&p.notes.length){
     html+='<div class="section-t">Lesson'+(p.notes.length>1?"s":"")+'</div>';
     p.notes.forEach(function(k){var n=NOTES[k];if(!n)return;
@@ -470,12 +525,15 @@ function finishQuiz(){
 
   var passed=score>=PASS;
   // daily completion
-  var newlyDone=false;
+  var newlyDone=false, wasLate=false;
   if(Q.dayRef!=null){
     var prev=S.progress[Q.dayRef];
     if(passed){
-      if(!(prev&&prev.done)){newlyDone=true;bumpStreak();}
-      S.progress[Q.dayRef]={done:true,score:Math.max(score,prev?prev.score||0:0),date:dayStr()};
+      wasLate=(Q.dayRef<calendarDay())||sprintOver(); // completing a past day = redeemed/late
+      if(!(prev&&prev.done))newlyDone=true;
+      S.progress[Q.dayRef]={done:true,score:Math.max(score,prev?prev.score||0:0),date:dayStr(),
+        late:wasLate||!!(prev&&prev.late)};
+      if(S.missed[Q.dayRef])delete S.missed[Q.dayRef]; // redeemed — no longer "open miss" (strike stays via late flag)
       save();
     }
   }
@@ -485,11 +543,11 @@ function finishQuiz(){
     save();
   }
   refreshChrome();
-  renderResult(score,correct,bd,passed,newlyDone);
+  renderResult(score,correct,bd,passed,newlyDone,wasLate);
 }
-function renderResult(score,correct,bd,passed,newlyDone){
+function renderResult(score,correct,bd,passed,newlyDone,wasLate){
   var ringColor=score>=80?"#22c55e":score>=PASS?"#3b82f6":score>=40?"#f59e0b":"#ef4444";
-  var msg=passed?(newlyDone?"Mission complete — day cleared! 🎉":"Passed! Solid work."):"Below "+PASS+"% — review and retake to clear this day.";
+  var msg=passed?(wasLate?"Redeemed — day caught up (late). ↺":(newlyDone?"Mission complete — day cleared! 🎉":"Passed! Solid work.")):"Below "+PASS+"% — review and retake to clear this day.";
   var bdHtml="";for(var s in bd){bdHtml+='<div class="pill"><b>'+pct(bd[s].c,bd[s].t)+'%</b>'+s+' ('+bd[s].c+'/'+bd[s].t+')</div>';}
 
   var html='<div class="result">'+
@@ -497,7 +555,7 @@ function renderResult(score,correct,bd,passed,newlyDone){
       '<div style="position:absolute;inset:12px;border-radius:50%;background:var(--bg);display:grid;place-items:center">'+score+'%</div></div>'+
     '<h2>'+msg+'</h2>'+
     '<p>You got <b style="color:#fff">'+correct+'</b> out of <b style="color:#fff">'+Q.list.length+'</b> correct.'+
-      (newlyDone?' Streak is now 🔥 '+S.streak+' days.':'')+'</p>'+
+      (passed&&wasLate?' Material caught up — but the strike stays and your streak isn\'t restored.':(newlyDone?' Streak is now 🔥 '+S.streak+' days.':''))+'</p>'+
     '<div class="pill-row">'+bdHtml+'</div>'+
     '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
       '<button class="btn btn-pri" id="r-review">Review answers</button>'+
@@ -539,8 +597,10 @@ function finishQuizRerender(){
    ============================================================ */
 var VIEWS={dashboard:vDashboard,today:vToday,"today-day":vTodayDay,plan:vPlan,library:vLibrary,
   note:vNote,practice:vPractice,mock:vMock,stats:vStats,group:vGroup};
+var CURRENT_VIEW="dashboard";
 function go(name){
   if(Q&&Q.timer){clearInterval(Q.timer);} // leaving a timed quiz cancels timer
+  CURRENT_VIEW=name;
   var fn=VIEWS[name]||vDashboard;
   var v=$("#view");
   v.classList.remove("enter");
@@ -562,12 +622,18 @@ function toast(msg){var t=el('<div class="toast">'+msg+'</div>');document.body.a
 
 document.querySelectorAll(".nav-item").forEach(function(n){n.onclick=function(){go(n.getAttribute("data-view"));};});
 $("#reset-btn").onclick=function(){
-  if(confirm("Reset ALL progress, streak and stats? This cannot be undone.")){
-    localStorage.removeItem(KEY);S=load();refreshChrome();go("dashboard");toast("Progress reset.");}
+  if(confirm("Reset ALL progress, streak, stats and your profile? This cannot be undone.")){
+    localStorage.removeItem(KEY);S=load();refreshChrome();
+    if(!hasProfile())showOnboarding(false);else{go("dashboard");}
+    toast("Progress reset.");}
 };
 // mobile sidebar toggle
 var mt=el('<button class="mobile-toggle">☰</button>');document.body.appendChild(mt);
 mt.onclick=function(){$(".sidebar").classList.toggle("open");};
+
+// edit profile by clicking the brand block
+var brand=$(".brand");if(brand){brand.style.cursor="pointer";brand.title="Edit your name / course";
+  brand.onclick=function(){showOnboarding(true);};}
 
 // footer: year + whatsapp link
 (function(){
@@ -575,6 +641,58 @@ mt.onclick=function(){$(".sidebar").classList.toggle("open");};
   var fw=$("#foot-wa");if(fw)fw.href=waLink("Hi Ojochegbe 👋 I'm using the AFIT Prep app and have a question I'd like help with.");
 })();
 
+/* ---------- onboarding (name + course) ---------- */
+var COURSES=["Electrical/Electronic Engineering","Aerospace Engineering","Mechatronics Engineering",
+  "Civil Engineering","Computer Engineering","Telecommunications Engineering",
+  "Information & Communication Technology","Computer Science","Cyber Security",
+  "Mathematics","Physics","Chemistry","Business Administration","Accounting","Economics"];
+function showOnboarding(isEdit){
+  var ov=$("#onboard");if(ov)ov.remove();
+  var name=isEdit&&S.profile?esc(S.profile.name||""):"";
+  var course=isEdit&&S.profile?esc(S.profile.course||""):"";
+  var opts=COURSES.map(function(c){return '<option value="'+esc(c)+'">';}).join("");
+  ov=el('<div class="onboard-overlay" id="onboard"><div class="onboard-card">'+
+    '<div class="ob-badge">AFIT</div>'+
+    '<h2>'+(isEdit?"Edit your details":"Welcome to your Post-UTME sprint")+'</h2>'+
+    '<p class="ob-sub">'+(isEdit?"Update your name or course below.":"Let\'s personalise it for you. Saved only on this device — no sign-up, no password.")+'</p>'+
+    '<label for="ob-name">Your name or initials</label>'+
+    '<input id="ob-name" type="text" maxlength="40" autocomplete="off" placeholder="e.g. Peter, or P.O." value="'+name+'" />'+
+    '<label for="ob-course">Course you\'re aspiring for at AFIT</label>'+
+    '<input id="ob-course" list="ob-courses" maxlength="60" autocomplete="off" placeholder="Start typing or pick…" value="'+course+'" />'+
+    '<datalist id="ob-courses">'+opts+'</datalist>'+
+    '<div class="ob-err" id="ob-err"></div>'+
+    '<button class="btn btn-pri ob-save" id="ob-save">'+(isEdit?"Save":"Start studying →")+'</button>'+
+    (isEdit?'<button class="btn btn-ghost ob-cancel" id="ob-cancel">Cancel</button>':'')+
+    '<div class="ob-foot">✦ Built by Ojochegbe Peter Ojoh</div>'+
+  '</div></div>');
+  document.body.appendChild(ov);
+  var nameI=$("#ob-name");setTimeout(function(){nameI.focus();},30);
+  $("#ob-save").onclick=function(){
+    var nm=nameI.value.trim(), cr=$("#ob-course").value.trim();
+    if(!nm){$("#ob-err").textContent="Please enter your name or initials.";nameI.focus();return;}
+    S.profile={name:nm,course:cr||"AFIT Aspirant"};save();
+    ov.remove();refreshChrome();go("dashboard");
+    toast("Welcome, "+esc(firstName())+"! 🚀");
+  };
+  $("#ob-name").onkeydown=function(e){if(e.key==="Enter")$("#ob-save").click();};
+  var cancel=$("#ob-cancel");if(cancel)cancel.onclick=function(){ov.remove();};
+}
+
+/* ---------- midnight rollover watcher ---------- */
+var __lastDay=calendarDay();
+setInterval(function(){
+  var c=calendarDay();
+  if(c!==__lastDay){
+    __lastDay=c;
+    reconcileMisses();
+    refreshChrome();
+    if(!$("#onboard"))go(CURRENT_VIEW);
+    toast("🌅 A new day — Day "+c+" is now open. Yesterday is locked.");
+  }
+},30000);
+
+// record any days missed since last visit, then start
+reconcileMisses();
 refreshChrome();
-go("dashboard");
+if(!hasProfile())showOnboarding(false);else go("dashboard");
 })();
