@@ -32,7 +32,7 @@ window.NOTES = {
 <li>Affiliated with <b>Cranfield University (UK)</b> for postgraduate aerospace studies.</li>
 <li>Has graduated over <b>5,600</b> people (Air Force, Army, Navy and civilians, including international students).</li>
 </ul>
-<div class="key"><b>Exam format (what to expect):</b> a physical <b>Computer-Based Test (CBT)</b> for degree candidates, drawn from <b>English, Mathematics, Physics, Chemistry</b> plus general knowledge / current affairs. The exact number of questions isn't officially published — many Nigerian Post-UTMEs use about <b>50 questions</b>, so this app's 60-question "Full Simulation" is deliberate over-preparation. Bring your <b>JAMB slip, AFIT acknowledgement slip and a calculator</b>. JAMB cut-off has been <b>200</b> for degree programmes — with 228 you're above the line; the screening decides the rest.</div>`},
+<div class="key"><b>Exam format (what to expect):</b> a physical <b>Computer-Based Test (CBT)</b> for degree candidates, drawn from <b>English, Mathematics, Physics, Chemistry</b> plus general knowledge / current affairs. The exact number of questions isn't officially published — many Nigerian Post-UTMEs use about <b>50 questions</b>, so this app's 60-question "Full Simulation" is deliberate over-preparation. Bring your <b>JAMB slip, AFIT acknowledgement slip and a calculator</b>. JAMB cut-off has been <b>200</b> for degree programmes — clearing that gets you to the screening, and the screening decides the rest.</div>`},
 
 /* ===================== MATHEMATICS ===================== */
 "m-numberbases":{title:"Number Bases",subject:"Maths",body:`
