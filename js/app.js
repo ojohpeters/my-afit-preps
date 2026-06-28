@@ -42,28 +42,38 @@ function fmtDate(x){try{return x.toLocaleDateString(undefined,{weekday:"short",d
 function planByDay(d){for(var i=0;i<PLAN.length;i++)if(PLAN[i].d===d)return PLAN[i];return null;}
 function dayDone(d){return !!(S.progress[d]&&S.progress[d].done);}
 function dayLate(d){return !!(S.progress[d]&&S.progress[d].late);}
-/* state of a day: done | redeemed | today | missed | future */
+/* the plan day the user joined on. Misses only count from here — earlier days
+   are optional, penalty-free "catch-up" (the exam date is fixed for everyone). */
+function joinDay(){return S.joinDay||1;}
+function ensureJoinDay(){
+  if(S.joinDay!=null)return;
+  var minDone=null;for(var k in S.progress){if(S.progress[k]&&S.progress[k].done){var dd=+k;if(minDone==null||dd<minDone)minDone=dd;}}
+  S.joinDay=(minDone!=null)?Math.min(minDone,calendarDay()):calendarDay();
+  save();
+}
+/* state of a day: done | redeemed | today | missed | prejoin | future */
 function dayState(d){
   if(dayDone(d))return dayLate(d)?"redeemed":"done";
   var a=calendarDay();
   if(d>a)return "future";
   if(d===a&&!sprintOver())return "today";
-  return "missed"; // its calendar day has passed and it was not completed
+  if(d<joinDay())return "prejoin"; // its day passed before this user joined — no penalty
+  return "missed";                  // passed since joining, not completed
 }
-/* record newly-missed days (run at load + at midnight rollover); returns new ones */
+/* record newly-missed days (from joinDay only); returns new ones */
 function reconcileMisses(){
-  var a=calendarDay(),over=sprintOver(),end=over?35:a-1,changed=false,newly=[];
-  for(var d=1;d<=end;d++){
+  var a=calendarDay(),over=sprintOver(),end=over?35:a-1,j=joinDay(),changed=false,newly=[];
+  for(var d=j;d<=end;d++){
     if(d===a&&!over)continue;
     if(!dayDone(d)&&!S.missed[d]){S.missed[d]={on:dayStr(dateForDay(d))};changed=true;newly.push(d);}
   }
   if(changed)save();
   return newly;
 }
-/* strikes = past days not completed on time (missed OR redeemed late) — permanent */
-function strikes(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,n=0;for(var d=1;d<=end;d++){if(d===a&&!over)continue;if(!(dayDone(d)&&!dayLate(d)))n++;}return n;}
-function missedOpen(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,list=[];for(var d=1;d<=end;d++){if(d===a&&!over)continue;if(!dayDone(d))list.push(d);}return list;}
-function dueDays(){var a=calendarDay();return sprintOver()?35:a-1;}
+/* strikes = days SINCE JOINING not completed on time (missed OR redeemed late) — permanent */
+function strikes(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,j=joinDay(),n=0;for(var d=j;d<=end;d++){if(d===a&&!over)continue;if(!(dayDone(d)&&!dayLate(d)))n++;}return n;}
+function missedOpen(){var a=calendarDay(),over=sprintOver(),end=over?35:a-1,j=joinDay(),list=[];for(var d=j;d<=end;d++){if(d===a&&!over)continue;if(!dayDone(d))list.push(d);}return list;}
+function dueDays(){var a=calendarDay();return Math.max(0,(sprintOver()?35:a-1)-(joinDay()-1));}
 function discipline(){var due=dueDays();if(due<=0)return 100;return Math.max(0,Math.round((due-strikes())/due*100));}
 function deriveStreak(){var d=calendarDay(),n=0;if(!(dayDone(d)&&!dayLate(d)))d--;while(d>=1&&dayDone(d)&&!dayLate(d)){n++;d--;}return n;}
 
@@ -134,6 +144,14 @@ function vDashboard(){
     '<div class="hero-cta">'+cta+'<button class="btn btn-ghost" data-go="plan">Full plan</button></div>'+
     '<div class="made-by">✦ Crafted by <b>Ojochegbe Peter Ojoh</b> — for fellow AFIT aspirants</div>'+
   '</div>';
+
+  // Late-joiner note (joined after Day 1) — reassure, no penalty for earlier days
+  if(joinDay()>1){
+    html+='<div class="card resource-card" style="border-color:rgba(59,130,246,.3)!important;background:linear-gradient(120deg,rgba(59,130,246,.12),rgba(20,27,51,.6))!important">'+
+      '<div><b>👋 You joined on Day '+joinDay()+' of 35.</b><div class="muted" style="font-size:13px;margin-top:4px">'+
+      'The exam date is fixed for everyone ('+daysLeft+' days left), so we drop you straight into today. Days before you joined are <b>optional catch-up</b> and never count against you — just keep today\'s streak going.</div></div>'+
+      '<button class="btn btn-ghost" data-go="plan">See catch-up days →</button></div>';
+  }
 
   // Risk / miss alert
   if(miss.length){
@@ -271,6 +289,7 @@ function vPlan(){
     else if(st==="redeemed")status='<span class="day-status" style="color:#fcd34d">↺ '+sc+'% · late</span>';
     else if(st==="today")status='<span class="day-status" style="color:#67e8f9">● TODAY</span>';
     else if(st==="missed")status='<span class="day-status" style="color:#f87171">✗ MISSED · redeem</span>';
+    else if(st==="prejoin")status='<span class="day-status" style="color:#93c5fd">○ catch-up</span>';
     else {status='<span class="day-status locked">🔒 '+date+'</span>';clickable=false;}
     html+='<div class="day-card state-'+st+'" data-day="'+p.d+'" data-state="'+st+'" '+(clickable?'style="cursor:pointer"':'')+'>'+
       '<div class="day-num">'+num+'</div>'+
@@ -301,6 +320,7 @@ function vTodayDay(){ // viewing a specific chosen day from the plan
   var html='<button class="btn btn-ghost" data-go="plan" style="margin-bottom:16px">← Back to plan</button>'+
   '<div class="page-h">Day '+p.d+' — '+p.title+'</div><div class="page-sub">'+fmtDate(dateForDay(p.d))+' &nbsp;•&nbsp; '+focusTags(p)+'</div>';
   if(st==="missed")html+='<div class="card alert-miss" style="margin-bottom:16px"><div><b>↺ Redeeming a missed day.</b> Study and pass it to learn the material — but note this still counts as a strike and won\'t restore your streak.</div></div>';
+  if(st==="prejoin")html+='<div class="card done-banner" style="margin-bottom:16px"><div><b>○ Optional catch-up.</b> This day passed before you joined, so it\'s free to study and <b>never counts against you</b>. Do it if you have time.</div></div>';
   if(prog&&prog.done)html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%'+(prog.late?' (late)':'')+'</b></div>';
   if(p.notes&&p.notes.length){
     html+='<div class="section-t">Lesson'+(p.notes.length>1?"s":"")+'</div>';
@@ -623,7 +643,7 @@ function toast(msg){var t=el('<div class="toast">'+msg+'</div>');document.body.a
 document.querySelectorAll(".nav-item").forEach(function(n){n.onclick=function(){go(n.getAttribute("data-view"));};});
 $("#reset-btn").onclick=function(){
   if(confirm("Reset ALL progress, streak, stats and your profile? This cannot be undone.")){
-    localStorage.removeItem(KEY);S=load();refreshChrome();
+    localStorage.removeItem(KEY);S=load();ensureJoinDay();refreshChrome();
     if(!hasProfile())showOnboarding(false);else{go("dashboard");}
     toast("Progress reset.");}
 };
@@ -691,7 +711,8 @@ setInterval(function(){
   }
 },30000);
 
-// record any days missed since last visit, then start
+// anchor the user's join day, record any misses since then, then start
+ensureJoinDay();
 reconcileMisses();
 refreshChrome();
 if(!hasProfile())showOnboarding(false);else go("dashboard");

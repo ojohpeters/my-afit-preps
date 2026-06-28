@@ -422,3 +422,8 @@ body{background:radial-gradient(1200px 600px at 80% -10%,#16204a 0%,transparent 
 .ob-foot{margin-top:16px;font-size:11.5px;color:var(--mut2)}
 .ob-foot{background:none}
 @media(max-width:860px){.alert-miss,.resource-card,.wa-cta{flex-direction:column;align-items:flex-start}}
+
+/* prejoin / catch-up day state (joined late — no penalty) */
+.day-card.state-prejoin{opacity:.82;border-style:dashed;border-color:rgba(147,197,253,.3)}
+.day-card.state-prejoin .day-num{background:rgba(59,130,246,.14);color:#93c5fd}
+.day-card.state-prejoin:hover{opacity:1;border-color:var(--pri)}
