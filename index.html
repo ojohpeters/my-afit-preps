@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AFIT Prep — Post-UTME Study Sprint (EEE) · by Ojochegbe Peter Ojoh</title>
+<meta name="author" content="Ojochegbe Peter Ojoh" />
+<meta name="description" content="A 35-day study sprint with lessons, a 200+ question bank and mock CBT exams for the AFIT Kaduna Post-UTME screening (Electrical Engineering). Built by Ojochegbe Peter Ojoh." />
+<meta name="theme-color" content="#070a16" />
+<!-- Social share preview -->
+<meta property="og:title" content="AFIT Prep — Post-UTME Study Sprint" />
+<meta property="og:description" content="35-day plan, 55 lessons, 200+ questions & mock CBT exams for AFIT Kaduna. Built by Ojochegbe Peter Ojoh." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-badge">AFIT</div>
+      <div>
+        <div class="brand-title">Post-UTME Sprint</div>
+        <div class="brand-sub">Electrical Eng. • Kaduna</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard"><span class="ni-ico">◉</span> Dashboard</button>
+      <button class="nav-item" data-view="today"><span class="ni-ico">★</span> Today's Mission</button>
+      <button class="nav-item" data-view="plan"><span class="ni-ico">▤</span> 35-Day Plan</button>
+      <button class="nav-item" data-view="library"><span class="ni-ico">▣</span> Study Library</button>
+      <button class="nav-item" data-view="practice"><span class="ni-ico">✎</span> Practice by Topic</button>
+      <button class="nav-item" data-view="mock"><span class="ni-ico">⏱</span> Mock Exam</button>
+      <button class="nav-item" data-view="stats"><span class="ni-ico">▮</span> My Stats</button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="streak-pill">🔥 <span id="streak-count">0</span>-day streak</div>
+      <button id="reset-btn" class="reset-btn" title="Reset all progress">Reset progress</button>
+      <div class="author-credit">
+        <span class="ac-spark">✦</span>
+        <span>Built by <b>Ojochegbe Peter Ojoh</b></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="topbar">
+      <div class="countdown" id="countdown">
+        <div class="cd-num" id="cd-days">--</div>
+        <div class="cd-label">days to exam<br><span id="cd-exam">Aug 3</span></div>
+      </div>
+      <div class="topbar-right">
+        <div class="tb-stat"><span id="tb-answered">0</span><small>answered</small></div>
+        <div class="tb-stat"><span id="tb-accuracy">0%</span><small>accuracy</small></div>
+        <div class="tb-stat"><span id="tb-done">0/35</span><small>days done</small></div>
+      </div>
+    </header>
+    <section id="view" class="view"></section>
+  </main>
+
+  <!-- Animated aurora background -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- Floating signature badge — shows on every page -->
+  <a class="sig-badge" id="sig-badge" title="Built by Ojochegbe Peter Ojoh">
+    <span class="sig-dot"></span>
+    <span class="sig-text">by <b>Ojochegbe</b></span>
+  </a>
+</div>
+
+<!-- Data + engine -->
+<script src="js/data-plan.js"></script>
+<script src="js/data-notes.js"></script>
+<script src="js/data-questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

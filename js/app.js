@@ -1,0 +1,534 @@
+/* ============================================================
+   AFIT PREP — app engine
+   Plain JS, no build step, works offline from file://
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ---------- State ---------- */
+var KEY="afit_prep_v1";
+var DEFAULT={progress:{},stats:{},topicStats:{},streak:0,lastStudy:null,mockScores:[]};
+function load(){try{return Object.assign({},DEFAULT,JSON.parse(localStorage.getItem(KEY))||{});}catch(e){return Object.assign({},DEFAULT);}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));}
+var S=load();
+
+/* ---------- Helpers ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function el(html){var d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function subjClass(s){return ({Maths:"math",Physics:"physics",Chemistry:"chemistry",English:"english",General:"general"})[s]||"general";}
+function dayStr(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function startOfDay(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function daysBetween(a,b){return Math.round((startOfDay(b)-startOfDay(a))/86400000);}
+function pct(n,d){return d?Math.round(n/d*100):0;}
+
+var PLAN=window.STUDY_PLAN, NOTES=window.NOTES, QS=window.QUESTIONS, LABELS=window.TOPIC_LABELS;
+var EXAM=new Date(window.EXAM_DATE), START=new Date(window.SPRINT_START+"T00:00:00"), PASS=window.PASS_MARK;
+
+/* which plan day should the user be on (calendar based), clamped */
+function calendarDay(){var n=daysBetween(START,new Date())+1;return Math.max(1,Math.min(35,n));}
+function firstIncomplete(){for(var i=0;i<PLAN.length;i++){if(!(S.progress[PLAN[i].d]&&S.progress[PLAN[i].d].done))return PLAN[i].d;}return 35;}
+function dayDone(d){return !!(S.progress[d]&&S.progress[d].done);}
+function dayUnlocked(d){return d===1||dayDone(d-1)||d<=calendarDay();}
+function planByDay(d){for(var i=0;i<PLAN.length;i++)if(PLAN[i].d===d)return PLAN[i];return null;}
+
+/* ---------- Question pool ---------- */
+function poolForTopics(topics,desired){
+  var pool;
+  if(topics.indexOf("ALL")>-1){pool=QS.slice();}
+  else{pool=QS.filter(function(q){return topics.indexOf(q.topic)>-1;});}
+  pool=shuffle(pool);
+  // top-up from same subjects if too few
+  if(desired&&pool.length<desired){
+    var subs={};pool.forEach(function(q){subs[q.subject]=1;});
+    if(topics.indexOf("ALL")>-1){subs={Maths:1,Physics:1,Chemistry:1,English:1,General:1};}
+    var extra=shuffle(QS.filter(function(q){return subs[q.subject]&&pool.indexOf(q)<0;}));
+    pool=pool.concat(extra);
+  }
+  return desired?pool.slice(0,desired):pool;
+}
+
+/* ---------- Stats recording ---------- */
+function recordAnswer(q,correct){
+  var st=S.stats[q.subject]||(S.stats[q.subject]={correct:0,total:0});
+  st.total++; if(correct)st.correct++;
+  var tt=S.topicStats[q.topic]||(S.topicStats[q.topic]={correct:0,total:0});
+  tt.total++; if(correct)tt.correct++;
+}
+function totals(){var c=0,t=0;for(var k in S.stats){c+=S.stats[k].correct;t+=S.stats[k].total;}return{c:c,t:t};}
+function bumpStreak(){
+  var today=dayStr();
+  if(S.lastStudy===today)return;
+  var y=new Date();y.setDate(y.getDate()-1);
+  S.streak=(S.lastStudy===dayStr(y))?S.streak+1:1;
+  S.lastStudy=today;
+}
+
+/* ---------- Top bar / sidebar refresh ---------- */
+function refreshChrome(){
+  var d=Math.max(0,daysBetween(new Date(),EXAM));
+  $("#cd-days").textContent=d;
+  $("#cd-exam").textContent="Aug 3";
+  var T=totals();
+  $("#tb-answered").textContent=T.t;
+  $("#tb-accuracy").textContent=pct(T.c,T.t)+"%";
+  var done=PLAN.filter(function(p){return dayDone(p.d);}).length;
+  $("#tb-done").textContent=done+"/35";
+  $("#streak-count").textContent=S.streak;
+}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+function vDashboard(){
+  var cd=calendarDay(), fi=firstIncomplete(), today=planByDay(fi), behind=fi<cd;
+  var done=PLAN.filter(function(p){return dayDone(p.d);}).length;
+  var T=totals();
+  var daysLeft=Math.max(0,daysBetween(new Date(),EXAM));
+  var html=''+
+  '<div class="hero"><div class="hero-ring"></div>'+
+    '<h1>'+greeting()+' Let\'s get you into AFIT. ✈️</h1>'+
+    '<p>You scored <b>228</b> in UTME — strong. The screening is a CBT in Maths, English, Physics, Chemistry and General Knowledge. '+
+    'This sprint turns the next <b>'+daysLeft+' days</b> into a daily habit so nothing is left to chance. One mission a day. No skipping.</p>'+
+    '<div class="hero-cta">'+
+      '<button class="btn btn-pri" data-go="today">▶ Start Today\'s Mission (Day '+fi+')</button>'+
+      '<button class="btn btn-ghost" data-go="plan">View full plan</button>'+
+    '</div>'+
+    '<div class="made-by">✦ Crafted by <b>Ojochegbe Peter Ojoh</b> — for fellow AFIT aspirants</div>'+
+  '</div>';
+
+  if(behind){
+    html+='<div class="card" style="border-color:#f59e0b;margin-bottom:18px"><b style="color:#fcd34d">⚠ Catch-up needed.</b> '+
+    'By the calendar you should be on <b>Day '+cd+'</b>, but you\'re on <b>Day '+fi+'</b>. Try to clear '+(cd-fi+1)+' day(s) to get back on track.</div>';
+  }
+
+  html+='<div class="grid g4">'+
+    statCard(daysLeft,"days to exam")+
+    statCard(done+"/35","missions done")+
+    statCard(T.t,"questions answered")+
+    statCard(pct(T.c,T.t)+"%","overall accuracy")+
+  '</div>';
+
+  // Today preview
+  if(today){
+    html+='<div class="section-t">Today — Day '+today.d+'</div>'+
+    '<div class="card">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
+        '<div><div style="font-size:18px;font-weight:700">'+today.title+'</div>'+
+        '<div class="muted" style="font-size:13px;margin-top:4px">'+focusTags(today)+'</div></div>'+
+        '<button class="btn btn-pri" data-go="today">Open mission →</button>'+
+      '</div>'+
+    '</div>';
+  }
+
+  // Overall progress bar
+  html+='<div class="section-t">Sprint progress</div>'+
+  '<div class="card"><div class="pbar"><i style="width:'+pct(done,35)+'%"></i></div>'+
+  '<div class="muted" style="margin-top:10px;font-size:13px">'+done+' of 35 daily missions complete • '+pct(done,35)+'% of the sprint • keep the 🔥 '+S.streak+'-day streak alive.</div></div>';
+
+  // Weak areas
+  html+='<div class="section-t">Where to focus</div>'+subjectBars();
+
+  // Exam info
+  html+='<div class="section-t">Know your exam</div>'+
+  '<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">'+
+    '<div><b>AFIT screening = a CBT</b> in English, Maths, Physics, Chemistry + general knowledge. Bring your JAMB slip, AFIT slip and a calculator. '+
+    'Exact question count isn\'t published (≈50 is typical) — read the full briefing.</div>'+
+    '<button class="btn btn-ghost" id="go-about">Read exam briefing →</button>'+
+  '</div>';
+  setTimeout(function(){var b=$("#go-about");if(b)b.onclick=function(){openNote("about-afit");};},0);
+  return html;
+}
+function greeting(){var h=new Date().getHours();return h<12?"Good morning.":h<17?"Good afternoon.":"Good evening.";}
+function statCard(v,l){return '<div class="card stat-card"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>';}
+function focusTags(p){return (p.focus||[]).map(function(f){var s=f==="Mixed"?"general":subjClass(f);return '<span class="tag tag-'+s+'">'+f+'</span>';}).join(" ");}
+function subjectBars(){
+  var subs=["Maths","Physics","Chemistry","English","General"],h='<div class="card">';
+  subs.forEach(function(s){
+    var st=S.stats[s]||{correct:0,total:0},p=pct(st.correct,st.total);
+    h+='<div class="subject-row"><div class="sn"><span class="tag tag-'+subjClass(s)+'">'+s+'</span></div>'+
+      '<div class="pbar"><i style="width:'+p+'%"></i></div><div class="pv">'+(st.total?p+"% ("+st.total+")":"—")+'</div></div>';
+  });
+  return h+'</div>';
+}
+
+function vToday(){
+  var fi=firstIncomplete(), p=planByDay(fi);
+  if(!p)return '<div class="empty">All missions complete! 🎉</div>';
+  if(p.d>1&&!dayDone(p.d-1)&&p.d>calendarDay()){
+    return '<div class="empty">🔒 Day '+p.d+' is locked. Finish Day '+(p.d-1)+' first.</div>';
+  }
+  var prog=S.progress[p.d];
+  var html='<div class="page-h">Day '+p.d+' — '+p.title+'</div>'+
+  '<div class="page-sub">'+focusTags(p)+(p.mock?' &nbsp;•&nbsp; This is a timed mock checkpoint.':'')+'</div>';
+
+  if(prog&&prog.done){
+    html+='<div class="card" style="border-color:#22c55e;margin-bottom:16px"><b style="color:#86efac">✓ Completed</b> — you scored '+prog.score+'%. You can revise the notes or retake the quiz anytime below.</div>';
+  }
+
+  // Lessons
+  if(p.notes&&p.notes.length){
+    html+='<div class="section-t">Step 1 — Study the lesson'+(p.notes.length>1?"s":"")+'</div>';
+    p.notes.forEach(function(k){var n=NOTES[k];if(!n)return;
+      html+='<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'+
+        '<h3 style="font-size:18px">'+n.title+'</h3><span class="tag tag-'+subjClass(n.subject)+'">'+n.subject+'</span></div>'+
+        '<div class="note">'+n.body+'</div></div>';
+    });
+  }
+
+  // Quiz launcher
+  var qcount=p.mock?(p.final?40:18):12;
+  html+='<div class="section-t">Step 2 — '+(p.mock?'Take the mock':'Pass the daily quiz')+'</div>'+
+  '<div class="card"><p class="muted" style="margin-bottom:14px">'+
+    qcount+' questions • you need <b style="color:#fff">'+PASS+'%</b> to complete this day'+(p.mock?' • timed':'')+'.</p>'+
+    '<button class="btn btn-pri" id="start-daily">'+(prog&&prog.done?'Retake quiz':'Start quiz')+' →</button>'+
+  '</div>';
+
+  setTimeout(function(){
+    var b=$("#start-daily");
+    if(b)b.onclick=function(){
+      var qs=poolForTopics(p.topics,qcount);
+      startQuiz({questions:qs,instant:!p.mock,timed:p.mock,seconds:qcount*60,title:"Day "+p.d+" — "+p.title,
+        dayRef:p.d,onPass:null});
+    };
+  },0);
+  return html;
+}
+
+function vPlan(){
+  var fi=firstIncomplete();
+  var html='<div class="page-h">35-Day Study Plan</div>'+
+  '<div class="page-sub">A full sprint from 28 Jun → 1 Aug, with weekly mock checkpoints. Days unlock as you complete them. Exam window: 3–7 Aug.</div>';
+  var wk=0;
+  PLAN.forEach(function(p){
+    if(p.week!==wk){wk=p.week;html+='<div class="section-t">Week '+wk+(wk===5?' — Final consolidation':'')+'</div>';}
+    var done=dayDone(p.d), today=(p.d===fi), unlocked=dayUnlocked(p.d);
+    var cls='day-card'+(done?' done':'')+(today?' today':'');
+    var status=done?('<span class="day-status" style="color:#86efac">✓ '+(S.progress[p.d].score)+'%</span>')
+      :(today?'<span class="day-status" style="color:#67e8f9">● TODAY</span>'
+      :(unlocked?'<span class="day-status muted">○ open</span>':'<span class="day-status locked">🔒 locked</span>'));
+    html+='<div class="'+cls+'" data-day="'+p.d+'" '+(unlocked?'style="cursor:pointer"':'')+'>'+
+      '<div class="day-num">'+(done?'✓':p.d)+'</div>'+
+      '<div class="day-body"><div class="day-title">'+p.title+(p.mock?' <span class="tag tag-general">MOCK</span>':'')+'</div>'+
+      '<div class="day-tags">'+focusTags(p)+'</div></div>'+status+'</div>';
+  });
+  setTimeout(function(){
+    document.querySelectorAll(".day-card").forEach(function(c){
+      var d=+c.getAttribute("data-day");
+      if(dayUnlocked(d))c.onclick=function(){openDay(d);};
+    });
+  },0);
+  return html;
+}
+function openDay(d){
+  var p=planByDay(d);
+  // Build a focused view for an arbitrary day (study + quiz)
+  var qcount=p.mock?(p.final?40:18):12;
+  CURRENT_OPEN=d;
+  go("today-day");
+}
+var CURRENT_OPEN=null;
+function vTodayDay(){ // viewing a specific chosen day from the plan
+  var p=planByDay(CURRENT_OPEN);if(!p)return vToday();
+  var prog=S.progress[p.d];
+  var html='<button class="btn btn-ghost" data-go="plan" style="margin-bottom:16px">← Back to plan</button>'+
+  '<div class="page-h">Day '+p.d+' — '+p.title+'</div><div class="page-sub">'+focusTags(p)+'</div>';
+  if(prog&&prog.done)html+='<div class="card" style="border-color:#22c55e;margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%</b></div>';
+  if(p.notes&&p.notes.length){
+    html+='<div class="section-t">Lesson'+(p.notes.length>1?"s":"")+'</div>';
+    p.notes.forEach(function(k){var n=NOTES[k];if(!n)return;
+      html+='<div class="card" style="margin-bottom:14px"><h3 style="font-size:18px;margin-bottom:6px">'+n.title+'</h3><div class="note">'+n.body+'</div></div>';});
+  }
+  var qcount=p.mock?(p.final?40:18):12;
+  html+='<div class="section-t">Quiz</div><div class="card"><p class="muted" style="margin-bottom:14px">'+qcount+' questions • pass mark '+PASS+'%.</p>'+
+  '<button class="btn btn-pri" id="open-day-quiz">'+(prog&&prog.done?'Retake':'Start')+' →</button></div>';
+  setTimeout(function(){var b=$("#open-day-quiz");if(b)b.onclick=function(){
+    startQuiz({questions:poolForTopics(p.topics,qcount),instant:!p.mock,timed:p.mock,seconds:qcount*60,title:"Day "+p.d+" — "+p.title,dayRef:p.d});
+  };},0);
+  return html;
+}
+
+function vLibrary(){
+  var groups={Maths:[],Physics:[],Chemistry:[],English:[],General:[]};
+  for(var k in NOTES){groups[NOTES[k].subject].push(k);}
+  var html='<div class="page-h">Study Library</div><div class="page-sub">All lessons and formula sheets in one place. Tap any card to read. Great for quick revision.</div>';
+  ["Maths","Physics","Chemistry","English","General"].forEach(function(s){
+    if(!groups[s].length)return;
+    html+='<div class="section-t">'+s+'</div><div class="topic-grid">';
+    groups[s].forEach(function(k){var n=NOTES[k];
+      html+='<div class="topic-card" data-note="'+k+'"><h4>'+n.title+'</h4><p>Tap to read →</p></div>';});
+    html+='</div>';
+  });
+  setTimeout(function(){document.querySelectorAll("[data-note]").forEach(function(c){c.onclick=function(){openNote(c.getAttribute("data-note"));};});},0);
+  return html;
+}
+var CURRENT_NOTE=null;
+function openNote(k){CURRENT_NOTE=k;go("note");}
+function vNote(){
+  var n=NOTES[CURRENT_NOTE];if(!n)return vLibrary();
+  return '<button class="btn btn-ghost" data-go="library" style="margin-bottom:16px">← Library</button>'+
+  '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+  '<h2 style="font-size:22px">'+n.title+'</h2><span class="tag tag-'+subjClass(n.subject)+'">'+n.subject+'</span></div>'+
+  '<div class="note">'+n.body+'</div></div>';
+}
+
+function vPractice(){
+  // group available topics (those with questions) by subject
+  var counts={};QS.forEach(function(q){counts[q.topic]=(counts[q.topic]||0)+1;});
+  var bySub={Maths:[],Physics:[],Chemistry:[],English:[],General:[]};
+  Object.keys(counts).forEach(function(t){var q=QS.find(function(x){return x.topic===t;});if(q)bySub[q.subject].push(t);});
+  var html='<div class="page-h">Practice by Topic</div><div class="page-sub">Free practice — drill any topic with instant feedback and explanations. No pass mark, just learning.</div>';
+  ["Maths","Physics","Chemistry","English","General"].forEach(function(s){
+    if(!bySub[s].length)return;
+    html+='<div class="section-t">'+s+' &nbsp;<button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" data-subject="'+s+'">Mix all '+s+'</button></div><div class="topic-grid">';
+    bySub[s].forEach(function(t){
+      html+='<div class="topic-card" data-topic="'+t+'"><h4>'+(LABELS[t]||t)+'</h4><p>'+counts[t]+' questions →</p></div>';});
+    html+='</div>';
+  });
+  setTimeout(function(){
+    document.querySelectorAll("[data-topic]").forEach(function(c){c.onclick=function(){
+      var t=c.getAttribute("data-topic");
+      startQuiz({questions:poolForTopics([t]),instant:true,timed:false,title:LABELS[t]||t,dayRef:null});};});
+    document.querySelectorAll("[data-subject]").forEach(function(c){c.onclick=function(){
+      var s=c.getAttribute("data-subject");
+      startQuiz({questions:shuffle(QS.filter(function(q){return q.subject===s;})),instant:true,timed:false,title:s+" — mixed practice",dayRef:null});};});
+  },0);
+  return html;
+}
+
+function vMock(){
+  var html='<div class="page-h">Mock Exam — CBT Simulation</div>'+
+  '<div class="page-sub">Simulate the real screening: mixed questions across all five areas, on a timer, with no feedback until the end. Build speed and stamina. '+
+  'AFIT doesn\'t publish the exact count — ~50 is typical for Nigerian Post-UTMEs, so the 60-question run is deliberate over-preparation.</div>'+
+  '<div class="grid g4">'+
+    mockCard("Quick Mock","20 questions • 20 min",20)+
+    mockCard("Exam Replica","50 questions • 50 min",50)+
+    mockCard("Standard Mock","40 questions • 40 min",40)+
+    mockCard("Full Simulation","60 questions • 60 min",60)+
+  '</div>';
+  if(S.mockScores&&S.mockScores.length){
+    html+='<div class="section-t">Your mock history</div><div class="card">';
+    S.mockScores.slice().reverse().slice(0,8).forEach(function(m){
+      html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span class="muted">'+m.date+' • '+m.count+' Qs</span><b style="color:'+(m.score>=PASS?"#86efac":"#fcd34d")+'">'+m.score+'%</b></div>';
+    });
+    html+='</div>';
+  }
+  setTimeout(function(){document.querySelectorAll("[data-mock]").forEach(function(c){c.onclick=function(){
+    var n=+c.getAttribute("data-mock");
+    startQuiz({questions:poolForTopics(["ALL"],n),instant:false,timed:true,seconds:n*60,title:n+"-Question Mock Exam",dayRef:null,isMock:true});};});},0);
+  return html;
+}
+function mockCard(t,sub,n){return '<div class="card" style="text-align:center"><h3 style="font-size:18px;margin-bottom:6px">'+t+'</h3>'+
+  '<p class="muted" style="font-size:13px;margin-bottom:16px">'+sub+'</p><button class="btn btn-pri" data-mock="'+n+'">Begin →</button></div>';}
+
+function vStats(){
+  var T=totals();
+  var html='<div class="page-h">My Statistics</div><div class="page-sub">Track accuracy, find weak topics, and prove to yourself you\'re ready.</div>';
+  html+='<div class="grid g4">'+
+    statCard(T.t,"total answered")+
+    statCard(pct(T.c,T.t)+"%","accuracy")+
+    statCard(S.streak,"day streak 🔥")+
+    statCard((S.mockScores||[]).length,"mocks taken")+
+  '</div>';
+  html+='<div class="section-t">Accuracy by subject</div>'+subjectBars();
+
+  // topic weak spots
+  var rows=[];for(var t in S.topicStats){var x=S.topicStats[t];rows.push({t:t,p:pct(x.correct,x.total),n:x.total});}
+  rows.sort(function(a,b){return a.p-b.p;});
+  html+='<div class="section-t">Topics to revisit (weakest first)</div><div class="card">';
+  if(!rows.length){html+='<p class="muted">Answer some questions and your weak topics will show here.</p>';}
+  else{rows.slice(0,12).forEach(function(r){
+    html+='<div class="subject-row"><div class="sn" style="width:200px;font-size:12.5px">'+(LABELS[r.t]||r.t)+'</div>'+
+    '<div class="pbar"><i style="width:'+r.p+'%;background:'+(r.p<50?"linear-gradient(90deg,#ef4444,#f59e0b)":"linear-gradient(90deg,#3b82f6,#22d3ee)")+'"></i></div>'+
+    '<div class="pv">'+r.p+'% ('+r.n+')</div></div>';});}
+  html+='</div>';
+  return html;
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+var Q=null; // active quiz
+function startQuiz(cfg){
+  Q={list:cfg.questions,idx:0,picked:[],instant:cfg.instant,timed:cfg.timed,seconds:cfg.seconds||0,
+     title:cfg.title,dayRef:cfg.dayRef,isMock:cfg.isMock,correct:0,answered:0,timer:null};
+  if(!Q.list.length){toast("No questions available for this selection.");return;}
+  renderQuiz();
+}
+function renderQuiz(){
+  var v=$("#view");
+  var timerHtml=Q.timed?'<div class="q-timer" id="q-timer">'+fmtTime(Q.seconds)+'</div>':'';
+  v.innerHTML='<div class="quiz-head"><div><div style="font-weight:700;font-size:16px">'+Q.title+'</div>'+
+    '<div class="quiz-prog">Question <span id="q-cur">1</span> of '+Q.list.length+'</div></div>'+timerHtml+'</div>'+
+    '<div id="q-body"></div>';
+  if(Q.timed)startTimer();
+  paintQuestion();
+}
+function paintQuestion(){
+  var q=Q.list[Q.idx];
+  $("#q-cur").textContent=(Q.idx+1);
+  var letters=["A","B","C","D","E"];
+  var picked=Q.picked[Q.idx];
+  var opts=q.options.map(function(o,i){
+    var cls="opt"+( (Q.instant&&picked!=null)?" disabled":"" );
+    if(Q.instant&&picked!=null){
+      if(i===q.answer)cls+=" correct";
+      else if(i===picked)cls+=" wrong";
+    } else if(!Q.instant&&picked===i){cls+=" correct";}
+    return '<div class="'+cls+'" data-opt="'+i+'"><div class="ol">'+letters[i]+'</div><div>'+o+'</div></div>';
+  }).join("");
+  var explain=(Q.instant&&picked!=null)?'<div class="explain show"><b>'+(picked===q.answer?"Correct! ":"Answer: "+letters[q.answer]+". ")+'</b>'+q.exp+'</div>':'';
+  var last=Q.idx===Q.list.length-1;
+  $("#q-body").innerHTML='<div class="q-card"><div class="q-num"><span class="tag tag-'+subjClass(q.subject)+'">'+q.subject+'</span> &nbsp; '+(LABELS[q.topic]||"")+'</div>'+
+    '<div class="q-text">'+q.q+'</div>'+opts+explain+
+    '<div class="quiz-foot"><button class="btn btn-ghost" id="q-prev"'+(Q.idx===0?' disabled':'')+'>← Prev</button>'+
+    '<button class="btn btn-pri" id="q-next">'+(last?(Q.instant?"Finish":"Submit"):"Next →")+'</button></div></div>';
+
+  document.querySelectorAll("[data-opt]").forEach(function(o){o.onclick=function(){pick(+o.getAttribute("data-opt"));};});
+  $("#q-next").onclick=function(){
+    if(Q.instant&&Q.picked[Q.idx]==null){toast("Pick an answer first.");return;}
+    if(last)finishQuiz();else{Q.idx++;paintQuestion();}
+  };
+  $("#q-prev").onclick=function(){if(Q.idx>0){Q.idx--;paintQuestion();}};
+}
+function pick(i){
+  var q=Q.list[Q.idx];
+  if(Q.instant){
+    if(Q.picked[Q.idx]!=null)return; // lock
+    Q.picked[Q.idx]=i;
+    var correct=i===q.answer;
+    if(correct)Q.correct++;
+    Q.answered++;
+    recordAnswer(q,correct);save();refreshChrome();
+    paintQuestion();
+  } else {
+    Q.picked[Q.idx]=i; // can change until submit
+    paintQuestion();
+  }
+}
+function fmtTime(s){var m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x;}
+function startTimer(){
+  Q.timer=setInterval(function(){
+    Q.seconds--;
+    var t=$("#q-timer");if(t){t.textContent=fmtTime(Q.seconds);
+      t.className="q-timer"+(Q.seconds<60?" danger":Q.seconds<180?" warn":"");}
+    if(Q.seconds<=0){clearInterval(Q.timer);toast("Time up! Submitting…");finishQuiz();}
+  },1000);
+}
+function finishQuiz(){
+  if(Q.timer)clearInterval(Q.timer);
+  // grade (for non-instant mode, record now)
+  var correct=0;
+  Q.list.forEach(function(q,i){
+    var p=Q.picked[i];var ok=p===q.answer;if(ok)correct++;
+    if(!Q.instant){recordAnswer(q,ok);}
+  });
+  var score=pct(correct,Q.list.length);
+  if(!Q.instant)save();
+  // subject breakdown
+  var bd={};Q.list.forEach(function(q,i){var b=bd[q.subject]||(bd[q.subject]={c:0,t:0});b.t++;if(Q.picked[i]===q.answer)b.c++;});
+
+  var passed=score>=PASS;
+  // daily completion
+  var newlyDone=false;
+  if(Q.dayRef!=null){
+    var prev=S.progress[Q.dayRef];
+    if(passed){
+      if(!(prev&&prev.done)){newlyDone=true;bumpStreak();}
+      S.progress[Q.dayRef]={done:true,score:Math.max(score,prev?prev.score||0:0),date:dayStr()};
+      save();
+    }
+  }
+  if(Q.isMock){
+    S.mockScores=S.mockScores||[];
+    S.mockScores.push({date:dayStr(),count:Q.list.length,score:score});
+    save();
+  }
+  refreshChrome();
+  renderResult(score,correct,bd,passed,newlyDone);
+}
+function renderResult(score,correct,bd,passed,newlyDone){
+  var ringColor=score>=80?"#22c55e":score>=PASS?"#3b82f6":score>=40?"#f59e0b":"#ef4444";
+  var msg=passed?(newlyDone?"Mission complete — day cleared! 🎉":"Passed! Solid work."):"Below "+PASS+"% — review and retake to clear this day.";
+  var bdHtml="";for(var s in bd){bdHtml+='<div class="pill"><b>'+pct(bd[s].c,bd[s].t)+'%</b>'+s+' ('+bd[s].c+'/'+bd[s].t+')</div>';}
+
+  var html='<div class="result">'+
+    '<div class="score-ring" style="background:conic-gradient('+ringColor+' '+(score*3.6)+'deg, var(--panel2) 0deg);">'+
+      '<div style="position:absolute;inset:12px;border-radius:50%;background:var(--bg);display:grid;place-items:center">'+score+'%</div></div>'+
+    '<h2>'+msg+'</h2>'+
+    '<p>You got <b style="color:#fff">'+correct+'</b> out of <b style="color:#fff">'+Q.list.length+'</b> correct.'+
+      (newlyDone?' Streak is now 🔥 '+S.streak+' days.':'')+'</p>'+
+    '<div class="pill-row">'+bdHtml+'</div>'+
+    '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+      '<button class="btn btn-pri" id="r-review">Review answers</button>'+
+      '<button class="btn btn-ghost" id="r-retake">Retake</button>'+
+      '<button class="btn btn-ghost" data-go="'+(Q.dayRef!=null?'plan':'dashboard')+'">'+(Q.dayRef!=null?'Back to plan':'Done')+'</button>'+
+    '</div>'+
+    '<div class="made-by" style="margin-top:22px">✦ <b>Ojochegbe Peter Ojoh</b> • AFIT Prep</div>'+
+    '</div>';
+  $("#view").innerHTML=html;
+  bindGo();
+  $("#r-retake").onclick=function(){var cfg={questions:shuffle(Q.list),instant:Q.instant,timed:Q.timed,seconds:(Q.list.length)*60,title:Q.title,dayRef:Q.dayRef,isMock:Q.isMock};startQuiz(cfg);};
+  $("#r-review").onclick=function(){renderReview();};
+}
+function renderReview(){
+  var letters=["A","B","C","D","E"];
+  var html='<button class="btn btn-ghost" id="rev-back" style="margin-bottom:16px">← Back to result</button><div class="page-h">Review — '+Q.title+'</div><div class="page-sub">Green = correct answer. Red = what you picked if wrong.</div>';
+  Q.list.forEach(function(q,i){
+    var picked=Q.picked[i];
+    var opts=q.options.map(function(o,j){
+      var cls="opt disabled";if(j===q.answer)cls+=" correct";else if(j===picked)cls+=" wrong";
+      return '<div class="'+cls+'"><div class="ol">'+letters[j]+'</div><div>'+o+'</div></div>';}).join("");
+    html+='<div class="q-card" style="margin-bottom:14px"><div class="q-num">Q'+(i+1)+' • <span class="tag tag-'+subjClass(q.subject)+'">'+q.subject+'</span></div>'+
+      '<div class="q-text" style="font-size:15px">'+q.q+'</div>'+opts+
+      '<div class="explain show"><b>'+(picked===q.answer?"You got it. ":picked==null?"Not answered. Answer "+letters[q.answer]+". ":"Answer: "+letters[q.answer]+". ")+'</b>'+q.exp+'</div></div>';
+  });
+  $("#view").innerHTML=html;
+  $("#rev-back").onclick=function(){finishQuizRerender();};
+}
+function finishQuizRerender(){
+  // recompute result view without re-recording stats
+  var correct=0;Q.list.forEach(function(q,i){if(Q.picked[i]===q.answer)correct++;});
+  var score=pct(correct,Q.list.length);
+  var bd={};Q.list.forEach(function(q,i){var b=bd[q.subject]||(bd[q.subject]={c:0,t:0});b.t++;if(Q.picked[i]===q.answer)b.c++;});
+  renderResult(score,correct,bd,score>=PASS,false);
+}
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+var VIEWS={dashboard:vDashboard,today:vToday,"today-day":vTodayDay,plan:vPlan,library:vLibrary,
+  note:vNote,practice:vPractice,mock:vMock,stats:vStats};
+function go(name){
+  if(Q&&Q.timer){clearInterval(Q.timer);} // leaving a timed quiz cancels timer
+  var fn=VIEWS[name]||vDashboard;
+  var v=$("#view");
+  v.classList.remove("enter");
+  v.innerHTML=fn();
+  void v.offsetWidth; // force reflow so the animation replays each navigation
+  v.classList.add("enter");
+  refreshChrome();
+  // active nav
+  document.querySelectorAll(".nav-item").forEach(function(n){n.classList.toggle("active",n.getAttribute("data-view")===name);});
+  bindGo();
+  window.scrollTo(0,0);
+  var sb=$(".sidebar");if(sb)sb.classList.remove("open");
+}
+function bindGo(){document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){go(b.getAttribute("data-go"));};});}
+
+/* ---------- init ---------- */
+function toast(msg){var t=el('<div class="toast">'+msg+'</div>');document.body.appendChild(t);
+  setTimeout(function(){t.classList.add("show");},10);setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.remove();},300);},2200);}
+
+document.querySelectorAll(".nav-item").forEach(function(n){n.onclick=function(){go(n.getAttribute("data-view"));};});
+$("#reset-btn").onclick=function(){
+  if(confirm("Reset ALL progress, streak and stats? This cannot be undone.")){
+    localStorage.removeItem(KEY);S=load();refreshChrome();go("dashboard");toast("Progress reset.");}
+};
+// mobile sidebar toggle
+var mt=el('<button class="mobile-toggle">☰</button>');document.body.appendChild(mt);
+mt.onclick=function(){$(".sidebar").classList.toggle("open");};
+
+refreshChrome();
+go("dashboard");
+})();
