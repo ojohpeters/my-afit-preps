@@ -25,6 +25,10 @@ function pct(n,d){return d?Math.round(n/d*100):0;}
 var PLAN=window.STUDY_PLAN, NOTES=window.NOTES, QS=window.QUESTIONS, LABELS=window.TOPIC_LABELS;
 var EXAM=new Date(window.EXAM_DATE), START=new Date(window.SPRINT_START+"T00:00:00"), PASS=window.PASS_MARK;
 
+/* WhatsApp 1-on-1 help (owner: Ojochegbe Peter Ojoh) */
+var WA_NUMBER="2348153304439"; // +234 815 330 4439
+function waLink(msg){return "https://wa.me/"+WA_NUMBER+(msg?"?text="+encodeURIComponent(msg):"");}
+
 /* which plan day should the user be on (calendar based), clamped */
 function calendarDay(){var n=daysBetween(START,new Date())+1;return Math.max(1,Math.min(35,n));}
 function firstIncomplete(){for(var i=0;i<PLAN.length;i++){if(!(S.progress[PLAN[i].d]&&S.progress[PLAN[i].d].done))return PLAN[i].d;}return 35;}
@@ -136,6 +140,15 @@ function vDashboard(){
     'Exact question count isn\'t published (≈50 is typical) — read the full briefing.</div>'+
     '<button class="btn btn-ghost" id="go-about">Read exam briefing →</button>'+
   '</div>';
+
+  // Ask 1-on-1 CTA
+  html+='<div class="section-t">Don\'t study alone</div>'+
+  '<div class="card wa-cta">'+
+    '<div><div style="font-size:16px;font-weight:700">💬 Stuck on a question? Message me directly.</div>'+
+    '<div class="muted" style="font-size:13px;margin-top:4px">Send any past question on WhatsApp and we solve it together, 1-on-1.</div></div>'+
+    '<button class="btn btn-wa" data-go="group">Ask Ojochegbe →</button>'+
+  '</div>';
+
   setTimeout(function(){var b=$("#go-about");if(b)b.onclick=function(){openNote("about-afit");};},0);
   return html;
 }
@@ -327,6 +340,27 @@ function vMock(){
 function mockCard(t,sub,n){return '<div class="card" style="text-align:center"><h3 style="font-size:18px;margin-bottom:6px">'+t+'</h3>'+
   '<p class="muted" style="font-size:13px;margin-bottom:16px">'+sub+'</p><button class="btn btn-pri" data-mock="'+n+'">Begin →</button></div>';}
 
+function vGroup(){
+  var msg="Hi Ojochegbe 👋 I'm using the AFIT Prep app. I have a question I'd like help with:\n\n(paste or attach your question here)";
+  var html='<div class="page-h">Bring a Question — Let\'s Solve It 1-on-1 💬</div>'+
+  '<div class="page-sub">Stuck on a past question or a tricky topic? Don\'t struggle alone. Message me directly on WhatsApp — type it out or snap a photo — and we\'ll work through it together, one on one.</div>'+
+  '<div class="card wa-card">'+
+    '<div class="wa-ico">💬</div>'+
+    '<h3 style="font-size:20px;margin-bottom:6px">Message Ojochegbe directly</h3>'+
+    '<p class="muted" style="margin-bottom:18px;max-width:520px">Send any question — Maths, Physics, Chemistry, English or General Knowledge — and I\'ll help you solve it step by step, <b style="color:#fff">one on one</b>.</p>'+
+    '<a class="btn btn-wa" href="'+waLink(msg)+'" target="_blank" rel="noopener">💬 Message me on WhatsApp</a>'+
+    '<div class="wa-num">or save <b>0815 330 4439</b></div>'+
+  '</div>'+
+  '<div class="section-t">How it works</div>'+
+  '<div class="grid g3">'+
+    '<div class="card"><div style="font-size:24px;margin-bottom:8px">📸</div><b>1. Send it</b><p class="muted" style="font-size:13px;margin-top:4px">Type your question or send a clear photo of the past-question to me on WhatsApp.</p></div>'+
+    '<div class="card"><div style="font-size:24px;margin-bottom:8px">🧠</div><b>2. We solve it together</b><p class="muted" style="font-size:13px;margin-top:4px">I break it down step by step, 1-on-1, until the method clicks for you.</p></div>'+
+    '<div class="card"><div style="font-size:24px;margin-bottom:8px">🚀</div><b>3. You level up</b><p class="muted" style="font-size:13px;margin-top:4px">Great questions may get added to the app\'s bank so others can practise too.</p></div>'+
+  '</div>'+
+  '<div class="card" style="margin-top:16px"><b>Quick tip:</b> <span class="muted">send a clear photo or type the full question (and any options) so I can help you faster. Ask anytime — no question is too small. 🤝</span></div>';
+  return html;
+}
+
 function vStats(){
   var T=totals();
   var html='<div class="page-h">My Statistics</div><div class="page-sub">Track accuracy, find weak topics, and prove to yourself you\'re ready.</div>';
@@ -504,7 +538,7 @@ function finishQuizRerender(){
    ROUTER
    ============================================================ */
 var VIEWS={dashboard:vDashboard,today:vToday,"today-day":vTodayDay,plan:vPlan,library:vLibrary,
-  note:vNote,practice:vPractice,mock:vMock,stats:vStats};
+  note:vNote,practice:vPractice,mock:vMock,stats:vStats,group:vGroup};
 function go(name){
   if(Q&&Q.timer){clearInterval(Q.timer);} // leaving a timed quiz cancels timer
   var fn=VIEWS[name]||vDashboard;
@@ -534,6 +568,12 @@ $("#reset-btn").onclick=function(){
 // mobile sidebar toggle
 var mt=el('<button class="mobile-toggle">☰</button>');document.body.appendChild(mt);
 mt.onclick=function(){$(".sidebar").classList.toggle("open");};
+
+// footer: year + whatsapp link
+(function(){
+  var y=$("#foot-year");if(y)y.textContent=new Date().getFullYear();
+  var fw=$("#foot-wa");if(fw)fw.href=waLink("Hi Ojochegbe 👋 I'm using the AFIT Prep app and have a question I'd like help with.");
+})();
 
 refreshChrome();
 go("dashboard");

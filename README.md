@@ -38,3 +38,14 @@ worked explanations, covering the full UTME/AFIT syllabus for EEE.
 - Exam date / pass mark are the top constants in `js/data-plan.js`.
 
 Good luck — go ace it. ✈️
+
+## Get help (1-on-1) & disclaimer
+Stuck on a question? Use the **"Ask Ojochegbe"** tab to message directly on
+WhatsApp (**0815 330 4439**) and solve it one-on-one.
+
+This app is a **free, non-commercial educational resource**. **No copyright
+infringement intended.** It is **not affiliated with, endorsed by, or an official
+product of** the Air Force Institute of Technology (AFIT) or the Nigerian Air
+Force. Study facts are compiled from publicly available sources; all names,
+logos and trademarks belong to their respective owners. Always confirm official
+details on the AFIT portal.
