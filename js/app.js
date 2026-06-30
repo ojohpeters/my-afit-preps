@@ -131,7 +131,7 @@ function vDashboard(){
   var done=PLAN.filter(function(x){return dayDone(x.d);}).length;
   var T=totals(), daysLeft=Math.max(0,daysBetween(new Date(),EXAM));
   var miss=missedOpen(), str=strikes(), disc=discipline(), name=firstName(), todayDone=dayDone(a);
-  var discColor=disc>=80?"#22c55e":disc>=50?"#f59e0b":"#ef4444";
+  var discColor=disc>=80?"#16a34a":disc>=50?"#d97706":"#e23b54";
 
   var cta = over ? '<button class="btn btn-pri" data-go="mock">Take a final mock →</button>'
     : todayDone ? '<button class="btn btn-ghost" data-go="today">✓ Today done — revise</button>'
@@ -164,7 +164,7 @@ function vDashboard(){
   html+='<div class="section-t">Your dedication</div>'+
   '<div class="grid g4">'+
     statCard('🔥 '+S.streak,"day streak")+
-    statCard(str,"strikes (missed)",str>0?"#f87171":null)+
+    statCard(str,"strikes (missed)",str>0?"#c0233c":null)+
     statCard(disc+"%","discipline",discColor)+
     statCard(done+"/35","missions done")+
   '</div>';
@@ -173,7 +173,7 @@ function vDashboard(){
   if(p&&!over){
     if(todayDone){
       html+='<div class="section-t">Today — Day '+a+' ✓</div>'+
-      '<div class="card done-banner"><b style="color:#86efac">✓ Today\'s mission complete'+(S.progress[a]?' — '+S.progress[a].score+'%':'')+'.</b> '+
+      '<div class="card done-banner"><b style="color:#15803d">✓ Today\'s mission complete'+(S.progress[a]?' — '+S.progress[a].score+'%':'')+'.</b> '+
       (a<35?'Next: <b>Day '+(a+1)+'</b> unlocks '+fmtDate(dateForDay(a+1))+' (at midnight). Rest, or revise below.':'That was the final day — well done! 🎉')+'</div>';
     } else {
       html+='<div class="section-t">Today — Day '+a+'</div>'+
@@ -242,7 +242,7 @@ function vToday(){
   '<div class="page-sub">'+fmtDate(dateForDay(a))+' &nbsp;•&nbsp; '+focusTags(p)+(p.mock?' &nbsp;•&nbsp; timed mock checkpoint':'')+'</div>';
 
   if(prog&&prog.done){
-    html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%.</b> '+
+    html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#15803d">✓ Completed — '+prog.score+'%.</b> '+
       (a<35?'Come back tomorrow for <b>Day '+(a+1)+'</b> (unlocks '+fmtDate(dateForDay(a+1))+' at midnight).':'That was the final day — superb! 🎉')+
       ' You can still revise the lesson or retake below.</div>';
   }
@@ -261,7 +261,7 @@ function vToday(){
   var qcount=p.mock?(p.final?40:18):12;
   html+='<div class="section-t">Step 2 — '+(p.mock?'Take the mock':'Pass the daily quiz')+'</div>'+
   '<div class="card"><p class="muted" style="margin-bottom:14px">'+
-    qcount+' questions • you need <b style="color:#fff">'+PASS+'%</b> to complete this day'+(p.mock?' • timed':'')+'.</p>'+
+    qcount+' questions • you need <b style="color:#19223c">'+PASS+'%</b> to complete this day'+(p.mock?' • timed':'')+'.</p>'+
     '<button class="btn btn-pri" id="start-daily">'+(prog&&prog.done?'Retake quiz':'Start quiz')+' →</button>'+
   '</div>';
 
@@ -278,18 +278,18 @@ function vToday(){
 
 function vPlan(){
   var html='<div class="page-h">35-Day Study Plan</div>'+
-  '<div class="page-sub">One mission unlocks each calendar day (28 Jun → 1 Aug) and <b>locks at midnight</b>. Finish on time or it becomes a <b style="color:#f87171">miss</b> (a permanent strike). Missed days can be <b>redeemed</b> to study late, but the strike — and the broken streak — stay. Exam: 3–7 Aug.</div>';
+  '<div class="page-sub">One mission unlocks each calendar day (28 Jun → 1 Aug) and <b>locks at midnight</b>. Finish on time or it becomes a <b style="color:#c0233c">miss</b> (a permanent strike). Missed days can be <b>redeemed</b> to study late, but the strike — and the broken streak — stay. Exam: 3–7 Aug.</div>';
   var wk=0;
   PLAN.forEach(function(p){
     if(p.week!==wk){wk=p.week;html+='<div class="section-t">Week '+wk+(wk===5?' — Final consolidation':'')+'</div>';}
     var st=dayState(p.d), date=fmtDate(dateForDay(p.d)), sc=S.progress[p.d]?S.progress[p.d].score:0;
     var num=(st==="done"||st==="redeemed")?"✓":(st==="missed"?"✗":p.d);
     var status, clickable=true;
-    if(st==="done")status='<span class="day-status" style="color:#86efac">✓ '+sc+'%</span>';
-    else if(st==="redeemed")status='<span class="day-status" style="color:#fcd34d">↺ '+sc+'% · late</span>';
-    else if(st==="today")status='<span class="day-status" style="color:#67e8f9">● TODAY</span>';
-    else if(st==="missed")status='<span class="day-status" style="color:#f87171">✗ MISSED · redeem</span>';
-    else if(st==="prejoin")status='<span class="day-status" style="color:#93c5fd">○ catch-up</span>';
+    if(st==="done")status='<span class="day-status" style="color:#15803d">✓ '+sc+'%</span>';
+    else if(st==="redeemed")status='<span class="day-status" style="color:#b45309">↺ '+sc+'% · late</span>';
+    else if(st==="today")status='<span class="day-status" style="color:#0e7490">● TODAY</span>';
+    else if(st==="missed")status='<span class="day-status" style="color:#c0233c">✗ MISSED · redeem</span>';
+    else if(st==="prejoin")status='<span class="day-status" style="color:#3a57e0">○ catch-up</span>';
     else {status='<span class="day-status locked">🔒 '+date+'</span>';clickable=false;}
     html+='<div class="day-card state-'+st+'" data-day="'+p.d+'" data-state="'+st+'" '+(clickable?'style="cursor:pointer"':'')+'>'+
       '<div class="day-num">'+num+'</div>'+
@@ -321,7 +321,7 @@ function vTodayDay(){ // viewing a specific chosen day from the plan
   '<div class="page-h">Day '+p.d+' — '+p.title+'</div><div class="page-sub">'+fmtDate(dateForDay(p.d))+' &nbsp;•&nbsp; '+focusTags(p)+'</div>';
   if(st==="missed")html+='<div class="card alert-miss" style="margin-bottom:16px"><div><b>↺ Redeeming a missed day.</b> Study and pass it to learn the material — but note this still counts as a strike and won\'t restore your streak.</div></div>';
   if(st==="prejoin")html+='<div class="card done-banner" style="margin-bottom:16px"><div><b>○ Optional catch-up.</b> This day passed before you joined, so it\'s free to study and <b>never counts against you</b>. Do it if you have time.</div></div>';
-  if(prog&&prog.done)html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#86efac">✓ Completed — '+prog.score+'%'+(prog.late?' (late)':'')+'</b></div>';
+  if(prog&&prog.done)html+='<div class="card done-banner" style="margin-bottom:16px"><b style="color:#15803d">✓ Completed — '+prog.score+'%'+(prog.late?' (late)':'')+'</b></div>';
   if(p.notes&&p.notes.length){
     html+='<div class="section-t">Lesson'+(p.notes.length>1?"s":"")+'</div>';
     p.notes.forEach(function(k){var n=NOTES[k];if(!n)return;
@@ -403,7 +403,7 @@ function vMock(){
   if(S.mockScores&&S.mockScores.length){
     html+='<div class="section-t">Your mock history</div><div class="card">';
     S.mockScores.slice().reverse().slice(0,8).forEach(function(m){
-      html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span class="muted">'+m.date+' • '+m.count+' Qs</span><b style="color:'+(m.score>=PASS?"#86efac":"#fcd34d")+'">'+m.score+'%</b></div>';
+      html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span class="muted">'+m.date+' • '+m.count+' Qs</span><b style="color:'+(m.score>=PASS?"#15803d":"#b45309")+'">'+m.score+'%</b></div>';
     });
     html+='</div>';
   }
@@ -422,7 +422,7 @@ function vGroup(){
   '<div class="card wa-card">'+
     '<div class="wa-ico">💬</div>'+
     '<h3 style="font-size:20px;margin-bottom:6px">Message Ojochegbe directly</h3>'+
-    '<p class="muted" style="margin-bottom:18px;max-width:520px">Send any question — Maths, Physics, Chemistry, English or General Knowledge — and I\'ll help you solve it step by step, <b style="color:#fff">one on one</b>.</p>'+
+    '<p class="muted" style="margin-bottom:18px;max-width:520px">Send any question — Maths, Physics, Chemistry, English or General Knowledge — and I\'ll help you solve it step by step, <b style="color:#19223c">one on one</b>.</p>'+
     '<a class="btn btn-wa" href="'+waLink(msg)+'" target="_blank" rel="noopener">💬 Message me on WhatsApp</a>'+
     '<div class="wa-num">or save <b>0815 330 4439</b></div>'+
   '</div>'+
@@ -574,7 +574,7 @@ function renderResult(score,correct,bd,passed,newlyDone,wasLate){
     '<div class="score-ring" style="background:conic-gradient('+ringColor+' '+(score*3.6)+'deg, var(--panel2) 0deg);">'+
       '<div style="position:absolute;inset:12px;border-radius:50%;background:var(--bg);display:grid;place-items:center">'+score+'%</div></div>'+
     '<h2>'+msg+'</h2>'+
-    '<p>You got <b style="color:#fff">'+correct+'</b> out of <b style="color:#fff">'+Q.list.length+'</b> correct.'+
+    '<p>You got <b style="color:#19223c">'+correct+'</b> out of <b style="color:#19223c">'+Q.list.length+'</b> correct.'+
       (passed&&wasLate?' Material caught up — but the strike stays and your streak isn\'t restored.':(newlyDone?' Streak is now 🔥 '+S.streak+' days.':''))+'</p>'+
     '<div class="pill-row">'+bdHtml+'</div>'+
     '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
