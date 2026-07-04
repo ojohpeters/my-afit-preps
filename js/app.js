@@ -16,7 +16,7 @@ var S=load();
 function $(s,r){return (r||document).querySelector(s);}
 function el(html){var d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function subjClass(s){return ({Maths:"math",Physics:"physics",Chemistry:"chemistry",English:"english",General:"general"})[s]||"general";}
+function subjClass(s){return ({Maths:"math",Physics:"physics",Chemistry:"chemistry",English:"english",Biology:"biology",General:"general"})[s]||"general";}
 function dayStr(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
 function startOfDay(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
 function daysBetween(a,b){return Math.round((startOfDay(b)-startOfDay(a))/86400000);}
@@ -360,6 +360,37 @@ function vNote(){
   '<div class="note">'+n.body+'</div></div>';
 }
 
+function vResources(){
+  var R=window.RESOURCES||[];
+  var html='<div class="page-h">Resources — Deep-Dive Study Guides</div>'+
+  '<div class="page-sub">Full, standalone lessons that teach a topic from zero — with worked examples and a click-to-answer quiz in each. '+
+  'Tap any guide to open it in a new tab. Works offline. Perfect for going deeper than the daily missions.</div>';
+  if(!R.length){return html+'<div class="empty"><h2>No resources yet</h2><p class="muted">Guides will appear here as they are added.</p></div>';}
+  var order=["Maths","Physics","Chemistry","Biology","English","General"];
+  var bySub={};
+  R.forEach(function(r){(bySub[r.subject]=bySub[r.subject]||[]).push(r);});
+  order.forEach(function(s){
+    var list=bySub[s];if(!list||!list.length)return;
+    html+='<div class="section-t">'+s+' <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:600">· '+list.length+' guide'+(list.length>1?'s':'')+'</span></div><div class="topic-grid">';
+    list.forEach(function(r){
+      html+='<a class="topic-card res-card" href="resources/'+esc(r.file)+'" target="_blank" rel="noopener">'+
+        '<div class="res-top"><h4 style="font-size:15px">'+esc(r.title)+'</h4>'+
+        '<span class="tag tag-'+subjClass(r.subject)+'">'+esc(r.subject)+'</span></div>'+
+        '<p style="font-size:12.5px;line-height:1.5">'+esc(r.desc)+'</p>'+
+        '<div class="res-meta"><span class="res-open">Open guide →</span>'+
+        (r.meta?'<span>• '+esc(r.meta)+'</span>':'')+
+        (r.note?'<span class="res-note">'+esc(r.note)+'</span>':'')+'</div>'+
+      '</a>';
+    });
+    html+='</div>';
+  });
+  html+='<div class="card resource-card" style="margin-top:18px">'+
+    '<div><div style="font-size:15px;font-weight:700">💬 Want a guide on another topic?</div>'+
+    '<div class="muted" style="font-size:13px;margin-top:4px">Message me the topic and I\'ll build a full lesson + quiz for it.</div></div>'+
+    '<button class="btn btn-wa" data-go="group">Request a topic →</button></div>';
+  return html;
+}
+
 function vPractice(){
   // group available topics (those with questions) by subject
   var counts={};QS.forEach(function(q){counts[q.topic]=(counts[q.topic]||0)+1;});
@@ -616,7 +647,7 @@ function finishQuizRerender(){
    ROUTER
    ============================================================ */
 var VIEWS={dashboard:vDashboard,today:vToday,"today-day":vTodayDay,plan:vPlan,library:vLibrary,
-  note:vNote,practice:vPractice,mock:vMock,stats:vStats,group:vGroup};
+  note:vNote,resources:vResources,practice:vPractice,mock:vMock,stats:vStats,group:vGroup};
 var CURRENT_VIEW="dashboard";
 function go(name){
   if(Q&&Q.timer){clearInterval(Q.timer);} // leaving a timed quiz cancels timer

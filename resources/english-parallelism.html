@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structural Parallelism in English — A–Z (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.88rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .principle{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.97rem;color:#ffe9a8}
+  .principle b{color:#fff}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🪞 Structural Parallelism in English</h1>
+  <p>Parallel structure — matching grammatical forms for matching ideas, taught from zero</p>
+  <p class="tip">WAEC / JAMB / Post-UTME Use of English level · with examples and a 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Wrong vs right examples</span><span class="pill">Summary tables</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="intro">📖 What is Parallelism</div>
+    <div class="tab" data-cat="correlatives">🔗 Correlatives &amp; Comparisons</div>
+    <div class="tab" data-cat="fixing">🛠️ Spotting &amp; Fixing Errors</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="cat intro show" id="cat-intro">
+    <h2 class="cathead">📖 What is Parallelism?</h2>
+
+    <div class="lesson">
+      <h3>1. The simple definition</h3>
+      <p><b>Parallelism</b> (also called <b>parallel structure</b> or <b>parallel construction</b>) is a grammar rule that says: <b>when ideas are joined together in a list, a pair, or a comparison, each item must be in the SAME grammatical form.</b></p>
+      <p>In short: <b>matching ideas need matching forms.</b> If one item in a series is a noun, they should all be nouns. If one is an <i>-ing</i> word, they should all be <i>-ing</i> words. If one is a <i>to + verb</i> (infinitive), they should all be infinitives.</p>
+      <div class="analogy">🌟 Think of a market display where eggs are lined up in a tray. If every slot holds an egg, the tray looks neat and balanced. Put one orange among the eggs and the whole row looks wrong. Parallelism is keeping every &ldquo;slot&rdquo; in a sentence the same kind of word — so the row of ideas looks and reads smoothly.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Why it matters</h3>
+      <ul>
+        <li><b>Clarity:</b> the reader follows your list easily because the pattern is steady.</li>
+        <li><b>Balance &amp; rhythm:</b> parallel sentences sound smooth and professional (think &ldquo;I came, I saw, I conquered&rdquo;).</li>
+        <li><b>Exam marks:</b> WAEC, JAMB and Post-UTME love to test this. A sentence that breaks parallelism is marked wrong, and you must pick the option that keeps it.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Faulty vs correct — the classic example</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> She likes reading, dancing and to sing.<br>
+      <b class="t">✅ Right:</b> She likes reading, dancing and <b>singing</b>.<br>
+      <span class="tip">The first two items are <i>-ing</i> words (gerunds), so the third must also be <i>-ing</i>. &ldquo;to sing&rdquo; breaks the pattern.</span></div>
+      <div class="principle"><b>Rule:</b> Find the joining word (usually <b>and</b>, <b>or</b>, <b>but</b>) and make sure the items on each side are the same form.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Parallelism of NOUNS</h3>
+      <p>When you list things (nouns), keep them all as nouns of the same kind.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> The team needs strength, speed and to be intelligent.<br>
+      <b class="t">✅ Right:</b> The team needs strength, speed and <b>intelligence</b>.<br>
+      <span class="tip">strength, speed, intelligence — all abstract nouns.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Parallelism of VERBS</h3>
+      <p>When verbs are joined, keep them in the same tense and form.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> He came in, sat down and is reading a book.<br>
+      <b class="t">✅ Right:</b> He came in, sat down and <b>read</b> a book.<br>
+      <span class="tip">came, sat, read — all simple past tense. Mixing in &ldquo;is reading&rdquo; breaks the chain.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Parallelism of GERUNDS (-ing words)</h3>
+      <p>If a sentence starts a list with an <i>-ing</i> word, finish it with <i>-ing</i> words.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> My hobbies are swimming, cooking and to paint.<br>
+      <b class="t">✅ Right:</b> My hobbies are swimming, cooking and <b>painting</b>.<br>
+      <span class="tip">All three must be gerunds: swimming, cooking, painting.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Parallelism of INFINITIVES (to + verb)</h3>
+      <p>If the list begins with a <i>to + verb</i>, keep all items as infinitives. (You may write &ldquo;to&rdquo; once and let it cover the rest.)</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> The aim is to learn, to grow and becoming better.<br>
+      <b class="t">✅ Right:</b> The aim is to learn, to grow and <b>to become</b> better. <br>
+      <i>(also correct:</i> to learn, grow and become better<i>)</i><br>
+      <span class="tip">Keep them all infinitives, or repeat &ldquo;to&rdquo; consistently.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Parallelism of ADJECTIVES</h3>
+      <p>Describing words joined together should all be adjectives.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> The child is bright, polite and works hard.<br>
+      <b class="t">✅ Right:</b> The child is bright, polite and <b>hardworking</b>.<br>
+      <span class="tip">bright, polite, hardworking — all adjectives.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>9. Parallelism of PHRASES and CLAUSES</h3>
+      <p>Whole phrases or clauses joined together should follow the same pattern too.</p>
+      <div class="ex"><b class="t">❌ Wrong (phrases):</b> She searched in the kitchen, under the table and was looking on the shelf.<br>
+      <b class="t">✅ Right:</b> She searched in the kitchen, under the table and <b>on the shelf</b>.<br>
+      <span class="tip">All three are prepositional phrases of place.</span></div>
+      <div class="ex"><b class="t">❌ Wrong (clauses):</b> He said that he was tired and wanting to rest.<br>
+      <b class="t">✅ Right:</b> He said that he was tired and <b>that he wanted to rest</b>.<br>
+      <span class="tip">Match &ldquo;that he was...&rdquo; with &ldquo;that he wanted...&rdquo; — same clause pattern.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Quick reference table</h3>
+      <table class="r">
+        <tr><th>If the first item is...</th><th>The rest must be...</th><th>Example (right)</th></tr>
+        <tr><td>A noun</td><td>Nouns</td><td>courage, honesty and loyalty</td></tr>
+        <tr><td>A gerund (-ing)</td><td>Gerunds (-ing)</td><td>reading, writing and singing</td></tr>
+        <tr><td>An infinitive (to + verb)</td><td>Infinitives</td><td>to plan, to build and to lead</td></tr>
+        <tr><td>An adjective</td><td>Adjectives</td><td>strong, fast and brave</td></tr>
+        <tr><td>A past-tense verb</td><td>Past-tense verbs</td><td>came, saw and conquered</td></tr>
+        <tr><td>A phrase</td><td>Same kind of phrase</td><td>in the house, on the roof, under the bed</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== CORRELATIVES & COMPARISONS ===================== -->
+  <section class="cat correlatives" id="cat-correlatives">
+    <h2 class="cathead">🔗 Parallelism with Correlative Conjunctions &amp; Comparisons</h2>
+
+    <div class="lesson">
+      <h3>1. What are correlative conjunctions?</h3>
+      <p><b>Correlative conjunctions</b> are word-pairs that work together to join two equal parts of a sentence. Because they come in pairs, the words that follow each part of the pair <b>must be the same grammatical form</b>. This is one of the most tested parallelism rules in WAEC and JAMB.</p>
+      <table class="r">
+        <tr><th>Correlative pair</th><th>Meaning</th><th>Right example</th></tr>
+        <tr><td>either ... or</td><td>one of two choices</td><td>You may either stay or leave.</td></tr>
+        <tr><td>neither ... nor</td><td>not one and not the other</td><td>He is neither rude nor lazy.</td></tr>
+        <tr><td>not only ... but also</td><td>two things both true</td><td>She is not only clever but also kind.</td></tr>
+        <tr><td>both ... and</td><td>two together</td><td>Both the teacher and the pupil agreed.</td></tr>
+        <tr><td>whether ... or</td><td>two possibilities</td><td>Decide whether to go or to stay.</td></tr>
+      </table>
+      <div class="principle"><b>Golden rule:</b> Whatever form comes right after the FIRST word of the pair must also come right after the SECOND word. Verb matches verb, noun matches noun, phrase matches phrase.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. either ... or</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> You can either pay now or you wait till tomorrow.<br>
+      <b class="t">✅ Right:</b> You can either <b>pay now</b> or <b>wait till tomorrow</b>.<br>
+      <span class="tip">After &ldquo;either&rdquo; comes a verb (pay), so after &ldquo;or&rdquo; you also need a verb (wait), not a new clause.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. neither ... nor</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> He neither speaks French nor German.<br>
+      <b class="t">✅ Right:</b> He speaks neither <b>French</b> nor <b>German</b>.<br>
+      <span class="tip">Move &ldquo;neither&rdquo; so both words after the pair are nouns (French, German). In the wrong version &ldquo;speaks French&rdquo; (verb + noun) does not match &ldquo;German&rdquo; (noun).</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. not only ... but also</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> She not only sings but also is dancing.<br>
+      <b class="t">✅ Right:</b> She not only <b>sings</b> but also <b>dances</b>.<br>
+      <span class="tip">&ldquo;sings&rdquo; (simple present verb) must be balanced by &ldquo;dances&rdquo; (simple present verb), not &ldquo;is dancing&rdquo;.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. both ... and</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> He is both intelligent and works hard.<br>
+      <b class="t">✅ Right:</b> He is both <b>intelligent</b> and <b>hardworking</b>.<br>
+      <span class="tip">After &ldquo;both&rdquo; comes an adjective (intelligent), so after &ldquo;and&rdquo; you also need an adjective (hardworking).</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. whether ... or</h3>
+      <div class="ex"><b class="t">❌ Wrong:</b> I cannot tell whether to laugh or crying.<br>
+      <b class="t">✅ Right:</b> I cannot tell whether to <b>laugh</b> or to <b>cry</b>.<br>
+      <span class="tip">Match infinitive with infinitive: to laugh, to cry.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Parallelism in COMPARISONS (than, as ... as)</h3>
+      <p>When you compare two things, the items being compared must be in the same form.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> Reading is easier than to write.<br>
+      <b class="t">✅ Right:</b> Reading is easier than <b>writing</b>.<br>
+      <span class="tip">Compare a gerund with a gerund: reading vs writing.</span></div>
+      <div class="ex"><b class="t">❌ Wrong:</b> Walking to school is as healthy as to ride a bicycle.<br>
+      <b class="t">✅ Right:</b> Walking to school is as healthy as <b>riding a bicycle</b>.<br>
+      <span class="tip">With &ldquo;as ... as&rdquo;, balance the two sides: walking vs riding.</span></div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Parallelism after coordinating conjunctions (and, but, or)</h3>
+      <p>The coordinating conjunctions <b>and, but, or</b> join equal grammatical units. Whatever sits on one side must match the other side.</p>
+      <div class="ex"><b class="t">❌ Wrong:</b> The job is tiring but it pays well and exciting.<br>
+      <b class="t">✅ Right:</b> The job is <b>tiring</b> but <b>well-paid</b> and <b>exciting</b>.<br>
+      <span class="tip">Keep all three as adjectives describing the job.</span></div>
+      <div class="ex"><b class="t">❌ Wrong:</b> We went to the market and buying some yams.<br>
+      <b class="t">✅ Right:</b> We <b>went</b> to the market and <b>bought</b> some yams.<br>
+      <span class="tip">went and bought — both simple past verbs.</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== SPOTTING & FIXING ===================== -->
+  <section class="cat fixing" id="cat-fixing">
+    <h2 class="cathead">🛠️ Spotting &amp; Fixing Faulty Parallelism</h2>
+
+    <div class="lesson">
+      <h3>The 4-step method to catch the error</h3>
+      <div class="principle"><b>Step 1 — Find the joiner.</b> Look for <b>and, or, but</b>, a comma list, or a correlative pair (either...or, not only...but also, etc.). The error always hides around the joiner.</div>
+      <div class="principle"><b>Step 2 — List the items.</b> Pull out each item that the joiner connects and stack them in your mind.</div>
+      <div class="principle"><b>Step 3 — Name the form of each.</b> Ask: is it a noun? a gerund (-ing)? an infinitive (to + verb)? an adjective? a clause? Most items will share one form.</div>
+      <div class="principle"><b>Step 4 — Fix the odd one out.</b> Find the single item whose form is different and rewrite it to match the rest.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Worked example 1</h3>
+      <div class="ex"><b class="t">Sentence:</b> Tunde enjoys football, music and to dance.<br>
+      <b class="t">Step 1 (joiner):</b> the comma list ending in &ldquo;and&rdquo;.<br>
+      <b class="t">Step 2 (items):</b> football / music / to dance.<br>
+      <b class="t">Step 3 (forms):</b> noun / noun / infinitive — the last one is odd.<br>
+      <b class="t">Step 4 (fix):</b> change &ldquo;to dance&rdquo; to the noun &ldquo;dancing&rdquo;.<br>
+      <b class="t">✅ Correct:</b> Tunde enjoys football, music and <b>dancing</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Worked example 2</h3>
+      <div class="ex"><b class="t">Sentence:</b> The manager asked us to be punctual, polite and that we should work hard.<br>
+      <b class="t">Forms:</b> adjective (punctual) / adjective (polite) / clause (that we should work hard) — the clause is odd.<br>
+      <b class="t">✅ Correct:</b> The manager asked us to be punctual, polite and <b>hardworking</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Worked example 3 (correlative trap)</h3>
+      <div class="ex"><b class="t">Sentence:</b> She is not only a writer but also teaches.<br>
+      <b class="t">Joiner:</b> not only ... but also.<br>
+      <b class="t">After &ldquo;not only&rdquo;:</b> &ldquo;a writer&rdquo; (noun phrase). <b>After &ldquo;but also&rdquo;:</b> &ldquo;teaches&rdquo; (verb) — they do not match.<br>
+      <b class="t">✅ Correct:</b> She is not only a <b>writer</b> but also a <b>teacher</b>. (noun ↔ noun)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Common error patterns examiners use</h3>
+      <table class="r">
+        <tr><th>Trap they set</th><th>What to watch for</th></tr>
+        <tr><td>Mixing gerund with infinitive</td><td>...reading, writing and <b>to talk</b> → should be &ldquo;talking&rdquo;</td></tr>
+        <tr><td>Mixing a verb into a noun list</td><td>strength, speed and <b>to run fast</b> → should be a noun</td></tr>
+        <tr><td>Mixing an adjective with a clause</td><td>brave, honest and <b>who works hard</b> → should be &ldquo;hardworking&rdquo;</td></tr>
+        <tr><td>Unbalanced correlatives</td><td>either + verb but or + clause, etc.</td></tr>
+        <tr><td>Unbalanced comparison</td><td>&ldquo;easier than to write&rdquo; → &ldquo;easier than writing&rdquo;</td></tr>
+        <tr><td>Tense shift in a verb list</td><td>came, sat and <b>is leaving</b> → &ldquo;left&rdquo;</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Identify-the-error practice</h3>
+      <div class="ex"><b class="t">Find the fault:</b> The lecture was long, boring and it confused everyone.<br>
+      <b class="t">Fault:</b> &ldquo;it confused everyone&rdquo; is a clause among adjectives (long, boring).<br>
+      <b class="t">✅ Fix:</b> The lecture was long, boring and <b>confusing</b>.</div>
+      <div class="ex"><b class="t">Find the fault:</b> He promised to study harder, to sleep early and waking up on time.<br>
+      <b class="t">Fault:</b> &ldquo;waking up&rdquo; is a gerund among infinitives (to study, to sleep).<br>
+      <b class="t">✅ Fix:</b> He promised to study harder, to sleep early and <b>to wake up</b> on time.</div>
+      <div class="ex"><b class="t">Find the fault:</b> Our duty is to obey the law, respect elders and helping the poor.<br>
+      <b class="t">Fault:</b> &ldquo;helping&rdquo; breaks the infinitive pattern (to obey, [to] respect).<br>
+      <b class="t">✅ Fix:</b> Our duty is to obey the law, respect elders and <b>help</b> the poor.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Golden checklist for the exam</h3>
+      <ul>
+        <li>Spot the joiner (and / or / but / a comma list / a correlative pair).</li>
+        <li>Make every item in the series the <b>same word class</b>.</li>
+        <li>Choose the option in which all items match — that is the answer.</li>
+        <li>If asked for the WRONG/odd item, pick the one whose form does not fit the others.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Matching ideas need matching forms. You&rsquo;ve got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Choose the option that completes the sentence with correct parallel structure: &lsquo;She likes reading, dancing and ___.&rsquo;",o:["to sing","singing","she sings","that she sings"],c:1,e:"<span class='h'>💡 Idea</span>The first two items are gerunds (reading, dancing), so the third must also be a gerund.<span class='h'>✅</span>&lsquo;singing&rsquo; keeps all three in the same <b>-ing</b> form; &lsquo;to sing&rsquo; switches to an infinitive and breaks the pattern."},
+{s:"Which option correctly completes: &lsquo;The aim of the club is to teach, to inspire and ___ young people.&rsquo;",o:["guiding","to guide","guides","guidance of"],c:1,e:"<span class='h'>💡 Idea</span>The list begins with infinitives (to teach, to inspire), so the next item must be an infinitive too.<span class='h'>✅</span>&lsquo;to guide&rsquo; matches; &lsquo;guiding&rsquo; is a gerund and breaks parallelism."},
+{s:"Identify the option that BREAKS parallelism: &lsquo;He is honest, hardworking and ___.&rsquo;",o:["loyal","brave","punctual","he keeps to time"],c:3,e:"<span class='h'>💡 Idea</span>The list is made of adjectives (honest, hardworking).<span class='h'>✅</span>&lsquo;he keeps to time&rsquo; is a clause, not an adjective, so it breaks the parallel adjective series; the others are all adjectives."},
+{s:"Choose the correctly parallel sentence.",o:["My duties are cooking, cleaning and to wash.","My duties are to cook, cleaning and washing.","My duties are cooking, cleaning and washing.","My duties are cook, cleaning and washing."],c:2,e:"<span class='h'>💡 Idea</span>For parallelism, all listed items must share one form.<span class='h'>✅</span>&lsquo;cooking, cleaning and washing&rsquo; are all gerunds; every other option mixes a gerund with an infinitive or a bare verb."},
+{s:"Complete with parallel structure: &lsquo;The soldiers fought bravely, marched proudly and ___.&rsquo;",o:["are singing loudly","sing loudly","sang loudly","to sing loudly"],c:2,e:"<span class='h'>💡 Idea</span>fought and marched are simple past-tense verbs, so the third verb must also be simple past.<span class='h'>✅</span>&lsquo;sang loudly&rsquo; matches the past tense; the others shift tense or form."},
+{s:"Which option correctly completes the correlative pair: &lsquo;You may either pay now or ___.&rsquo;",o:["you wait till tomorrow","waiting till tomorrow","wait till tomorrow","to wait till tomorrow"],c:2,e:"<span class='h'>💡 Idea</span>With <b>either ... or</b>, the form after &lsquo;either&rsquo; (the verb &lsquo;pay&rsquo;) must match the form after &lsquo;or&rsquo;.<span class='h'>✅</span>&lsquo;wait till tomorrow&rsquo; is a matching verb phrase; a new clause or different form unbalances the pair."},
+{s:"Identify the sentence with FAULTY parallelism.",o:["She is not only clever but also kind.","He likes tea, coffee and juice.","They came, saw and conquered.","The plan is to save money and buying land."],c:3,e:"<span class='h'>💡 Idea</span>Check that all joined items share one form.<span class='h'>✅</span>&lsquo;to save money and buying land&rsquo; mixes an infinitive with a gerund, so it is faulty; the other three are correctly balanced."},
+{s:"Complete with the correlative &lsquo;neither ... nor&rsquo;: &lsquo;He speaks neither French nor ___.&rsquo;",o:["he knows German","German","to speak German","speaking German"],c:1,e:"<span class='h'>💡 Idea</span>After &lsquo;neither&rsquo; we have the noun &lsquo;French&rsquo;, so after &lsquo;nor&rsquo; we also need a noun.<span class='h'>✅</span>&lsquo;German&rsquo; balances &lsquo;French&rsquo; perfectly; the others add a verb or clause and break the pair."},
+{s:"Choose the correctly parallel sentence using &lsquo;not only ... but also&rsquo;.",o:["She not only sings but also is dancing.","She not only sings but also dances.","She not only singing but also dances.","She is not only sings but also dancing."],c:1,e:"<span class='h'>💡 Idea</span>The verb after &lsquo;not only&rsquo; (sings) must match the verb after &lsquo;but also&rsquo;.<span class='h'>✅</span>&lsquo;sings ... dances&rsquo; are both simple present verbs; the others mix forms."},
+{s:"Complete the comparison with parallel structure: &lsquo;Reading is easier than ___.&rsquo;",o:["to write","writing","you write","written"],c:1,e:"<span class='h'>💡 Idea</span>In a comparison, both sides must be the same form. &lsquo;Reading&rsquo; is a gerund.<span class='h'>✅</span>&lsquo;writing&rsquo; (gerund) balances &lsquo;reading&rsquo;; &lsquo;to write&rsquo; switches to an infinitive."},
+{s:"Identify the option that does NOT keep parallel structure: &lsquo;The course teaches you how to plan, how to budget and ___.&rsquo;",o:["how to lead","how to save","how leading works","how to invest"],c:2,e:"<span class='h'>💡 Idea</span>The pattern is &lsquo;how to + verb&rsquo;.<span class='h'>✅</span>&lsquo;how leading works&rsquo; abandons the &lsquo;how to + verb&rsquo; pattern; the others keep it (how to lead, how to save, how to invest)."},
+{s:"Choose the correctly parallel sentence.",o:["The job is tiring, demanding but it pays well.","The job is tiring, demanding but rewarding.","The job is tiring, demands a lot but rewarding.","The job tires, demands but rewarding."],c:1,e:"<span class='h'>💡 Idea</span>All three descriptions of the job should be adjectives.<span class='h'>✅</span>&lsquo;tiring, demanding but rewarding&rsquo; are all adjectives; the other options slip in a clause or verb."},
+{s:"Complete with &lsquo;both ... and&rsquo; in parallel form: &lsquo;He is both intelligent and ___.&rsquo;",o:["works hard","hardworking","he works hard","to work hard"],c:1,e:"<span class='h'>💡 Idea</span>After &lsquo;both&rsquo; comes the adjective &lsquo;intelligent&rsquo;, so after &lsquo;and&rsquo; we need an adjective.<span class='h'>✅</span>&lsquo;hardworking&rsquo; is an adjective and balances &lsquo;intelligent&rsquo;; &lsquo;works hard&rsquo; is a verb phrase."},
+{s:"Which sentence is grammatically parallel?",o:["I came, I saw and conquering.","I came, I saw and I conquered.","I come, I saw and I conquered.","I came, seeing and I conquered."],c:1,e:"<span class='h'>💡 Idea</span>The famous balanced sentence uses three simple past verbs.<span class='h'>✅</span>&lsquo;I came, I saw and I conquered&rsquo; keeps all verbs in the same past tense; the others break tense or form."},
+{s:"Complete with parallel infinitives: &lsquo;My teacher told me to read widely, to think deeply and ___.&rsquo;",o:["writing clearly","to write clearly","write clearly","clear writing"],c:1,e:"<span class='h'>💡 Idea</span>The first two items are infinitives (to read, to think).<span class='h'>✅</span>&lsquo;to write clearly&rsquo; keeps the infinitive pattern; &lsquo;writing clearly&rsquo; is a gerund and breaks it."},
+{s:"Identify the FAULTY sentence.",o:["She enjoys music, dance and drama.","We need food, water and shelter.","He is strong, fast and to be brave.","The book is short, simple and clear."],c:2,e:"<span class='h'>💡 Idea</span>Listed items must share a form. Adjectives go with adjectives.<span class='h'>✅</span>&lsquo;strong, fast and to be brave&rsquo; mixes adjectives with an infinitive phrase, so it is faulty; the others are balanced."},
+{s:"Complete with &lsquo;whether ... or&rsquo;: &lsquo;I cannot decide whether to stay or ___.&rsquo;",o:["leaving","to leave","I should leave","that I leave"],c:1,e:"<span class='h'>💡 Idea</span>After &lsquo;whether&rsquo; comes the infinitive &lsquo;to stay&rsquo;, so after &lsquo;or&rsquo; we need an infinitive.<span class='h'>✅</span>&lsquo;to leave&rsquo; balances &lsquo;to stay&rsquo;; the others change form."},
+{s:"Choose the correctly parallel sentence.",o:["He searched in the room, under the bed and was looking on the shelf.","He searched in the room, under the bed and on the shelf.","He searched in the room, beneath the bed and looking on the shelf.","He searched the room, under the bed and shelf checking."],c:1,e:"<span class='h'>💡 Idea</span>The list should be three matching prepositional phrases of place.<span class='h'>✅</span>&lsquo;in the room, under the bed and on the shelf&rsquo; are all parallel phrases; the others add a verb clause."},
+{s:"Complete with parallel nouns: &lsquo;Success requires patience, discipline and ___.&rsquo;",o:["to be determined","being determined","determination","determined"],c:2,e:"<span class='h'>💡 Idea</span>patience and discipline are abstract nouns, so the third item must also be a noun.<span class='h'>✅</span>&lsquo;determination&rsquo; is a noun; the others are an infinitive, a gerund or an adjective."},
+{s:"Identify the option that breaks parallelism: &lsquo;The athlete trained hard, ate well and ___.&rsquo;",o:["rested often","slept early","is winning races","ran daily"],c:2,e:"<span class='h'>💡 Idea</span>trained, ate are simple past verbs.<span class='h'>✅</span>&lsquo;is winning races&rsquo; shifts to present continuous and breaks the past-tense series; the others stay in simple past."},
+{s:"Choose the correctly parallel sentence.",o:["She is not only a writer but also teaches.","She is not only a writer but also a teacher.","She not only a writer but also a teacher.","She is not only writing but also a teacher."],c:1,e:"<span class='h'>💡 Idea</span>With &lsquo;not only ... but also&rsquo;, a noun phrase must match a noun phrase.<span class='h'>✅</span>&lsquo;a writer ... a teacher&rsquo; are both noun phrases; option A pairs a noun with a verb."},
+{s:"Complete with &lsquo;as ... as&rsquo; in parallel form: &lsquo;Swimming is as enjoyable as ___.&rsquo;",o:["to cycle","cycling","you cycle","cycled"],c:1,e:"<span class='h'>💡 Idea</span>Both sides of an &lsquo;as ... as&rsquo; comparison must match. &lsquo;Swimming&rsquo; is a gerund.<span class='h'>✅</span>&lsquo;cycling&rsquo; (gerund) balances &lsquo;swimming&rsquo;; &lsquo;to cycle&rsquo; is an infinitive."},
+{s:"Which sentence keeps correct parallel structure?",o:["The plan is to cut costs, raise sales and improving service.","The plan is to cut costs, raise sales and to improve service.","The plan is cutting costs, raise sales and improve service.","The plan is to cut costs, raising sales and improve service."],c:1,e:"<span class='h'>💡 Idea</span>Once &lsquo;to&rsquo; starts the list, all verbs should be infinitives (the &lsquo;to&rsquo; can cover them).<span class='h'>✅</span>Option B keeps every verb as an infinitive; the others mix in a stray gerund."},
+{s:"Identify the FAULTY parallel sentence.",o:["He is wise, calm and gentle.","She sang sweetly and danced gracefully.","They want freedom, justice and to be equal.","We read, wrote and discussed.","None of these"],c:2,e:"<span class='h'>💡 Idea</span>Check each list for one shared form.<span class='h'>✅</span>&lsquo;freedom, justice and to be equal&rsquo; mixes nouns with an infinitive phrase, so it is faulty; the rest are balanced."},
+{s:"Complete with parallel gerunds: &lsquo;Her morning routine includes jogging, stretching and ___.&rsquo;",o:["to meditate","meditation","meditating","she meditates"],c:2,e:"<span class='h'>💡 Idea</span>jogging and stretching are gerunds.<span class='h'>✅</span>&lsquo;meditating&rsquo; keeps the -ing form; &lsquo;meditation&rsquo; is a noun and &lsquo;to meditate&rsquo; an infinitive."},
+{s:"Choose the correctly parallel sentence.",o:["The teacher praised the boy for being neat, polite and he answers well.","The teacher praised the boy for being neat, polite and well-spoken.","The teacher praised the boy for neatness, polite and well-spoken.","The teacher praised the boy for being neat, politeness and well-spoken."],c:1,e:"<span class='h'>💡 Idea</span>The qualities should all be adjectives after &lsquo;being&rsquo;.<span class='h'>✅</span>&lsquo;neat, polite and well-spoken&rsquo; are all adjectives; the others slip in a clause or a noun."},
+{s:"Complete in parallel form: &lsquo;To know the road ahead, ask those ___.&rsquo; (choose the balanced pair) &lsquo;who are coming back and ___.&rsquo;",o:["have travelled it","who have travelled it","travelling it","to travel it"],c:1,e:"<span class='h'>💡 Idea</span>The first item is the relative clause &lsquo;who are coming back&rsquo;, so the second should also be a relative clause.<span class='h'>✅</span>&lsquo;who have travelled it&rsquo; matches the clause pattern; the others change form."},
+{s:"Identify the option that breaks parallelism: &lsquo;The conference was informative, lively and ___.&rsquo;",o:["engaging","enjoyable","useful","it ended late"],c:3,e:"<span class='h'>💡 Idea</span>informative and lively are adjectives.<span class='h'>✅</span>&lsquo;it ended late&rsquo; is a clause, not an adjective, so it breaks the parallel structure; the others are adjectives."},
+{s:"Choose the correctly parallel sentence.",o:["We went to the market and buying yams.","We went to the market and bought yams.","We going to the market and bought yams.","We went to the market and to buy yams."],c:1,e:"<span class='h'>💡 Idea</span>The verbs joined by &lsquo;and&rsquo; should share the same tense.<span class='h'>✅</span>&lsquo;went ... bought&rsquo; are both simple past; the others mix tense or form."},
+{s:"Complete the sentence with parallel structure: &lsquo;A good leader must be firm, fair and ___.&rsquo;",o:["showing kindness","to show kindness","kind","kindness"],c:2,e:"<span class='h'>💡 Idea</span>firm and fair are adjectives describing the leader.<span class='h'>✅</span>&lsquo;kind&rsquo; is an adjective and matches; &lsquo;kindness&rsquo; is a noun and the others change form, breaking parallelism."}
+);
+
+["intro","correlatives","fixing","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pollination Biology — Insect vs Wind Pollinated Flowers (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.88rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .principle{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.97rem;color:#ffe9a8}
+  .principle b{color:#fff}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🌸 Pollination Biology</h1>
+  <p>Insect-pollinated vs wind-pollinated flowers — taught from zero, A to Z</p>
+  <p class="tip">Secondary school &amp; WAEC / JAMB / Post-UTME level · with examples and a 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Real-life examples</span><span class="pill">Comparison table</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">🌸 Pollination Basics</div>
+    <div class="tab" data-cat="insect">🐝 Insect-Pollinated Flowers</div>
+    <div class="tab" data-cat="wind">🌬️ Wind-Pollinated Flowers</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== BASICS ===================== -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">🌸 The Basics — What Pollination Is and How It Happens</h2>
+
+    <div class="lesson">
+      <h3>1. What is pollination?</h3>
+      <p><b>Pollination</b> is the <b>transfer of pollen grains from the anther (the male part) to the stigma (the female part)</b> of a flower. Pollen carries the male sex cells; for a plant to make seeds, that pollen must reach the stigma.</p>
+      <div class="principle"><b>Definition to memorise:</b> Pollination = transfer of pollen from the <b>anther</b> to the <b>stigma</b>.</div>
+      <div class="analogy">🌟 Think of pollen like a letter that must be "posted" from the anther (post office) to the stigma (the address). Pollination is simply the delivery — by an insect, the wind, or another agent. Without delivery, no seed is formed.</div>
+      <p class="tip">Note: pollination is NOT the same as fertilisation. Pollination just <i>delivers</i> the pollen; fertilisation happens <i>after</i>, when the male cell joins the egg inside the ovule.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Parts of a flower (quick tour)</h3>
+      <h4>The male part — the STAMEN</h4>
+      <ul>
+        <li><b>Anther</b> — the small sac at the top that <b>produces and holds pollen grains</b>.</li>
+        <li><b>Filament</b> — the stalk that holds up the anther.</li>
+        <li><b>Stamen</b> = anther + filament (the whole male part).</li>
+      </ul>
+      <h4>The female part — the CARPEL / PISTIL</h4>
+      <ul>
+        <li><b>Stigma</b> — the top part that <b>receives pollen</b>.</li>
+        <li><b>Style</b> — the stalk connecting the stigma to the ovary.</li>
+        <li><b>Ovary</b> — the base that contains the ovules (which become seeds).</li>
+        <li><b>Carpel / Pistil</b> = stigma + style + ovary (the whole female part).</li>
+      </ul>
+      <h4>Other parts</h4>
+      <ul>
+        <li><b>Petals</b> — the often colourful parts that attract pollinators.</li>
+        <li><b>Sepals</b> — the small green leaf-like parts that protect the flower bud.</li>
+      </ul>
+      <table class="r">
+        <tr><th>Part</th><th>Male or Female?</th><th>Job</th></tr>
+        <tr><td>Anther</td><td>Male</td><td>Makes &amp; holds pollen</td></tr>
+        <tr><td>Filament</td><td>Male</td><td>Holds up the anther</td></tr>
+        <tr><td>Stigma</td><td>Female</td><td>Receives pollen</td></tr>
+        <tr><td>Style</td><td>Female</td><td>Connects stigma to ovary</td></tr>
+        <tr><td>Ovary</td><td>Female</td><td>Holds ovules → seeds</td></tr>
+        <tr><td>Petals</td><td>—</td><td>Attract pollinators</td></tr>
+        <tr><td>Sepals</td><td>—</td><td>Protect the bud</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Self-pollination vs cross-pollination</h3>
+      <ul>
+        <li><b>Self-pollination:</b> pollen lands on the stigma of the <b>same flower</b> (or another flower on the same plant). No second plant needed.</li>
+        <li><b>Cross-pollination:</b> pollen is carried to the stigma of <b>a different flower on a different plant of the same species</b>. This mixes characteristics and gives healthier, more varied offspring.</li>
+      </ul>
+      <div class="analogy">🌟 Self-pollination is like marrying within your own household; cross-pollination is like marrying someone from another family — it brings in fresh variety.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Agents of pollination</h3>
+      <p>An <b>agent</b> is the thing that <b>carries the pollen</b> from anther to stigma. The main agents are:</p>
+      <ul>
+        <li><b>Insects</b> — bees, butterflies, moths, beetles (the most common agent).</li>
+        <li><b>Wind</b> — air currents blow the pollen around.</li>
+        <li><b>Water</b> — used by some water plants.</li>
+        <li><b>Birds</b> — e.g. sunbirds (this is called ornithophily).</li>
+        <li><b>Bats</b> — pollinate some night-opening flowers.</li>
+      </ul>
+      <div class="principle"><b>Two key words to define:</b><br><b>Entomophily</b> = pollination by <b>insects</b> (entomophilous flowers).<br><b>Anemophily</b> = pollination by <b>wind</b> (anemophilous flowers).</div>
+      <p class="tip">The next two tabs explain how flowers are specially built ("adapted") for each of these two main agents — and the comparison table in the wind tab is the most important part for exams.</p>
+    </div>
+  </section>
+
+  <!-- ===================== INSECT-POLLINATED ===================== -->
+  <section class="cat insect" id="cat-insect">
+    <h2 class="cathead">🐝 Insect-Pollinated (Entomophilous) Flowers</h2>
+
+    <div class="lesson">
+      <h3>The big idea</h3>
+      <div class="principle"><b>Goal:</b> the flower must <b>attract insects</b> and make the pollen <b>stick to their bodies</b>, so the insect carries it to the next flower.</div>
+      <p>Every feature below exists to either <b>(a) attract an insect</b> or <b>(b) stick pollen onto it / pick pollen off it</b>. If you understand that, you can reason out every adaptation.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>1. Large, brightly coloured, conspicuous petals</h3>
+      <div class="principle"><b>Why:</b> big bright petals are easy for insects to <b>see and find</b> from a distance, like a signboard advertising "food here!"</div>
+      <div class="ex"><b class="t">Example:</b> the large red/yellow petals of <b>Hibiscus</b> and the bright orange-red flowers of the <b>flamboyant</b> tree are very showy.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Scented and produce nectar (have a nectary)</h3>
+      <div class="principle"><b>Why:</b> sweet <b>scent</b> guides insects in, and the sugary <b>nectar</b> (made in a gland called the <b>nectary</b>) is the food reward that makes insects visit. As the insect feeds, it brushes against the anthers and stigma.</div>
+      <div class="ex"><b class="t">Example:</b> bees are drawn to the scent of <b>sunflower</b> and feed on its nectar, picking up pollen in the process.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Pollen grains are sticky and spiky (rough)</h3>
+      <div class="principle"><b>Why:</b> sticky, spiky/rough pollen <b>clings firmly to the hairy body of the insect</b> so it doesn't fall off before reaching the next flower's stigma.</div>
+      <div class="analogy">🌟 The spiky surface acts like tiny Velcro hooks that grab onto an insect's hairs.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Pollen produced in small or moderate amounts</h3>
+      <div class="principle"><b>Why:</b> because an insect delivers the pollen <b>directly and reliably</b> to another flower, the plant doesn't need to waste energy making huge quantities. A small/moderate amount is enough.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Stigma is small, sticky and INSIDE the flower</h3>
+      <div class="principle"><b>Why:</b> it is <b>sticky</b> so the pollen brushed off the insect's body holds onto it; it sits <b>inside</b> the flower exactly where the visiting insect will rub against it.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Anthers are firm and held INSIDE the flower</h3>
+      <div class="principle"><b>Why:</b> the anthers are <b>firmly fixed inside</b> so that an insect crawling in for nectar must brush against them and get dusted with sticky pollen.</div>
+      <div class="ex"><b class="t">More examples of insect-pollinated plants:</b> <b>Hibiscus</b>, <b>flamboyant</b>, <b>sunflower</b>, and <b>Crotalaria</b> — all showy, scented, nectar-producing flowers.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Quick summary of insect-pollinated features</h3>
+      <table class="r">
+        <tr><th>Feature</th><th>Why it helps</th></tr>
+        <tr><td>Large, bright, conspicuous petals</td><td>Easily seen → attract insects</td></tr>
+        <tr><td>Scented + nectar (nectary present)</td><td>Smell &amp; food reward draw insects in</td></tr>
+        <tr><td>Pollen sticky &amp; spiky/rough</td><td>Clings to the insect's body</td></tr>
+        <tr><td>Pollen in small/moderate amount</td><td>Delivery is direct, so little is wasted</td></tr>
+        <tr><td>Stigma small, sticky, inside flower</td><td>Holds pollen brushed off the insect</td></tr>
+        <tr><td>Anthers firm &amp; inside flower</td><td>Insect rubs against them &amp; gets dusted</td></tr>
+        <tr><td>Examples</td><td>Hibiscus, flamboyant, sunflower, Crotalaria</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== WIND-POLLINATED ===================== -->
+  <section class="cat wind" id="cat-wind">
+    <h2 class="cathead">🌬️ Wind-Pollinated (Anemophilous) Flowers</h2>
+
+    <div class="lesson">
+      <h3>The big idea</h3>
+      <div class="principle"><b>Goal:</b> the wind is a <b>random, wasteful carrier</b> — it doesn't aim. So these flowers don't bother attracting anything; instead they <b>make huge amounts of light pollen</b> and hang their parts <b>outside in the breeze</b> to catch and release it.</div>
+      <p>Notice how every feature is the <b>opposite</b> of an insect-pollinated flower — because there is no insect to please, only the wind to use.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>1. Small, dull/green, inconspicuous petals (or none at all)</h3>
+      <div class="principle"><b>Why:</b> there is no insect to attract, so the plant <b>wastes no energy</b> on big colourful petals. They are tiny, green or even absent.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. No scent and no nectar</h3>
+      <div class="principle"><b>Why:</b> scent and nectar exist only to lure insects. With wind doing the job, they are <b>not needed</b>, so the flower produces neither.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Large amounts of light, smooth, dry pollen</h3>
+      <div class="principle"><b>Why:</b> the wind scatters pollen randomly and most is lost, so the plant makes <b>huge quantities</b> to improve the chance some lands on a stigma. The grains are <b>light, smooth and dry</b> so they are easily lifted and carried far by the wind.</div>
+      <div class="analogy">🌟 It's like firing thousands of tiny seeds into the wind hoping a few hit the target — quantity makes up for poor aim.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Large, feathery stigmas hanging OUTSIDE the flower</h3>
+      <div class="principle"><b>Why:</b> a big <b>feathery</b> stigma has a large surface area, like a net, and it hangs <b>outside</b> in the open air to <b>catch the floating pollen</b> as it drifts past.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Long filaments with anthers hanging OUTSIDE (versatile anthers)</h3>
+      <div class="principle"><b>Why:</b> long filaments dangle the anthers <b>outside the flower</b>, in the wind. The anthers are <b>versatile</b> (loosely attached so they swing freely), so the slightest breeze shakes the pollen out into the air.</div>
+      <div class="ex"><b class="t">Examples of wind-pollinated plants:</b> <b>maize</b> (its tassels and silky stigmas), <b>grasses</b>, <b>sugarcane</b>, and <b>Guinea corn (sorghum)</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ THE COMPARISON TABLE (most important for exams)</h3>
+      <p class="tip">Master this side-by-side table — most pollination exam questions come straight from it.</p>
+      <table class="r">
+        <tr><th>Feature</th><th>🐝 Insect-pollinated (entomophilous)</th><th>🌬️ Wind-pollinated (anemophilous)</th></tr>
+        <tr><td>Petals (colour &amp; size)</td><td>Large, bright, conspicuous</td><td>Small, dull/green or absent</td></tr>
+        <tr><td>Scent</td><td>Present (scented)</td><td>Absent (no scent)</td></tr>
+        <tr><td>Nectar</td><td>Present (has a nectary)</td><td>Absent (no nectar)</td></tr>
+        <tr><td>Pollen quantity</td><td>Small / moderate amount</td><td>Very large amount</td></tr>
+        <tr><td>Pollen texture</td><td>Sticky, spiky/rough, heavier</td><td>Light, smooth, dry</td></tr>
+        <tr><td>Stigma</td><td>Small, sticky, inside the flower</td><td>Large, feathery, hanging outside</td></tr>
+        <tr><td>Anthers / stamen position</td><td>Firm, fixed inside the flower</td><td>Long filaments, versatile anthers hanging outside</td></tr>
+        <tr><td>Examples</td><td>Hibiscus, flamboyant, sunflower, Crotalaria</td><td>Maize, grasses, sugarcane, Guinea corn</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>How to answer an exam question fast</h3>
+      <p>If a question describes a flower, just check: <b>Is it showy, scented, with sticky spiky pollen and parts inside? → insect.</b> Or <b>is it dull, scentless, with masses of light pollen and feathery stigmas/anthers hanging outside? → wind.</b></p>
+      <div class="analogy">🌟 One word each to remember the whole idea: insect flowers = "<b>advertise</b>" (be seen, smelled, rewarded). Wind flowers = "<b>broadcast</b>" (make lots, hang out, let the breeze do the rest).</div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Insect = advertise, Wind = broadcast. You’ve got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Pollination is best defined as the transfer of pollen from the…",o:["Stigma to the anther","Anther to the stigma","Ovary to the ovule","Petal to the sepal"],c:1,e:"<span class='h'>💡 Idea</span>Pollination means moving pollen from the <b>anther</b> (male) to the <b>stigma</b> (female). It is the delivery step that must happen before a seed can form.<span class='h'>✅</span>Anther to the stigma."},
+{s:"Which part of the flower produces and holds the pollen grains?",o:["Stigma","Ovary","Anther","Style"],c:2,e:"<span class='h'>💡 Idea</span>The <b>anther</b>, at the top of the stamen, makes and stores pollen. The stigma only <i>receives</i> pollen.<span class='h'>✅</span>Anther."},
+{s:"The stamen of a flower is made up of the…",o:["Stigma and style","Anther and filament","Ovary and ovule","Petal and sepal"],c:1,e:"<span class='h'>💡 Idea</span>The male part, the <b>stamen</b>, = anther + filament. The filament holds up the anther.<span class='h'>✅</span>Anther and filament."},
+{s:"Which structure RECEIVES the pollen during pollination?",o:["Anther","Filament","Stigma","Sepal"],c:2,e:"<span class='h'>💡 Idea</span>The <b>stigma</b> is the top of the female part (carpel) and is where pollen lands. The anther sends pollen; the stigma receives it.<span class='h'>✅</span>Stigma."},
+{s:"The carpel (pistil) consists of the…",o:["Anther, filament and pollen","Stigma, style and ovary","Petals and sepals","Nectary and filament"],c:1,e:"<span class='h'>💡 Idea</span>The female part, the <b>carpel/pistil</b>, = stigma + style + ovary. The ovary holds the ovules that become seeds.<span class='h'>✅</span>Stigma, style and ovary."},
+{s:"Pollen landing on the stigma of the SAME flower is called…",o:["Cross-pollination","Self-pollination","Fertilisation","Anemophily"],c:1,e:"<span class='h'>💡 Idea</span>When pollen reaches the stigma of the same flower (or same plant) it is <b>self-pollination</b>. Different plant = cross-pollination.<span class='h'>✅</span>Self-pollination."},
+{s:"Pollination carried out by insects is called…",o:["Anemophily","Hydrophily","Entomophily","Ornithophily"],c:2,e:"<span class='h'>💡 Idea</span><b>Entomophily</b> = pollination by insects (entomon = insect). Anemophily = wind, hydrophily = water, ornithophily = birds.<span class='h'>✅</span>Entomophily."},
+{s:"Pollination carried out by wind is called…",o:["Entomophily","Anemophily","Hydrophily","Chiropterophily"],c:1,e:"<span class='h'>💡 Idea</span><b>Anemophily</b> = pollination by wind (anemos = wind). Easy pair: ento = insect, anemo = wind.<span class='h'>✅</span>Anemophily."},
+{s:"Which of the following is NOT an agent of pollination?",o:["Insects","Wind","Soil","Birds"],c:2,e:"<span class='h'>💡 Idea</span>Agents that carry pollen include insects, wind, water, birds and bats. <b>Soil</b> does not carry pollen, so it is not an agent.<span class='h'>✅</span>Soil."},
+{s:"Insect-pollinated flowers usually have petals that are…",o:["Small, dull and green","Large, brightly coloured and conspicuous","Absent altogether","Hard and woody"],c:1,e:"<span class='h'>💡 Idea</span>Big, bright, showy petals are easily <b>seen by insects</b> from afar, advertising the flower like a signboard.<span class='h'>✅</span>Large, brightly coloured and conspicuous."},
+{s:"Why do insect-pollinated flowers produce scent and nectar?",o:["To make the pollen heavier","To attract insects and reward them with food","To kill harmful insects","To catch wind-blown pollen"],c:1,e:"<span class='h'>💡 Idea</span>Scent guides insects in and <b>nectar</b> (from the nectary) is the sugary food reward that keeps them visiting; while feeding they brush against anthers and stigma.<span class='h'>✅</span>To attract insects and reward them with food."},
+{s:"The gland that produces nectar in an insect-pollinated flower is the…",o:["Nectary","Filament","Stigma","Sepal"],c:0,e:"<span class='h'>💡 Idea</span>Nectar is made by the <b>nectary</b>. The presence of a nectary is a typical insect-pollination feature.<span class='h'>✅</span>Nectary."},
+{s:"The pollen grains of insect-pollinated flowers are typically…",o:["Light, smooth and dry","Sticky and spiky/rough","Produced in huge amounts","Carried by water"],c:1,e:"<span class='h'>💡 Idea</span><b>Sticky, spiky/rough</b> pollen clings to the hairy body of the insect, like tiny Velcro hooks, so it isn't lost before reaching the next flower.<span class='h'>✅</span>Sticky and spiky/rough."},
+{s:"Why do insect-pollinated flowers produce only a SMALL or moderate amount of pollen?",o:["Because insects eat all the pollen","Because the insect delivers pollen directly, so little is wasted","Because they have no anthers","Because wind blows the rest away"],c:1,e:"<span class='h'>💡 Idea</span>An insect carries pollen <b>directly</b> to another flower, so delivery is reliable. Little is wasted, so the plant need not make a lot.<span class='h'>✅</span>Because the insect delivers pollen directly, so little is wasted."},
+{s:"In an insect-pollinated flower, the stigma is usually…",o:["Large, feathery and hanging outside","Small, sticky and inside the flower","Absent","Hard and dry"],c:1,e:"<span class='h'>💡 Idea</span>The stigma is <b>small, sticky and tucked inside</b> exactly where a visiting insect will rub against it, picking up the pollen on its body.<span class='h'>✅</span>Small, sticky and inside the flower."},
+{s:"Where are the anthers positioned in a typical insect-pollinated flower?",o:["Hanging far outside on long filaments","Firmly fixed inside the flower","Buried in the soil","Inside the ovary"],c:1,e:"<span class='h'>💡 Idea</span>The anthers are <b>firm and inside</b> so that an insect crawling in for nectar must brush against them and get dusted with sticky pollen.<span class='h'>✅</span>Firmly fixed inside the flower."},
+{s:"Which of the following is an example of an insect-pollinated plant?",o:["Maize","Hibiscus","Guinea corn","Grass"],c:1,e:"<span class='h'>💡 Idea</span><b>Hibiscus</b> has large bright scented flowers — typical of insect pollination. Maize, Guinea corn and grasses are wind-pollinated.<span class='h'>✅</span>Hibiscus."},
+{s:"A flower has small green petals, no scent and no nectar. It is most likely…",o:["Insect-pollinated","Wind-pollinated","Water-pollinated only","Bird-pollinated"],c:1,e:"<span class='h'>💡 Idea</span>No colour, no scent, no nectar means nothing is being used to attract animals — the agent must be the <b>wind</b>.<span class='h'>✅</span>Wind-pollinated."},
+{s:"Wind-pollinated flowers usually have petals that are…",o:["Large and brightly coloured","Small, dull or absent","Sticky and spiky","Sweet-smelling"],c:1,e:"<span class='h'>💡 Idea</span>With no insect to attract, the plant wastes no energy on showy petals, so they are <b>small, dull/green or even absent</b>.<span class='h'>✅</span>Small, dull or absent."},
+{s:"Why do wind-pollinated flowers produce VERY LARGE amounts of pollen?",o:["To attract more insects","Because wind scatters pollen randomly and most is lost","To make heavier grains","To produce sweeter nectar"],c:1,e:"<span class='h'>💡 Idea</span>The wind does not aim, so most pollen never reaches a stigma. Making <b>huge quantities</b> raises the chance that some lands on target.<span class='h'>✅</span>Because wind scatters pollen randomly and most is lost."},
+{s:"The pollen grains of wind-pollinated flowers are typically…",o:["Sticky and spiky","Light, smooth and dry","Heavy and moist","Brightly coloured"],c:1,e:"<span class='h'>💡 Idea</span><b>Light, smooth and dry</b> pollen is easily lifted and blown far by the wind. Sticky spiky pollen would be too heavy and would clump.<span class='h'>✅</span>Light, smooth and dry."},
+{s:"In wind-pollinated flowers, the stigma is usually…",o:["Small, sticky and hidden inside","Large, feathery and hanging outside","Absent","Surrounded by bright petals"],c:1,e:"<span class='h'>💡 Idea</span>A large <b>feathery</b> stigma works like a net with a big surface area, hanging <b>outside</b> in the air to catch drifting pollen.<span class='h'>✅</span>Large, feathery and hanging outside."},
+{s:"Why do wind-pollinated flowers have long filaments with anthers hanging outside?",o:["To attract butterflies","So the breeze can easily shake the pollen out into the air","To store nectar","To protect the ovary"],c:1,e:"<span class='h'>💡 Idea</span>Long filaments dangle the anthers in the open. Being <b>versatile</b> (loosely attached), they swing so the slightest breeze shakes pollen into the air.<span class='h'>✅</span>So the breeze can easily shake the pollen out into the air."},
+{s:"Anthers that are loosely attached and swing freely in the wind are described as…",o:["Versatile anthers","Fixed anthers","Sticky anthers","Feathery anthers"],c:0,e:"<span class='h'>💡 Idea</span><b>Versatile anthers</b> are loosely hinged so they swing in the wind and release pollen easily — a wind-pollination feature.<span class='h'>✅</span>Versatile anthers."},
+{s:"Which of the following is an example of a wind-pollinated plant?",o:["Sunflower","Hibiscus","Maize","Crotalaria"],c:2,e:"<span class='h'>💡 Idea</span><b>Maize</b> has dull flowers, masses of light pollen and feathery silks — typical wind pollination. Sunflower, Hibiscus and Crotalaria are insect-pollinated.<span class='h'>✅</span>Maize."},
+{s:"Which set of plants are ALL wind-pollinated?",o:["Maize, grasses, sugarcane, Guinea corn","Hibiscus, sunflower, flamboyant, Crotalaria","Maize, Hibiscus, grass, sunflower","Sugarcane, Hibiscus, maize, flamboyant"],c:0,e:"<span class='h'>💡 Idea</span><b>Maize, grasses, sugarcane and Guinea corn</b> are all wind-pollinated. The others (Hibiscus, sunflower, flamboyant, Crotalaria) are insect-pollinated.<span class='h'>✅</span>Maize, grasses, sugarcane, Guinea corn."},
+{s:"A flower with large bright petals, sweet scent, nectar and sticky spiky pollen is adapted for pollination by…",o:["Wind","Insects","Water","Gravity"],c:1,e:"<span class='h'>💡 Idea</span>Bright petals, scent, nectar and sticky spiky pollen all work to attract and stick pollen onto <b>insects</b>.<span class='h'>✅</span>Insects."},
+{s:"Which feature is found in insect-pollinated flowers but NOT in wind-pollinated ones?",o:["Feathery stigma hanging outside","Nectar and scent","Huge amounts of light, dry pollen","Versatile anthers"],c:1,e:"<span class='h'>💡 Idea</span><b>Nectar and scent</b> exist only to attract insects, so they are present in insect-pollinated flowers and absent in wind-pollinated ones. The other options describe wind flowers.<span class='h'>✅</span>Nectar and scent."},
+{s:"Compared with insect-pollinated flowers, the petals of wind-pollinated flowers are best described as…",o:["More colourful and larger","Smaller, dull and inconspicuous","Stickier","More scented"],c:1,e:"<span class='h'>💡 Idea</span>Because there is no insect to attract, wind-pollinated petals are <b>smaller, dull and inconspicuous</b> (or absent) — the opposite of insect flowers.<span class='h'>✅</span>Smaller, dull and inconspicuous."},
+{s:"Which statement correctly compares the two pollination types?",o:["Insect-pollinated pollen is light and dry; wind-pollinated pollen is sticky","Insect-pollinated flowers have feathery stigmas outside; wind-pollinated have stigmas inside","Insect-pollinated pollen is sticky/spiky; wind-pollinated pollen is light, smooth and dry","Both produce nectar to attract the wind"],c:2,e:"<span class='h'>💡 Idea</span>Insect pollen is <b>sticky and spiky</b> (clings to insects); wind pollen is <b>light, smooth and dry</b> (blown easily). The other options are reversed or wrong.<span class='h'>✅</span>Insect-pollinated pollen is sticky/spiky; wind-pollinated pollen is light, smooth and dry."}
+);
+
+["basics","insect","wind","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

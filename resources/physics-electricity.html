@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electricity A–Z — Charges, Electric Field & Current (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,6rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>⚡ Electricity A–Z</h1>
+  <p>Electric Charges · Electric Field · Current Electricity — taught from zero</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="charge">🔋 Charges (Static)</div>
+    <div class="tab" data-cat="field">🌐 Electric Field</div>
+    <div class="tab" data-cat="current">💡 Current Electricity</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: CHARGES ============ -->
+  <section class="cat charge show" id="cat-charge">
+    <h2 class="cathead">🔋 PART 1 — Electric Charges (Static Electricity / Electrostatics)</h2>
+
+    <div class="lesson">
+      <h3>1. What is electric charge?</h3>
+      <p>Everything is made of <b>atoms</b>. Inside each atom are tiny particles that carry <b>electric charge</b>:</p>
+      <ul>
+        <li><b>Protons</b> — carry <b>positive (+)</b> charge, sit in the nucleus, cannot move easily.</li>
+        <li><b>Electrons</b> — carry <b>negative (−)</b> charge, orbit the nucleus, <b>can move from atom to atom</b>.</li>
+        <li><b>Neutrons</b> — no charge (neutral).</li>
+      </ul>
+      <p>A normal atom has equal protons and electrons, so it is <b>neutral</b>. When an object <b>gains electrons</b> it becomes <b>negative</b>; when it <b>loses electrons</b> it becomes <b>positive</b>. (Only electrons move — protons stay put.)</p>
+      <span class="key">SI unit of charge</span>
+      <p>Charge is measured in <b>coulombs (C)</b>. The smallest charge is on one electron: <b>e = 1.6 × 10⁻¹⁹ C</b>.</p>
+      <div class="formula">Charge Q = number of electrons (n) × e &nbsp;⇒&nbsp; Q = n × 1.6×10⁻¹⁹</div>
+      <div class="ex"><b class="t">Worked example:</b> How many electrons make up a charge of 1 C?
+        <div class="calc">n = Q ÷ e = 1 ÷ 1.6×10⁻¹⁹ = 6.25 × 10¹⁸ electrons</div>
+        So 1 coulomb is a HUGE number of electrons.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The law of electric charges</h3>
+      <p>This is the golden rule of electrostatics:</p>
+      <div class="formula">LIKE charges REPEL · UNLIKE charges ATTRACT</div>
+      <ul>
+        <li>+ and + → push apart (repel)</li>
+        <li>− and − → push apart (repel)</li>
+        <li>+ and − → pull together (attract)</li>
+      </ul>
+      <div class="analogy">💡 Memory: opposites attract (like a boy and girl magnet), same kinds quarrel and push away.</div>
+      <p><b>Key test:</b> Only <b>repulsion</b> proves an object is charged for sure. Attraction can happen even with a neutral object (because of induction), so attraction alone is not proof.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Conductors and insulators</h3>
+      <table class="r">
+        <tr><th>Conductors</th><th>Insulators</th></tr>
+        <tr><td>Let charge/electrons flow freely</td><td>Do NOT let charge flow</td></tr>
+        <tr><td>Have free electrons</td><td>Electrons are tightly held</td></tr>
+        <tr><td>Metals (copper, silver), graphite, the human body, salt water</td><td>Rubber, plastic, glass, dry wood, air, pure water</td></tr>
+      </table>
+      <p><b>Semiconductors</b> (e.g. silicon) are in between — used in electronics.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Ways of charging an object</h3>
+      <h4>(a) Charging by friction (rubbing)</h4>
+      <p>Rub two different materials together — electrons jump from one to the other. One becomes + (lost electrons), the other − (gained electrons).</p>
+      <div class="analogy">🌟 Real life: rubbing a plastic ruler/comb on your hair lets it pick up tiny pieces of paper; lightning is charge built by friction in clouds.</div>
+      <h4>(b) Charging by contact (conduction)</h4>
+      <p>Touch a charged object to a neutral conductor — charge spreads onto it. Both end up with the <b>same sign</b> of charge.</p>
+      <h4>(c) Charging by induction (no touching!)</h4>
+      <p>Bring a charged rod NEAR (not touching) a conductor. The rod pushes/pulls the electrons in the conductor, so the near side gets one charge and the far side the opposite. Earth the far side, remove it, then remove the rod — the object keeps a charge that is <b>opposite</b> to the rod.</p>
+      <span class="key">Conservation of charge</span>
+      <p>Charge is never created or destroyed — it only <b>moves</b> from one body to another. The total charge before = total charge after.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The gold-leaf electroscope</h3>
+      <p>A device used to <b>detect charge</b> and tell if it is + or −. It has a metal cap connected to a metal rod with a thin gold leaf.</p>
+      <ul>
+        <li><b>Detecting charge:</b> a charged object near the cap makes the leaf <b>diverge (rise/spread)</b>.</li>
+        <li><b>More divergence = more charge.</b></li>
+        <li><b>Finding the sign:</b> bring a KNOWN charge close. If the leaf diverges MORE, the object has the SAME charge as the known one. If it falls, it’s opposite.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Coulomb’s Law (force between charges)</h3>
+      <p>Two charges feel a force. Coulomb measured exactly how strong:</p>
+      <div class="formula">F = k Q₁Q₂ / r²&nbsp;&nbsp;&nbsp;(k = 9 × 10⁹ N·m²/C²)</div>
+      <ul>
+        <li><b>F</b> = force in newtons (N)</li>
+        <li><b>Q₁, Q₂</b> = the two charges in coulombs (C)</li>
+        <li><b>r</b> = distance between them in metres (m)</li>
+      </ul>
+      <p><b>Notice the r²:</b> double the distance → force becomes <b>¼</b> (inverse-square law). Bigger charges → bigger force.</p>
+      <div class="ex"><b class="t">Worked example:</b> Find the force between +2 µC and +3 µC placed 0.1 m apart.
+        <div class="calc">F = kQ₁Q₂/r² = 9×10⁹ × (2×10⁻⁶)(3×10⁻⁶) ÷ (0.1)²</div>
+        <div class="calc">= 9×10⁹ × 6×10⁻¹² ÷ 0.01 = 0.054 ÷ 0.01 = 5.4 N</div>
+        Both are positive → the force is <b>repulsive</b>. (Tip: µC means ×10⁻⁶ — always convert!)</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: ELECTRIC FIELD ============ -->
+  <section class="cat field" id="cat-field">
+    <h2 class="cathead">🌐 PART 2 — The Electric Field</h2>
+
+    <div class="lesson">
+      <h3>1. What is an electric field?</h3>
+      <p>An <b>electric field</b> is the region around a charge where another charge would feel a force. You don’t have to touch a charge to feel its push/pull — the field reaches out through space.</p>
+      <div class="analogy">🌟 Analogy: just as the Earth has a gravitational field that pulls objects toward it, a charge has an electric field that pushes/pulls other charges around it.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Electric field lines (direction)</h3>
+      <p>We draw arrows to show which way a <b>positive</b> test charge would be pushed:</p>
+      <ul>
+        <li>Field lines point <b>AWAY from a positive</b> charge (it pushes a + test charge away).</li>
+        <li>Field lines point <b>TOWARD a negative</b> charge (it pulls a + test charge in).</li>
+        <li>Lines start on + and end on −.</li>
+        <li><b>Field lines NEVER cross</b> (a point can have only one field direction).</li>
+        <li><b>Closer lines = stronger field.</b></li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Electric field strength / intensity (E)</h3>
+      <p>This tells you <b>how strong</b> the field is — the force felt per unit charge.</p>
+      <div class="formula">E = F / Q</div>
+      <ul>
+        <li><b>E</b> = electric field strength, unit <b>N/C</b> (newton per coulomb) or V/m</li>
+        <li><b>F</b> = force on the charge (N)</li>
+        <li><b>Q</b> = the charge placed in the field (C)</li>
+      </ul>
+      <p>Field strength is a <b>vector</b> — it has direction (same direction a + charge would move).</p>
+      <div class="ex"><b class="t">Worked example:</b> A charge of 5 µC feels a force of 0.1 N in a field. Find E.
+        <div class="calc">E = F ÷ Q = 0.1 ÷ (5×10⁻⁶) = 2×10⁴ N/C</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Field due to a point charge</h3>
+      <p>The field strength at a distance r from a single charge Q:</p>
+      <div class="formula">E = k Q / r²&nbsp;&nbsp;&nbsp;(k = 9 × 10⁹)</div>
+      <p>Same inverse-square idea as Coulomb’s law: move twice as far → field drops to a quarter.</p>
+      <div class="ex"><b class="t">Worked example:</b> Find the field 0.3 m from a +2 µC charge.
+        <div class="calc">E = kQ/r² = 9×10⁹ × 2×10⁻⁶ ÷ (0.3)²</div>
+        <div class="calc">= 9×10⁹ × 2×10⁻⁶ ÷ 0.09 = 18×10³ ÷ 0.09 = 2×10⁵ N/C</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Electric potential &amp; potential difference (p.d.)</h3>
+      <p><b>Electric potential (V)</b> at a point = the work done to bring 1 coulomb of positive charge from infinity to that point. Unit = <b>volt (V)</b>.</p>
+      <div class="formula">V = W / Q&nbsp;&nbsp;⇒&nbsp;&nbsp;Work W = QV</div>
+      <p><b>Potential difference (p.d. or voltage)</b> between two points = the work done to move 1 C of charge between them. A battery provides this “push”.</p>
+      <div class="analogy">🌟 Analogy: potential is like <b>height/pressure</b>. Charges flow from high potential to low potential, just as water flows downhill from high pressure to low.</div>
+      <div class="ex"><b class="t">Worked example:</b> 12 J of work moves 4 C between two points. Find the p.d.
+        <div class="calc">V = W ÷ Q = 12 ÷ 4 = 3 V</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Capacitors (storing charge) — basic idea</h3>
+      <p>A <b>capacitor</b> stores electric charge. Its <b>capacitance (C)</b> measures how much charge it holds per volt.</p>
+      <div class="formula">C = Q / V&nbsp;&nbsp;(unit: farad, F)</div>
+      <div class="ex"><b class="t">Worked example:</b> A capacitor stores 12 µC at 6 V. Find its capacitance.
+        <div class="calc">C = Q ÷ V = 12×10⁻⁶ ÷ 6 = 2×10⁻⁶ F = 2 µF</div></div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: CURRENT ELECTRICITY ============ -->
+  <section class="cat current" id="cat-current">
+    <h2 class="cathead">💡 PART 3 — Current Electricity</h2>
+
+    <div class="lesson">
+      <h3>1. Electric current</h3>
+      <p><b>Electric current</b> is the <b>rate of flow of charge</b> — how much charge passes a point each second. Unit = <b>ampere (A)</b>.</p>
+      <div class="formula">I = Q / t&nbsp;&nbsp;⇒&nbsp;&nbsp;Q = I × t</div>
+      <ul>
+        <li><b>I</b> = current (A) &nbsp; <b>Q</b> = charge (C) &nbsp; <b>t</b> = time (s)</li>
+        <li>1 ampere = 1 coulomb per second. So <b>1 C = 1 A·s</b>.</li>
+      </ul>
+      <p><b>Conventional current</b> flows from <b>+ to −</b> (outside the cell). Electrons actually flow the opposite way (− to +), but we follow the conventional direction.</p>
+      <div class="ex"><b class="t">Worked example:</b> A current of 2 A flows for 30 s. How much charge passed?
+        <div class="calc">Q = I × t = 2 × 30 = 60 C</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. E.m.f. vs potential difference</h3>
+      <ul>
+        <li><b>E.m.f. (electromotive force, E):</b> the TOTAL energy a cell/battery gives to each coulomb of charge. Measured across the cell when no current flows.</li>
+        <li><b>P.d. (voltage, V):</b> the energy used by each coulomb in a particular component of the circuit.</li>
+      </ul>
+      <p>Both are measured in <b>volts</b>. Some energy is lost inside the cell itself (internal resistance), so usually p.d. across the circuit &lt; e.m.f.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Ohm’s Law &amp; resistance</h3>
+      <p><b>Ohm’s Law:</b> for a metal conductor at constant temperature, current is directly proportional to voltage.</p>
+      <div class="formula">V = I × R&nbsp;&nbsp;⇒&nbsp;&nbsp;R = V/I&nbsp;,&nbsp; I = V/R</div>
+      <ul>
+        <li><b>V</b> = voltage (V) &nbsp; <b>I</b> = current (A) &nbsp; <b>R</b> = resistance (ohms, Ω)</li>
+        <li><b>Resistance</b> = how much a component opposes current. High R → small current.</li>
+      </ul>
+      <div class="analogy">🌟 Analogy: voltage = pump pressure, current = water flow, resistance = a narrow pipe that fights the flow.</div>
+      <div class="ex"><b class="t">Worked example:</b> A 12 V battery drives current through a 4 Ω resistor. Find I.
+        <div class="calc">I = V ÷ R = 12 ÷ 4 = 3 A</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. What affects resistance? (Resistivity)</h3>
+      <div class="formula">R = ρL / A</div>
+      <ul>
+        <li><b>ρ</b> (rho) = resistivity of the material (Ω·m)</li>
+        <li><b>L</b> = length of wire — <b>longer wire → more resistance</b></li>
+        <li><b>A</b> = cross-sectional area — <b>thicker wire → less resistance</b></li>
+      </ul>
+      <p>Also: resistance of a metal <b>increases with temperature</b>.</p>
+      <div class="ex"><b class="t">Quick logic:</b> Double the length → double R. Double the thickness (area) → halve R.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Resistors in series and parallel</h3>
+      <h4>Series (one path, joined end to end)</h4>
+      <div class="formula">R = R₁ + R₂ + R₃ + …</div>
+      <p>Same current everywhere; voltages add up. Resistances simply add.</p>
+      <div class="ex"><b class="t">Example:</b> 2 Ω, 3 Ω, 5 Ω in series → R = 2 + 3 + 5 = <b>10 Ω</b>.</div>
+      <h4>Parallel (branches, side by side)</h4>
+      <div class="formula">1/R = 1/R₁ + 1/R₂ + 1/R₃ + …</div>
+      <p>Same voltage across each branch; currents add. Total R is <b>smaller</b> than the smallest resistor.</p>
+      <div class="ex"><b class="t">Example:</b> two 6 Ω resistors in parallel:
+        <div class="calc">1/R = 1/6 + 1/6 = 2/6 = 1/3 → R = 3 Ω</div>
+        Shortcut for two resistors: R = (R₁×R₂)/(R₁+R₂) = (6×6)/(6+6) = 36/12 = 3 Ω.
+        (For n EQUAL resistors in parallel: R = one resistor ÷ n.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Electrical energy &amp; power</h3>
+      <div class="formula">Power P = V × I = I²R = V²/R&nbsp;&nbsp;(unit: watt, W)</div>
+      <div class="formula">Energy W = P × t = V I t&nbsp;&nbsp;(unit: joule, J)</div>
+      <div class="ex"><b class="t">Worked example:</b> A bulb runs on 240 V drawing 5 A. Find its power.
+        <div class="calc">P = V × I = 240 × 5 = 1200 W = 1.2 kW</div></div>
+      <span class="key">Cost of electricity (the kilowatt-hour)</span>
+      <p>Electricity bills use the <b>kWh</b> (1 kW used for 1 hour).</p>
+      <div class="ex"><b class="t">Example:</b> a 2 kW heater for 3 hours uses 2 × 3 = <b>6 kWh</b> (6 units). Multiply by the price per unit for the cost.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Cells &amp; internal resistance</h3>
+      <p>A real cell wastes a little energy inside itself — its <b>internal resistance (r)</b>. The full circuit equation:</p>
+      <div class="formula">E = I (R + r)&nbsp;&nbsp;⇒&nbsp;&nbsp;E = V + I r</div>
+      <div class="ex"><b class="t">Worked example:</b> A 1.5 V cell with r = 0.5 Ω connects to a 4 Ω resistor. Find the current.
+        <div class="calc">I = E ÷ (R + r) = 1.5 ÷ (4 + 0.5) = 1.5 ÷ 4.5 = 0.33 A</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Safety in electricity (quick facts)</h3>
+      <ul>
+        <li><b>Fuse:</b> a thin wire that melts and breaks the circuit if the current is too high — protects appliances.</li>
+        <li><b>Earthing:</b> a wire connecting the metal case to the ground, so stray charge flows safely away instead of shocking you.</li>
+        <li><b>Switches and fuses are placed in the LIVE wire.</b></li>
+        <li>Never touch electrical things with wet hands — water + salt on skin conducts electricity.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Master the idea, then the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"The SI unit of electric charge is the…",o:["Ampere","Volt","Coulomb","Ohm"],c:2,e:"<span class='h'>💡 Idea</span>Charge is measured in <b>coulombs (C)</b>. (Ampere = current, Volt = voltage, Ohm = resistance.)<span class='h'>✅</span>Coulomb."},
+{s:"Two positive charges placed near each other will…",o:["Attract","Repel","Do nothing","Become neutral"],c:1,e:"<span class='h'>💡 Idea</span>Law of charges: LIKE charges repel, UNLIKE attract. Two positives are alike → they push apart.<span class='h'>✅</span>Repel."},
+{s:"An object becomes negatively charged when it…",o:["Loses protons","Gains electrons","Loses electrons","Gains protons"],c:1,e:"<span class='h'>💡 Idea</span>Protons can’t move — only electrons do. Gaining extra (negative) electrons makes an object negative.<span class='h'>✅</span>Gains electrons."},
+{s:"How many electrons make up a charge of 1 C? (e = 1.6×10⁻¹⁹ C)",o:["1.6×10⁻¹⁹","6.25×10¹⁸","9×10⁹","1.6×10¹⁹"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>n = Q ÷ e = 1 ÷ 1.6×10⁻¹⁹ = 6.25×10¹⁸</span><span class='h'>✅</span>6.25×10¹⁸ electrons."},
+{s:"Which is the best electrical conductor?",o:["Rubber","Glass","Copper","Dry wood"],c:2,e:"<span class='h'>💡 Idea</span>Metals like <b>copper</b> have free electrons, so they conduct. Rubber, glass and dry wood are insulators.<span class='h'>✅</span>Copper."},
+{s:"Charging a neutral conductor by bringing a charged rod NEAR it (without touching) is called charging by…",o:["Friction","Induction","Conduction","Earthing"],c:1,e:"<span class='h'>💡 Idea</span>No contact = <b>induction</b>. The rod re-arranges the conductor’s electrons from a distance. (Friction = rubbing; conduction = touching.)<span class='h'>✅</span>Induction."},
+{s:"Which observation PROVES that a body is electrically charged?",o:["Attraction","Repulsion","Glowing","Heating"],c:1,e:"<span class='h'>💡 Idea</span>Only <b>repulsion</b> is sure proof. Attraction can happen with a neutral body (by induction), so it isn’t conclusive.<span class='h'>✅</span>Repulsion."},
+{s:"A gold-leaf electroscope is used to…",o:["Store charge","Detect charge","Produce current","Measure resistance"],c:1,e:"<span class='h'>💡 Idea</span>An electroscope <b>detects</b> the presence and sign of charge (the leaf diverges). It doesn’t store charge or make current.<span class='h'>✅</span>Detect charge."},
+{s:"In Coulomb’s law, if the distance between two charges is doubled, the force becomes…",o:["Double","Half","One quarter","Four times"],c:2,e:"<span class='h'>💡 Idea</span>F ∝ 1/r² (inverse-square). Double r → r² becomes 4× → force becomes <b>1/4</b>.<span class='h'>✅</span>One quarter."},
+{s:"Find the force between +2 µC and +3 µC, 0.1 m apart (k = 9×10⁹).",o:["5.4 N","54 N","0.54 N","2.7 N"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>F = kQ₁Q₂/r² = 9×10⁹ × 2×10⁻⁶ × 3×10⁻⁶ ÷ (0.1)²</span><span class='calc'>= 9×10⁹ × 6×10⁻¹² ÷ 0.01 = 5.4 N</span><span class='h'>✅</span>5.4 N."},
+{s:"Electric field lines around a positive charge point…",o:["Toward the charge","Away from the charge","In circles","In no particular direction"],c:1,e:"<span class='h'>💡 Idea</span>Field lines show where a + test charge is pushed. A positive charge pushes it AWAY, so the arrows point outward.<span class='h'>✅</span>Away from the charge."},
+{s:"Two electric field lines can never…",o:["Be curved","Cross each other","Point away from a charge","Be close together"],c:1,e:"<span class='h'>💡 Idea</span>At any point the field has ONE direction, so lines <b>never cross</b>. Crossing would mean two directions at once.<span class='h'>✅</span>Cross each other."},
+{s:"Electric field strength E is defined as…",o:["Force × charge","Force per unit charge","Charge per unit force","Work per unit charge"],c:1,e:"<span class='h'>💡 Idea</span>E = F/Q = force felt by each coulomb. Unit: N/C.<span class='h'>✅</span>Force per unit charge."},
+{s:"A 5 µC charge feels a force of 0.1 N in a field. The field strength is…",o:["2×10⁴ N/C","5×10⁻⁶ N/C","0.5 N/C","2×10⁻⁴ N/C"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>E = F ÷ Q = 0.1 ÷ 5×10⁻⁶ = 2×10⁴ N/C</span><span class='h'>✅</span>2×10⁴ N/C."},
+{s:"The field 0.3 m from a +2 µC point charge is (k = 9×10⁹)…",o:["2×10⁵ N/C","6×10⁴ N/C","2×10⁴ N/C","9×10⁵ N/C"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>E = kQ/r² = 9×10⁹ × 2×10⁻⁶ ÷ (0.3)² = 18×10³ ÷ 0.09 = 2×10⁵ N/C</span><span class='h'>✅</span>2×10⁵ N/C."},
+{s:"The unit of potential difference (voltage) is the…",o:["Ampere","Volt","Watt","Coulomb"],c:1,e:"<span class='h'>💡 Idea</span>Potential difference is measured in <b>volts (V)</b> = joules per coulomb.<span class='h'>✅</span>Volt."},
+{s:"If 12 J of work moves 4 C between two points, the p.d. is…",o:["48 V","3 V","16 V","0.33 V"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>V = W ÷ Q = 12 ÷ 4 = 3 V</span><span class='h'>✅</span>3 V."},
+{s:"A capacitor stores 12 µC at 6 V. Its capacitance is…",o:["72 µF","2 µF","0.5 µF","18 µF"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>C = Q ÷ V = 12×10⁻⁶ ÷ 6 = 2×10⁻⁶ F = 2 µF</span><span class='h'>✅</span>2 µF."},
+{s:"Electric current is best defined as the…",o:["Amount of charge stored","Rate of flow of charge","Force on a charge","Resistance to flow"],c:1,e:"<span class='h'>💡 Idea</span>Current = how much charge flows per second = <b>rate of flow of charge</b> (I = Q/t).<span class='h'>✅</span>Rate of flow of charge."},
+{s:"A current of 2 A flows for 30 s. The charge that passes is…",o:["15 C","60 C","0.067 C","32 C"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = I × t = 2 × 30 = 60 C</span><span class='h'>✅</span>60 C."},
+{s:"Conventional current flows from…",o:["Negative to positive","Positive to negative","High to low resistance","Electrons' direction"],c:1,e:"<span class='h'>💡 Idea</span>By convention current flows <b>+ to −</b> in the external circuit (electrons actually go the other way).<span class='h'>✅</span>Positive to negative."},
+{s:"A 12 V battery is connected to a 4 Ω resistor. The current is…",o:["48 A","3 A","8 A","0.33 A"],c:1,e:"<span class='h'>✏️ Working</span>Ohm’s law: <span class='calc'>I = V ÷ R = 12 ÷ 4 = 3 A</span><span class='h'>✅</span>3 A."},
+{s:"Resistors of 2 Ω, 3 Ω and 5 Ω are connected in SERIES. Total resistance is…",o:["10 Ω","0.97 Ω","1.03 Ω","30 Ω"],c:0,e:"<span class='h'>💡 Idea</span>In series, resistances simply add.<span class='h'>✏️</span><span class='calc'>R = 2 + 3 + 5 = 10 Ω</span><span class='h'>✅</span>10 Ω."},
+{s:"Two 6 Ω resistors are connected in PARALLEL. Total resistance is…",o:["12 Ω","6 Ω","3 Ω","1.5 Ω"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>1/R = 1/6 + 1/6 = 2/6 → R = 3 Ω</span>(For n equal resistors in parallel, R = one ÷ n = 6 ÷ 2 = 3.)<span class='h'>✅</span>3 Ω."},
+{s:"How does the resistance of a wire change if its length is doubled (same thickness)?",o:["Halves","Doubles","Stays the same","Becomes four times"],c:1,e:"<span class='h'>💡 Idea</span>R = ρL/A, so R ∝ L. Double the length → <b>double</b> the resistance.<span class='h'>✅</span>Doubles."},
+{s:"A thicker wire (larger cross-sectional area) has…",o:["More resistance","Less resistance","The same resistance","Zero resistance"],c:1,e:"<span class='h'>💡 Idea</span>R = ρL/A, so R ∝ 1/A. Bigger area → <b>less</b> resistance (more room for electrons to flow).<span class='h'>✅</span>Less resistance."},
+{s:"A bulb works on 240 V and draws 5 A. Its power is…",o:["48 W","1200 W","245 W","0.02 W"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>P = V × I = 240 × 5 = 1200 W</span><span class='h'>✅</span>1200 W (= 1.2 kW)."},
+{s:"A 2 kW heater runs for 3 hours. Energy used in kWh is…",o:["6 kWh","0.67 kWh","5 kWh","2 kWh"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Energy = power(kW) × time(h) = 2 × 3 = 6 kWh</span>That’s 6 ‘units’ on the bill.<span class='h'>✅</span>6 kWh."},
+{s:"A 1.5 V cell (internal resistance 0.5 Ω) is connected to a 4 Ω resistor. The current is…",o:["0.375 A","3 A","0.33 A","1.5 A"],c:2,e:"<span class='h'>✏️ Working</span>Include internal resistance:<span class='calc'>I = E ÷ (R + r) = 1.5 ÷ (4 + 0.5) = 1.5 ÷ 4.5 = 0.33 A</span><span class='h'>✅</span>0.33 A."},
+{s:"The component that melts to break a circuit when the current is too high is the…",o:["Switch","Fuse","Resistor","Capacitor"],c:1,e:"<span class='h'>💡 Idea</span>A <b>fuse</b> is a thin wire that melts on excess current, cutting the circuit to protect appliances. It is placed in the live wire.<span class='h'>✅</span>Fuse."}
+);
+
+["charge","field","current","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

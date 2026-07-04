@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Separation Techniques in Chemistry — A–Z (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.88rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .principle{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.97rem;color:#ffe9a8}
+  .principle b{color:#fff}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>⚗️ Separation Techniques in Chemistry</h1>
+  <p>How to separate mixtures — taught from zero, A to Z</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · with examples and a 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Real-life examples</span><span class="pill">Summary table</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="intro">📖 Basics &amp; Choosing</div>
+    <div class="tab" data-cat="solidsolid">🧱 Solid + Solid</div>
+    <div class="tab" data-cat="solidliquid">💧 Solid + Liquid</div>
+    <div class="tab" data-cat="liquids">🌡️ Liquids &amp; Special</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="cat intro show" id="cat-intro">
+    <h2 class="cathead">📖 The Basics — Why and How We Separate Mixtures</h2>
+
+    <div class="lesson">
+      <h3>1. Pure substances vs mixtures</h3>
+      <ul>
+        <li>A <b>pure substance</b> is made of only one kind of particle (e.g. pure water, pure salt).</li>
+        <li>A <b>mixture</b> contains two or more substances <b>physically</b> mixed — NOT chemically joined. Their parts keep their own properties and can be separated again.</li>
+      </ul>
+      <p>Examples of mixtures: salt + water, sand + iron filings, crude oil, air, ink, blood.</p>
+      <div class="analogy">🌟 Think of it like a bowl of rice and beans: they are mixed but not "joined" — you can still pick them apart. A chemical compound (like water, H₂O) is different — the hydrogen and oxygen are truly bonded and need a chemical reaction to separate.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The golden rule: separate using a DIFFERENCE in physical property</h3>
+      <p>Every separation method works by exploiting a property in which the components <b>differ</b>. Ask: "How are these two things different?" Then pick the method that uses that difference.</p>
+      <table class="r">
+        <tr><th>Difference between components</th><th>Method to use</th></tr>
+        <tr><td>One is magnetic, the other is not</td><td>Magnetic separation</td></tr>
+        <tr><td>Different particle sizes</td><td>Sieving</td></tr>
+        <tr><td>One sublimes (solid → gas), the other doesn’t</td><td>Sublimation</td></tr>
+        <tr><td>One is soluble, the other insoluble (in same liquid)</td><td>Dissolve, then filter</td></tr>
+        <tr><td>Insoluble solid in a liquid</td><td>Filtration / decantation / centrifugation</td></tr>
+        <tr><td>Soluble solid dissolved in a liquid</td><td>Evaporation / crystallisation / distillation</td></tr>
+        <tr><td>Two liquids that don’t mix (immiscible)</td><td>Separating funnel</td></tr>
+        <tr><td>Two liquids that mix, different boiling points</td><td>Fractional distillation</td></tr>
+        <tr><td>Coloured substances with different solubilities</td><td>Chromatography</td></tr>
+      </table>
+      <p class="tip">This table is the master key — if you understand it, every exam question becomes "spot the difference, then name the method."</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Words you MUST know (examiners love these)</h3>
+      <ul>
+        <li><b>Filtrate</b> — the liquid that <i>passes through</i> the filter paper.</li>
+        <li><b>Residue</b> — the solid <i>left behind</i> on the filter paper.</li>
+        <li><b>Distillate</b> — the pure liquid <i>collected</i> after distillation (it boiled then condensed).</li>
+        <li><b>Soluble</b> — can dissolve; <b>Insoluble</b> — cannot dissolve.</li>
+        <li><b>Miscible</b> — two liquids that mix fully (e.g. alcohol + water); <b>Immiscible</b> — don’t mix (e.g. oil + water).</li>
+        <li><b>Saturated solution</b> — a solution holding the maximum solute it can at that temperature.</li>
+        <li><b>Sublimation</b> — a solid turning straight into vapour (skipping liquid).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SOLID + SOLID ===================== -->
+  <section class="cat solidsolid" id="cat-solidsolid">
+    <h2 class="cathead">🧱 Separating Solid–Solid Mixtures</h2>
+
+    <div class="lesson">
+      <h3>1. Magnetic separation</h3>
+      <div class="principle"><b>Principle:</b> one solid is attracted to a magnet, the other is not.</div>
+      <p><b>How:</b> run a magnet over (or through) the mixture; the magnetic part sticks to the magnet while the rest stays behind.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>iron filings from sulphur</b>, or iron/steel scrap from rubbish at a recycling plant.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Sublimation</h3>
+      <div class="principle"><b>Principle:</b> one solid <b>sublimes</b> (turns directly to vapour when heated) while the other does not.</div>
+      <p><b>How:</b> heat the mixture. The subliming solid becomes vapour, rises, then cools on a cold surface and re-forms as pure solid; the other solid stays at the bottom.</p>
+      <p><b>Solids that sublime:</b> ammonium chloride, iodine, camphor, naphthalene, solid CO₂ (dry ice).</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>common salt from iodine</b>, ammonium chloride from sand, or camphor from sand.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Dissolving + filtering (when one is soluble, one is not)</h3>
+      <div class="principle"><b>Principle:</b> in a chosen liquid, one solid dissolves and the other does not.</div>
+      <p><b>How (3 steps):</b></p>
+      <ul>
+        <li>① Add water — the soluble solid dissolves, the insoluble one doesn’t.</li>
+        <li>② <b>Filter</b> — insoluble solid stays as residue; the solution passes through as filtrate.</li>
+        <li>③ <b>Evaporate</b> the filtrate to get the dissolved solid back.</li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> separating a mixture of <b>salt and sand</b> → salt dissolves, sand is filtered off, then evaporate to recover the salt.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Sieving</h3>
+      <div class="principle"><b>Principle:</b> the solids have different particle sizes.</div>
+      <p><b>How:</b> shake the mixture on a sieve/mesh; small particles fall through, large ones stay on top.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>garri from lumps/chaff</b>, fine sand from gravel, flour from bran.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Floatation &amp; winnowing (bonus methods)</h3>
+      <ul>
+        <li><b>Floatation:</b> add to water — the lighter/less dense solid floats while the denser one sinks (e.g. good seeds from bad ones; sawdust from sand).</li>
+        <li><b>Winnowing:</b> use wind/air to blow away the lighter part (e.g. separating chaff from grain by tossing in the air).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SOLID + LIQUID ===================== -->
+  <section class="cat solidliquid" id="cat-solidliquid">
+    <h2 class="cathead">💧 Separating Solid–Liquid Mixtures</h2>
+
+    <div class="lesson">
+      <h3>1. Decantation</h3>
+      <div class="principle"><b>Principle:</b> an insoluble solid is denser than the liquid, so it settles at the bottom.</div>
+      <p><b>How:</b> let the mixture stand so the solid sinks (sediment), then gently pour off the clear liquid on top.</p>
+      <div class="ex"><b class="t">Examples:</b> pouring clear water off settled <b>sand</b>; pouring oil off water. Quick but not very pure.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Filtration</h3>
+      <div class="principle"><b>Principle:</b> the solid is insoluble and too big to pass through the tiny holes of filter paper; the liquid passes through.</div>
+      <p><b>How:</b> pour the mixture through filter paper in a funnel. <b>Residue</b> (solid) stays on the paper; <b>filtrate</b> (liquid) collects below.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>chalk from water</b>, sand from water, or precipitate from a solution. (Like a sieve for very fine particles.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Centrifugation</h3>
+      <div class="principle"><b>Principle:</b> spinning very fast forces the denser solid/particles to the bottom faster than they would settle naturally.</div>
+      <p><b>How:</b> place the mixture in a centrifuge and spin it; the denser part collects at the bottom of the tube, the lighter liquid stays on top, then decant.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>blood cells from plasma</b>, getting cream from milk, separating very fine suspensions that won’t filter easily.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Evaporation (to recover a soluble solid)</h3>
+      <div class="principle"><b>Principle:</b> the liquid (solvent) turns to vapour on heating, leaving the dissolved solid behind.</div>
+      <p><b>How:</b> heat the solution in an evaporating dish until all the liquid evaporates, leaving the solid.</p>
+      <p><b>Note:</b> use this when you want the SOLID and don’t care about keeping the liquid, and when heat won’t damage the solid.</p>
+      <div class="ex"><b class="t">Example:</b> getting <b>salt from salt solution</b> (how table salt is made from sea water in salt pans).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Crystallisation</h3>
+      <div class="principle"><b>Principle:</b> as a hot saturated solution cools, the solid can hold less in solution, so it comes out as pure crystals.</div>
+      <p><b>How:</b> heat the solution to make it concentrated (saturated), then let it cool slowly. Clean crystals form and are filtered out and dried.</p>
+      <p><b>Why better than plain evaporation sometimes:</b> it gives <b>pure, well-shaped crystals</b> and is gentle — good for substances that decompose with strong heat, like sugar or copper(II) sulphate, and for those with water of crystallisation.</p>
+      <div class="ex"><b class="t">Examples:</b> getting <b>copper(II) sulphate crystals</b> or sugar crystals from their solutions.</div>
+    </div>
+  </section>
+
+  <!-- ===================== LIQUIDS & SPECIAL ===================== -->
+  <section class="cat liquids" id="cat-liquids">
+    <h2 class="cathead">🌡️ Separating Liquids &amp; Special Mixtures</h2>
+
+    <div class="lesson">
+      <h3>1. Simple distillation (get the pure liquid from a solution)</h3>
+      <div class="principle"><b>Principle:</b> the liquid boils off and is condensed back, while the dissolved solid stays behind in the flask.</div>
+      <p><b>How:</b> heat the solution → the liquid <b>boils</b> to vapour → the vapour passes through a <b>condenser</b> (cooled by water) → it <b>condenses</b> back to pure liquid, collected as the <b>distillate</b>.</p>
+      <p>Use it when you want to keep BOTH the pure liquid AND the solid (unlike evaporation, which throws the liquid away).</p>
+      <div class="ex"><b class="t">Example:</b> getting <b>pure water from sea water / salt solution</b>. Output = pure water (distillate); salt remains in the flask.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Fractional distillation (separate two MISCIBLE liquids)</h3>
+      <div class="principle"><b>Principle:</b> miscible liquids have <b>different boiling points</b>, so they boil off at different temperatures.</div>
+      <p><b>How:</b> heat the mixture. The liquid with the <b>lower boiling point boils off first</b> and is collected; the higher-boiling one comes later. A tall <b>fractionating column</b> (packed with glass beads) gives a big surface area so the liquids separate more cleanly — vapours of the higher-boiling liquid condense and drip back, only the lowest-boiling vapour reaches the top.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>alcohol (ethanol) from water</b> (ethanol boils at 78°C, water at 100°C); separating <b>crude oil</b> into petrol, kerosene, diesel, etc.; getting <b>nitrogen and oxygen from liquid air</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Separating funnel (two IMMISCIBLE liquids)</h3>
+      <div class="principle"><b>Principle:</b> immiscible liquids don’t mix and have different densities, so they form two layers — denser at the bottom.</div>
+      <p><b>How:</b> pour the mixture into a separating funnel, let the layers settle, then open the tap to run off the bottom layer first; close the tap when it’s gone, then collect the top layer.</p>
+      <div class="ex"><b class="t">Examples:</b> separating <b>oil and water</b>, or kerosene and water, or palm oil and water.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Chromatography (separate dissolved coloured substances)</h3>
+      <div class="principle"><b>Principle:</b> different substances dissolve in and travel with the solvent at <b>different speeds</b> (different solubility / how strongly they cling to the paper).</div>
+      <p><b>How:</b> put a spot of the mixture (e.g. ink) near the bottom of chromatography paper, dip the edge in solvent. As the solvent creeps up, it carries the components different distances → they separate into bands of colour. The more soluble component travels farthest.</p>
+      <div class="ex"><b class="t">Examples:</b> separating the <b>dyes in ink</b> or food colouring; identifying substances; testing for drugs/pigments in plants.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Precipitation (bonus)</h3>
+      <div class="principle"><b>Principle:</b> add a reagent that turns a dissolved substance into an insoluble solid (precipitate), which can then be filtered out.</div>
+      <div class="ex"><b class="t">Example:</b> removing certain dissolved ions from water by precipitating them, then filtering.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Master summary table</h3>
+      <table class="r">
+        <tr><th>Mixture</th><th>Best method</th></tr>
+        <tr><td>Iron filings + sulphur</td><td>Magnetic separation</td></tr>
+        <tr><td>Salt + iodine / camphor + sand</td><td>Sublimation</td></tr>
+        <tr><td>Salt + sand</td><td>Dissolve → filter → evaporate</td></tr>
+        <tr><td>Garri + lumps</td><td>Sieving</td></tr>
+        <tr><td>Sand + water</td><td>Filtration or decantation</td></tr>
+        <tr><td>Blood cells + plasma</td><td>Centrifugation</td></tr>
+        <tr><td>Salt + water (want the salt)</td><td>Evaporation / crystallisation</td></tr>
+        <tr><td>Salt + water (want pure water)</td><td>Simple distillation</td></tr>
+        <tr><td>Ethanol + water / crude oil</td><td>Fractional distillation</td></tr>
+        <tr><td>Oil + water</td><td>Separating funnel</td></tr>
+        <tr><td>Dyes in ink</td><td>Chromatography</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Spot the difference, then name the method. You’ve got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"A mixture of common salt and iodine is best separated by…",o:["Filtration","Sublimation","Decantation","Distillation"],c:1,e:"<span class='h'>💡 Idea</span>Iodine <b>sublimes</b> (solid → vapour) on heating, but salt does not. Heat the mixture: iodine vapour rises and re-solidifies on a cool surface, leaving the salt.<span class='h'>✅</span>Sublimation."},
+{s:"Which method separates iron filings from sulphur powder?",o:["Sieving","Magnetic separation","Evaporation","Chromatography"],c:1,e:"<span class='h'>💡 Idea</span>Iron is magnetic, sulphur is not. A <b>magnet</b> pulls out the iron filings.<span class='h'>✅</span>Magnetic separation."},
+{s:"To separate a mixture of salt and sand, the FIRST step is to…",o:["Filter the mixture","Add water to dissolve the salt","Heat it strongly","Use a magnet"],c:1,e:"<span class='h'>💡 Idea</span>Salt is soluble, sand is not. ① <b>Add water</b> (salt dissolves) ② filter off the sand ③ evaporate to recover salt. The very first step is dissolving.<span class='h'>✅</span>Add water to dissolve the salt."},
+{s:"The solid left behind on the filter paper during filtration is called the…",o:["Filtrate","Distillate","Residue","Solute"],c:2,e:"<span class='h'>💡 Idea</span><b>Residue</b> = solid trapped on the paper. <b>Filtrate</b> = the liquid that passes through.<span class='h'>✅</span>Residue."},
+{s:"The liquid that passes through the filter paper is the…",o:["Residue","Filtrate","Precipitate","Sublimate"],c:1,e:"<span class='h'>💡 Idea</span>Remember the pair: <b>filtrate</b> goes through, <b>residue</b> stays on top.<span class='h'>✅</span>Filtrate."},
+{s:"Pure water can be obtained from sea water by…",o:["Filtration","Simple distillation","Decantation","Crystallisation"],c:1,e:"<span class='h'>💡 Idea</span>Salt is dissolved, so filtering won’t work. <b>Distillation</b> boils the water to vapour, condenses it back to pure water, and leaves the salt behind.<span class='h'>✅</span>Simple distillation."},
+{s:"Oil and water (which do not mix) are best separated using a…",o:["Separating funnel","Filter funnel","Condenser","Centrifuge"],c:0,e:"<span class='h'>💡 Idea</span>They are <b>immiscible</b> and form two layers. A <b>separating funnel</b> lets you run off the denser (bottom) layer first.<span class='h'>✅</span>Separating funnel."},
+{s:"Ethanol (b.p. 78°C) and water (b.p. 100°C) are both liquids that mix. The best separation method is…",o:["Simple distillation","Fractional distillation","Filtration","Evaporation"],c:1,e:"<span class='h'>💡 Idea</span>Two <b>miscible</b> liquids with different boiling points → <b>fractional distillation</b>. Ethanol boils off first and is collected.<span class='h'>✅</span>Fractional distillation."},
+{s:"Crude oil (petroleum) is refined into petrol, kerosene and diesel by…",o:["Chromatography","Fractional distillation","Sublimation","Magnetic separation"],c:1,e:"<span class='h'>💡 Idea</span>The fractions have different boiling points, so <b>fractional distillation</b> separates them — each is collected at its own temperature range.<span class='h'>✅</span>Fractional distillation."},
+{s:"The different coloured dyes in ink are separated by…",o:["Distillation","Chromatography","Filtration","Decantation"],c:1,e:"<span class='h'>💡 Idea</span><b>Chromatography</b>: the dyes travel up the paper at different speeds (different solubility), so they spread into separate colour bands.<span class='h'>✅</span>Chromatography."},
+{s:"Blood cells are separated from plasma using a…",o:["Filter paper","Centrifuge","Magnet","Sieve"],c:1,e:"<span class='h'>💡 Idea</span>A <b>centrifuge</b> spins fast, forcing the denser blood cells to the bottom while the lighter plasma stays on top.<span class='h'>✅</span>Centrifuge."},
+{s:"To recover salt from salt solution (the liquid is not needed), the simplest method is…",o:["Distillation","Filtration","Evaporation","Sublimation"],c:2,e:"<span class='h'>💡 Idea</span>Just heat off the water — <b>evaporation</b> leaves the salt behind. (Use distillation only if you also want to keep the water.)<span class='h'>✅</span>Evaporation."},
+{s:"A solid that turns directly into vapour on heating (without melting) is said to…",o:["Evaporate","Condense","Sublime","Distil"],c:2,e:"<span class='h'>💡 Idea</span>Going straight from solid to gas is <b>sublimation</b>. Examples: iodine, ammonium chloride, camphor.<span class='h'>✅</span>Sublime."},
+{s:"Sand can be quickly separated from water by allowing it to settle and gently pouring off the liquid. This is…",o:["Filtration","Decantation","Distillation","Sieving"],c:1,e:"<span class='h'>💡 Idea</span>Letting the solid settle, then pouring off the clear liquid, is <b>decantation</b> — fast but less pure than filtration.<span class='h'>✅</span>Decantation."},
+{s:"Garri is separated from its lumps and chaff by…",o:["Filtration","Sieving","Evaporation","Distillation"],c:1,e:"<span class='h'>💡 Idea</span>The pieces differ in <b>size</b>, so a sieve lets fine garri fall through while lumps stay on top = <b>sieving</b>.<span class='h'>✅</span>Sieving."},
+{s:"Which method is most suitable to obtain copper(II) sulphate crystals from its solution?",o:["Filtration","Crystallisation","Decantation","Chromatography"],c:1,e:"<span class='h'>💡 Idea</span><b>Crystallisation</b> gives pure, shaped crystals and is gentle — ideal for copper(II) sulphate (which can lose water/decompose with harsh heating).<span class='h'>✅</span>Crystallisation."},
+{s:"The pure liquid collected after distillation is called the…",o:["Residue","Filtrate","Distillate","Solute"],c:2,e:"<span class='h'>💡 Idea</span>The vapour that boils off and condenses back to liquid is collected as the <b>distillate</b>.<span class='h'>✅</span>Distillate."},
+{s:"Nitrogen and oxygen are obtained from liquid air by…",o:["Sublimation","Fractional distillation","Filtration","Chromatography"],c:1,e:"<span class='h'>💡 Idea</span>Liquid nitrogen and oxygen have different boiling points, so <b>fractional distillation</b> of liquid air separates them.<span class='h'>✅</span>Fractional distillation."},
+{s:"Why is a fractionating column packed with glass beads?",o:["To make it heavier","To increase surface area for better separation","To add colour","To trap the solid"],c:1,e:"<span class='h'>💡 Idea</span>The beads give a <b>large surface area</b> where higher-boiling vapours condense and drip back, so only the lowest-boiling vapour reaches the top — a cleaner separation.<span class='h'>✅</span>To increase surface area."},
+{s:"Two liquids that mix completely together are described as…",o:["Immiscible","Miscible","Insoluble","Saturated"],c:1,e:"<span class='h'>💡 Idea</span><b>Miscible</b> = they mix fully (e.g. alcohol + water). Immiscible = they don’t (oil + water).<span class='h'>✅</span>Miscible."},
+{s:"Camphor mixed with sand is best separated by…",o:["Sublimation","Filtration","Centrifugation","Decantation"],c:0,e:"<span class='h'>💡 Idea</span>Camphor <b>sublimes</b> when heated; sand doesn’t. Heat the mixture and collect the camphor vapour on a cool surface.<span class='h'>✅</span>Sublimation."},
+{s:"Cream is separated from milk by…",o:["Filtration","Centrifugation","Distillation","Sublimation"],c:1,e:"<span class='h'>💡 Idea</span>Spinning in a <b>centrifuge</b> throws the denser part out and lets the lighter cream collect — too fine to filter.<span class='h'>✅</span>Centrifugation."},
+{s:"In chromatography, the substance that is MOST soluble in the solvent will…",o:["Stay at the bottom","Travel the farthest up the paper","Not move at all","Sink"],c:1,e:"<span class='h'>💡 Idea</span>The more soluble a component, the more it’s carried along by the solvent, so it <b>travels farthest</b>.<span class='h'>✅</span>Travel the farthest up the paper."},
+{s:"Which property is exploited in separating immiscible liquids with a separating funnel?",o:["Boiling point","Magnetism","Difference in density (they form layers)","Particle size"],c:2,e:"<span class='h'>💡 Idea</span>Immiscible liquids form two layers by <b>density</b> — denser at the bottom — so you run off the lower layer first.<span class='h'>✅</span>Difference in density."},
+{s:"The best method to obtain BOTH pure water AND the dissolved salt from salt solution is…",o:["Evaporation","Simple distillation","Filtration","Decantation"],c:1,e:"<span class='h'>💡 Idea</span><b>Distillation</b> collects the pure water (distillate) AND leaves the salt in the flask — you keep both. Evaporation loses the water as vapour.<span class='h'>✅</span>Simple distillation."},
+{s:"A device with tiny holes used to separate solids of different sizes is a…",o:["Condenser","Sieve","Funnel","Burette"],c:1,e:"<span class='h'>💡 Idea</span>A <b>sieve/mesh</b> lets small particles through and holds back large ones — separation by size.<span class='h'>✅</span>Sieve."},
+{s:"Chalk powder suspended in water is separated by…",o:["Distillation","Filtration","Fractional distillation","Sublimation"],c:1,e:"<span class='h'>💡 Idea</span>Chalk is insoluble in water, so <b>filtration</b> traps it as residue while clear water passes through as filtrate.<span class='h'>✅</span>Filtration."},
+{s:"Separating an insoluble solid that is too fine to filter easily is best done by…",o:["Sublimation","Centrifugation","Chromatography","Evaporation"],c:1,e:"<span class='h'>💡 Idea</span>Very fine suspensions clog filter paper; a <b>centrifuge</b> spins the particles down quickly instead.<span class='h'>✅</span>Centrifugation."},
+{s:"Which separation method relies on a DIFFERENCE IN BOILING POINTS?",o:["Filtration","Fractional distillation","Magnetic separation","Sieving"],c:1,e:"<span class='h'>💡 Idea</span><b>Fractional distillation</b> works because miscible liquids boil at different temperatures, so they vaporise (and are collected) at different points.<span class='h'>✅</span>Fractional distillation."},
+{s:"To separate good (full) seeds from bad (empty) ones, you can put them in water and use…",o:["Floatation","Sublimation","Distillation","Magnetism"],c:0,e:"<span class='h'>💡 Idea</span>Light/empty seeds float while heavy/full ones sink — separation by density = <b>floatation</b>.<span class='h'>✅</span>Floatation."}
+);
+
+["intro","solidsolid","solidliquid","liquids","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TUTOR GUIDE — Teaching Differentiation & Integration</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.86rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .say{background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(124,92,255,.08));border-left:3px solid var(--accent2);border-radius:0 10px 10px 0;padding:10px 14px;margin:10px 0}
+  .say b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .warnbox{border-left:3px solid var(--bad);background:rgba(239,68,68,.08);padding:8px 14px;margin:10px 0;border-radius:0 10px 10px 0;color:#ffd9d9;font-size:.95rem}
+  .checkbox{border-left:3px solid var(--good);background:rgba(34,197,94,.08);padding:8px 14px;margin:10px 0;border-radius:0 10px 10px 0;color:#cdebd6;font-size:.95rem}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  details{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:8px 0}
+  details summary{cursor:pointer;color:var(--accent2);font-weight:700}
+  details .calc{margin-top:8px}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .prob{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+  .prob .pn{display:inline-flex;min-width:28px;height:28px;align-items:center;justify-content:center;background:var(--accent);border-radius:7px;font-weight:700;margin-right:8px}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🎓 TUTOR GUIDE</h1>
+  <p>How to teach Differentiation &amp; Integration on a call</p>
+  <p class="tip">Your private companion — lesson plan, teaching scripts, error-watch, check-questions &amp; a graded practice set with full solutions</p>
+  <div><span class="pill">Pacing plan</span><span class="pill">What to say</span><span class="pill">Common mistakes</span><span class="pill">Practice + answer key</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="plan">🗺️ Lesson Plan</div>
+    <div class="tab" data-cat="teach">🎤 Teaching Scripts</div>
+    <div class="tab" data-cat="practice">✍️ Practice + Solutions</div>
+    <div class="tab" data-cat="ref">📋 Rules Reference</div>
+  </div>
+
+  <!-- =============== PLAN =============== -->
+  <section class="cat plan show" id="cat-plan">
+    <h2 class="cathead">🗺️ The Lesson Plan (≈ 90-minute call)</h2>
+
+    <div class="lesson">
+      <h3>Before you start</h3>
+      <ul>
+        <li>Ask: <b>“Have you done indices/laws of powers?”</b> Differentiation is impossible without confidence in xⁿ, x⁻¹ = 1/x, x^½ = √x. If shaky, spend 5 minutes here first.</li>
+        <li>Have both files open: send him the <b>Student Guide</b> so he follows the same examples on his screen.</li>
+        <li>Golden teaching rule: <b>you do one, he does the next.</b> Never do more than two examples before he tries one.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>Suggested running order &amp; timing</h3>
+      <table class="r">
+        <tr><th>Time</th><th>Topic</th><th>Goal</th></tr>
+        <tr><td>0–5 min</td><td>Warm-up: indices recap</td><td>He can rewrite 1/x and √x as powers</td></tr>
+        <tr><td>5–20 min</td><td>Differentiation: meaning + power rule</td><td>He differentiates any polynomial confidently</td></tr>
+        <tr><td>20–35 min</td><td>Chain rule (then product/quotient if strong)</td><td>He handles (2x+3)⁵ types</td></tr>
+        <tr><td>35–50 min</td><td>Applications: gradient, tangent, max/min</td><td>He finds & classifies turning points</td></tr>
+        <tr><td>50–70 min</td><td>Integration: reverse rule + definite integrals</td><td>He integrates & evaluates with limits</td></tr>
+        <tr><td>70–85 min</td><td>Mixed practice (from Practice tab)</td><td>He solves with you watching, not leading</td></tr>
+        <tr><td>85–90 min</td><td>Recap + assign homework</td><td>Set the quiz + 4 practice questions</td></tr>
+      </table>
+      <p class="tip">If he is doing <b>Further Maths</b>, add a second session for substitution, by parts, implicit & parametric (Student Guide → “Further Maths Extras” tab).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>The one big idea to anchor everything</h3>
+      <div class="say"><b class="t">Say this early:</b> “Differentiation and integration are <b>opposites</b> — one breaks a quantity down into its rate of change, the other builds it back up. If you can differentiate, you can integrate by running the steps backwards.”</div>
+      <p>Keep returning to this. When you teach integration, literally show him a derivative and then reverse it on screen so he <i>sees</i> they undo each other.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>How to know he actually understands (not just copying)</h3>
+      <ul>
+        <li>Change ONE number in your example and ask him to redo it.</li>
+        <li>Ask him to <b>explain the step back to you</b> (“why did the 7 disappear?”).</li>
+        <li>Give a deliberately wrong line and ask “is this right?” — see if he catches it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =============== TEACHING SCRIPTS =============== -->
+  <section class="cat teach" id="cat-teach">
+    <h2 class="cathead">🎤 Concept-by-Concept Teaching Scripts</h2>
+
+    <div class="lesson">
+      <h3>1. What differentiation MEANS (don’t skip this)</h3>
+      <div class="say"><b class="t">Open with:</b> “When you drive, the speedometer shows how fast your distance is changing each second — that <i>is</i> differentiation. We’re measuring how steep a graph is at one exact point.”</div>
+      <div class="analogy">Analogy to use: steepness of a hill. Flat ground = gradient 0; steep climb = big gradient; going downhill = negative gradient.</div>
+      <div class="checkbox"><b>Check question:</b> “If a graph is a flat horizontal line, what is its gradient?” (Answer: 0 — this primes him for why constants differentiate to 0.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The power rule — teach it as a 2-step chant</h3>
+      <div class="say"><b class="t">Say:</b> “Two moves: <b>(1) bring the power down to the front, (2) take one off the power.</b> That’s it. Say it with me.”</div>
+      <p>Do live: x³ → 3x². Then 5x⁴ → 20x³. Then ask HIM: 2x⁶ → ? (expect 12x⁵).</p>
+      <div class="warnbox"><b>Watch for these errors:</b>
+        <ul>
+          <li>Forgetting to multiply the coefficient (writes x² instead of 6x for 3x²).</li>
+          <li>Thinking d/dx of a constant is the constant (it’s 0).</li>
+          <li>Thinking d/dx of x is 0 (it’s 1).</li>
+          <li>With 1/x and √x: not rewriting as powers first. <b>Always rewrite</b> 1/x = x⁻¹ and √x = x^½ before differentiating.</li>
+        </ul>
+      </div>
+      <div class="checkbox"><b>Check questions:</b> differentiate (a) 4x³ (b) 9 (c) x (d) 1/x². Answers: 12x², 0, 1, −2/x³.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Term-by-term differentiation</h3>
+      <div class="say"><b class="t">Say:</b> “A long expression is just several small ones added. Differentiate each piece on its own and keep the + and − signs.”</div>
+      <p>Live example: y = x³ + 2x² − 5x + 7 → 3x² + 4x − 5. Emphasise the 7 vanishing.</p>
+      <div class="checkbox"><b>His turn:</b> y = 2x³ − 4x² + x − 6 → 6x² − 8x + 1.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Chain rule (the “bracket” rule)</h3>
+      <div class="say"><b class="t">Say:</b> “When there’s a bracket raised to a power, do the normal power rule on the bracket, then <b>multiply by the derivative of what’s inside</b>. Outside, then inside.”</div>
+      <p>Live: (2x+3)⁵ → 5(2x+3)⁴ × 2 = 10(2x+3)⁴. Circle the inside derivative (the 2) so he sees where it comes from.</p>
+      <div class="warnbox"><b>Top error:</b> forgetting the “× inside derivative.” Students write 5(2x+3)⁴ and stop. Drill the extra multiply.</div>
+      <div class="checkbox"><b>His turn:</b> (3x−1)⁴ → 4(3x−1)³ × 3 = 12(3x−1)³.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Product &amp; quotient rules (only if he’s solid on the above)</h3>
+      <div class="say"><b class="t">Product:</b> “u·v differentiates to u·v′ + v·u′ — ‘this times derivative of that, plus that times derivative of this.’”</div>
+      <div class="say"><b class="t">Quotient:</b> “(bottom × derivative of top − top × derivative of bottom) ÷ bottom².” Have him memorise the chant.</div>
+      <div class="warnbox"><b>Watch:</b> sign order in the quotient rule (it’s vu′ − uv′, NOT uv′ − vu′). Getting the order wrong flips the sign.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Turning points (max/min) — the exam favourite</h3>
+      <div class="say"><b class="t">Say:</b> “At the top of a hill or bottom of a valley the curve is flat for an instant, so set dy/dx = 0 to FIND the points. Then the second derivative tells you which: positive = valley (min), negative = hill (max).”</div>
+      <div class="analogy">Use the smiley/sad-face trick: min = smiley (∪, second derivative +), max = sad (∩, second derivative −).</div>
+      <p>Live: y = x³ − 3x → dy/dx = 3x² − 3 = 0 → x = ±1; d²y/dx² = 6x → x=1 min, x=−1 max.</p>
+      <div class="warnbox"><b>Watch:</b> solving 3x² − 3 = 0 — students forget x can be ±1, not just +1. Also forgetting to test with the second derivative.</div>
+      <div class="checkbox"><b>His turn:</b> y = x² − 4x + 1 → dy/dx = 2x − 4 = 0 → x = 2; second derivative = 2 (positive) → minimum.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Integration — sell it as “undo”</h3>
+      <div class="say"><b class="t">Say:</b> “Integration reverses the power rule: instead of ‘down and minus one,’ it’s <b>‘add one to the power, then divide by the new power.’</b> And because reversing isn’t unique, we add + C.”</div>
+      <p>Show the undo live: differentiate x³ → 3x²; now integrate 3x² → x³. Let him watch them cancel.</p>
+      <div class="warnbox"><b>The #1 lost mark:</b> forgetting <b>+ C</b> on indefinite integrals. Make him say “plus C” out loud every time until it’s automatic.</div>
+      <div class="checkbox"><b>His turn:</b> ∫(4x³ + 2x) dx → x⁴ + x² + C.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Definite integrals &amp; area</h3>
+      <div class="say"><b class="t">Say:</b> “With limits, integrate as normal, then plug in the top number, plug in the bottom number, and subtract. No + C — it cancels.”</div>
+      <p>Live: ∫₀² x² dx = [x³/3]₀² = 8/3 − 0 = 8/3. Stress the square brackets and the subtraction.</p>
+      <div class="warnbox"><b>Watch:</b> subtracting in the wrong order (must be top − bottom), and area below the x-axis coming out negative — mention they may need to take the modulus.</div>
+    </div>
+  </section>
+
+  <!-- =============== PRACTICE =============== -->
+  <section class="cat practice" id="cat-practice">
+    <h2 class="cathead">✍️ Practice Set (with full solutions)</h2>
+    <p class="tip">Use these live or assign as homework. Click each <b>“Show solution”</b> to reveal the full worked answer. Sections go from easy → exam-standard.</p>
+
+    <div class="lesson">
+      <h3>A. Differentiation basics</h3>
+      <div class="prob"><span class="pn">1</span>Differentiate y = 4x³ − 2x² + 7x − 9.
+        <details><summary>Show solution</summary><div class="calc">dy/dx = 12x² − 4x + 7</div>(power rule each term; the −9 vanishes.)</details></div>
+      <div class="prob"><span class="pn">2</span>Differentiate y = 5/x² (hint: rewrite as 5x⁻²).
+        <details><summary>Show solution</summary><div class="calc">y = 5x⁻² → dy/dx = −10x⁻³ = −10/x³</div></details></div>
+      <div class="prob"><span class="pn">3</span>Differentiate y = √x + 3x (hint: √x = x^½).
+        <details><summary>Show solution</summary><div class="calc">dy/dx = ½x^(−½) + 3 = 1/(2√x) + 3</div></details></div>
+    </div>
+
+    <div class="lesson">
+      <h3>B. Chain, product &amp; quotient</h3>
+      <div class="prob"><span class="pn">4</span>Differentiate y = (3x + 2)⁴.
+        <details><summary>Show solution</summary><div class="calc">dy/dx = 4(3x+2)³ × 3 = 12(3x+2)³</div></details></div>
+      <div class="prob"><span class="pn">5</span>Differentiate y = x²(2x − 1) using the product rule.
+        <details><summary>Show solution</summary>u = x², v = 2x−1, u′ = 2x, v′ = 2.<div class="calc">dy/dx = x²(2) + (2x−1)(2x) = 2x² + 4x² − 2x = 6x² − 2x</div></details></div>
+      <div class="prob"><span class="pn">6</span>Differentiate y = (x + 1)/(x − 1) using the quotient rule.
+        <details><summary>Show solution</summary>u = x+1, v = x−1, u′ = 1, v′ = 1.<div class="calc">dy/dx = [(x−1)(1) − (x+1)(1)] / (x−1)²</div><div class="calc">= (x−1−x−1)/(x−1)² = −2/(x−1)²</div></details></div>
+    </div>
+
+    <div class="lesson">
+      <h3>C. Applications</h3>
+      <div class="prob"><span class="pn">7</span>Find the gradient of y = 2x² − 5x + 1 at x = 3.
+        <details><summary>Show solution</summary><div class="calc">dy/dx = 4x − 5 → at x=3: 12 − 5 = 7</div></details></div>
+      <div class="prob"><span class="pn">8</span>Find the equation of the tangent to y = x² + 1 at (2, 5).
+        <details><summary>Show solution</summary><div class="calc">dy/dx = 2x → m = 4 at x=2</div><div class="calc">y − 5 = 4(x − 2) → y = 4x − 3</div></details></div>
+      <div class="prob"><span class="pn">9</span>Find and classify the turning points of y = x³ − 12x.
+        <details><summary>Show solution</summary><div class="calc">dy/dx = 3x² − 12 = 0 → x² = 4 → x = ±2</div><div class="calc">d²y/dx² = 6x → x=2: +12 = MIN; x=−2: −12 = MAX</div><div class="calc">y-values: at x=2, y = 8−24 = −16 (min); at x=−2, y = −8+24 = 16 (max)</div></details></div>
+      <div class="prob"><span class="pn">10</span>A particle’s displacement is s = 2t³ − 3t² + 4t. Find its velocity and acceleration at t = 2.
+        <details><summary>Show solution</summary><div class="calc">v = ds/dt = 6t² − 6t + 4 → at t=2: 24 − 12 + 4 = 16 units/s</div><div class="calc">a = dv/dt = 12t − 6 → at t=2: 24 − 6 = 18 units/s²</div></details></div>
+    </div>
+
+    <div class="lesson">
+      <h3>D. Integration</h3>
+      <div class="prob"><span class="pn">11</span>Evaluate ∫ (6x² − 4x + 5) dx.
+        <details><summary>Show solution</summary><div class="calc">= 2x³ − 2x² + 5x + C</div></details></div>
+      <div class="prob"><span class="pn">12</span>Evaluate ∫ (x³ + 1/x²) dx.
+        <details><summary>Show solution</summary>Rewrite 1/x² = x⁻².<div class="calc">= x⁴/4 + x⁻¹/(−1) + C = x⁴/4 − 1/x + C</div></details></div>
+      <div class="prob"><span class="pn">13</span>Evaluate the definite integral ∫₁² (3x²) dx.
+        <details><summary>Show solution</summary><div class="calc">∫3x² dx = x³ → [x³]₁² = 8 − 1 = 7</div></details></div>
+      <div class="prob"><span class="pn">14</span>Find the area under y = x² + 1 between x = 0 and x = 3.
+        <details><summary>Show solution</summary><div class="calc">∫₀³ (x²+1) dx = [x³/3 + x]₀³ = (9 + 3) − 0 = 12 square units</div></details></div>
+      <div class="prob"><span class="pn">15</span>Given dy/dx = 3x² − 2 and the curve passes through (1, 4), find y.
+        <details><summary>Show solution</summary><div class="calc">y = x³ − 2x + C</div><div class="calc">4 = 1 − 2 + C → C = 5 → y = x³ − 2x + 5</div></details></div>
+    </div>
+
+    <div class="lesson">
+      <h3>E. Further Maths stretch (optional)</h3>
+      <div class="prob"><span class="pn">16</span>∫ 2x(x² + 5)³ dx (substitution).
+        <details><summary>Show solution</summary>Let u = x² + 5, du = 2x dx.<div class="calc">= ∫u³ du = u⁴/4 + C = (x² + 5)⁴/4 + C</div></details></div>
+      <div class="prob"><span class="pn">17</span>∫ x·eˣ dx (by parts).
+        <details><summary>Show solution</summary>u = x (du = dx), dv = eˣ dx (v = eˣ).<div class="calc">= x·eˣ − ∫eˣ dx = x·eˣ − eˣ + C = eˣ(x − 1) + C</div></details></div>
+      <div class="prob"><span class="pn">18</span>Find dy/dx for x² + y² = 25 (implicit).
+        <details><summary>Show solution</summary><div class="calc">2x + 2y(dy/dx) = 0 → dy/dx = −x/y</div></details></div>
+    </div>
+
+    <div class="lesson">
+      <h3>📌 Homework to assign</h3>
+      <ul>
+        <li>The <b>30-question quiz</b> in the Student Guide (tell him to aim for 25+).</li>
+        <li>Re-do problems 9, 13 and 15 above from scratch on paper without looking.</li>
+        <li>Write out the standard derivatives & integrals table from memory (Rules tab).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =============== REFERENCE =============== -->
+  <section class="cat ref" id="cat-ref">
+    <h2 class="cathead">📋 Quick Rules Reference (keep on screen)</h2>
+
+    <div class="lesson">
+      <h3>Differentiation</h3>
+      <table class="r">
+        <tr><th>Function</th><th>Derivative</th></tr>
+        <tr><td>axⁿ</td><td>a·n·xⁿ⁻¹</td></tr>
+        <tr><td>constant</td><td>0</td></tr>
+        <tr><td>[f(x)]ⁿ (chain)</td><td>n[f(x)]ⁿ⁻¹ · f′(x)</td></tr>
+        <tr><td>u·v (product)</td><td>u·v′ + v·u′</td></tr>
+        <tr><td>u/v (quotient)</td><td>(v·u′ − u·v′)/v²</td></tr>
+        <tr><td>sin x / cos x / tan x</td><td>cos x / −sin x / sec²x</td></tr>
+        <tr><td>eˣ / ln x</td><td>eˣ / (1/x)</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Integration</h3>
+      <table class="r">
+        <tr><th>∫ … dx</th><th>Result</th></tr>
+        <tr><td>∫ xⁿ dx (n ≠ −1)</td><td>xⁿ⁺¹/(n+1) + C</td></tr>
+        <tr><td>∫ (1/x) dx</td><td>ln|x| + C</td></tr>
+        <tr><td>∫ cos x dx / ∫ sin x dx</td><td>sin x + C / −cos x + C</td></tr>
+        <tr><td>∫ sec²x dx</td><td>tan x + C</td></tr>
+        <tr><td>∫ eˣ dx</td><td>eˣ + C</td></tr>
+        <tr><td>∫ₐᵇ f(x) dx</td><td>F(b) − F(a)  (no C)</td></tr>
+        <tr><td>By parts</td><td>∫u dv = uv − ∫v du</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Application checklist</h3>
+      <ul>
+        <li><b>Gradient at a point:</b> find dy/dx, substitute x.</li>
+        <li><b>Tangent:</b> m = dy/dx; use y − y₁ = m(x − x₁). <b>Normal:</b> slope = −1/m.</li>
+        <li><b>Turning points:</b> dy/dx = 0 to find them; d²y/dx² sign to classify (+ min, − max).</li>
+        <li><b>Motion:</b> v = ds/dt, a = dv/dt. Reverse with integration (s = ∫v dt).</li>
+        <li><b>Area under curve:</b> ∫ₐᵇ y dx (split if it dips below the x-axis).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>Top 6 mistakes to catch on the call</h3>
+      <ol>
+        <li>Dropping the coefficient in the power rule.</li>
+        <li>Saying d/dx(constant) = constant (it’s 0).</li>
+        <li>Chain rule: forgetting “× inside derivative.”</li>
+        <li>Quotient rule sign order (vu′ − uv′).</li>
+        <li>Forgetting <b>+ C</b> on indefinite integrals.</li>
+        <li>Definite integral: subtracting bottom − top instead of top − bottom.</li>
+      </ol>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Teach one, let him try the next. Confidence grows by doing. Have a great session! 🎓</p>
+</footer>
+
+<script>
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

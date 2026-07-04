@@ -97,6 +97,12 @@ h1,h2,h3,.brand-title{font-family:'Sora',sans-serif}
 .tag-chemistry{background:rgba(124,58,237,.13);color:#6d28d9}
 .tag-english{background:rgba(22,163,74,.14);color:#15803d}
 .tag-general{background:rgba(217,119,6,.16);color:#b45309}
+.tag-biology{background:rgba(5,150,105,.15);color:#0f766e}
+.res-card{text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.res-card .res-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.res-card .res-meta{margin-top:12px;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.res-open{color:var(--pri);font-weight:700}
+.res-note{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:20px;background:rgba(217,119,6,.16);color:#b45309}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin-bottom:22px;

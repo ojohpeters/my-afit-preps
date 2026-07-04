@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.C. Circuits — Physics (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.86rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔌 A.C. Circuits</h1>
+  <p>Alternating Current — resistors, capacitors, inductors &amp; resonance, taught from zero</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">📖 A.C. Basics</div>
+    <div class="tab" data-cat="components">⚙️ R, C &amp; L</div>
+    <div class="tab" data-cat="rlc">🔗 RLC &amp; Resonance</div>
+    <div class="tab" data-cat="power">⚡ Power &amp; Uses</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- =============== BASICS =============== -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">📖 Understanding Alternating Current</h2>
+
+    <div class="lesson">
+      <h3>1. What is A.C.? (and how it differs from D.C.)</h3>
+      <ul>
+        <li><b>Direct Current (D.C.)</b> flows in <b>one direction only</b> — like from a battery. Its graph is a flat straight line.</li>
+        <li><b>Alternating Current (A.C.)</b> keeps <b>reversing direction</b>, back and forth, many times a second. Its graph is a smooth <b>sine wave</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Real life: the electricity in your wall socket is A.C. In Nigeria/UK it reverses 50 times a second (50 Hz); in the USA, 60 times a second (60 Hz). A battery in a torch is D.C.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The shape of A.C. — key words</h3>
+      <p>A.C. voltage/current follows a sine curve: <b>V = V₀ sin(2πft)</b> or <b>I = I₀ sin(ωt)</b>. The words you must know:</p>
+      <table class="r">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><b>Peak value (V₀, I₀)</b></td><td>The maximum height of the wave (amplitude).</td></tr>
+        <tr><td><b>Cycle</b></td><td>One complete up-and-down of the wave.</td></tr>
+        <tr><td><b>Period (T)</b></td><td>Time for one cycle, in seconds.</td></tr>
+        <tr><td><b>Frequency (f)</b></td><td>Number of cycles per second, in hertz (Hz). <b>f = 1/T</b>.</td></tr>
+        <tr><td><b>Angular frequency (ω)</b></td><td>ω = 2πf (radians per second).</td></tr>
+      </table>
+      <div class="ex"><b class="t">Worked example:</b> A.C. mains has f = 50 Hz. Find its period and angular frequency.
+        <div class="calc">T = 1/f = 1/50 = 0.02 s</div>
+        <div class="calc">ω = 2πf = 2 × 3.142 × 50 = 314 rad/s</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. R.M.S. and peak values (very important!)</h3>
+      <p>Because A.C. is always changing, we use an “effective” value called the <b>root-mean-square (r.m.s.)</b> value. The r.m.s. value of A.C. is the D.C. value that would give the <b>same heating effect</b>.</p>
+      <div class="formula">V<sub>rms</sub> = V₀ / √2 = 0.707 V₀ &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>rms</sub> = I₀ / √2</div>
+      <div class="formula">V₀ = √2 × V<sub>rms</sub> &nbsp;(peak = 1.414 × rms)</div>
+      <p class="tip">⚠️ When we say “the mains is 220 V,” that 220 V is the <b>r.m.s.</b> value. Its actual peak is much higher!</p>
+      <div class="ex"><b class="t">Worked example:</b> Mains r.m.s. voltage is 220 V. Find the peak voltage.
+        <div class="calc">V₀ = √2 × 220 = 1.414 × 220 = 311 V</div>
+      </div>
+      <div class="ex"><b class="t">Worked example 2:</b> An A.C. has peak current 4 A. Find the r.m.s. current.
+        <div class="calc">I<sub>rms</sub> = I₀/√2 = 4/1.414 = 2.83 A</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Why is A.C. used for mains supply?</h3>
+      <ul>
+        <li>A.C. voltage can be easily <b>stepped up or down</b> using a <b>transformer</b> (D.C. cannot).</li>
+        <li>High voltage = low current for transmission → <b>less energy lost</b> as heat in the cables.</li>
+        <li>It is cheaper to generate with rotating generators (alternators).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =============== COMPONENTS =============== -->
+  <section class="cat components" id="cat-components">
+    <h2 class="cathead">⚙️ R, C and L in A.C. Circuits</h2>
+
+    <div class="lesson">
+      <h3>1. The big idea: opposition to A.C. = "impedance"</h3>
+      <p>In D.C. the only opposition is <b>resistance (R)</b>. In A.C., capacitors and inductors also oppose the current — this A.C. opposition is called <b>reactance (X)</b>. The total combined opposition is called <b>impedance (Z)</b>, all measured in <b>ohms (Ω)</b>.</p>
+      <div class="analogy">💡 Think of impedance as the "A.C. version of resistance" — it controls the current using Ohm’s law for A.C.: <b>V = I × Z</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Pure RESISTOR in A.C.</h3>
+      <div class="principle formula">Opposition = R (just normal resistance). Voltage and current are IN PHASE (rise and fall together).</div>
+      <p>A resistor behaves the same in A.C. as in D.C. — no phase shift. Ohm’s law applies directly: V<sub>rms</sub> = I<sub>rms</sub> × R.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Pure CAPACITOR in A.C. — capacitive reactance</h3>
+      <div class="formula">X<sub>C</sub> = 1 / (2πfC) = 1/(ωC)</div>
+      <ul>
+        <li>A capacitor’s opposition is called <b>capacitive reactance (X<sub>C</sub>)</b>, in ohms.</li>
+        <li><b>Higher frequency → smaller X<sub>C</sub></b> (capacitor passes high frequencies more easily).</li>
+        <li>Phase: in a capacitor, the <b>current LEADS the voltage by 90°</b> (current peaks a quarter-cycle before voltage). Memory: “<b>ICE</b>” → in a Capacitor (C), I leads E(voltage).</li>
+      </ul>
+      <div class="ex"><b class="t">Worked example:</b> A 50 µF capacitor in a 50 Hz circuit. Find X<sub>C</sub>.
+        <div class="calc">X<sub>C</sub> = 1/(2πfC) = 1/(2 × 3.142 × 50 × 50×10⁻⁶)</div>
+        <div class="calc">= 1/(0.0157) = 63.7 Ω</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Pure INDUCTOR in A.C. — inductive reactance</h3>
+      <div class="formula">X<sub>L</sub> = 2πfL = ωL</div>
+      <ul>
+        <li>An inductor (coil) opposes A.C. with <b>inductive reactance (X<sub>L</sub>)</b>, in ohms.</li>
+        <li><b>Higher frequency → larger X<sub>L</sub></b> (inductor blocks high frequencies).</li>
+        <li>Phase: in an inductor, the <b>voltage LEADS the current by 90°</b> (current lags). Memory: “<b>ELI</b>” → in an inductor (L), E(voltage) leads I.</li>
+      </ul>
+      <div class="analogy">🧠 Memory sentence: <b>“ELI the ICE man.”</b> ELI = in inductor(L), voltage(E) before current(I). ICE = in capacitor(C), current(I) before voltage(E).</div>
+      <div class="ex"><b class="t">Worked example:</b> A 0.2 H inductor at 50 Hz. Find X<sub>L</sub>.
+        <div class="calc">X<sub>L</sub> = 2πfL = 2 × 3.142 × 50 × 0.2 = 62.8 Ω</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Quick comparison</h3>
+      <table class="r">
+        <tr><th>Component</th><th>Opposition</th><th>Formula</th><th>Phase (current vs voltage)</th><th>High frequency effect</th></tr>
+        <tr><td>Resistor (R)</td><td>Resistance</td><td>R</td><td>In phase</td><td>No change</td></tr>
+        <tr><td>Capacitor (C)</td><td>Capacitive reactance</td><td>1/(2πfC)</td><td>Current leads by 90° (ICE)</td><td>Reactance falls</td></tr>
+        <tr><td>Inductor (L)</td><td>Inductive reactance</td><td>2πfL</td><td>Current lags by 90° (ELI)</td><td>Reactance rises</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- =============== RLC =============== -->
+  <section class="cat rlc" id="cat-rlc">
+    <h2 class="cathead">🔗 Series RLC Circuits &amp; Resonance</h2>
+
+    <div class="lesson">
+      <h3>1. Impedance of a series RLC circuit</h3>
+      <p>When R, L and C are in series, they don’t simply add — because L and C are 90° out of phase with R (and opposite to each other). We combine them with a right-angled (Pythagoras) formula:</p>
+      <div class="formula">Z = √[ R² + (X<sub>L</sub> − X<sub>C</sub>)² ]</div>
+      <p>Then the current comes from A.C. Ohm’s law:</p>
+      <div class="formula">I<sub>rms</sub> = V<sub>rms</sub> / Z</div>
+      <div class="ex"><b class="t">Worked example:</b> R = 30 Ω, X<sub>L</sub> = 80 Ω, X<sub>C</sub> = 40 Ω. Find Z.
+        <div class="calc">X<sub>L</sub> − X<sub>C</sub> = 80 − 40 = 40 Ω</div>
+        <div class="calc">Z = √(30² + 40²) = √(900 + 1600) = √2500 = 50 Ω</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Phase angle &amp; power factor</h3>
+      <div class="formula">tan φ = (X<sub>L</sub> − X<sub>C</sub>) / R &nbsp;&nbsp;|&nbsp;&nbsp; power factor = cos φ = R / Z</div>
+      <ul>
+        <li>φ (phi) is the phase angle between voltage and current.</li>
+        <li>If X<sub>L</sub> &gt; X<sub>C</sub> → circuit is <b>inductive</b> (current lags).</li>
+        <li>If X<sub>C</sub> &gt; X<sub>L</sub> → circuit is <b>capacitive</b> (current leads).</li>
+      </ul>
+      <div class="ex"><b class="t">From the example above</b> (R=30, Z=50): power factor = R/Z = 30/50 = <b>0.6</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Resonance (the star topic!)</h3>
+      <p><b>Resonance</b> happens when the inductor and capacitor exactly cancel out: <b>X<sub>L</sub> = X<sub>C</sub></b>. At that special frequency:</p>
+      <ul>
+        <li>The (X<sub>L</sub> − X<sub>C</sub>) term becomes 0, so <b>Z = R</b> (impedance is at its MINIMUM).</li>
+        <li>Since Z is smallest, the <b>current is at its MAXIMUM</b>.</li>
+        <li>The circuit behaves as if purely resistive → <b>voltage and current are in phase</b> (power factor = 1).</li>
+      </ul>
+      <div class="formula">At resonance: X<sub>L</sub> = X<sub>C</sub> &nbsp;⇒&nbsp; f₀ = 1 / (2π√(LC))</div>
+      <div class="analogy">🌟 Real life: this is how a radio is TUNED — you adjust C so the circuit resonates at one station’s frequency, giving maximum current for just that station.</div>
+      <div class="ex"><b class="t">Worked example:</b> Find the resonant frequency for L = 2 H and C = 8 µF.
+        <div class="calc">f₀ = 1/(2π√(LC)) = 1/(2π√(2 × 8×10⁻⁶))</div>
+        <div class="calc">√(16×10⁻⁶) = 4×10⁻³ → f₀ = 1/(2π × 0.004) = 1/0.02513 ≈ 39.8 Hz</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== POWER =============== -->
+  <section class="cat power" id="cat-power">
+    <h2 class="cathead">⚡ Power in A.C. &amp; Real-Life Uses</h2>
+
+    <div class="lesson">
+      <h3>1. Real power in an A.C. circuit</h3>
+      <p>In D.C., power = VI. In A.C., because voltage and current can be out of phase, the true (average) power is:</p>
+      <div class="formula">P = V<sub>rms</sub> × I<sub>rms</sub> × cos φ</div>
+      <p>The term <b>cos φ</b> is the <b>power factor</b>. Only the resistor uses up real power; a pure capacitor or pure inductor uses <b>zero average power</b> (they store and return energy each cycle).</p>
+      <div class="ex"><b class="t">Worked example:</b> V<sub>rms</sub> = 200 V, I<sub>rms</sub> = 5 A, power factor = 0.8. Find the real power.
+        <div class="calc">P = 200 × 5 × 0.8 = 800 W</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Power in a purely resistive A.C. circuit</h3>
+      <p>If the circuit is only a resistor, φ = 0 and cos φ = 1, so:</p>
+      <div class="formula">P = V<sub>rms</sub> × I<sub>rms</sub> = I<sub>rms</sub>² R</div>
+      <div class="ex"><b class="t">Example:</b> I<sub>rms</sub> = 3 A through R = 20 Ω → P = 3² × 20 = 180 W.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Wattless (reactive) current</h3>
+      <p>The current component that is 90° out of phase with the voltage (through pure L or C) delivers <b>no real power</b> — it is called <b>wattless current</b>. That is why an ideal capacitor/inductor consumes no energy on average.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Transformers (a key A.C. device)</h3>
+      <p>A transformer changes A.C. voltage using two coils. For an ideal transformer:</p>
+      <div class="formula">V<sub>s</sub>/V<sub>p</sub> = N<sub>s</sub>/N<sub>p</sub> &nbsp;&nbsp;and&nbsp;&nbsp; V<sub>p</sub>I<sub>p</sub> = V<sub>s</sub>I<sub>s</sub></div>
+      <ul>
+        <li><b>Step-up:</b> more turns on secondary → higher voltage (used to send power over long distances).</li>
+        <li><b>Step-down:</b> fewer turns on secondary → lower voltage (used to power home appliances).</li>
+        <li>Transformers work on A.C. ONLY (they need a changing magnetic field).</li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> Primary 240 V, 1000 turns; secondary 100 turns. Secondary voltage?
+        <div class="calc">V<sub>s</sub> = V<sub>p</sub> × (N<sub>s</sub>/N<sub>p</sub>) = 240 × (100/1000) = 24 V (step-down)</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Measuring A.C.</h3>
+      <ul>
+        <li>A.C. is measured with instruments that respond to r.m.s. values (e.g. a hot-wire ammeter or an a.c. moving-iron meter).</li>
+        <li>A <b>moving-coil</b> galvanometer alone reads zero for pure A.C. (the needle can’t follow the fast reversals) — it needs a rectifier first.</li>
+        <li>A <b>C.R.O. (oscilloscope)</b> shows the actual wave shape and lets you read the peak value and period.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- =============== QUIZ =============== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Remember ELI the ICE man, and resonance = max current. You’ve got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Alternating current (A.C.) differs from direct current (D.C.) because A.C.…",o:["Flows in one direction only","Periodically reverses its direction","Cannot flow through wires","Has no frequency"],c:1,e:"<span class='h'>💡 Idea</span>A.C. keeps reversing direction (a sine wave), while D.C. flows one way only (a battery).<span class='h'>✅</span>Periodically reverses its direction."},
+{s:"The number of complete cycles an A.C. makes per second is its…",o:["Period","Amplitude","Frequency","Phase"],c:2,e:"<span class='h'>💡 Idea</span>Cycles per second = frequency (in hertz, Hz). Time for one cycle = period.<span class='h'>✅</span>Frequency."},
+{s:"If the frequency of an A.C. supply is 50 Hz, its period is…",o:["50 s","0.02 s","0.5 s","5 s"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>T = 1/f = 1/50 = 0.02 s</span><span class='h'>✅</span>0.02 s."},
+{s:"The angular frequency ω of a 50 Hz supply is about…",o:["50 rad/s","100 rad/s","314 rad/s","25 rad/s"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>ω = 2πf = 2 × 3.142 × 50 = 314 rad/s</span><span class='h'>✅</span>314 rad/s."},
+{s:"The r.m.s. value of an alternating current is the value that…",o:["Is the same as the peak value","Gives the same heating effect as an equal D.C.","Is always zero","Is twice the peak value"],c:1,e:"<span class='h'>💡 Idea</span>R.m.s. = the effective value; it produces the same heating (power) as a steady D.C. of that value.<span class='h'>✅</span>Same heating effect as an equal D.C."},
+{s:"The relationship between peak (V₀) and r.m.s. voltage is…",o:["V_rms = V₀","V_rms = V₀/√2","V_rms = 2V₀","V_rms = V₀²"],c:1,e:"<span class='h'>💡 Idea</span>For a sine wave, r.m.s. = peak ÷ √2 ≈ 0.707 × peak.<span class='h'>✅</span>V_rms = V₀/√2."},
+{s:"If mains r.m.s. voltage is 220 V, the peak voltage is about…",o:["220 V","156 V","311 V","440 V"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>V₀ = √2 × V_rms = 1.414 × 220 = 311 V</span><span class='h'>✅</span>311 V."},
+{s:"An A.C. has a peak current of 4 A. Its r.m.s. current is about…",o:["4 A","5.66 A","2.83 A","8 A"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>I_rms = I₀/√2 = 4/1.414 = 2.83 A</span><span class='h'>✅</span>2.83 A."},
+{s:"When we say the mains supply is '220 V', this value is the…",o:["Peak value","R.m.s. value","Average value","Instantaneous value"],c:1,e:"<span class='h'>💡 Idea</span>Quoted mains voltages are always r.m.s. values (the peak is higher, ~311 V).<span class='h'>✅</span>R.m.s. value."},
+{s:"In a purely RESISTIVE A.C. circuit, the voltage and current are…",o:["90° out of phase","In phase","180° out of phase","45° out of phase"],c:1,e:"<span class='h'>💡 Idea</span>A resistor causes no phase shift — V and I rise and fall together (in phase).<span class='h'>✅</span>In phase."},
+{s:"The opposition offered by a capacitor to A.C. is called…",o:["Resistance","Capacitive reactance","Inductance","Conductance"],c:1,e:"<span class='h'>💡 Idea</span>A capacitor’s A.C. opposition is capacitive reactance, X_C, in ohms.<span class='h'>✅</span>Capacitive reactance."},
+{s:"Capacitive reactance X_C is given by…",o:["2πfC","1/(2πfC)","2πfL","fC"],c:1,e:"<span class='h'>💡 Idea</span>X_C = 1/(2πfC). Higher frequency → smaller reactance (capacitor passes high f).<span class='h'>✅</span>1/(2πfC)."},
+{s:"Find X_C for a 50 µF capacitor at 50 Hz.",o:["63.7 Ω","0.0157 Ω","314 Ω","31.4 Ω"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>X_C = 1/(2πfC) = 1/(2×3.142×50×50×10⁻⁶)</span><span class='calc'>= 1/0.0157 = 63.7 Ω</span><span class='h'>✅</span>63.7 Ω."},
+{s:"In a pure capacitor, the current…",o:["Leads the voltage by 90°","Lags the voltage by 90°","Is in phase with voltage","Is zero"],c:0,e:"<span class='h'>💡 Idea</span>Remember 'ICE': in a Capacitor (C), I (current) leads E (voltage) by 90°.<span class='h'>✅</span>Leads the voltage by 90°."},
+{s:"Inductive reactance X_L is given by…",o:["1/(2πfL)","2πfL","2πfC","L/f"],c:1,e:"<span class='h'>💡 Idea</span>X_L = 2πfL. Higher frequency → bigger reactance (inductor blocks high f).<span class='h'>✅</span>2πfL."},
+{s:"Find X_L for a 0.2 H inductor at 50 Hz.",o:["62.8 Ω","6.28 Ω","0.0159 Ω","628 Ω"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>X_L = 2πfL = 2×3.142×50×0.2 = 62.8 Ω</span><span class='h'>✅</span>62.8 Ω."},
+{s:"In a pure inductor, the current…",o:["Leads the voltage by 90°","Lags the voltage by 90°","Is in phase","Is doubled"],c:1,e:"<span class='h'>💡 Idea</span>Remember 'ELI': in an inductor (L), E (voltage) leads I (current), so current LAGS by 90°.<span class='h'>✅</span>Lags the voltage by 90°."},
+{s:"As frequency increases, the reactance of an inductor…",o:["Decreases","Increases","Stays constant","Becomes zero"],c:1,e:"<span class='h'>💡 Idea</span>X_L = 2πfL, so X_L rises with frequency — inductors block high frequencies.<span class='h'>✅</span>Increases."},
+{s:"As frequency increases, the reactance of a capacitor…",o:["Increases","Decreases","Stays constant","Becomes infinite"],c:1,e:"<span class='h'>💡 Idea</span>X_C = 1/(2πfC), so as f rises X_C falls — capacitors pass high frequencies.<span class='h'>✅</span>Decreases."},
+{s:"The total opposition to current in an A.C. circuit (combining R and reactance) is called…",o:["Resistance","Impedance","Conductance","Capacitance"],c:1,e:"<span class='h'>💡 Idea</span>The combined A.C. opposition is impedance, Z, measured in ohms. A.C. Ohm’s law: V = IZ.<span class='h'>✅</span>Impedance."},
+{s:"For a series RLC circuit, the impedance Z is…",o:["R + X_L + X_C","√[R² + (X_L − X_C)²]","R × X_L × X_C","(X_L − X_C)/R"],c:1,e:"<span class='h'>💡 Idea</span>R and reactance are 90° apart, so they combine by Pythagoras: Z = √[R² + (X_L − X_C)²].<span class='h'>✅</span>√[R² + (X_L − X_C)²]."},
+{s:"In a series circuit, R = 30 Ω, X_L = 80 Ω, X_C = 40 Ω. Find Z.",o:["150 Ω","50 Ω","110 Ω","70 Ω"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>X_L − X_C = 80 − 40 = 40</span><span class='calc'>Z = √(30² + 40²) = √2500 = 50 Ω</span><span class='h'>✅</span>50 Ω."},
+{s:"For that circuit (R = 30 Ω, Z = 50 Ω), the power factor (cos φ) is…",o:["0.6","0.8","1.0","0.5"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>power factor = R/Z = 30/50 = 0.6</span><span class='h'>✅</span>0.6."},
+{s:"Resonance in a series RLC circuit occurs when…",o:["X_L = X_C","R = 0","X_L = R","f = 0"],c:0,e:"<span class='h'>💡 Idea</span>At resonance the inductive and capacitive reactances cancel: X_L = X_C.<span class='h'>✅</span>X_L = X_C."},
+{s:"At resonance, the impedance of a series RLC circuit is…",o:["Maximum","Zero","Minimum (equal to R)","Infinite"],c:2,e:"<span class='h'>💡 Idea</span>Since X_L − X_C = 0, Z = √(R²) = R, which is the smallest possible value.<span class='h'>✅</span>Minimum (equal to R)."},
+{s:"At resonance, the current in a series RLC circuit is…",o:["Zero","Minimum","Maximum","Unchanged"],c:2,e:"<span class='h'>💡 Idea</span>Impedance is smallest at resonance, so by I = V/Z the current is at its MAXIMUM.<span class='h'>✅</span>Maximum."},
+{s:"The resonant frequency of an RLC circuit is given by…",o:["1/(2π√(LC))","2π√(LC)","1/(2πLC)","√(LC)/2π"],c:0,e:"<span class='h'>💡 Idea</span>Setting X_L = X_C and solving gives f₀ = 1/(2π√(LC)).<span class='h'>✅</span>1/(2π√(LC))."},
+{s:"The real power used in an A.C. circuit is P =…",o:["V_rms × I_rms","V_rms × I_rms × cos φ","V₀ × I₀","V_rms / I_rms"],c:1,e:"<span class='h'>💡 Idea</span>Because V and I may be out of phase, true power = V_rms × I_rms × power factor (cos φ).<span class='h'>✅</span>V_rms × I_rms × cos φ."},
+{s:"A pure inductor or pure capacitor in an A.C. circuit consumes an average power of…",o:["Maximum","Zero","Half of VI","Equal to I²R"],c:1,e:"<span class='h'>💡 Idea</span>They store energy then return it each cycle (current is 90° out of phase), so average real power = 0 (wattless).<span class='h'>✅</span>Zero."},
+{s:"A transformer works on A.C. but NOT on steady D.C. because it needs…",o:["A very high current","A changing (alternating) magnetic field","A large resistance","A capacitor"],c:1,e:"<span class='h'>💡 Idea</span>Transformers work by electromagnetic induction, which needs a CHANGING magnetic field — steady D.C. gives a constant field, so no induction.<span class='h'>✅</span>A changing (alternating) magnetic field."}
+);
+
+["basics","components","rlc","power","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

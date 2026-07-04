@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principle of Moments — Physics (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.88rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>⚖️ Principle of Moments</h1>
+  <p>The turning effect of forces — taught from zero, step by step</p>
+  <p class="tip">For PrepIQ · Secondary school &amp; Post-UTME level · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">📖 What is a Moment</div>
+    <div class="tab" data-cat="principle">⚖️ The Principle</div>
+    <div class="tab" data-cat="worked">🧮 Worked Examples</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ================= BASICS ================= -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">📖 Understanding Moments (Turning Effect of a Force)</h2>
+
+    <div class="lesson">
+      <h3>1. What is a moment?</h3>
+      <p>A <b>moment</b> is the <b>turning effect of a force</b> about a point (called the <b>pivot</b> or fulcrum). Whenever a force makes something <b>rotate, turn, or tip</b>, it is producing a moment.</p>
+      <div class="analogy">🌟 Real life: pushing a door open, turning a spanner on a nut, a seesaw going up and down, opening a bottle cap, using scissors — all of these are moments in action.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The formula for a moment</h3>
+      <div class="formula">Moment = Force × perpendicular distance from the pivot</div>
+      <div class="formula">M = F × d</div>
+      <ul>
+        <li><b>M</b> = moment, measured in <b>newton-metre (N m)</b></li>
+        <li><b>F</b> = the force, in newtons (N)</li>
+        <li><b>d</b> = the <b>perpendicular</b> distance from the pivot to the line of the force, in metres (m)</li>
+      </ul>
+      <p>So a moment gets <b>bigger</b> if you use a <b>bigger force</b> OR if you apply it <b>further from the pivot</b>.</p>
+      <div class="ex"><b class="t">Worked example:</b> A force of 20 N acts 0.5 m from a pivot. Find the moment.
+        <div class="calc">M = F × d = 20 × 0.5 = 10 N m</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Why distance matters so much (the spanner trick)</h3>
+      <p>The same force gives a bigger turning effect when applied further from the pivot. That is why:</p>
+      <ul>
+        <li>A <b>long spanner</b> loosens a tight nut more easily than a short one.</li>
+        <li>A door handle is placed <b>far from the hinge</b> — push near the hinge and the door barely moves.</li>
+        <li>A child can lift a heavier adult on a seesaw by sitting <b>further out</b>.</li>
+      </ul>
+      <div class="analogy">💡 Memory hook: "Big force OR long arm = big turn." Double the distance → double the moment.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Clockwise and anticlockwise moments</h3>
+      <p>A force can turn an object two ways about the pivot:</p>
+      <ul>
+        <li><b>Clockwise moment</b> — turns it like a clock’s hands (to the right / downward on the right side).</li>
+        <li><b>Anticlockwise moment</b> — turns it the opposite way (to the left / downward on the left side).</li>
+      </ul>
+      <p>On a seesaw, weight on the <b>right</b> of the pivot turns it <b>clockwise</b>; weight on the <b>left</b> turns it <b>anticlockwise</b>. These two fight against each other — and that fight is the heart of the principle of moments.</p>
+    </div>
+  </section>
+
+  <!-- ================= PRINCIPLE ================= -->
+  <section class="cat principle" id="cat-principle">
+    <h2 class="cathead">⚖️ The Principle of Moments</h2>
+
+    <div class="lesson">
+      <h3>1. The statement (memorise this)</h3>
+      <div class="principle formula">When a body is in equilibrium (balanced), the sum of CLOCKWISE moments about any point = the sum of ANTICLOCKWISE moments about that point.</div>
+      <p>In short:</p>
+      <div class="formula">Total clockwise moments = Total anticlockwise moments</div>
+      <p><b>“In equilibrium”</b> means the body is balanced — it is not turning. Think of a seesaw resting level, or a beam balance that has settled.</p>
+      <div class="analogy">🌟 Picture two children on a seesaw sitting perfectly still and level. The one on the left tries to turn it anticlockwise; the one on the right tries to turn it clockwise. They balance because their moments are equal.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The two conditions for equilibrium</h3>
+      <p>For an object to be in complete (static) equilibrium, BOTH must be true:</p>
+      <ul>
+        <li><b>① Sum of forces = 0</b> (forces up = forces down; forces left = forces right). The body does not move off in any direction.</li>
+        <li><b>② Sum of moments = 0</b> (clockwise = anticlockwise). The body does not rotate.</li>
+      </ul>
+      <p>Condition ① is the <b>principle of moments’ partner</b> — it’s how you find support/reaction forces (see worked examples).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. How to SOLVE any moments problem (4 easy steps)</h3>
+      <table class="r">
+        <tr><th>Step</th><th>What to do</th></tr>
+        <tr><td>1</td><td>Find the <b>pivot</b> (the turning point / support / fulcrum).</td></tr>
+        <tr><td>2</td><td>List every force and its <b>perpendicular distance</b> from the pivot.</td></tr>
+        <tr><td>3</td><td>Work out each moment (F × d) and label it <b>clockwise</b> or <b>anticlockwise</b>.</td></tr>
+        <tr><td>4</td><td>Set <b>clockwise = anticlockwise</b> and solve for the unknown.</td></tr>
+      </table>
+      <p class="tip">Tip: a force acting <b>at the pivot</b> has zero distance, so its moment is zero — it doesn’t affect balance. Smart students take moments about a point where an unknown force acts, so that unknown cancels out.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Centre of gravity &amp; uniform objects</h3>
+      <p>The <b>centre of gravity (c.g.)</b> is the single point where the whole weight of an object seems to act. For a <b>uniform</b> rod or metre rule, the c.g. is at the <b>middle (centre)</b>. So in problems, hang the rod’s weight at its midpoint (the 50 cm mark for a metre rule).</p>
+      <div class="analogy">💡 If a uniform metre rule is balanced at its centre, its own weight acts right at the pivot → its moment is zero → you can ignore the rod’s weight in that case.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. A couple (bonus)</h3>
+      <p>A <b>couple</b> is two equal, parallel forces acting in <b>opposite directions</b> but not along the same line — they produce pure turning (rotation) with no overall movement.</p>
+      <div class="formula">Moment of a couple = Force × perpendicular distance between the two forces</div>
+      <div class="ex"><b class="t">Example:</b> turning a steering wheel or tap with both hands pushing opposite ways.</div>
+    </div>
+  </section>
+
+  <!-- ================= WORKED EXAMPLES ================= -->
+  <section class="cat worked" id="cat-worked">
+    <h2 class="cathead">🧮 Fully Worked Examples</h2>
+
+    <div class="lesson">
+      <h3>Example 1 — Balancing a seesaw (find the force)</h3>
+      <p>A child of weight 300 N sits 2 m to the LEFT of the pivot. Where another person sits 3 m to the RIGHT, what weight will balance the seesaw?</p>
+      <div class="ex">
+        <b class="t">Solution:</b>
+        <div class="calc">Anticlockwise moment (left child) = 300 × 2 = 600 N m</div>
+        <div class="calc">Clockwise moment (right person) = F × 3</div>
+        <div class="calc">Balance: 600 = F × 3 → F = 600 ÷ 3 = 200 N</div>
+        <b>Answer: 200 N.</b> (Notice: sitting further out, the person needs LESS weight to balance.)
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>Example 2 — Metre rule (find an unknown weight)</h3>
+      <p>A light (weightless) metre rule is pivoted at its centre (50 cm mark). A 2 N weight hangs at the 20 cm mark. What weight at the 90 cm mark balances it?</p>
+      <div class="ex">
+        <b class="t">Solution:</b> distances are measured FROM the pivot (50 cm).
+        <div class="calc">Left weight distance = 50 − 20 = 30 cm</div>
+        <div class="calc">Right weight distance = 90 − 50 = 40 cm</div>
+        <div class="calc">Anticlockwise = 2 × 30 = 60 (N·cm)</div>
+        <div class="calc">Clockwise = W × 40</div>
+        <div class="calc">60 = 40W → W = 60 ÷ 40 = 1.5 N</div>
+        <b>Answer: 1.5 N.</b> (Units of distance cancel as long as both sides use the same unit — cm is fine here.)
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>Example 3 — Heavy (uniform) rule with its own weight</h3>
+      <p>A uniform metre rule weighing 1 N is pivoted at the 30 cm mark. A 4 N weight hangs at the 10 cm mark. Find the single force needed at the 100 cm end to balance it.</p>
+      <div class="ex">
+        <b class="t">Solution:</b> The rule’s own weight (1 N) acts at its centre, the 50 cm mark. Take moments about the pivot (30 cm).
+        <div class="calc">4 N at 10 cm → distance = 30 − 10 = 20 cm (anticlockwise) → 4 × 20 = 80</div>
+        <div class="calc">1 N rule weight at 50 cm → distance = 50 − 30 = 20 cm (clockwise) → 1 × 20 = 20</div>
+        <div class="calc">Unknown F at 100 cm → distance = 100 − 30 = 70 cm (clockwise) → F × 70</div>
+        <div class="calc">Anticlockwise = Clockwise: 80 = 20 + 70F</div>
+        <div class="calc">80 − 20 = 70F → 60 = 70F → F = 0.857 N ≈ 0.86 N</div>
+        <b>Answer: ≈ 0.86 N.</b> (Always remember to include the rule’s own weight at its centre when it is NOT pivoted at the centre.)
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>Example 4 — Finding a support (reaction) force</h3>
+      <p>A uniform beam of weight 100 N and length 4 m rests on two supports, one at each end (A on the left, B on the right). A 60 N load sits 1 m from end A. Find the reaction force at each support.</p>
+      <div class="ex">
+        <b class="t">Solution:</b> Take moments about A (so the unknown at A cancels). The beam’s 100 N acts at its centre (2 m from A).
+        <div class="calc">Clockwise about A: (60 × 1) + (100 × 2) = 60 + 200 = 260 N m</div>
+        <div class="calc">Anticlockwise about A: reaction at B × 4 m = R_B × 4</div>
+        <div class="calc">R_B × 4 = 260 → R_B = 65 N</div>
+        Now use condition ① (forces balance): total up = total down.
+        <div class="calc">R_A + R_B = 100 + 60 = 160</div>
+        <div class="calc">R_A = 160 − 65 = 95 N</div>
+        <b>Answer: R_A = 95 N, R_B = 65 N.</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>Example 5 — Find the pivot position</h3>
+      <p>A uniform 0.8 m plank balances when a 5 N weight is hung at one end and a 3 N weight at the other. The plank is light. How far from the 5 N end is the pivot?</p>
+      <div class="ex">
+        <b class="t">Solution:</b> Let the pivot be x metres from the 5 N end. Then it is (0.8 − x) from the 3 N end.
+        <div class="calc">5 × x = 3 × (0.8 − x)</div>
+        <div class="calc">5x = 2.4 − 3x</div>
+        <div class="calc">5x + 3x = 2.4 → 8x = 2.4 → x = 0.3 m</div>
+        <b>Answer: 0.3 m from the 5 N end.</b> (The pivot sits closer to the heavier weight — that makes sense!)
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Quick exam reminders</h3>
+      <ul>
+        <li>Distance must be the <b>perpendicular</b> distance from the pivot to the force.</li>
+        <li>Measure all distances <b>from the pivot</b>, not from the end of the rule.</li>
+        <li>For a uniform rule/beam, put its <b>weight at the centre</b>.</li>
+        <li>Forces acting <b>at the pivot</b> give zero moment.</li>
+        <li>For full equilibrium use BOTH: moments balance AND forces balance.</li>
+        <li>Unit of moment is <b>N m</b> (newton-metre) — never just N.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Find the pivot, balance the moments — and you’ll never miss one. You’ve got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"The moment of a force is best defined as the…",o:["Force times the mass","Turning effect of a force about a point","Push of a force in a straight line","Force divided by distance"],c:1,e:"<span class='h'>💡 Idea</span>A moment is the <b>turning/rotating effect</b> of a force about a pivot — like a force opening a door.<span class='h'>✅</span>Turning effect of a force about a point."},
+{s:"The formula for the moment of a force is…",o:["Force ÷ distance","Force × perpendicular distance from pivot","Force + distance","Mass × distance"],c:1,e:"<span class='h'>💡 Idea</span>Moment = <b>F × d</b>, where d is the perpendicular distance from the pivot.<span class='h'>✅</span>Force × perpendicular distance from pivot."},
+{s:"The SI unit of moment of a force is the…",o:["Newton (N)","Joule (J)","Newton-metre (N m)","Watt (W)"],c:2,e:"<span class='h'>💡 Idea</span>Since moment = force (N) × distance (m), its unit is <b>newton-metre (N m)</b>. (It looks like the joule but it is a turning effect, not energy.)<span class='h'>✅</span>Newton-metre (N m)."},
+{s:"A force of 20 N acts at a perpendicular distance of 0.5 m from a pivot. The moment is…",o:["40 N m","10 N m","20.5 N m","0.025 N m"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>M = F × d = 20 × 0.5 = 10 N m</span><span class='h'>✅</span>10 N m."},
+{s:"The principle of moments states that for a body in equilibrium…",o:["All forces are zero","Sum of clockwise moments = sum of anticlockwise moments","Clockwise moments are greater","Moments add up to the weight"],c:1,e:"<span class='h'>💡 Idea</span>A balanced body isn’t turning, so the clockwise turning exactly equals the anticlockwise turning.<span class='h'>✅</span>Sum of clockwise moments = sum of anticlockwise moments."},
+{s:"Why does a longer spanner loosen a tight nut more easily?",o:["It is heavier","It applies the force at a greater distance, giving a bigger moment","It reduces the force needed to zero","It changes the nut's mass"],c:1,e:"<span class='h'>💡 Idea</span>Moment = F × d. A longer arm (bigger d) gives a bigger turning effect for the same force.<span class='h'>✅</span>Greater distance → bigger moment."},
+{s:"A child weighing 300 N sits 2 m from the pivot of a seesaw. What moment does she produce?",o:["150 N m","302 N m","600 N m","6 N m"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>M = F × d = 300 × 2 = 600 N m</span><span class='h'>✅</span>600 N m."},
+{s:"On a balanced seesaw, a 400 N child sits 1.5 m left of the pivot. A child sits 2 m right. What is the right child's weight?",o:["300 N","533 N","600 N","250 N"],c:0,e:"<span class='h'>✏️ Working</span>Anticlockwise = Clockwise:<span class='calc'>400 × 1.5 = F × 2</span><span class='calc'>600 = 2F → F = 300 N</span><span class='h'>✅</span>300 N."},
+{s:"A light metre rule is pivoted at its centre. A 2 N weight hangs 30 cm from the pivot. What force 40 cm from the pivot on the other side balances it?",o:["2.67 N","1.5 N","60 N","0.67 N"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>2 × 30 = F × 40</span><span class='calc'>60 = 40F → F = 1.5 N</span><span class='h'>✅</span>1.5 N (further out needs less force)."},
+{s:"For a body to be in COMPLETE equilibrium, which two conditions must hold?",o:["Only moments balance","Only forces balance","Forces balance AND moments balance","Mass equals weight"],c:2,e:"<span class='h'>💡 Idea</span>It must neither move (forces balance, ΣF = 0) nor rotate (moments balance, ΣM = 0).<span class='h'>✅</span>Forces balance AND moments balance."},
+{s:"A force acting exactly AT the pivot produces a moment of…",o:["Maximum value","Zero","Equal to the force","Negative"],c:1,e:"<span class='h'>💡 Idea</span>Moment = F × d, and at the pivot the distance d = 0, so the moment = <b>0</b>.<span class='h'>✅</span>Zero."},
+{s:"In moment problems, the distance used must be the…",o:["Distance from the end of the rule","Perpendicular distance from the pivot to the force","Total length of the rule","Distance from the ground"],c:1,e:"<span class='h'>💡 Idea</span>Always measure the <b>perpendicular distance from the pivot</b> to the line of the force.<span class='h'>✅</span>Perpendicular distance from the pivot."},
+{s:"For a UNIFORM metre rule, the whole weight is taken to act at the…",o:["10 cm mark","Centre (50 cm mark)","Pivot","90 cm mark"],c:1,e:"<span class='h'>💡 Idea</span>A uniform rule’s centre of gravity is at its middle, the <b>50 cm mark</b>.<span class='h'>✅</span>Centre (50 cm mark)."},
+{s:"The point where the whole weight of a body appears to act is called the…",o:["Pivot","Moment","Centre of gravity","Fulcrum"],c:2,e:"<span class='h'>💡 Idea</span>That single point is the <b>centre of gravity</b>.<span class='h'>✅</span>Centre of gravity."},
+{s:"A 5 N weight is 0.3 m from the pivot and a 3 N weight is on the other side. For balance, how far is the 3 N weight from the pivot?",o:["0.18 m","0.5 m","1.5 m","0.9 m"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>5 × 0.3 = 3 × d</span><span class='calc'>1.5 = 3d → d = 0.5 m</span><span class='h'>✅</span>0.5 m."},
+{s:"Doubling the distance of a force from the pivot (force unchanged) makes the moment…",o:["Halve","Stay the same","Double","Four times"],c:2,e:"<span class='h'>💡 Idea</span>M = F × d, so M ∝ d. Double d → <b>double</b> the moment.<span class='h'>✅</span>Double."},
+{s:"Two equal and opposite parallel forces (not in the same line) that cause pure rotation form a…",o:["Couple","Pivot","Resultant","Equilibrium"],c:0,e:"<span class='h'>💡 Idea</span>Such a pair is a <b>couple</b> — e.g. two hands turning a steering wheel.<span class='h'>✅</span>Couple."},
+{s:"A see-saw is balanced. Child A (250 N) is 1.2 m left of the pivot. Child B is 1.5 m right. Find B's weight.",o:["200 N","312 N","450 N","180 N"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>250 × 1.2 = F × 1.5</span><span class='calc'>300 = 1.5F → F = 200 N</span><span class='h'>✅</span>200 N."},
+{s:"A clockwise moment about a pivot tends to turn the body…",o:["Like the hands of a clock","Anticlockwise","Straight up","It does not turn"],c:0,e:"<span class='h'>💡 Idea</span>By definition a clockwise moment rotates the body in the same sense as a clock’s hands.<span class='h'>✅</span>Like the hands of a clock."},
+{s:"A uniform beam weighs 60 N. When balanced at its centre, the moment due to its own weight about the pivot is…",o:["60 N m","30 N m","Zero","120 N m"],c:2,e:"<span class='h'>💡 Idea</span>The weight acts at the centre, which is the pivot, so its distance is 0 → moment = 0.<span class='h'>✅</span>Zero."},
+{s:"A 4 N load hangs 0.25 m left of a pivot; a 2 N load hangs 0.5 m right. Is the system balanced?",o:["No, it turns clockwise","No, it turns anticlockwise","Yes, it is balanced","Cannot be determined"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Left (anticlockwise) = 4 × 0.25 = 1 N m</span><span class='calc'>Right (clockwise) = 2 × 0.5 = 1 N m</span>They are equal → balanced.<span class='h'>✅</span>Yes, it is balanced."},
+{s:"Which is an everyday application of the principle of moments?",o:["A flying aeroplane","A beam (lever) balance","Boiling water","A falling stone"],c:1,e:"<span class='h'>💡 Idea</span>A beam/lever balance, seesaw, spanner, wheelbarrow and scissors all use moments.<span class='h'>✅</span>A beam (lever) balance."},
+{s:"A uniform rule of weight 1 N is pivoted at the 40 cm mark. A 3 N weight hangs at 10 cm. Taking the rule's weight at 50 cm, the anticlockwise moment (about the pivot) from the 3 N weight is…",o:["30 N·cm","90 N·cm","120 N·cm","3 N·cm"],c:1,e:"<span class='h'>🔍 In plain words</span>We only want the turning effect of the 3 N weight about the pivot. The moment formula is <b>Moment = Force × distance from the pivot</b> — so we need just two numbers: the force (3 N) and how far that force is from the pivot.<span class='h'>💡 Key point — measure FROM the pivot, not from the end of the rule</span>The marks (10 cm, 40 cm, 50 cm) are positions ON the ruler, like a number line. The distance we use is the GAP between the weight’s mark and the pivot’s mark. The 3 N weight sits at the 10 cm mark; the pivot is at the 40 cm mark.<span class='h'>✏️ Step 1 — find the distance</span><span class='calc'>distance = pivot mark − weight mark = 40 − 10 = 30 cm</span><span class='h'>✏️ Step 2 — apply Moment = Force × distance</span><span class='calc'>Moment = 3 N × 30 cm = 90 N·cm</span><span class='h'>🧭 Why 'anticlockwise'?</span>The 3 N weight is on the LEFT of the pivot. A downward pull on the left tips that side down, turning the rule anticlockwise (like the left side of a seesaw going down).<span class='h'>❌ Why not the others?</span>• 30 N·cm forgets to multiply by the force (that’s just the distance). • 120 N·cm wrongly uses 40 cm (measuring from the 0 end, not from the pivot). • 3 N·cm forgets the distance entirely. Also note: the rule’s own 1 N weight (at 50 cm) is NOT part of this answer — the question only asked for the moment of the 3 N weight.<span class='h'>✅</span>90 N·cm."},
+{s:"To find an unknown support force, it is smart to take moments about…",o:["The middle of the rule","The point where the unknown force acts","The heaviest weight","The ground"],c:1,e:"<span class='h'>💡 Idea</span>Taking moments about the unknown’s position makes its distance 0, so it cancels out and the maths is simpler.<span class='h'>✅</span>The point where the unknown force acts."},
+{s:"A uniform 4 m beam (weight 100 N) rests on supports A and B at its ends. A 60 N load sits 1 m from A. The reaction at B is (take moments about A)…",o:["65 N","95 N","160 N","80 N"],c:0,e:"<span class='h'>✏️ Working</span>Clockwise about A: (60 × 1) + (100 × 2) = 260.<span class='calc'>R_B × 4 = 260 → R_B = 65 N</span><span class='h'>✅</span>65 N."},
+{s:"In the previous beam (total downward load 160 N, R_B = 65 N), the reaction at A is…",o:["95 N","65 N","160 N","225 N"],c:0,e:"<span class='h'>✏️ Working</span>Forces balance: R_A + R_B = total weight.<span class='calc'>R_A = 160 − 65 = 95 N</span><span class='h'>✅</span>95 N."},
+{s:"A spanner needs a force of 50 N at 0.2 m to turn a nut. What moment is applied to the nut?",o:["250 N m","10 N m","50.2 N m","0.004 N m"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>M = F × d = 50 × 0.2 = 10 N m</span><span class='h'>✅</span>10 N m."},
+{s:"A light plank 0.8 m long balances with 5 N at one end and 3 N at the other. The pivot is how far from the 5 N end?",o:["0.5 m","0.3 m","0.4 m","0.6 m"],c:1,e:"<span class='h'>✏️ Working</span>Let pivot be x from the 5 N end.<span class='calc'>5x = 3(0.8 − x)</span><span class='calc'>5x = 2.4 − 3x → 8x = 2.4 → x = 0.3 m</span>(Pivot sits nearer the heavier weight.)<span class='h'>✅</span>0.3 m."},
+{s:"Increasing BOTH the force and its distance from the pivot will make the moment…",o:["Decrease","Stay the same","Increase","Become zero"],c:2,e:"<span class='h'>💡 Idea</span>Moment = F × d. Increasing either factor increases the product, so increasing both increases it even more.<span class='h'>✅</span>Increase."},
+{s:"A wheelbarrow makes lifting easy because the load is placed…",o:["Far from the wheel (pivot)","Close to the wheel (pivot), reducing the effort moment needed","On top of the handles","Behind the person"],c:1,e:"<span class='h'>💡 Idea</span>Putting the load close to the wheel (pivot) gives the load a small distance, so a smaller effort at the long handles balances it easily — a moments-based lever.<span class='h'>✅</span>Close to the wheel (pivot)."}
+);
+
+["basics","principle","worked","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

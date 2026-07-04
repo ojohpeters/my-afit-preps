@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Mixed Practice — AFIT Aspirant (with Answers)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .intro{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:18px 0}
+  .intro h2{margin-top:0;color:var(--accent2)}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.86rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧪 Chemistry Mixed Practice</h1>
+  <p>General revision questions for AFIT / Post-UTME aspirants — all topics</p>
+  <p class="tip">48 questions across 4 areas · every answer explained</p>
+  <div><span class="pill">Atomic &amp; Periodic</span><span class="pill">Bonding &amp; Reactions</span><span class="pill">Physical Chemistry</span><span class="pill">Organic &amp; Everyday</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="intro">
+    <h2>How to use this 🚀</h2>
+    <p>These are mixed questions with no single topic — exactly like a screening test. Click an option: <b>green = correct, red = wrong</b>, and a full explanation appears so you learn from every one. Your score tracks bottom-right.</p>
+    <p><b>Exam tips for AFIT chemistry:</b></p>
+    <ul>
+      <li>Master the basics first: atomic number = protons, mole = mass ÷ molar mass, OIL RIG (Oxidation Is Loss, Reduction Is Gain of electrons).</li>
+      <li>Learn the general formulas: alkanes CₙH₂ₙ₊₂, alkenes CₙH₂ₙ, alkynes CₙH₂ₙ₋₂.</li>
+      <li>Know your constants: Avogadro = 6.02×10²³, molar gas volume at s.t.p. = 22.4 dm³, pH 7 = neutral.</li>
+      <li>Read every option before choosing — the examiner loves a "nearly right" distractor.</li>
+    </ul>
+    <button class="btn small" onclick="revealAllTabs()">👁️ Reveal all answers (study mode)</button>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="atomic">⚛️ Atomic &amp; Periodic</div>
+    <div class="tab" data-cat="bonding">🔗 Bonding &amp; Reactions</div>
+    <div class="tab" data-cat="physical">⚗️ Physical Chemistry</div>
+    <div class="tab" data-cat="organic">🧬 Organic &amp; Everyday</div>
+  </div>
+
+  <section class="cat atomic show" id="cat-atomic">
+    <h2 class="cathead">⚛️ Atomic Structure &amp; the Periodic Table</h2>
+    <div id="atomic-questions"></div>
+  </section>
+  <section class="cat bonding" id="cat-bonding">
+    <h2 class="cathead">🔗 Chemical Bonding &amp; Reactions</h2>
+    <div id="bonding-questions"></div>
+  </section>
+  <section class="cat physical" id="cat-physical">
+    <h2 class="cathead">⚗️ Physical Chemistry (moles, gases, rates, energetics)</h2>
+    <div id="physical-questions"></div>
+  </section>
+  <section class="cat organic" id="cat-organic">
+    <h2 class="cathead">🧬 Organic &amp; Everyday Chemistry</h2>
+    <div id="organic-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Consistency beats cramming. Do a few daily and watch your score climb. 🎓</p>
+</footer>
+
+<script>
+const DATA={atomic:[],bonding:[],physical:[],organic:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAllTabs(){
+  ["atomic","bonding","physical","organic"].forEach(cat=>{
+    DATA[cat].forEach((q,idx)=>{
+      const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+      if(!card) return;
+      card.querySelector(".reveal").classList.add("show");
+      const lis=card.querySelectorAll(".opts li");
+      if(lis[q.c]) lis[q.c].classList.add("correct");
+    });
+  });
+}
+
+DATA.atomic.push(
+{s:"The atomic number of an element is equal to the number of…",o:["Neutrons","Protons","Protons + neutrons","Electrons + neutrons"],c:1,e:"<span class='h'>💡 Idea</span>The atomic number is the identity card of an element — it is the number of <b>protons</b> in the nucleus.<span class='h'>✅</span>Protons."},
+{s:"Isotopes of an element have the same number of protons but different numbers of…",o:["Electrons","Neutrons","Protons","Charges"],c:1,e:"<span class='h'>💡 Idea</span>Isotopes are 'same element, different weight'. Same protons (so same element) but different <b>neutrons</b> (so different mass). Example: carbon-12 and carbon-14.<span class='h'>✅</span>Neutrons."},
+{s:"The mass number of an atom is the sum of its…",o:["Protons and electrons","Protons and neutrons","Neutrons and electrons","Electrons only"],c:1,e:"<span class='h'>💡 Idea</span>Nearly all the mass sits in the nucleus, so mass number = <b>protons + neutrons</b> (together called nucleons). Electrons are too light to count.<span class='h'>✅</span>Protons and neutrons."},
+{s:"In a neutral atom, the number of electrons equals the number of…",o:["Neutrons","Protons","Mass number","Nucleons"],c:1,e:"<span class='h'>💡 Idea</span>Neutral means no overall charge, so the positive protons must be balanced by an equal number of negative <b>electrons</b>.<span class='h'>✅</span>Protons."},
+{s:"The electronic configuration of sodium (atomic number 11) is…",o:["2, 8, 1","2, 8, 3","8, 2, 1","2, 9"],c:0,e:"<span class='h'>💡 Idea</span>Fill shells 2, then 8, then the rest: 2 + 8 = 10, leaving 1 → <b>2, 8, 1</b>. (That single outer electron makes sodium very reactive.)<span class='h'>✅</span>2, 8, 1."},
+{s:"An element with electronic configuration 2, 8, 7 belongs to Group…",o:["2","5","7","8"],c:2,e:"<span class='h'>💡 Idea</span>The group number = number of outer (valence) electrons. Here the outer shell has 7 → <b>Group 7</b> (the halogens, e.g. chlorine).<span class='h'>✅</span>7."},
+{s:"The period number of an element equals its number of…",o:["Protons","Electron shells (energy levels)","Neutrons","Valence electrons"],c:1,e:"<span class='h'>💡 Idea</span>Down the table you add shells. The period tells you how many <b>electron shells</b> are occupied.<span class='h'>✅</span>Electron shells (energy levels)."},
+{s:"Carbon-14 has 6 protons. How many neutrons does it contain?",o:["6","8","14","20"],c:1,e:"<span class='h'>✏️ Working</span>Neutrons = mass number − protons.<span class='calc'>14 − 6 = 8 neutrons</span><span class='h'>✅</span>8."},
+{s:"The most electronegative element in the periodic table is…",o:["Oxygen","Chlorine","Fluorine","Nitrogen"],c:2,e:"<span class='h'>💡 Idea</span>Electronegativity (pulling power for electrons) increases up and to the right. The champion is <b>fluorine</b>.<span class='h'>✅</span>Fluorine."},
+{s:"Noble gases are chemically unreactive because they have…",o:["Empty outer shells","A complete (full) outer shell","One valence electron","No protons"],c:1,e:"<span class='h'>💡 Idea</span>A full outer shell (stable octet) means they have no need to gain, lose or share electrons — so they barely react.<span class='h'>✅</span>A complete (full) outer shell."},
+{s:"Elements in the same GROUP of the periodic table have the same number of…",o:["Shells","Valence (outer) electrons","Neutrons","Protons"],c:1,e:"<span class='h'>💡 Idea</span>A group is a vertical column. Members share the same number of <b>outer electrons</b>, which is why they have similar chemical behaviour.<span class='h'>✅</span>Valence (outer) electrons."},
+{s:"Relative atomic masses are measured relative to the mass of…",o:["Hydrogen-1","Oxygen-16","Carbon-12","Nitrogen-14"],c:2,e:"<span class='h'>💡 Idea</span>The modern standard is one-twelfth the mass of a <b>carbon-12</b> atom.<span class='h'>✅</span>Carbon-12."}
+);
+
+DATA.bonding.push(
+{s:"An ionic bond is formed by the…",o:["Sharing of electrons","Complete transfer of electrons from a metal to a non-metal","Overlap of orbitals","Attraction of neutrons"],c:1,e:"<span class='h'>💡 Idea</span>A metal gives up electron(s) (becomes +) and a non-metal takes them (becomes −); the opposite charges attract. That is <b>electron transfer</b>.<span class='h'>✅</span>Complete transfer of electrons."},
+{s:"A covalent bond is formed by…",o:["Transfer of electrons","Sharing of electrons between atoms","Losing protons","Gaining neutrons"],c:1,e:"<span class='h'>💡 Idea</span>Two non-metals <b>share</b> pairs of electrons so each reaches a stable shell. Example: H₂, CH₄, H₂O.<span class='h'>✅</span>Sharing of electrons between atoms."},
+{s:"Which compound contains IONIC bonding?",o:["H₂O","CH₄","NaCl","CO₂"],c:2,e:"<span class='h'>💡 Idea</span>Ionic = metal + non-metal. <b>NaCl</b> (sodium + chlorine) fits; the others are all non-metal + non-metal (covalent).<span class='h'>✅</span>NaCl."},
+{s:"Which molecule contains only COVALENT bonds?",o:["NaCl","KBr","CH₄","MgO"],c:2,e:"<span class='h'>💡 Idea</span>NaCl, KBr and MgO are metal + non-metal (ionic). <b>CH₄</b> is carbon + hydrogen (both non-metals) → covalent.<span class='h'>✅</span>CH₄."},
+{s:"In the reaction Zn + CuSO₄ → ZnSO₄ + Cu, the type of reaction is…",o:["Neutralization","Displacement","Decomposition","Combustion"],c:1,e:"<span class='h'>💡 Idea</span>The more reactive metal (zinc) kicks out (displaces) the less reactive metal (copper) from its salt. That is a <b>displacement</b> reaction.<span class='h'>✅</span>Displacement."},
+{s:"Oxidation is best defined as the…",o:["Gain of electrons","Loss of electrons","Gain of protons","Loss of neutrons"],c:1,e:"<span class='h'>💡 Idea</span>Remember <b>OIL RIG</b>: Oxidation Is Loss (of electrons), Reduction Is Gain.<span class='h'>✅</span>Loss of electrons."},
+{s:"Reduction involves the…",o:["Loss of electrons","Gain of electrons","Loss of protons","Addition of oxygen"],c:1,e:"<span class='h'>💡 Idea</span>OIL RIG again: Reduction Is Gain of electrons.<span class='h'>✅</span>Gain of electrons."},
+{s:"An oxidizing agent is a substance that…",o:["Loses electrons","Gains electrons (is itself reduced)","Donates protons","Is itself oxidized"],c:1,e:"<span class='h'>💡 Idea</span>An oxidizing agent oxidizes something else by TAKING its electrons — so the agent itself <b>gains electrons and is reduced</b>.<span class='h'>✅</span>Gains electrons (is itself reduced)."},
+{s:"The oxidation state of sulphur in H₂SO₄ is…",o:["+2","+4","+6","−2"],c:2,e:"<span class='h'>✏️ Working</span>H is +1 (×2 = +2), O is −2 (×4 = −8). Total must be 0:<span class='calc'>(+2) + S + (−8) = 0 → S = +6</span><span class='h'>✅</span>+6."},
+{s:"A reaction between an acid and a base to form salt and water is called…",o:["Oxidation","Neutralization","Hydrolysis","Fermentation"],c:1,e:"<span class='h'>💡 Idea</span>Acid + Base → Salt + Water is <b>neutralization</b> (the acid and base cancel each other).<span class='h'>✅</span>Neutralization."},
+{s:"When a metal reacts with a non-metal, the metal usually…",o:["Gains electrons","Loses electrons to form a positive ion","Shares electrons equally","Gains neutrons"],c:1,e:"<span class='h'>💡 Idea</span>Metals have few outer electrons and prefer to <b>lose</b> them, becoming positive ions (cations).<span class='h'>✅</span>Loses electrons to form a positive ion."},
+{s:"The bond that holds atoms together in a metal is a…",o:["Ionic bond","Covalent bond","Metallic bond","Hydrogen bond"],c:2,e:"<span class='h'>💡 Idea</span>In a metal, positive ions sit in a 'sea' of free electrons — this attraction is the <b>metallic bond</b> (it also explains why metals conduct).<span class='h'>✅</span>Metallic bond."}
+);
+
+DATA.physical.push(
+{s:"Avogadro's number is approximately…",o:["6.02×10²³","3.0×10⁸","1.6×10⁻¹⁹","9.8"],c:0,e:"<span class='h'>💡 Idea</span>One mole of anything contains <b>6.02×10²³</b> particles. (The others are speed of light, electron charge and g.)<span class='h'>✅</span>6.02×10²³."},
+{s:"The number of moles of a substance is found by…",o:["mass × molar mass","mass ÷ molar mass","molar mass ÷ mass","mass + molar mass"],c:1,e:"<span class='h'>💡 Idea</span>Moles = mass ÷ molar mass. (Think: how many 'molar-mass chunks' fit into your mass.)<span class='h'>✅</span>mass ÷ molar mass."},
+{s:"The molar mass of CO₂ is (C = 12, O = 16)…",o:["28 g","44 g","60 g","32 g"],c:1,e:"<span class='h'>✏️ Working</span>Add the atomic masses: C + 2 oxygens.<span class='calc'>12 + (2 × 16) = 12 + 32 = 44 g</span><span class='h'>✅</span>44 g."},
+{s:"How many moles are in 36 g of water (H₂O = 18)?",o:["1","2","3","0.5"],c:1,e:"<span class='h'>✏️ Working</span>Moles = mass ÷ molar mass.<span class='calc'>36 ÷ 18 = 2 moles</span><span class='h'>✅</span>2."},
+{s:"At s.t.p., one mole of any gas occupies a volume of…",o:["1 dm³","22.4 dm³","24 dm³","100 dm³"],c:1,e:"<span class='h'>💡 Idea</span>The molar volume at standard temperature and pressure is <b>22.4 dm³</b> for any gas.<span class='h'>✅</span>22.4 dm³."},
+{s:"Boyle's law states that at constant temperature, the volume of a gas is… its pressure.",o:["Directly proportional to","Inversely proportional to","Equal to","Independent of"],c:1,e:"<span class='h'>💡 Idea</span>Squeeze a gas (raise pressure) and its volume shrinks — they move in opposite directions, so V is <b>inversely proportional</b> to P (PV = constant).<span class='h'>✅</span>Inversely proportional to."},
+{s:"Which factor does NOT increase the rate of a chemical reaction?",o:["Increasing temperature","Adding a catalyst","Increasing concentration","Lowering the temperature"],c:3,e:"<span class='h'>💡 Idea</span>Heat, catalysts and higher concentration all speed reactions up. <b>Lowering</b> the temperature slows particles down, so it slows the reaction.<span class='h'>✅</span>Lowering the temperature."},
+{s:"A catalyst speeds up a reaction by…",o:["Being used up","Lowering the activation energy","Raising the activation energy","Increasing the temperature"],c:1,e:"<span class='h'>💡 Idea</span>A catalyst gives the reaction an easier path (<b>lower activation energy</b>) and is not used up.<span class='h'>✅</span>Lowering the activation energy."},
+{s:"A reaction that gives out heat to the surroundings is…",o:["Endothermic","Exothermic","Neutral","Reversible only"],c:1,e:"<span class='h'>💡 Idea</span><b>Exo</b>thermic = heat EXits (given out), surroundings get warmer (e.g. burning). Endothermic absorbs heat.<span class='h'>✅</span>Exothermic."},
+{s:"A solution with pH 3 is…",o:["Strongly basic","Acidic","Neutral","Weakly basic"],c:1,e:"<span class='h'>💡 Idea</span>pH below 7 = acidic, 7 = neutral, above 7 = basic. pH 3 is well below 7, so <b>acidic</b>.<span class='h'>✅</span>Acidic."},
+{s:"The molarity (concentration) of a solution is the moles of solute per…",o:["gram","cubic decimetre (litre) of solution","mole","kilogram"],c:1,e:"<span class='h'>💡 Idea</span>Molarity = moles ÷ volume in dm³ (litres). Unit is mol/dm³.<span class='h'>✅</span>Cubic decimetre (litre) of solution."},
+{s:"Charles's law relates the volume of a gas to its…",o:["Pressure","Temperature (at constant pressure)","Mass","Density"],c:1,e:"<span class='h'>💡 Idea</span>Charles's law: at constant pressure, volume is directly proportional to (absolute) <b>temperature</b> — heat a gas and it expands.<span class='h'>✅</span>Temperature (at constant pressure)."}
+);
+
+DATA.organic.push(
+{s:"The general molecular formula for alkanes is…",o:["CₙH₂ₙ","CₙH₂ₙ₊₂","CₙH₂ₙ₋₂","CₙHₙ"],c:1,e:"<span class='h'>💡 Idea</span>Alkanes (single bonds, saturated) follow <b>CₙH₂ₙ₊₂</b>. Check methane: n=1 → CH₄. ✓<span class='h'>✅</span>CₙH₂ₙ₊₂."},
+{s:"The general formula for alkenes is…",o:["CₙH₂ₙ₊₂","CₙH₂ₙ","CₙH₂ₙ₋₂","CₙHₙ"],c:1,e:"<span class='h'>💡 Idea</span>Alkenes have one C=C double bond and follow <b>CₙH₂ₙ</b>. Check ethene: n=2 → C₂H₄. ✓<span class='h'>✅</span>CₙH₂ₙ."},
+{s:"The first member of the alkane series is…",o:["Ethane","Methane","Propane","Butane"],c:1,e:"<span class='h'>💡 Idea</span>Count carbons: 1 = <b>methane</b> (CH₄), 2 = ethane, 3 = propane, 4 = butane.<span class='h'>✅</span>Methane."},
+{s:"The functional group of alkanols (alcohols) is…",o:["−COOH","−OH","−CHO","−NH₂"],c:1,e:"<span class='h'>💡 Idea</span>Alcohols/alkanols carry the hydroxyl group <b>−OH</b> (e.g. ethanol, C₂H₅OH).<span class='h'>✅</span>−OH."},
+{s:"The functional group −COOH belongs to the…",o:["Alcohols","Alkanoic (carboxylic) acids","Ketones","Amines"],c:1,e:"<span class='h'>💡 Idea</span>−COOH (carboxyl) is the mark of <b>alkanoic/carboxylic acids</b>, e.g. ethanoic acid in vinegar.<span class='h'>✅</span>Alkanoic (carboxylic) acids."},
+{s:"A hydrocarbon with only single bonds between its carbons is described as…",o:["Unsaturated","Saturated","Aromatic","Ionic"],c:1,e:"<span class='h'>💡 Idea</span>All single bonds (no C=C) means it is 'full up' with hydrogen = <b>saturated</b> (alkanes). Double/triple bonds = unsaturated.<span class='h'>✅</span>Saturated."},
+{s:"Complete combustion of a hydrocarbon produces…",o:["Carbon monoxide and water","Carbon dioxide and water","Carbon and hydrogen","Hydrogen only"],c:1,e:"<span class='h'>💡 Idea</span>With plenty of oxygen, a hydrocarbon burns fully to <b>CO₂ and water</b>. (Incomplete combustion gives poisonous CO.)<span class='h'>✅</span>Carbon dioxide and water."},
+{s:"Ethanol is produced from sugar by the process of…",o:["Cracking","Fermentation","Polymerization","Hydrogenation"],c:1,e:"<span class='h'>💡 Idea</span>Yeast enzymes break sugar into ethanol + CO₂ — that is <b>fermentation</b>.<span class='h'>✅</span>Fermentation."},
+{s:"The presence of a C=C double bond (unsaturation) is tested for by decolourizing…",o:["Limewater","Bromine water","Sodium hydroxide","Copper sulphate"],c:1,e:"<span class='h'>💡 Idea</span>An alkene rapidly turns reddish-brown <b>bromine water</b> colourless. (Limewater is the test for CO₂.)<span class='h'>✅</span>Bromine water."},
+{s:"Which of the following is a polymer?",o:["Ethene","Polythene","Methane","Ethanol"],c:1,e:"<span class='h'>💡 Idea</span><b>Polythene</b> is many ethene molecules joined into a long chain. Ethene is the small starting unit (monomer).<span class='h'>✅</span>Polythene."},
+{s:"The joining of many small monomers into one large molecule is called…",o:["Hydrolysis","Polymerization","Saponification","Neutralization"],c:1,e:"<span class='h'>💡 Idea</span>Building a giant molecule from repeating small units is <b>polymerization</b> (e.g. ethene → polythene).<span class='h'>✅</span>Polymerization."},
+{s:"The acid responsible for the sour taste of vinegar is…",o:["Ethanoic (acetic) acid","Citric acid","Ascorbic acid","Hydrochloric acid"],c:0,e:"<span class='h'>💡 Idea</span>Vinegar is a dilute solution of <b>ethanoic (acetic) acid</b>. (Citric = citrus fruits, ascorbic = vitamin C.)<span class='h'>✅</span>Ethanoic (acetic) acid."}
+);
+
+["atomic","bonding","physical","organic"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

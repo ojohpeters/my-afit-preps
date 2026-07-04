@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculus — Differentiation & Integration (Student Guide)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.86rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>📐 Calculus Made Simple</h1>
+  <p>Differentiation &amp; Integration — taught from zero (Maths &amp; Further Maths)</p>
+  <p class="tip">Student Guide · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">All rules explained</span><span class="pill">Step-by-step examples</span><span class="pill">Quiz with answers</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="diff">📉 Differentiation</div>
+    <div class="tab" data-cat="apps">📈 Applications</div>
+    <div class="tab" data-cat="integ">∫ Integration</div>
+    <div class="tab" data-cat="further">🎓 Further Maths Extras</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- =============== DIFFERENTIATION =============== -->
+  <section class="cat diff show" id="cat-diff">
+    <h2 class="cathead">📉 Differentiation — Finding the Rate of Change</h2>
+
+    <div class="lesson">
+      <h3>1. What is differentiation?</h3>
+      <p>Differentiation finds <b>how fast one quantity changes compared to another</b> — the <b>rate of change</b>. On a graph, it gives the <b>gradient (slope) of the curve at a point</b>.</p>
+      <div class="analogy">🌟 Real life: when you drive, your speedometer shows how fast your distance is changing each second — that is differentiation (speed = rate of change of distance). The steepness of a hill at the exact spot you stand is also a derivative.</div>
+      <span class="key">Notation</span>
+      <p>If y depends on x (written y = f(x)), the derivative is written <b>dy/dx</b> or <b>f′(x)</b>. It means “the gradient of y with respect to x.”</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The POWER RULE (your main tool)</h3>
+      <div class="formula">If y = a·xⁿ &nbsp;then&nbsp; dy/dx = a·n·xⁿ⁻¹</div>
+      <p>In words: <b>multiply by the power, then reduce the power by 1.</b></p>
+      <table class="r">
+        <tr><th>Function y</th><th>dy/dx</th><th>What happened</th></tr>
+        <tr><td>x³</td><td>3x²</td><td>bring down the 3, power 3→2</td></tr>
+        <tr><td>5x⁴</td><td>20x³</td><td>5×4 = 20, power 4→3</td></tr>
+        <tr><td>x (= x¹)</td><td>1</td><td>1×x⁰ = 1</td></tr>
+        <tr><td>7 (a constant)</td><td>0</td><td>constants vanish — a flat line has no slope</td></tr>
+        <tr><td>1/x (= x⁻¹)</td><td>−1/x²</td><td>−1×x⁻²</td></tr>
+        <tr><td>√x (= x^½)</td><td>1/(2√x)</td><td>½x^(−½)</td></tr>
+      </table>
+      <p class="tip">⚠️ Two facts students forget: the derivative of a <b>constant is 0</b>, and the derivative of <b>x is 1</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Differentiating term by term (sum/difference rule)</h3>
+      <p>Differentiate each term separately, then join with the same + and − signs.</p>
+      <div class="ex"><b class="t">Worked example:</b> y = x³ + 2x² − 5x + 7
+        <div class="calc">d/dx(x³) = 3x²</div>
+        <div class="calc">d/dx(2x²) = 4x</div>
+        <div class="calc">d/dx(−5x) = −5</div>
+        <div class="calc">d/dx(7) = 0</div>
+        <div class="calc">dy/dx = 3x² + 4x − 5</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The second derivative</h3>
+      <p>Differentiate again to get the <b>second derivative</b>, written <b>d²y/dx²</b> or f″(x). It measures how the gradient itself is changing (used for max/min and acceleration).</p>
+      <div class="ex"><b class="t">Example:</b> y = x⁴
+        <div class="calc">dy/dx = 4x³ &nbsp;→&nbsp; d²y/dx² = 12x²</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The CHAIN RULE (function inside a function)</h3>
+      <div class="formula">If y = [f(x)]ⁿ &nbsp;then&nbsp; dy/dx = n·[f(x)]ⁿ⁻¹ × f′(x)</div>
+      <p>In words: differentiate the <b>outside</b> (power rule), then <b>multiply by the derivative of the inside (the bracket)</b>.</p>
+      <div class="ex"><b class="t">Worked example:</b> y = (2x + 3)⁵
+        <div class="calc">Outside: 5(2x+3)⁴ &nbsp;|&nbsp; Inside derivative: d/dx(2x+3) = 2</div>
+        <div class="calc">dy/dx = 5(2x+3)⁴ × 2 = 10(2x+3)⁴</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. PRODUCT RULE &amp; QUOTIENT RULE</h3>
+      <span class="key">Product rule (two things multiplied)</span>
+      <div class="formula">If y = u·v &nbsp;then&nbsp; dy/dx = u·(dv/dx) + v·(du/dx)</div>
+      <div class="ex"><b class="t">Example:</b> y = x²(2x + 1). Let u = x², v = 2x+1.
+        <div class="calc">du/dx = 2x, dv/dx = 2</div>
+        <div class="calc">dy/dx = x²(2) + (2x+1)(2x) = 2x² + 4x² + 2x = 6x² + 2x</div>
+      </div>
+      <span class="key">Quotient rule (one thing divided by another)</span>
+      <div class="formula">If y = u/v &nbsp;then&nbsp; dy/dx = [v·(du/dx) − u·(dv/dx)] / v²</div>
+      <p class="tip">Memory: “bottom × d(top) − top × d(bottom), all over bottom squared.”</p>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Standard derivatives to memorise</h3>
+      <table class="r">
+        <tr><th>y</th><th>dy/dx</th></tr>
+        <tr><td>sin x</td><td>cos x</td></tr>
+        <tr><td>cos x</td><td>−sin x</td></tr>
+        <tr><td>tan x</td><td>sec²x</td></tr>
+        <tr><td>eˣ</td><td>eˣ</td></tr>
+        <tr><td>ln x</td><td>1/x</td></tr>
+        <tr><td>aˣ</td><td>aˣ ln a</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- =============== APPLICATIONS =============== -->
+  <section class="cat apps" id="cat-apps">
+    <h2 class="cathead">📈 Applications of Differentiation</h2>
+
+    <div class="lesson">
+      <h3>1. Gradient of a curve at a point</h3>
+      <p>To find the slope at a particular point, find dy/dx, then <b>substitute the x-value</b>.</p>
+      <div class="ex"><b class="t">Example:</b> Find the gradient of y = x² − 3x at x = 2.
+        <div class="calc">dy/dx = 2x − 3</div>
+        <div class="calc">At x = 2: gradient = 2(2) − 3 = 1</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Equation of tangent and normal</h3>
+      <ul>
+        <li><b>Tangent</b> — a line just touching the curve. Its slope m = dy/dx at the point.</li>
+        <li><b>Normal</b> — the line perpendicular to the tangent. Its slope = <b>−1/m</b>.</li>
+        <li>Use the straight-line formula: <b>y − y₁ = m(x − x₁)</b>.</li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> Tangent to y = x² at the point (1, 1).
+        <div class="calc">dy/dx = 2x → at x=1, m = 2</div>
+        <div class="calc">y − 1 = 2(x − 1) → y = 2x − 1</div>
+        Normal slope = −1/2, so normal: y − 1 = −½(x − 1).
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Maximum &amp; minimum (turning points)</h3>
+      <p>At a turning point the curve is momentarily flat, so the gradient is zero.</p>
+      <div class="formula">Step 1: set dy/dx = 0 and solve for x (these are the turning points)</div>
+      <div class="formula">Step 2: use d²y/dx² → if positive = MINIMUM, if negative = MAXIMUM</div>
+      <div class="analogy">💡 Memory: a <b>minimum</b> is a valley (smiley curve, second derivative +). A <b>maximum</b> is a hilltop (sad curve, second derivative −).</div>
+      <div class="ex"><b class="t">Worked example:</b> Find and classify the turning points of y = x³ − 3x.
+        <div class="calc">dy/dx = 3x² − 3 = 0 → x² = 1 → x = 1 or x = −1</div>
+        <div class="calc">d²y/dx² = 6x</div>
+        <div class="calc">At x = 1: 6(1) = +6 → MINIMUM</div>
+        <div class="calc">At x = −1: 6(−1) = −6 → MAXIMUM</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Increasing &amp; decreasing functions</h3>
+      <ul>
+        <li>If dy/dx &gt; 0 → the function is <b>increasing</b> (going up).</li>
+        <li>If dy/dx &lt; 0 → the function is <b>decreasing</b> (going down).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Motion: velocity &amp; acceleration</h3>
+      <p>If displacement s is a function of time t:</p>
+      <div class="formula">velocity v = ds/dt &nbsp;&nbsp;|&nbsp;&nbsp; acceleration a = dv/dt = d²s/dt²</div>
+      <div class="ex"><b class="t">Example:</b> s = 3t² + 2t. Find v and a.
+        <div class="calc">v = ds/dt = 6t + 2</div>
+        <div class="calc">a = dv/dt = 6 (constant)</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Rates of change (connected rates)</h3>
+      <p>Differentiation links how quantities change together. For example, if the radius of a balloon grows, its volume grows too — the chain rule connects the two rates: dV/dt = (dV/dr) × (dr/dt).</p>
+    </div>
+  </section>
+
+  <!-- =============== INTEGRATION =============== -->
+  <section class="cat integ" id="cat-integ">
+    <h2 class="cathead">∫ Integration — The Reverse of Differentiation</h2>
+
+    <div class="lesson">
+      <h3>1. What is integration?</h3>
+      <p>Integration is the <b>opposite of differentiation</b> (anti-differentiation). It also finds the <b>area under a curve</b>.</p>
+      <div class="analogy">🌟 If differentiation breaks distance into speed, integration builds speed back into distance. They undo each other — like × and ÷, or + and −.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The POWER RULE for integration</h3>
+      <div class="formula">∫ xⁿ dx = xⁿ⁺¹ / (n + 1) + C&nbsp;&nbsp;(as long as n ≠ −1)</div>
+      <p>In words: <b>add 1 to the power, then divide by the new power.</b> (It is the power rule done backwards.) Always add the constant <b>+ C</b> for an indefinite integral.</p>
+      <table class="r">
+        <tr><th>∫ … dx</th><th>Result</th></tr>
+        <tr><td>∫ x² dx</td><td>x³/3 + C</td></tr>
+        <tr><td>∫ 3x² dx</td><td>x³ + C</td></tr>
+        <tr><td>∫ (2x + 3) dx</td><td>x² + 3x + C</td></tr>
+        <tr><td>∫ x⁻¹ dx (= 1/x)</td><td>ln|x| + C &nbsp;(special case)</td></tr>
+      </table>
+      <p class="tip">⚠️ Never forget the <b>+ C</b> on an indefinite integral — it is a common place to lose marks.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Standard integrals to memorise</h3>
+      <table class="r">
+        <tr><th>∫ … dx</th><th>Result</th></tr>
+        <tr><td>∫ cos x dx</td><td>sin x + C</td></tr>
+        <tr><td>∫ sin x dx</td><td>−cos x + C</td></tr>
+        <tr><td>∫ sec²x dx</td><td>tan x + C</td></tr>
+        <tr><td>∫ eˣ dx</td><td>eˣ + C</td></tr>
+        <tr><td>∫ (1/x) dx</td><td>ln|x| + C</td></tr>
+      </table>
+      <p class="tip">Notice the sign flip: ∫sin = −cos (differentiation of cos gives −sin, so reverse it).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. DEFINITE integrals (with limits) — gives a number</h3>
+      <div class="formula">∫ₐᵇ f(x) dx = F(b) − F(a)</div>
+      <p>Integrate as usual, then put in the top limit, the bottom limit, and subtract. <b>No + C needed</b> (it cancels out).</p>
+      <div class="ex"><b class="t">Worked example:</b> Evaluate ∫₀² x² dx.
+        <div class="calc">∫ x² dx = x³/3</div>
+        <div class="calc">= [x³/3]₀² = (2³/3) − (0³/3) = 8/3 − 0 = 8/3</div>
+      </div>
+      <div class="ex"><b class="t">Example 2:</b> ∫₁³ 2x dx
+        <div class="calc">∫2x dx = x² → [x²]₁³ = 3² − 1² = 9 − 1 = 8</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Area under a curve</h3>
+      <p>The area between a curve y = f(x), the x-axis, and the lines x = a and x = b is exactly the definite integral:</p>
+      <div class="formula">Area = ∫ₐᵇ y dx</div>
+      <div class="ex"><b class="t">Example:</b> Area under y = x² from x = 0 to x = 2 is ∫₀² x² dx = <b>8/3 square units</b> (from the example above).</div>
+      <p class="tip">If part of the curve is below the x-axis, that part gives a negative value — handle it separately and take the size (modulus).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Finding the constant C (if given a point)</h3>
+      <div class="ex"><b class="t">Example:</b> dy/dx = 2x and the curve passes through (1, 5). Find y.
+        <div class="calc">y = ∫2x dx = x² + C</div>
+        <div class="calc">Put in (1, 5): 5 = 1² + C → C = 4</div>
+        <div class="calc">So y = x² + 4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== FURTHER MATHS =============== -->
+  <section class="cat further" id="cat-further">
+    <h2 class="cathead">🎓 Further Maths Extras</h2>
+
+    <div class="lesson">
+      <h3>1. Integration by substitution (reverse chain rule)</h3>
+      <p>When a function is “inside” another, let <b>u = the inside</b>, replace dx using du, integrate in u, then put x back.</p>
+      <div class="ex"><b class="t">Example:</b> ∫ 2x(x² + 1)³ dx. Let u = x² + 1 → du = 2x dx.
+        <div class="calc">= ∫ u³ du = u⁴/4 + C = (x² + 1)⁴ / 4 + C</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Integration by parts (reverse product rule)</h3>
+      <div class="formula">∫ u dv = uv − ∫ v du</div>
+      <p>Use it for products like x·eˣ or x·sin x. Pick u using <b>LIATE</b> (Log, Inverse, Algebra, Trig, Exponential — choose u as the one earliest in that list).</p>
+      <div class="ex"><b class="t">Example:</b> ∫ x·eˣ dx. Let u = x (du = dx), dv = eˣ dx (v = eˣ).
+        <div class="calc">= x·eˣ − ∫ eˣ dx = x·eˣ − eˣ + C = eˣ(x − 1) + C</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Implicit differentiation</h3>
+      <p>When y is not isolated (e.g. x² + y² = 25), differentiate both sides with respect to x, treating y as a function of x (so d/dx of y² is 2y·dy/dx), then make dy/dx the subject.</p>
+      <div class="ex"><b class="t">Example:</b> x² + y² = 25
+        <div class="calc">2x + 2y(dy/dx) = 0 → dy/dx = −x/y</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Parametric differentiation</h3>
+      <p>When x and y are each given in terms of a parameter t:</p>
+      <div class="formula">dy/dx = (dy/dt) ÷ (dx/dt)</div>
+      <div class="ex"><b class="t">Example:</b> x = t², y = t³.
+        <div class="calc">dx/dt = 2t, dy/dt = 3t²</div>
+        <div class="calc">dy/dx = 3t² ÷ 2t = (3/2)t</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Volume of revolution</h3>
+      <p>Spin a curve around the x-axis and you get a solid; its volume is:</p>
+      <div class="formula">V = π ∫ₐᵇ y² dx</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Simple differential equations (separable)</h3>
+      <p>Separate the variables (all y on one side, all x on the other), then integrate both sides.</p>
+      <div class="ex"><b class="t">Example:</b> dy/dx = xy
+        <div class="calc">(1/y) dy = x dx → ∫(1/y)dy = ∫x dx</div>
+        <div class="calc">ln|y| = x²/2 + C</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== QUIZ =============== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full worked explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Differentiate to break down, integrate to build up. Practice daily and it clicks. 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Differentiate y = x⁵.",o:["5x⁴","x⁶/6","5x⁶","4x⁵"],c:0,e:"<span class='h'>💡 Idea</span>Power rule: bring the power down, reduce power by 1.<span class='h'>✏️</span><span class='calc'>dy/dx = 5·x⁴ = 5x⁴</span><span class='h'>✅</span>5x⁴."},
+{s:"Differentiate y = 3x².",o:["3x","6x","x³","6x²"],c:1,e:"<span class='h'>✏️</span><span class='calc'>3 × 2 × x¹ = 6x</span><span class='h'>✅</span>6x."},
+{s:"What is the derivative of a constant, e.g. y = 10?",o:["10","1","0","x"],c:2,e:"<span class='h'>💡 Idea</span>A constant is a flat horizontal line — it has no slope, so its derivative is 0.<span class='h'>✅</span>0."},
+{s:"Differentiate y = x³ + 2x.",o:["3x² + 2","3x² + 2x","x⁴/4 + x²","3x + 2"],c:0,e:"<span class='h'>✏️</span>Term by term:<span class='calc'>d/dx(x³)=3x², d/dx(2x)=2 → 3x² + 2</span><span class='h'>✅</span>3x² + 2."},
+{s:"The derivative dy/dx represents the…",o:["Area under the curve","Gradient (rate of change) of the curve","Length of the curve","y-intercept"],c:1,e:"<span class='h'>💡 Idea</span>Differentiation gives the slope/gradient of the curve at a point = its rate of change.<span class='h'>✅</span>Gradient (rate of change)."},
+{s:"Differentiate y = 1/x (= x⁻¹).",o:["1/x²","−1/x²","ln x","−x²"],c:1,e:"<span class='h'>✏️</span>Power rule on x⁻¹:<span class='calc'>−1·x⁻² = −1/x²</span><span class='h'>✅</span>−1/x²."},
+{s:"Differentiate y = (2x + 3)⁵ (chain rule).",o:["5(2x+3)⁴","10(2x+3)⁴","(2x+3)⁶/6","2(2x+3)⁴"],c:1,e:"<span class='h'>💡 Idea</span>Differentiate the outside, then × derivative of the inside (2).<span class='h'>✏️</span><span class='calc'>5(2x+3)⁴ × 2 = 10(2x+3)⁴</span><span class='h'>✅</span>10(2x+3)⁴."},
+{s:"What is d/dx (sin x)?",o:["cos x","−cos x","−sin x","sec²x"],c:0,e:"<span class='h'>💡 Idea</span>Standard result: the derivative of sin x is cos x.<span class='h'>✅</span>cos x."},
+{s:"What is d/dx (cos x)?",o:["sin x","−sin x","cos x","tan x"],c:1,e:"<span class='h'>💡 Idea</span>Derivative of cos x is −sin x (note the minus sign).<span class='h'>✅</span>−sin x."},
+{s:"What is d/dx (eˣ)?",o:["x eˣ⁻¹","eˣ","1/x","x eˣ"],c:1,e:"<span class='h'>💡 Idea</span>eˣ is special — it is its own derivative.<span class='h'>✅</span>eˣ."},
+{s:"What is d/dx (ln x)?",o:["1/x","ln x","x","eˣ"],c:0,e:"<span class='h'>💡 Idea</span>The derivative of ln x is 1/x.<span class='h'>✅</span>1/x."},
+{s:"Find the second derivative of y = x⁴.",o:["4x³","12x²","x⁵/5","24x"],c:1,e:"<span class='h'>✏️</span>First: 4x³. Differentiate again:<span class='calc'>d/dx(4x³) = 12x²</span><span class='h'>✅</span>12x²."},
+{s:"Find the gradient of y = x² − 3x at the point x = 2.",o:["1","4","−2","7"],c:0,e:"<span class='h'>✏️</span><span class='calc'>dy/dx = 2x − 3</span><span class='calc'>At x=2: 2(2) − 3 = 1</span><span class='h'>✅</span>1."},
+{s:"At a turning point of a curve, the gradient dy/dx equals…",o:["1","Infinity","0","The y-value"],c:2,e:"<span class='h'>💡 Idea</span>A turning point (max or min) is momentarily flat, so dy/dx = 0.<span class='h'>✅</span>0."},
+{s:"If d²y/dx² is NEGATIVE at a turning point, the point is a…",o:["Minimum","Maximum","Point of inflection","Root"],c:1,e:"<span class='h'>💡 Idea</span>Negative second derivative = curve bends down like a hilltop = MAXIMUM.<span class='h'>✅</span>Maximum."},
+{s:"Find the x-coordinates of the turning points of y = x³ − 3x.",o:["x = 0 only","x = 1 and x = −1","x = 3","x = ±3"],c:1,e:"<span class='h'>✏️</span><span class='calc'>dy/dx = 3x² − 3 = 0 → x² = 1 → x = ±1</span><span class='h'>✅</span>x = 1 and x = −1."},
+{s:"For motion, velocity is found from displacement s by…",o:["Integrating s","ds/dt (differentiating s)","s × t","s ÷ t only"],c:1,e:"<span class='h'>💡 Idea</span>Velocity is the rate of change of displacement: v = ds/dt.<span class='h'>✅</span>ds/dt."},
+{s:"Acceleration is obtained from velocity v by…",o:["dv/dt","∫v dt","v²","v × t"],c:0,e:"<span class='h'>💡 Idea</span>Acceleration = rate of change of velocity = dv/dt.<span class='h'>✅</span>dv/dt."},
+{s:"The slope of the NORMAL to a curve, where the tangent slope is m, is…",o:["m","−m","1/m","−1/m"],c:3,e:"<span class='h'>💡 Idea</span>The normal is perpendicular to the tangent, so its slope is the negative reciprocal, −1/m.<span class='h'>✅</span>−1/m."},
+{s:"Integration is best described as…",o:["The reverse of differentiation","Multiplying by x","Squaring the function","Finding the slope"],c:0,e:"<span class='h'>💡 Idea</span>Integration undoes differentiation (anti-derivative) and gives the area under a curve.<span class='h'>✅</span>The reverse of differentiation."},
+{s:"Evaluate ∫ x² dx.",o:["2x + C","x³/3 + C","3x³ + C","x³ + C"],c:1,e:"<span class='h'>💡 Idea</span>Add 1 to the power, divide by the new power, add C.<span class='h'>✏️</span><span class='calc'>x³/3 + C</span><span class='h'>✅</span>x³/3 + C."},
+{s:"What must you ALWAYS add to an indefinite integral?",o:["A power","The constant + C","A minus sign","dx"],c:1,e:"<span class='h'>💡 Idea</span>Many functions differentiate to the same thing, so we add the arbitrary constant + C.<span class='h'>✅</span>The constant + C."},
+{s:"Evaluate ∫ 2x dx.",o:["x² + C","2 + C","x²","2x² + C"],c:0,e:"<span class='h'>✏️</span><span class='calc'>∫2x dx = 2 · x²/2 + C = x² + C</span><span class='h'>✅</span>x² + C."},
+{s:"Evaluate the definite integral ∫₀² x² dx.",o:["8","4","8/3","2"],c:2,e:"<span class='h'>✏️</span><span class='calc'>[x³/3]₀² = 8/3 − 0 = 8/3</span><span class='h'>✅</span>8/3."},
+{s:"Evaluate ∫ cos x dx.",o:["−cos x + C","sin x + C","−sin x + C","tan x + C"],c:1,e:"<span class='h'>💡 Idea</span>∫cos x dx = sin x + C (reverse of d/dx sin x = cos x).<span class='h'>✅</span>sin x + C."},
+{s:"Evaluate ∫ (1/x) dx.",o:["ln|x| + C","−1/x² + C","x⁰ + C","1 + C"],c:0,e:"<span class='h'>💡 Idea</span>The power rule fails when n = −1, so this special case gives ln|x| + C.<span class='h'>✅</span>ln|x| + C."},
+{s:"Evaluate ∫₁³ 2x dx.",o:["8","9","4","6"],c:0,e:"<span class='h'>✏️</span><span class='calc'>∫2x dx = x² → [x²]₁³ = 9 − 1 = 8</span><span class='h'>✅</span>8."},
+{s:"The area under the curve y = f(x) between x = a and x = b is given by…",o:["f(b) − f(a)","∫ₐᵇ y dx","dy/dx","f(a) × f(b)"],c:1,e:"<span class='h'>💡 Idea</span>Area under a curve = the definite integral of y between the limits.<span class='h'>✅</span>∫ₐᵇ y dx."},
+{s:"Evaluate ∫ (3x² + 2) dx.",o:["x³ + 2x + C","6x + C","3x³ + 2x + C","x³ + 2 + C"],c:0,e:"<span class='h'>✏️</span>Integrate term by term:<span class='calc'>∫3x² = x³, ∫2 = 2x → x³ + 2x + C</span><span class='h'>✅</span>x³ + 2x + C."},
+{s:"Given dy/dx = 2x and the curve passes through (1, 5), find y.",o:["y = x² + 4","y = x² + 5","y = 2x² + 3","y = x² + C"],c:0,e:"<span class='h'>✏️</span><span class='calc'>y = ∫2x dx = x² + C</span><span class='calc'>5 = 1² + C → C = 4 → y = x² + 4</span><span class='h'>✅</span>y = x² + 4."}
+);
+
+["diff","apps","integ","further","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
