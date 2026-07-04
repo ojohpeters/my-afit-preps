@@ -373,7 +373,7 @@ function vResources(){
     var list=bySub[s];if(!list||!list.length)return;
     html+='<div class="section-t">'+s+' <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:600">· '+list.length+' guide'+(list.length>1?'s':'')+'</span></div><div class="topic-grid">';
     list.forEach(function(r){
-      html+='<a class="topic-card res-card" href="resources/'+esc(r.file)+'" target="_blank" rel="noopener">'+
+      html+='<a class="topic-card res-card" href="resources/'+esc(r.file)+'">'+
         '<div class="res-top"><h4 style="font-size:15px">'+esc(r.title)+'</h4>'+
         '<span class="tag tag-'+subjClass(r.subject)+'">'+esc(r.subject)+'</span></div>'+
         '<p style="font-size:12.5px;line-height:1.5">'+esc(r.desc)+'</p>'+
