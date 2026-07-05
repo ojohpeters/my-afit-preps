@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isoelectronic Species & Ions — A–Z (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔬 Isoelectronic Species &amp; Ions</h1>
+  <p>Atoms and ions that share the same number of electrons — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME chemistry · with worked examples and a 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Electron-counting rules</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="intro">🔬 What Isoelectronic Means</div>
+    <div class="tab" data-cat="groups">🧮 Finding Isoelectronic Groups</div>
+    <div class="tab" data-cat="size">📏 Ionic Size Trend</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="cat intro show" id="cat-intro">
+    <h2 class="cathead">🔬 What "Isoelectronic" Means</h2>
+
+    <div class="lesson">
+      <h3>1. The definition</h3>
+      <p><b>Isoelectronic</b> species are atoms or ions that have the <b>SAME number of electrons</b> — and therefore the <b>same electronic configuration</b>.</p>
+      <p>The word breaks into <b>iso</b> (meaning "same" or "equal") + <b>electronic</b> (electrons). So it literally means "same electrons".</p>
+      <div class="analogy">🌟 Think of electrons like passengers. Two different buses (different atoms/ions) are "isoelectronic" if they carry <b>exactly the same number of passengers</b> — even though the buses themselves (the nuclei) are different. Na⁺ and Mg²⁺ look different on paper, but each carries 10 electrons, so they are isoelectronic.</div>
+      <p class="tip">Key point: isoelectronic species need the SAME electron count. They usually have DIFFERENT numbers of protons (different atomic numbers).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Recap — how to count electrons</h3>
+      <span class="key">Neutral atom</span>
+      <p>A neutral atom has no charge because its protons and electrons balance. So:</p>
+      <div class="formula">electrons in a neutral atom = atomic number (Z)</div>
+      <p>Example: sodium (Na) has atomic number 11, so a neutral Na atom has 11 electrons.</p>
+
+      <span class="key">Cation (positive ion)</span>
+      <p>A <b>cation</b> is positive because it <b>LOST</b> electrons. Losing negative electrons leaves extra positive charge. So it has fewer electrons than its atomic number:</p>
+      <div class="formula">electrons in a cation = atomic number − charge</div>
+      <p>Example: Na⁺ has charge +1, so electrons = 11 − 1 = 10.</p>
+
+      <span class="key">Anion (negative ion)</span>
+      <p>An <b>anion</b> is negative because it <b>GAINED</b> electrons. Extra electrons add negative charge. So it has more electrons than its atomic number:</p>
+      <div class="formula">electrons in an anion = atomic number + charge</div>
+      <p>Example: O²⁻ has charge −2 (gained 2), so electrons = 8 + 2 = 10.</p>
+
+      <div class="analogy">🌟 Easy memory trick: the charge tells you the direction. A <b>+</b> charge means electrons were removed (subtract). A <b>−</b> charge means electrons were added (add). "Plus means minus electrons, minus means plus electrons."</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked examples — counting electrons in ions</h3>
+      <div class="ex"><b class="t">Example 1 — Na⁺ (Na has Z = 11):</b> It is a cation (+1), so it LOST 1 electron. Electrons = 11 − 1 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 2 — Mg²⁺ (Mg has Z = 12):</b> Cation (+2), lost 2 electrons. Electrons = 12 − 2 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 3 — Al³⁺ (Al has Z = 13):</b> Cation (+3), lost 3 electrons. Electrons = 13 − 3 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 4 — O²⁻ (O has Z = 8):</b> Anion (−2), gained 2 electrons. Electrons = 8 + 2 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 5 — F⁻ (F has Z = 9):</b> Anion (−1), gained 1 electron. Electrons = 9 + 1 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 6 — N³⁻ (N has Z = 7):</b> Anion (−3), gained 3 electrons. Electrons = 7 + 3 = <b>10</b>.</div>
+      <div class="ex"><b class="t">Example 7 — Cl⁻ (Cl has Z = 17):</b> Anion (−1), gained 1 electron. Electrons = 17 + 1 = <b>18</b>.</div>
+      <div class="ex"><b class="t">Example 8 — Ca²⁺ (Ca has Z = 20):</b> Cation (+2), lost 2 electrons. Electrons = 20 − 2 = <b>18</b>.</div>
+      <p class="tip">Notice how examples 1–6 all landed on 10 electrons. That is not a coincidence — it is the famous 10-electron family, coming up in the next tab.</p>
+    </div>
+  </section>
+
+  <!-- ===================== GROUPS ===================== -->
+  <section class="cat groups" id="cat-groups">
+    <h2 class="cathead">🧮 Finding Isoelectronic Groups</h2>
+
+    <div class="lesson">
+      <h3>1. The 10-electron family (the "neon family")</h3>
+      <p>Any species that ends up with <b>10 electrons</b> has the same electronic configuration as <b>neon (Ne, Z = 10)</b>. This is the most-tested group in exams.</p>
+      <table class="r">
+        <tr><th>Species</th><th>Atomic number (Z)</th><th>Charge</th><th>Electron count</th></tr>
+        <tr><td>N³⁻</td><td>7</td><td>−3 (gained 3)</td><td>7 + 3 = <b>10</b></td></tr>
+        <tr><td>O²⁻</td><td>8</td><td>−2 (gained 2)</td><td>8 + 2 = <b>10</b></td></tr>
+        <tr><td>F⁻</td><td>9</td><td>−1 (gained 1)</td><td>9 + 1 = <b>10</b></td></tr>
+        <tr><td>Ne</td><td>10</td><td>0 (neutral)</td><td>10 = <b>10</b></td></tr>
+        <tr><td>Na⁺</td><td>11</td><td>+1 (lost 1)</td><td>11 − 1 = <b>10</b></td></tr>
+        <tr><td>Mg²⁺</td><td>12</td><td>+2 (lost 2)</td><td>12 − 2 = <b>10</b></td></tr>
+        <tr><td>Al³⁺</td><td>13</td><td>+3 (lost 3)</td><td>13 − 3 = <b>10</b></td></tr>
+      </table>
+      <p>So <b>N³⁻, O²⁻, F⁻, Ne, Na⁺, Mg²⁺ and Al³⁺</b> are all isoelectronic — each has 10 electrons.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The 18-electron family (the "argon family")</h3>
+      <p>Any species with <b>18 electrons</b> matches <b>argon (Ar, Z = 18)</b>.</p>
+      <table class="r">
+        <tr><th>Species</th><th>Atomic number (Z)</th><th>Charge</th><th>Electron count</th></tr>
+        <tr><td>P³⁻</td><td>15</td><td>−3 (gained 3)</td><td>15 + 3 = <b>18</b></td></tr>
+        <tr><td>S²⁻</td><td>16</td><td>−2 (gained 2)</td><td>16 + 2 = <b>18</b></td></tr>
+        <tr><td>Cl⁻</td><td>17</td><td>−1 (gained 1)</td><td>17 + 1 = <b>18</b></td></tr>
+        <tr><td>Ar</td><td>18</td><td>0 (neutral)</td><td>18 = <b>18</b></td></tr>
+        <tr><td>K⁺</td><td>19</td><td>+1 (lost 1)</td><td>19 − 1 = <b>18</b></td></tr>
+        <tr><td>Ca²⁺</td><td>20</td><td>+2 (lost 2)</td><td>20 − 2 = <b>18</b></td></tr>
+      </table>
+      <p>So <b>P³⁻, S²⁻, Cl⁻, Ar, K⁺ and Ca²⁺</b> are all isoelectronic with 18 electrons each.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The 2-electron family (the "helium family")</h3>
+      <p>The smallest common group matches <b>helium (He, Z = 2)</b> with just <b>2 electrons</b>.</p>
+      <table class="r">
+        <tr><th>Species</th><th>Atomic number (Z)</th><th>Charge</th><th>Electron count</th></tr>
+        <tr><td>H⁻</td><td>1</td><td>−1 (gained 1)</td><td>1 + 1 = <b>2</b></td></tr>
+        <tr><td>He</td><td>2</td><td>0 (neutral)</td><td>2 = <b>2</b></td></tr>
+        <tr><td>Li⁺</td><td>3</td><td>+1 (lost 1)</td><td>3 − 1 = <b>2</b></td></tr>
+        <tr><td>Be²⁺</td><td>4</td><td>+2 (lost 2)</td><td>4 − 2 = <b>2</b></td></tr>
+      </table>
+      <p>So <b>H⁻, He, Li⁺ and Be²⁺</b> are all isoelectronic with 2 electrons each.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Method box — how to test if two species are isoelectronic</h3>
+      <div class="formula">Step 1: count electrons of species A · Step 2: count electrons of species B · Step 3: compare</div>
+      <ul>
+        <li>① Count the electrons of the first species (use the rules: neutral = Z, cation = Z − charge, anion = Z + charge).</li>
+        <li>② Count the electrons of the second species the same way.</li>
+        <li>③ If the two counts are <b>equal</b>, they are isoelectronic. If not, they are not.</li>
+      </ul>
+      <div class="analogy">🌟 The nuclei can be totally different — it is ONLY the final electron count that decides. Ignore the protons when comparing; only the electrons matter for "isoelectronic".</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked examples — testing pairs</h3>
+      <div class="ex"><b class="t">Are Na⁺ and F⁻ isoelectronic?</b> Na⁺ = 11 − 1 = 10 electrons. F⁻ = 9 + 1 = 10 electrons. Same → <b>YES, isoelectronic</b> (both 10).</div>
+      <div class="ex"><b class="t">Are K⁺ and Cl⁻ isoelectronic?</b> K⁺ = 19 − 1 = 18. Cl⁻ = 17 + 1 = 18. Same → <b>YES</b> (both 18).</div>
+      <div class="ex"><b class="t">Are Na⁺ and Cl⁻ isoelectronic?</b> Na⁺ = 10 electrons, Cl⁻ = 18 electrons. Different → <b>NO</b>.</div>
+      <div class="ex"><b class="t">Which ion is isoelectronic with Ne (10 e⁻)?</b> Test the options — Mg²⁺ = 12 − 2 = 10. Match → <b>Mg²⁺</b>.</div>
+      <div class="ex"><b class="t">Which species is isoelectronic with Ar (18 e⁻)?</b> S²⁻ = 16 + 2 = 18. Match → <b>S²⁻</b>.</div>
+    </div>
+  </section>
+
+  <!-- ===================== SIZE ===================== -->
+  <section class="cat size" id="cat-size">
+    <h2 class="cathead">📏 Ionic Size Trend in an Isoelectronic Series</h2>
+
+    <div class="lesson">
+      <h3>1. Same electrons, different protons</h3>
+      <p>In an isoelectronic series, every species has the <b>SAME number of electrons</b> but a <b>DIFFERENT number of protons</b> (different nuclear charge). This difference in protons is what changes the size.</p>
+      <div class="formula">More protons → stronger inward pull on the same electron cloud → SMALLER ion</div>
+      <p>The nucleus and the electrons attract each other. When there are more protons in the nucleus but the same number of electrons to hold, the pull on each electron is stronger, so the whole electron cloud is dragged in tighter and the ion shrinks.</p>
+      <div class="analogy">🌟 Imagine the same number of dogs on leashes. One owner (few protons) holds them loosely — they spread out wide. A stronger owner (more protons) pulls all the leashes tight — the same dogs now huddle in a smaller space. Same "electrons", tighter grip = smaller size.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The rule for the whole series</h3>
+      <div class="formula">Across an isoelectronic series, ionic radius DECREASES as nuclear charge (proton / atomic number) INCREASES</div>
+      <p>So the species with the <b>fewest protons</b> is the <b>biggest</b>, and the one with the <b>most protons</b> is the <b>smallest</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked ordering — the 10-electron series</h3>
+      <p>Arrange N³⁻, O²⁻, F⁻, Na⁺, Mg²⁺, Al³⁺ (all 10 electrons) in order of size.</p>
+      <table class="r">
+        <tr><th>Ion</th><th>Protons (Z)</th><th>Relative size</th></tr>
+        <tr><td>N³⁻</td><td>7 (fewest)</td><td>LARGEST</td></tr>
+        <tr><td>O²⁻</td><td>8</td><td>↓</td></tr>
+        <tr><td>F⁻</td><td>9</td><td>↓</td></tr>
+        <tr><td>Na⁺</td><td>11</td><td>↓</td></tr>
+        <tr><td>Mg²⁺</td><td>12</td><td>↓</td></tr>
+        <tr><td>Al³⁺</td><td>13 (most)</td><td>SMALLEST</td></tr>
+      </table>
+      <p>Order of decreasing size: <b>N³⁻ &gt; O²⁻ &gt; F⁻ &gt; Na⁺ &gt; Mg²⁺ &gt; Al³⁺</b>. The more protons, the smaller — so N³⁻ (7 protons) is biggest and Al³⁺ (13 protons) is smallest.</p>
+      <div class="ex"><b class="t">Why is Al³⁺ smaller than Na⁺?</b> Both have 10 electrons, but Al³⁺ has 13 protons versus Na⁺'s 11. The extra positive charge in Al³⁺ pulls those 10 electrons in much tighter, so Al³⁺ is the smaller ion.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Why anions are bigger and cations smaller than their parent atom</h3>
+      <span class="key">Anion vs its parent atom</span>
+      <p>An anion <b>gained electrons</b>. Now there are more electrons than protons, so the protons cannot hold them as tightly, and the extra electron–electron repulsion pushes the cloud outward. The electron cloud swells, so an <b>anion is LARGER than its parent atom</b> (e.g. Cl⁻ is bigger than a Cl atom).</p>
+      <span class="key">Cation vs its parent atom</span>
+      <p>A cation <b>lost electrons</b>. Often it loses its entire outer shell, so it may even have fewer shells. The same number of protons now pulls fewer electrons, holding them tighter. So a <b>cation is SMALLER than its parent atom</b> (e.g. Na⁺ is much smaller than a Na atom).</p>
+      <div class="analogy">🌟 Add passengers to a bus (anion) and it feels crowded and bulges; remove passengers (cation) and the remaining few are pulled to the middle, leaving a smaller, tighter group.</div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Count the electrons, compare, then rank by protons. You've got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"What does the term 'isoelectronic' mean?",o:["Same number of electrons","Same number of protons","Same number of neutrons","Same mass number"],c:0,e:"<span class='h'>💡 Idea</span>The prefix 'iso' means 'same', and 'electronic' points to electrons. Isoelectronic species have the same number of electrons (and so the same electronic configuration).<span class='h'>✅</span>Same number of electrons."},
+{s:"Two isoelectronic species must have the same…",o:["Atomic number","Electronic configuration","Number of protons","Number of neutrons"],c:1,e:"<span class='h'>💡 Idea</span>Equal electron count means the electrons fill the shells the same way, so they share the same electronic configuration. Their protons usually differ.<span class='h'>✅</span>Electronic configuration."},
+{s:"A neutral atom of oxygen has atomic number 8. How many electrons does it have?",o:["6","10","8","2"],c:2,e:"<span class='h'>💡 Idea</span>In a neutral atom, electrons equal the atomic number.<span class='h'>✏️ Working</span><span class='calc'>electrons = Z = 8</span><span class='h'>✅</span>8."},
+{s:"How many electrons are in the ion Na⁺? (Na has atomic number 11)",o:["11","12","9","10"],c:3,e:"<span class='h'>💡 Idea</span>A + charge means the atom LOST electrons, so subtract the charge.<span class='h'>✏️ Working</span><span class='calc'>electrons = 11 − 1 = 10</span><span class='h'>✅</span>10."},
+{s:"How many electrons are in the ion O²⁻? (O has atomic number 8)",o:["10","6","8","16"],c:0,e:"<span class='h'>💡 Idea</span>A − charge means the atom GAINED electrons, so add the charge.<span class='h'>✏️ Working</span><span class='calc'>electrons = 8 + 2 = 10</span><span class='h'>✅</span>10."},
+{s:"For a cation carrying a charge of +n, the number of electrons equals…",o:["Z + n","Z − n","Z","n"],c:1,e:"<span class='h'>💡 Idea</span>A cation is positive because it lost electrons, so you subtract the charge from the atomic number.<span class='h'>✏️ Working</span><span class='calc'>electrons = Z − n</span><span class='h'>✅</span>Z − n."},
+{s:"For an anion carrying a charge of −n, the number of electrons equals…",o:["Z − n","Z","Z + n","n"],c:2,e:"<span class='h'>💡 Idea</span>An anion is negative because it gained electrons, so you add the charge to the atomic number.<span class='h'>✏️ Working</span><span class='calc'>electrons = Z + n</span><span class='h'>✅</span>Z + n."},
+{s:"How many electrons are in Mg²⁺? (Mg has atomic number 12)",o:["12","14","8","10"],c:3,e:"<span class='h'>💡 Idea</span>Cation +2 means 2 electrons were lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 12 − 2 = 10</span><span class='h'>✅</span>10."},
+{s:"How many electrons are in N³⁻? (N has atomic number 7)",o:["10","7","4","3"],c:0,e:"<span class='h'>💡 Idea</span>Anion −3 means 3 electrons were gained.<span class='h'>✏️ Working</span><span class='calc'>electrons = 7 + 3 = 10</span><span class='h'>✅</span>10."},
+{s:"How many electrons are in Al³⁺? (Al has atomic number 13)",o:["13","10","16","3"],c:1,e:"<span class='h'>💡 Idea</span>Cation +3 means 3 electrons were lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 13 − 3 = 10</span><span class='h'>✅</span>10."},
+{s:"Which of these is isoelectronic with neon, Ne (10 electrons)?",o:["Cl⁻","K⁺","Na⁺","O"],c:2,e:"<span class='h'>💡 Idea</span>Ne has 10 electrons. Na⁺ = 11 − 1 = 10, a match. Cl⁻ = 18, K⁺ = 18, and neutral O = 8.<span class='h'>✅</span>Na⁺."},
+{s:"Which ion is isoelectronic with F⁻? (F has atomic number 9)",o:["Cl⁻","K⁺","Br⁻","Na⁺"],c:3,e:"<span class='h'>💡 Idea</span>F⁻ = 9 + 1 = 10 electrons. Na⁺ = 11 − 1 = 10, so they match. Cl⁻ and K⁺ have 18.<span class='h'>✅</span>Na⁺."},
+{s:"All of the following have 10 electrons EXCEPT…",o:["Cl⁻","O²⁻","F⁻","Na⁺"],c:0,e:"<span class='h'>💡 Idea</span>O²⁻ = 10, F⁻ = 10, Na⁺ = 10, but Cl⁻ = 17 + 1 = 18.<span class='h'>✏️ Working</span><span class='calc'>Cl⁻ = 17 + 1 = 18 (not 10)</span><span class='h'>✅</span>Cl⁻."},
+{s:"How many electrons are in Cl⁻? (Cl has atomic number 17)",o:["17","18","16","10"],c:1,e:"<span class='h'>💡 Idea</span>Anion −1 means 1 electron gained.<span class='h'>✏️ Working</span><span class='calc'>electrons = 17 + 1 = 18</span><span class='h'>✅</span>18."},
+{s:"How many electrons are in K⁺? (K has atomic number 19)",o:["19","20","18","10"],c:2,e:"<span class='h'>💡 Idea</span>Cation +1 means 1 electron lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 19 − 1 = 18</span><span class='h'>✅</span>18."},
+{s:"How many electrons are in Ca²⁺? (Ca has atomic number 20)",o:["20","22","10","18"],c:3,e:"<span class='h'>💡 Idea</span>Cation +2 means 2 electrons lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 20 − 2 = 18</span><span class='h'>✅</span>18."},
+{s:"Which species is isoelectronic with argon, Ar (18 electrons)?",o:["S²⁻","O²⁻","Na⁺","Ne"],c:0,e:"<span class='h'>💡 Idea</span>Ar has 18 electrons. S²⁻ = 16 + 2 = 18, a match. O²⁻ = 10, Na⁺ = 10, Ne = 10.<span class='h'>✅</span>S²⁻."},
+{s:"Which of these belongs to the 18-electron (argon) family?",o:["Mg²⁺","P³⁻","N³⁻","Li⁺"],c:1,e:"<span class='h'>💡 Idea</span>P³⁻ = 15 + 3 = 18, so it joins the argon family. Mg²⁺ = 10, N³⁻ = 10, Li⁺ = 2.<span class='h'>✅</span>P³⁻."},
+{s:"How many electrons are in S²⁻? (S has atomic number 16)",o:["16","14","18","10"],c:2,e:"<span class='h'>💡 Idea</span>Anion −2 means 2 electrons gained.<span class='h'>✏️ Working</span><span class='calc'>electrons = 16 + 2 = 18</span><span class='h'>✅</span>18."},
+{s:"The species H⁻, He, Li⁺ and Be²⁺ all have how many electrons?",o:["1","10","4","2"],c:3,e:"<span class='h'>💡 Idea</span>Check each: H⁻ = 1 + 1 = 2, He = 2, Li⁺ = 3 − 1 = 2, Be²⁺ = 4 − 2 = 2. They form the 2-electron (helium) family.<span class='h'>✅</span>2."},
+{s:"How many electrons are in Li⁺? (Li has atomic number 3)",o:["2","3","4","1"],c:0,e:"<span class='h'>💡 Idea</span>Cation +1 means 1 electron lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 3 − 1 = 2</span><span class='h'>✅</span>2."},
+{s:"How many electrons are in Be²⁺? (Be has atomic number 4)",o:["4","2","6","0"],c:1,e:"<span class='h'>💡 Idea</span>Cation +2 means 2 electrons lost.<span class='h'>✏️ Working</span><span class='calc'>electrons = 4 − 2 = 2</span><span class='h'>✅</span>2."},
+{s:"How many electrons are in H⁻? (H has atomic number 1)",o:["0","1","2","3"],c:2,e:"<span class='h'>💡 Idea</span>Anion −1 means 1 electron gained.<span class='h'>✏️ Working</span><span class='calc'>electrons = 1 + 1 = 2</span><span class='h'>✅</span>2 (same as helium)."},
+{s:"In an isoelectronic series, all species have the same number of electrons but they differ in…",o:["Number of electrons","Electronic configuration","Type of charge only","Number of protons (nuclear charge)"],c:3,e:"<span class='h'>💡 Idea</span>Electron count is fixed across the series; what changes is the number of protons, which is why their sizes differ.<span class='h'>✅</span>Number of protons (nuclear charge)."},
+{s:"Across the isoelectronic series N³⁻, O²⁻, F⁻, Na⁺, Mg²⁺, Al³⁺, the ionic radius…",o:["Decreases as atomic number increases","Increases as atomic number increases","Stays exactly the same","Changes randomly"],c:0,e:"<span class='h'>💡 Idea</span>More protons pull the same 10 electrons in tighter, so the ion gets smaller. Radius decreases as nuclear charge rises.<span class='h'>✅</span>Decreases as atomic number increases."},
+{s:"In the 10-electron series, which ion is the LARGEST?",o:["F⁻","N³⁻","Na⁺","Al³⁺"],c:1,e:"<span class='h'>💡 Idea</span>All have 10 electrons; the largest is the one with the FEWEST protons. N³⁻ has only 7 protons — the weakest pull — so its cloud is biggest.<span class='h'>✅</span>N³⁻."},
+{s:"In the 10-electron series, which ion is the SMALLEST?",o:["N³⁻","O²⁻","Al³⁺","Na⁺"],c:2,e:"<span class='h'>💡 Idea</span>The smallest is the one with the MOST protons. Al³⁺ has 13 protons pulling the 10 electrons in hardest.<span class='h'>✅</span>Al³⁺."},
+{s:"Both Na⁺ and Al³⁺ have 10 electrons. Why is Al³⁺ smaller than Na⁺?",o:["Al³⁺ has fewer electrons than Na⁺","Al³⁺ has more electron shells","Na⁺ gained extra electrons","Al³⁺ has more protons pulling the same electrons in tighter"],c:3,e:"<span class='h'>💡 Idea</span>Same 10 electrons, but Al³⁺ has 13 protons versus Na⁺'s 11. Stronger nuclear charge pulls the cloud in tighter, so Al³⁺ is smaller.<span class='h'>✅</span>Al³⁺ has more protons pulling the same electrons in tighter."},
+{s:"Compared with its parent atom, a cation is always…",o:["Smaller","Larger","Exactly the same size","Impossible to compare"],c:0,e:"<span class='h'>💡 Idea</span>A cation lost electrons (often a whole outer shell), so the same protons hold fewer electrons more tightly. It shrinks. A cation is smaller than its atom.<span class='h'>✅</span>Smaller."},
+{s:"Compared with its parent atom, an anion is always…",o:["Smaller","Larger","Exactly the same size","Lighter in mass"],c:1,e:"<span class='h'>💡 Idea</span>An anion gained electrons, adding electron–electron repulsion while the proton count stays the same, so the cloud swells. An anion is larger than its atom.<span class='h'>✅</span>Larger."}
+);
+
+["intro","groups","size","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

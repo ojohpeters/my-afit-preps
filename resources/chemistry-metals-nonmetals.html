@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metals, Non-metals & Their Compounds — A–Z (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔩 Metals, Non-metals &amp; Their Compounds</h1>
+  <p>Compare them, react them, name their oxides — taught from zero, A to Z</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · with examples and a 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Side-by-side comparisons</span><span class="pill">Summary tables</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="compare">🔩 Metals vs Non-metals</div>
+    <div class="tab" data-cat="reactions">🔥 Reactions of Metals</div>
+    <div class="tab" data-cat="compounds">⚗️ Their Compounds</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== COMPARE ===================== -->
+  <section class="cat compare show" id="cat-compare">
+    <h2 class="cathead">🔩 Metals vs Non-metals — the Big Comparison</h2>
+
+    <div class="lesson">
+      <h3>1. First, the big picture</h3>
+      <p>Every element is either a <b>metal</b>, a <b>non-metal</b>, or a rare in-between type called a <b>metalloid</b>. The whole topic is about spotting the <b>differences</b> between metals and non-metals — in how they look and behave (physical properties) and in how they react (chemical properties).</p>
+      <ul>
+        <li><b>Metals</b> — e.g. iron (Fe), copper (Cu), aluminium (Al), sodium (Na), zinc (Zn), gold (Au), calcium (Ca).</li>
+        <li><b>Non-metals</b> — e.g. oxygen (O), carbon (C), sulphur (S), nitrogen (N), chlorine (Cl), phosphorus (P), hydrogen (H).</li>
+      </ul>
+      <div class="analogy">🌟 Simple picture: metals are the shiny, strong, bendable, electricity-carrying team (think spoons, wires, coins). Non-metals are the dull, brittle-or-gassy team (think charcoal, sulphur powder, the air you breathe).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. PHYSICAL properties — side by side</h3>
+      <p>This is the table examiners love. Learn it row by row.</p>
+      <table class="r">
+        <tr><th>Physical property</th><th>METALS</th><th>NON-METALS</th></tr>
+        <tr><td><b>State at room temp</b></td><td>Mostly <b>solids</b> (only exception: mercury, Hg, is a liquid)</td><td>Can be <b>solids, liquids or gases</b> (e.g. carbon is solid, bromine is liquid, oxygen is gas)</td></tr>
+        <tr><td><b>Lustre / appearance</b></td><td><b>Shiny (lustrous)</b> when freshly cut</td><td><b>Dull</b> (exceptions: graphite &amp; iodine look shiny)</td></tr>
+        <tr><td><b>Malleability &amp; ductility</b></td><td><b>Malleable</b> (hammered into sheets) and <b>ductile</b> (drawn into wires)</td><td><b>Brittle</b> when solid — they crack/shatter; not ductile</td></tr>
+        <tr><td><b>Conductivity (heat &amp; electricity)</b></td><td><b>Good conductors</b> of heat and electricity</td><td><b>Poor conductors / insulators</b> (exception: graphite conducts electricity)</td></tr>
+        <tr><td><b>Sonorous</b></td><td><b>Sonorous</b> — make a ringing sound when struck (that is why bells are metal)</td><td><b>Not sonorous</b> — a dull thud</td></tr>
+        <tr><td><b>Density</b></td><td>Usually <b>high</b> density (heavy for their size)</td><td>Usually <b>low</b> density</td></tr>
+        <tr><td><b>Melting / boiling point</b></td><td>Usually <b>high</b> (exceptions: sodium, mercury are low)</td><td>Usually <b>low</b> (exceptions: carbon/graphite &amp; silicon are very high)</td></tr>
+      </table>
+      <p class="tip">Memory hook for the good side of metals: <b>shiny, strong, bendy, ringing, heavy, conducting.</b> Non-metals are basically the opposite.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. CHEMICAL character — the real difference</h3>
+      <h4>Metals are ELECTROPOSITIVE</h4>
+      <p>Metals have few electrons in their outer shell and <b>lose them easily</b>. When a metal loses electrons it becomes a <b>positive ion (cation)</b>. Because they give away electrons, metals are called <b>electropositive</b> and act as <b>reducing agents</b> (electron donors).</p>
+      <div class="formula">Metal → positive ion + electron(s)</div>
+      <div class="ex"><b class="t">Ion examples:</b>
+        <div class="calc">Na → Na⁺ + e⁻ &nbsp;(sodium loses 1)</div>
+        <div class="calc">Mg → Mg²⁺ + 2e⁻ &nbsp;(magnesium loses 2)</div>
+        <div class="calc">Al → Al³⁺ + 3e⁻ &nbsp;(aluminium loses 3)</div>
+      </div>
+      <h4>Non-metals are ELECTRONEGATIVE</h4>
+      <p>Non-metals have nearly-full outer shells and <b>gain electrons</b> to complete them. When a non-metal gains electrons it becomes a <b>negative ion (anion)</b>. Because they pull in electrons, non-metals are called <b>electronegative</b> and act as <b>oxidising agents</b> (electron acceptors).</p>
+      <div class="ex"><b class="t">Ion examples:</b>
+        <div class="calc">Cl + e⁻ → Cl⁻ &nbsp;(chlorine gains 1)</div>
+        <div class="calc">O + 2e⁻ → O²⁻ &nbsp;(oxygen gains 2)</div>
+      </div>
+      <div class="analogy">🌟 Think of a chemical reaction as a game of pass-the-ball with electrons: <b>metals throw</b> electrons away (become +), <b>non-metals catch</b> them (become −). Opposite charges then attract → an ionic bond.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Where they sit in the Periodic Table</h3>
+      <ul>
+        <li><b>Metals</b> occupy the <b>left side and the whole centre</b> of the table (the biggest region).</li>
+        <li><b>Non-metals</b> are packed into the <b>top-right corner</b> (plus hydrogen, which sits top-left but behaves as a non-metal).</li>
+        <li>A zig-zag "staircase" line divides the two regions. Right along that dividing line sit the <b>metalloids</b>.</li>
+      </ul>
+      <span class="key">Metalloids (semi-metals)</span>
+      <p>A metalloid has a <b>mix</b> of metallic and non-metallic properties. The main ones to remember: <b>boron (B), silicon (Si), germanium (Ge), arsenic (As)</b> (also antimony, tellurium). Silicon and germanium are <b>semiconductors</b> — they conduct electricity a little, which is why silicon is used to make computer chips.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Quick recap of examples</h3>
+      <table class="r">
+        <tr><th>Type</th><th>Everyday examples</th></tr>
+        <tr><td><b>Metals</b></td><td>Iron, copper, aluminium, zinc, sodium, calcium, magnesium, lead, gold, silver, mercury (liquid)</td></tr>
+        <tr><td><b>Non-metals</b></td><td>Oxygen, carbon, sulphur, nitrogen, chlorine, phosphorus, hydrogen, bromine (liquid), iodine</td></tr>
+        <tr><td><b>Metalloids</b></td><td>Boron, silicon, germanium, arsenic</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== REACTIONS ===================== -->
+  <section class="cat reactions" id="cat-reactions">
+    <h2 class="cathead">🔥 How Metals React</h2>
+
+    <div class="lesson">
+      <h3>1. The Reactivity Series (learn this order!)</h3>
+      <p>Metals differ in <b>how eagerly they react</b>. We line them up from <b>most reactive</b> (top) to <b>least reactive</b> (bottom). Hydrogen (a non-metal) is slotted in as a reference marker.</p>
+      <div class="formula">K &gt; Na &gt; Ca &gt; Mg &gt; Al &gt; Zn &gt; Fe &gt; Pb &gt; (H) &gt; Cu &gt; Ag &gt; Au</div>
+      <p><b>Mnemonic</b> (first letters — Potassium, Sodium, Calcium, Magnesium, Aluminium, Zinc, Iron, Lead, Hydrogen, Copper, Silver, Gold):</p>
+      <div class="ex"><b class="t">"Poor Silly Children Must All Zip Into Lorries, Hoping Cars Stop Gently."</b>
+        <div class="calc">P-Poor · S-Silly · C-Children · M-Must · A-All · Z-Zip · I-Into · L-Lorries · H-Hoping · C-Cars · S-Stop · G-Gently</div>
+      </div>
+      <p class="tip">Higher up = more reactive = loses electrons more easily = harder to extract from its ore. Lower down (Cu, Ag, Au) = unreactive = found almost pure in nature and used for coins/jewellery.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Metal + Oxygen → a BASIC oxide</h3>
+      <div class="formula">metal + oxygen → metal oxide (basic)</div>
+      <p>Reactive metals burn brightly; less reactive ones oxidise slowly; gold and silver hardly react at all.</p>
+      <div class="ex"><b class="t">Worked equations:</b>
+        <div class="calc">4Na + O₂ → 2Na₂O</div>
+        <div class="calc">2Mg + O₂ → 2MgO &nbsp;(bright white flame)</div>
+        <div class="calc">4Al + 3O₂ → 2Al₂O₃</div>
+        <div class="calc">2Cu + O₂ → 2CuO &nbsp;(slow, forms black coating)</div>
+      </div>
+      <p>These metal oxides are <b>basic</b> — they neutralise acids. (We build on this in the Compounds tab.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Metal + Water / Steam</h3>
+      <h4>Very reactive metals (K, Na, Ca) + COLD water</h4>
+      <div class="formula">metal + water → metal hydroxide + hydrogen</div>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">2Na + 2H₂O → 2NaOH + H₂↑</div>
+        <div class="calc">Ca + 2H₂O → Ca(OH)₂ + H₂↑</div>
+      </div>
+      <h4>Moderately reactive metals (Mg, Zn, Fe) + STEAM</h4>
+      <div class="formula">metal + steam → metal oxide + hydrogen</div>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">Mg + H₂O → MgO + H₂↑</div>
+        <div class="calc">Zn + H₂O → ZnO + H₂↑</div>
+        <div class="calc">3Fe + 4H₂O → Fe₃O₄ + 4H₂↑</div>
+      </div>
+      <h4>Unreactive metals (Cu, Ag, Au)</h4>
+      <p><b>No reaction</b> with water or steam. That is why copper is safe for water pipes.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Metal + Dilute Acid</h3>
+      <div class="formula">metal + dilute acid → salt + hydrogen</div>
+      <p>The golden rule: <b>only metals ABOVE hydrogen</b> in the reactivity series react with dilute acids to push out hydrogen gas. Metals <b>below hydrogen</b> (Cu, Ag, Au) give <b>no reaction</b>.</p>
+      <div class="ex"><b class="t">Worked equations:</b>
+        <div class="calc">Mg + 2HCl → MgCl₂ + H₂↑</div>
+        <div class="calc">Zn + H₂SO₄ → ZnSO₄ + H₂↑</div>
+        <div class="calc">Fe + 2HCl → FeCl₂ + H₂↑</div>
+        <div class="calc">Cu + HCl → no reaction (Cu is below H)</div>
+      </div>
+      <p class="tip">The gas pops with a lighted splint — that is the classic test for hydrogen. (Note: K, Na, Ca react with acids far too violently to do safely, so lab demos use Mg down to Fe.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Displacement reactions</h3>
+      <div class="principle formula">A more reactive metal displaces a less reactive metal from its salt solution.</div>
+      <p>Put a piece of a reactive metal into the salt solution of a less reactive metal — the reactive one takes the place of the less reactive one, which comes out as the free metal.</p>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">Fe + CuSO₄ → FeSO₄ + Cu &nbsp;(iron is more reactive, so it displaces copper — blue solution fades, brown copper coats the iron)</div>
+        <div class="calc">Zn + CuSO₄ → ZnSO₄ + Cu</div>
+        <div class="calc">Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag</div>
+        <div class="calc">Cu + ZnSO₄ → no reaction (copper is LESS reactive than zinc)</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Why reactivity decides the extraction method</h3>
+      <table class="r">
+        <tr><th>Reactivity</th><th>Metals</th><th>How they are extracted</th></tr>
+        <tr><td>Very reactive</td><td>K, Na, Ca, Mg, Al</td><td><b>Electrolysis</b> of the molten ore (strong pull needed)</td></tr>
+        <tr><td>Moderately reactive</td><td>Zn, Fe, Pb</td><td><b>Reduction</b> with carbon / carbon monoxide (e.g. iron in a blast furnace)</td></tr>
+        <tr><td>Unreactive</td><td>Cu, Ag, Au</td><td>Found <b>native (pure)</b> or freed by simple heating</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== COMPOUNDS ===================== -->
+  <section class="cat compounds" id="cat-compounds">
+    <h2 class="cathead">⚗️ Their Compounds — Oxides &amp; More</h2>
+
+    <div class="lesson">
+      <h3>1. The four types of OXIDES</h3>
+      <p>An <b>oxide</b> is a compound of an element with oxygen. How the oxide behaves with acids and bases lets us sort it into four groups. This is the heart of the topic.</p>
+      <table class="r">
+        <tr><th>Type of oxide</th><th>Made from</th><th>Reacts with…</th><th>Examples</th></tr>
+        <tr><td><b>BASIC</b></td><td>Metals</td><td><b>Acids only</b> (→ salt + water)</td><td>Na₂O, K₂O, CaO, MgO, CuO, FeO</td></tr>
+        <tr><td><b>ACIDIC</b></td><td>Non-metals</td><td><b>Bases / alkalis only</b> (→ salt + water)</td><td>CO₂, SO₂, SO₃, P₄O₁₀, NO₂, SiO₂</td></tr>
+        <tr><td><b>AMPHOTERIC</b></td><td>Certain metals</td><td><b>BOTH acids AND bases</b></td><td>Al₂O₃, ZnO, PbO</td></tr>
+        <tr><td><b>NEUTRAL</b></td><td>Non-metals</td><td><b>Neither</b> acids nor bases</td><td>CO, NO, N₂O, H₂O</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory trick: <b>Metal oxide = basic</b>, <b>Non-metal oxide = acidic</b>. The two odd groups to memorise are the <b>amphoteric</b> few (<b>Al₂O₃, ZnO, PbO</b> — react both ways) and the <b>neutral</b> few (<b>CO, NO, N₂O, H₂O</b> — react neither way).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Basic oxides (metal oxides)</h3>
+      <p>They <b>neutralise acids</b> to give a salt and water:</p>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">CaO + 2HCl → CaCl₂ + H₂O</div>
+        <div class="calc">MgO + H₂SO₄ → MgSO₄ + H₂O</div>
+      </div>
+      <span class="key">Soluble basic oxides + water → ALKALIS (bases)</span>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">Na₂O + H₂O → 2NaOH &nbsp;(sodium hydroxide, an alkali)</div>
+        <div class="calc">CaO + H₂O → Ca(OH)₂ &nbsp;(slaked lime, an alkali)</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Acidic oxides (non-metal oxides)</h3>
+      <p>They react with <b>bases/alkalis</b> to give a salt and water:</p>
+      <div class="ex"><b class="t">Example:</b>
+        <div class="calc">CO₂ + 2NaOH → Na₂CO₃ + H₂O</div>
+      </div>
+      <span class="key">Acidic oxides + water → ACIDS</span>
+      <div class="ex"><b class="t">Examples:</b>
+        <div class="calc">CO₂ + H₂O → H₂CO₃ &nbsp;(carbonic acid)</div>
+        <div class="calc">SO₂ + H₂O → H₂SO₃ &nbsp;(sulphurous acid)</div>
+        <div class="calc">SO₃ + H₂O → H₂SO₄ &nbsp;(sulphuric acid)</div>
+      </div>
+      <p class="tip">This is exactly why factory fumes of SO₂ and SO₃ dissolve in rain to make <b>acid rain</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Amphoteric oxides (the two-faced ones)</h3>
+      <p><b>Al₂O₃, ZnO and PbO</b> react with <b>both</b> acids (like a base) <b>and</b> alkalis (like an acid).</p>
+      <div class="ex"><b class="t">Zinc oxide, both ways:</b>
+        <div class="calc">ZnO + 2HCl → ZnCl₂ + H₂O &nbsp;(acts as a base)</div>
+        <div class="calc">ZnO + 2NaOH → Na₂ZnO₂ + H₂O &nbsp;(acts as an acid)</div>
+      </div>
+      <p>Aluminium oxide (Al₂O₃) behaves the same way. Remember the trio: <b>Al₂O₃, ZnO, PbO</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Neutral oxides</h3>
+      <p><b>CO, NO, N₂O and H₂O</b> are non-metal oxides that are <b>neither acidic nor basic</b> — they do not react with acids or bases to form salts.</p>
+      <div class="analogy">🌟 Don't be tricked: carbon has TWO oxides — <b>CO₂ is acidic</b>, but <b>CO is neutral</b>. Nitrogen too: NO₂ is acidic, but <b>NO and N₂O are neutral</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Other compounds: ionic vs covalent</h3>
+      <ul>
+        <li><b>Metals form ionic (electrovalent) compounds</b> — a metal gives electrons to a non-metal. Their chlorides and salts are ionic solids with high melting points that conduct electricity when molten or dissolved. e.g. <b>NaCl, MgCl₂, CaCl₂</b>.</li>
+        <li><b>Non-metals form covalent (molecular) compounds</b> — non-metals share electrons. These are often gases or liquids with low melting points and do not conduct. e.g. <b>CO₂, H₂O, CCl₄, HCl</b>.</li>
+      </ul>
+      <table class="r">
+        <tr><th></th><th>Metal compounds</th><th>Non-metal compounds</th></tr>
+        <tr><td>Bond type</td><td>Ionic / electrovalent</td><td>Covalent</td></tr>
+        <tr><td>Chloride example</td><td>NaCl, MgCl₂ (solid)</td><td>HCl, CCl₄ (gas/liquid)</td></tr>
+        <tr><td>Oxide character</td><td>Basic (or amphoteric)</td><td>Acidic (or neutral)</td></tr>
+        <tr><td>Oxide + water gives</td><td>Alkali / base</td><td>Acid</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>7. A few important uses</h3>
+      <table class="r">
+        <tr><th>Element</th><th>Use — and why</th></tr>
+        <tr><td>Iron / steel</td><td>Buildings, machines, tools — strong</td></tr>
+        <tr><td>Aluminium</td><td>Aircraft, cans, foil — light (low density) &amp; resists corrosion</td></tr>
+        <tr><td>Copper</td><td>Electrical wiring — excellent conductor, not too costly</td></tr>
+        <tr><td>Zinc</td><td>Galvanising (coating) iron to stop it rusting</td></tr>
+        <tr><td>Gold / silver</td><td>Jewellery, coins — shiny &amp; do not corrode</td></tr>
+        <tr><td>Oxygen</td><td>Breathing (respiration) &amp; welding</td></tr>
+        <tr><td>Carbon</td><td>Fuel (charcoal), graphite in pencils, diamond for cutting</td></tr>
+        <tr><td>Nitrogen</td><td>Fertilisers; inert (unreactive) atmosphere</td></tr>
+        <tr><td>Sulphur</td><td>Making sulphuric acid; vulcanising rubber</td></tr>
+        <tr><td>Chlorine</td><td>Treating drinking water; making bleach</td></tr>
+        <tr><td>Silicon (metalloid)</td><td>Computer chips / semiconductors</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Metals give, non-metals grab. Master the oxides and you've won half the marks! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Which of the following is a general physical property of metals?",o:["They are good conductors of electricity","They are dull in appearance","They are brittle","They are poor conductors of heat"],c:0,e:"<span class='h'>💡 Idea</span>Metals are shiny, malleable, sonorous and above all <b>good conductors of heat and electricity</b>. Being dull, brittle and poor conductors describes non-metals.<span class='h'>✅</span>They are good conductors of electricity."},
+{s:"At room temperature, most metals exist as…",o:["Gases","Solids","Liquids","Plasma"],c:1,e:"<span class='h'>💡 Idea</span>Almost all metals are <b>solids</b> at room temperature. The one famous exception is mercury, which is a liquid.<span class='h'>✅</span>Solids."},
+{s:"The only metal that is a liquid at room temperature is…",o:["Sodium","Bromine","Mercury","Iron"],c:2,e:"<span class='h'>💡 Idea</span><b>Mercury (Hg)</b> is the single metal that is liquid at room temperature. (Bromine is also liquid, but bromine is a NON-metal.)<span class='h'>✅</span>Mercury."},
+{s:"Which non-metal is a liquid at room temperature?",o:["Oxygen","Carbon","Sulphur","Bromine"],c:3,e:"<span class='h'>💡 Idea</span>Non-metals can be solid, liquid or gas. <b>Bromine</b> is a liquid non-metal; oxygen is a gas, carbon and sulphur are solids.<span class='h'>✅</span>Bromine."},
+{s:"The property of a metal that lets it be hammered into thin sheets is called…",o:["Malleability","Ductility","Sonority","Conductivity"],c:0,e:"<span class='h'>💡 Idea</span><b>Malleability</b> = can be hammered/rolled into sheets. Ductility = can be drawn into wires. Don't mix them up.<span class='h'>✅</span>Malleability."},
+{s:"The property that allows metals to be drawn out into thin wires is…",o:["Malleability","Ductility","Brittleness","Lustre"],c:1,e:"<span class='h'>💡 Idea</span>Drawn into WIRES = <b>ductility</b>. That is why copper can be pulled into long electrical wires.<span class='h'>✅</span>Ductility."},
+{s:"Metals produce a ringing sound when struck. This property is described as…",o:["Ductile","Brittle","Sonorous","Volatile"],c:2,e:"<span class='h'>💡 Idea</span>Being <b>sonorous</b> means making a clear ringing sound when hit — which is why bells and gongs are made of metal.<span class='h'>✅</span>Sonorous."},
+{s:"Metals are described as ELECTROPOSITIVE because they…",o:["Gain electrons","Form negative ions","Do not take part in reactions","Lose electrons to form positive ions"],c:3,e:"<span class='h'>💡 Idea</span>Metals have few outer electrons and <b>lose them easily</b>, becoming positive ions (cations). Losing electrons = electropositive.<span class='h'>✅</span>Lose electrons to form positive ions."},
+{s:"Non-metals are described as ELECTRONEGATIVE because they tend to…",o:["Gain electrons to form negative ions","Lose electrons","Form cations","Conduct electricity well"],c:0,e:"<span class='h'>💡 Idea</span>Non-metals have nearly full outer shells, so they <b>gain electrons</b> to complete them, forming negative ions (anions). Gaining electrons = electronegative.<span class='h'>✅</span>Gain electrons to form negative ions."},
+{s:"When a sodium atom forms an ion, it becomes…",o:["Na⁻","Na⁺","Na²⁺","Na²⁻"],c:1,e:"<span class='h'>💡 Idea</span>Sodium has 1 outer electron; it loses it to form <b>Na⁺</b>. Metals form POSITIVE ions.<span class='h'>✅</span>Na⁺."},
+{s:"A magnesium atom loses electrons to form which ion?",o:["Mg⁺","Mg⁻","Mg²⁺","Mg²⁻"],c:2,e:"<span class='h'>💡 Idea</span>Magnesium has 2 outer electrons; losing both gives <b>Mg²⁺</b>.<span class='h'>✅</span>Mg²⁺."},
+{s:"When a chlorine atom gains one electron, it becomes…",o:["Cl⁺","Cl²⁻","Cl²⁺","Cl⁻"],c:3,e:"<span class='h'>💡 Idea</span>Chlorine needs just 1 electron to fill its shell, so it gains one and becomes the <b>Cl⁻</b> ion (a negative anion).<span class='h'>✅</span>Cl⁻."},
+{s:"A positively charged ion is called a…",o:["Cation","Anion","Isotope","Molecule"],c:0,e:"<span class='h'>💡 Idea</span><b>Cation</b> = positive ion (formed by metals). <b>Anion</b> = negative ion (formed by non-metals). Remember: caT-ion is posiTive.<span class='h'>✅</span>Cation."},
+{s:"In the reactivity series, which of these metals is the MOST reactive?",o:["Gold","Potassium","Copper","Iron"],c:1,e:"<span class='h'>💡 Idea</span>The series runs K &gt; Na &gt; Ca &gt; Mg &gt; Al &gt; Zn &gt; Fe &gt; Pb &gt; (H) &gt; Cu &gt; Ag &gt; Au. <b>Potassium (K)</b> sits at the very top.<span class='h'>✅</span>Potassium."},
+{s:"Which of these metals is the LEAST reactive?",o:["Zinc","Magnesium","Gold","Calcium"],c:2,e:"<span class='h'>💡 Idea</span><b>Gold (Au)</b> is at the bottom of the reactivity series — that is why it stays shiny and is used for jewellery.<span class='h'>✅</span>Gold."},
+{s:"Which list is correctly ordered from MOST to LEAST reactive?",o:["Iron, Zinc, Magnesium","Copper, Iron, Sodium","Gold, Silver, Calcium","Magnesium, Zinc, Iron"],c:3,e:"<span class='h'>💡 Idea</span>In the series Mg comes before Zn, which comes before Fe. So <b>Magnesium, Zinc, Iron</b> is the correct high-to-low order.<span class='h'>✅</span>Magnesium, Zinc, Iron."},
+{s:"When a metal such as magnesium burns in oxygen, it forms a…",o:["Basic oxide","Acidic oxide","Neutral oxide","Acid"],c:0,e:"<span class='h'>💡 Idea</span>Metal + oxygen → metal oxide, and metal oxides are <b>basic</b> (they neutralise acids). e.g. 2Mg + O₂ → 2MgO.<span class='h'>✅</span>Basic oxide."},
+{s:"Very reactive metals like sodium react with cold water to give a metal hydroxide plus…",o:["Oxygen","Hydrogen","Chlorine","Carbon dioxide"],c:1,e:"<span class='h'>💡 Idea</span>2Na + 2H₂O → 2NaOH + H₂. The gas released is <b>hydrogen</b>.<span class='h'>✅</span>Hydrogen."},
+{s:"Which metal will NOT react with dilute hydrochloric acid?",o:["Magnesium","Zinc","Copper","Iron"],c:2,e:"<span class='h'>💡 Idea</span>Only metals ABOVE hydrogen react with dilute acids. <b>Copper is below hydrogen</b>, so it gives no reaction.<span class='h'>✅</span>Copper."},
+{s:"When zinc reacts with dilute sulphuric acid, the gas given off is…",o:["Oxygen","Carbon dioxide","Chlorine","Hydrogen"],c:3,e:"<span class='h'>💡 Idea</span>Metal + acid → salt + hydrogen. Zn + H₂SO₄ → ZnSO₄ + H₂. The gas is <b>hydrogen</b> (it pops with a lighted splint).<span class='h'>✅</span>Hydrogen."},
+{s:"Metals below hydrogen in the reactivity series (e.g. copper) react with dilute acids to give…",o:["No reaction","Salt and hydrogen","Salt and oxygen","Hydroxide and hydrogen"],c:0,e:"<span class='h'>💡 Idea</span>Copper, silver and gold sit below hydrogen, so they are too unreactive — there is simply <b>no reaction</b> with dilute acids.<span class='h'>✅</span>No reaction."},
+{s:"An iron nail is placed in copper(II) sulphate solution. What happens?",o:["Nothing happens","Iron displaces copper because iron is more reactive","Copper displaces iron because copper is more reactive","The iron turns into a gas"],c:1,e:"<span class='h'>💡 Idea</span>Iron is more reactive than copper, so <b>iron displaces copper</b>: Fe + CuSO₄ → FeSO₄ + Cu. The blue colour fades and brown copper coats the nail.<span class='h'>✅</span>Iron displaces copper."},
+{s:"Which of these displacement reactions WILL take place?",o:["Copper displacing zinc from zinc sulphate","Silver displacing copper from copper sulphate","Zinc displacing copper from copper(II) sulphate","Gold displacing iron from iron sulphate"],c:2,e:"<span class='h'>💡 Idea</span>Only a MORE reactive metal displaces a less reactive one. Zinc is above copper, so <b>zinc displaces copper</b>: Zn + CuSO₄ → ZnSO₄ + Cu. The others try to displace a more reactive metal, so they fail.<span class='h'>✅</span>Zinc displacing copper from copper(II) sulphate."},
+{s:"Na₂O, CaO and MgO are examples of…",o:["Acidic oxides","Amphoteric oxides","Neutral oxides","Basic oxides"],c:3,e:"<span class='h'>💡 Idea</span>They are all METAL oxides, and metal oxides are <b>basic</b> — they react with acids to give salt + water.<span class='h'>✅</span>Basic oxides."},
+{s:"CO₂ and SO₂ are best classified as…",o:["Acidic oxides","Basic oxides","Amphoteric oxides","Neutral oxides"],c:0,e:"<span class='h'>💡 Idea</span>They are NON-metal oxides, which are <b>acidic</b>. With water CO₂ makes carbonic acid and SO₂ makes sulphurous acid.<span class='h'>✅</span>Acidic oxides."},
+{s:"Which oxide is AMPHOTERIC — reacting with BOTH acids and bases?",o:["Na₂O","Al₂O₃","CO₂","CaO"],c:1,e:"<span class='h'>💡 Idea</span><b>Al₂O₃</b> (along with ZnO and PbO) is amphoteric — it behaves as a base with acids and as an acid with alkalis. Na₂O and CaO are basic; CO₂ is acidic.<span class='h'>✅</span>Al₂O₃."},
+{s:"Which of the following is a NEUTRAL oxide?",o:["CaO","SO₃","CO","Na₂O"],c:2,e:"<span class='h'>💡 Idea</span><b>CO</b> (carbon monoxide) is neutral — it reacts with neither acids nor bases. Watch out: CO₂ is acidic, but CO is neutral. CaO and Na₂O are basic; SO₃ is acidic.<span class='h'>✅</span>CO."},
+{s:"When the non-metal oxide SO₃ dissolves in water, it forms a(n)…",o:["Alkali","Salt","Neutral solution","Acid"],c:3,e:"<span class='h'>💡 Idea</span>Non-metal (acidic) oxide + water → acid. SO₃ + H₂O → H₂SO₄ (sulphuric acid).<span class='h'>✅</span>Acid."},
+{s:"When the metal oxide Na₂O dissolves in water, it forms a(n)…",o:["Alkali (base)","Acid","Neutral solution","Gas"],c:0,e:"<span class='h'>💡 Idea</span>Soluble metal (basic) oxide + water → alkali. Na₂O + H₂O → 2NaOH (sodium hydroxide, an alkali).<span class='h'>✅</span>Alkali (base)."},
+{s:"Elements such as silicon and germanium, which have properties in between metals and non-metals, are called…",o:["Alloys","Metalloids","Halogens","Noble gases"],c:1,e:"<span class='h'>💡 Idea</span><b>Metalloids</b> (e.g. B, Si, Ge, As) sit along the staircase line of the periodic table and share features of both metals and non-metals — silicon is a semiconductor used in chips.<span class='h'>✅</span>Metalloids."}
+);
+
+["compare","reactions","compounds","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

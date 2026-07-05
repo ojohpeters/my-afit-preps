@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radioactivity A–Z — Radiation, Nuclear Equations & Half-life (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>☢️ Radioactivity A–Z</h1>
+  <p>Radiation Types · Nuclear Equations · Half-life — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every equation balanced</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">☢️ Basics &amp; Radiation Types</div>
+    <div class="tab" data-cat="equations">⚛️ Nuclear Equations</div>
+    <div class="tab" data-cat="halflife">⏳ Half-life &amp; Uses</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: BASICS & RADIATION TYPES ============ -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">☢️ PART 1 — Basics &amp; The Three Radiations</h2>
+
+    <div class="lesson">
+      <h3>1. What is radioactivity?</h3>
+      <p><b>Radioactivity</b> is the <b>spontaneous disintegration (decay) of unstable atomic nuclei with the emission of radiation.</b></p>
+      <p>Some nuclei have too many protons/neutrons and are <b>unstable</b>. To become stable they break down on their own and throw out particles or energy. We call these particles/energy <b>nuclear radiation</b> (alpha, beta or gamma).</p>
+      <span class="key">The four key facts about radioactivity</span>
+      <ul>
+        <li><b>It is a NUCLEAR process, not a chemical one.</b> The change happens deep inside the nucleus — chemical reactions only involve outer electrons.</li>
+        <li><b>It is spontaneous</b> — it happens by itself, with no trigger.</li>
+        <li><b>It is random</b> — you cannot predict which nucleus will decay next or exactly when; you can only give the probability.</li>
+        <li><b>It is unaffected by temperature, pressure or chemical state.</b> Heating it, squeezing it, or turning it into a compound does NOT change the decay rate. This is the big clue that it is nuclear, not chemical.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: chemistry uses the OUTSIDE of the atom (electrons); radioactivity uses the CENTRE (the nucleus). That is why heat and pressure cannot touch it.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three types of radiation</h3>
+      <p>An unstable nucleus can give out three kinds of radiation, named after the first three Greek letters:</p>
+      <ul>
+        <li><b>Alpha (α)</b> — a heavy, positive helium nucleus, written ⁴₂He.</li>
+        <li><b>Beta (β)</b> — a light, negative fast-moving electron, written ⁰₋₁e.</li>
+        <li><b>Gamma (γ)</b> — a wave of energy (electromagnetic wave), no charge and no mass.</li>
+      </ul>
+      <span class="key">Full comparison table</span>
+      <table class="r">
+        <tr><th>Property</th><th>Alpha (α)</th><th>Beta (β)</th><th>Gamma (γ)</th></tr>
+        <tr><td>What it is</td><td>Helium nucleus (2 protons + 2 neutrons)</td><td>Fast-moving electron</td><td>Electromagnetic wave (energy)</td></tr>
+        <tr><td>Symbol</td><td>⁴₂He</td><td>⁰₋₁e</td><td>γ</td></tr>
+        <tr><td>Charge</td><td><b>+2</b></td><td><b>−1</b></td><td><b>0 (none)</b></td></tr>
+        <tr><td>Relative mass</td><td>4 (heavy)</td><td>≈ 1/1840 (very light)</td><td>0 (massless)</td></tr>
+        <tr><td>Speed</td><td>Slow (about 0.1 × light)</td><td>Fast (up to 0.9 × light)</td><td>Speed of light (c)</td></tr>
+        <tr><td>Penetrating power</td><td><b>Low</b> — stopped by paper / skin</td><td><b>Medium</b> — stopped by a few mm of aluminium</td><td><b>Very high</b> — needs thick lead / concrete</td></tr>
+        <tr><td>Ionising power</td><td><b>Very high (strongest)</b></td><td><b>Medium</b></td><td><b>Low (weakest)</b></td></tr>
+        <tr><td>Deflected by electric/magnetic fields?</td><td>Yes — small deflection (heavy, +)</td><td>Yes — large, in the OPPOSITE direction (light, −)</td><td><b>No</b> — not deflected (no charge)</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Penetrating power — how far it travels</h3>
+      <p>Penetrating power is how deeply the radiation can pass through matter before being stopped.</p>
+      <div class="formula">Penetration:&nbsp; Alpha &lt; Beta &lt; Gamma&nbsp;&nbsp;(alpha weakest, gamma strongest)</div>
+      <ul>
+        <li><b>Alpha</b> — stopped by a <b>sheet of paper</b> or the top layer of skin. It travels only a few cm in air.</li>
+        <li><b>Beta</b> — passes through paper but is stopped by a <b>few mm of aluminium</b>.</li>
+        <li><b>Gamma</b> — passes through metal; you need <b>thick lead or concrete</b> to cut it down (it is never fully stopped, only reduced).</li>
+      </ul>
+      <div class="analogy">🌟 Picture it: alpha is a fat slow bowling ball (caught by paper), beta is a small fast bullet (needs metal), gamma is like an X-ray (goes through almost everything).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Ionising power — the opposite order</h3>
+      <p><b>Ionising</b> means knocking electrons off atoms it passes, leaving charged ions. The heavier and more charged the radiation, the more strongly it ionises.</p>
+      <div class="formula">Ionising power:&nbsp; Alpha &gt; Beta &gt; Gamma&nbsp;&nbsp;(alpha strongest, gamma weakest)</div>
+      <p><b>Notice:</b> ionising power is the <b>reverse</b> of penetrating power. Alpha ionises the most because it is big and highly charged — but that is exactly why it loses its energy fast and cannot penetrate far.</p>
+      <div class="analogy">🌟 Rule of thumb: the radiation that penetrates LEAST (alpha) ionises the MOST, and vice-versa.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Deflection in electric and magnetic fields</h3>
+      <p>Because they carry charge, alpha and beta are bent by electric and magnetic fields; gamma is not.</p>
+      <ul>
+        <li><b>Alpha (+2):</b> deflected towards the <b>negative</b> plate; only a <b>small</b> deflection because it is heavy.</li>
+        <li><b>Beta (−1):</b> deflected towards the <b>positive</b> plate — the <b>opposite</b> way to alpha; a <b>large</b> deflection because it is very light.</li>
+        <li><b>Gamma (0):</b> <b>not deflected at all</b> — it has no charge, so it goes straight through.</li>
+      </ul>
+      <div class="analogy">🌟 In a field the beam splits three ways: alpha bends slightly one way, beta bends a lot the other way, gamma carries straight on.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: NUCLEAR EQUATIONS ============ -->
+  <section class="cat equations" id="cat-equations">
+    <h2 class="cathead">⚛️ PART 2 — Balancing Nuclear Equations</h2>
+
+    <div class="lesson">
+      <h3>1. Reading a nuclear symbol</h3>
+      <p>Every nucleus is written with two numbers, like ²³⁸₉₂U:</p>
+      <ul>
+        <li><b>Top number = mass number (A)</b> = total protons + neutrons (also called the nucleon number). Here A = 238.</li>
+        <li><b>Bottom number = atomic number (Z)</b> = number of protons (this decides which element it is). Here Z = 92, so it is uranium (U).</li>
+      </ul>
+      <span class="key">The golden rule (conservation)</span>
+      <div class="formula">Top numbers must BALANCE&nbsp;·&nbsp;Bottom numbers must BALANCE</div>
+      <p>In any nuclear equation, the sum of the mass numbers (A) on the left = sum on the right, AND the sum of the atomic numbers (Z) on the left = sum on the right. Use this to find any missing particle or daughter nucleus.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Alpha decay — lose an ⁴₂He</h3>
+      <p>The nucleus throws out an alpha particle (⁴₂He). Since alpha carries away 4 mass units and 2 protons:</p>
+      <div class="formula">Alpha decay:&nbsp; A decreases by 4&nbsp;·&nbsp;Z decreases by 2</div>
+      <div class="ex"><b class="t">Worked example (the classic one):</b> Uranium-238 decays by alpha emission.
+        <div class="calc">²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He</div>
+        Check top: 238 = 234 + 4 ✓ &nbsp; Check bottom: 92 = 90 + 2 ✓. The daughter is thorium-234.</div>
+      <div class="ex"><b class="t">Worked example — find the missing daughter:</b> ²²⁶₈₈Ra → ? + ⁴₂He
+        <div class="calc">Mass of daughter = 226 − 4 = 222</div>
+        <div class="calc">Atomic number of daughter = 88 − 2 = 86 → element with Z = 86 is radon (Rn)</div>
+        So the daughter is <b>²²²₈₆Rn</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Beta decay — a neutron turns into a proton</h3>
+      <p>Inside the nucleus a <b>neutron changes into a proton + an electron</b>. The electron shoots out as the beta particle (⁰₋₁e). The proton stays, so the number of protons goes UP by 1, but the total mass number does not change (a neutron simply became a proton).</p>
+      <div class="formula">Beta decay:&nbsp; A stays the SAME&nbsp;·&nbsp;Z increases by 1</div>
+      <div class="ex"><b class="t">Worked example:</b> Carbon-14 decays by beta emission.
+        <div class="calc">¹⁴₆C → ¹⁴₇N + ⁰₋₁e</div>
+        Check top: 14 = 14 + 0 ✓ &nbsp; Check bottom: 6 = 7 + (−1) ✓. Carbon (Z=6) becomes nitrogen (Z=7).</div>
+      <div class="ex"><b class="t">Worked example — find the missing daughter:</b> ²³⁴₉₀Th → ? + ⁰₋₁e
+        <div class="calc">Mass of daughter = 234 − 0 = 234 (unchanged)</div>
+        <div class="calc">Atomic number = 90 + 1 = 91 → element with Z = 91 is protactinium (Pa)</div>
+        So the daughter is <b>²³⁴₉₁Pa</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Gamma emission — pure energy</h3>
+      <p>After alpha or beta decay the new nucleus is often left with extra energy. It releases this as a <b>gamma ray (γ)</b>. Gamma has no mass and no charge, so:</p>
+      <div class="formula">Gamma emission:&nbsp; NO change in A&nbsp;·&nbsp;NO change in Z</div>
+      <p>Only energy is lost. The element stays exactly the same element — it just calms down to a lower-energy state.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Method box — find any missing particle</h3>
+      <div class="ex"><b class="t">Step-by-step method:</b>
+        <ul>
+          <li><b>Step 1:</b> Write the equation with the unknown as a symbol.</li>
+          <li><b>Step 2:</b> Add up the TOP (mass) numbers on the known side and make both sides equal → gives the unknown mass number.</li>
+          <li><b>Step 3:</b> Add up the BOTTOM (atomic) numbers and make both sides equal → gives the unknown atomic number.</li>
+          <li><b>Step 4:</b> Use Z to name the particle: Z=2 & A=4 → alpha; Z=−1 & A=0 → beta; Z=0 & A=0 → gamma; otherwise look up the element with that Z.</li>
+        </ul>
+      </div>
+      <div class="ex"><b class="t">Worked example — find the emitted particle:</b> ²¹⁰₈₄Po → ²⁰⁶₈₂Pb + ?
+        <div class="calc">Top: 210 = 206 + A → A = 210 − 206 = 4</div>
+        <div class="calc">Bottom: 84 = 82 + Z → Z = 84 − 82 = 2</div>
+        A particle with A = 4 and Z = 2 is an <b>alpha particle (⁴₂He)</b>.</div>
+      <div class="ex"><b class="t">Worked example — beta this time:</b> ²⁴₁₁Na → ²⁴₁₂Mg + ?
+        <div class="calc">Top: 24 = 24 + A → A = 0</div>
+        <div class="calc">Bottom: 11 = 12 + Z → Z = 11 − 12 = −1</div>
+        A particle with A = 0 and Z = −1 is a <b>beta particle (⁰₋₁e)</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: HALF-LIFE & USES ============ -->
+  <section class="cat halflife" id="cat-halflife">
+    <h2 class="cathead">⏳ PART 3 — Half-life, Fission/Fusion &amp; Uses</h2>
+
+    <div class="lesson">
+      <h3>1. What is half-life?</h3>
+      <p><b>Half-life (T½)</b> is the <b>time taken for half of the radioactive nuclei in a sample to decay</b> (equivalently, the time for the activity or count rate to fall to half its value).</p>
+      <p>Because decay is random, we cannot say when one nucleus will go — but for a large sample, the time to lose half is always the same. Each isotope has its own fixed half-life (seconds for some, billions of years for others).</p>
+      <div class="analogy">🌟 Idea: if T½ = 2 hours, then every 2 hours the amount left is cut in half — again and again: full → ½ → ¼ → ⅛ …</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The halving formula</h3>
+      <p>After each half-life the amount is halved. After <b>n</b> half-lives:</p>
+      <div class="formula">Fraction remaining = (½)ⁿ&nbsp;&nbsp;&nbsp;where n = t / T½</div>
+      <div class="formula">N = N₀ × (½)^(t / T½)</div>
+      <ul>
+        <li><b>N₀</b> = starting amount (or starting count rate/activity)</li>
+        <li><b>N</b> = amount left after time t</li>
+        <li><b>n = t ÷ T½</b> = number of half-lives that have passed</li>
+      </ul>
+      <p>Handy table of fractions: after 1 half-life ½ left · 2 → ¼ · 3 → ⅛ · 4 → 1/16 · 5 → 1/32.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked half-life calculations</h3>
+      <div class="ex"><b class="t">Example 1 — how much is left?</b> A sample of 800 g has a half-life of 5 years. How much remains after 15 years?
+        <div class="calc">n = t ÷ T½ = 15 ÷ 5 = 3 half-lives</div>
+        <div class="calc">Remaining = 800 × (½)³ = 800 × 1/8 = 100 g</div>
+        Step check: 800 → 400 → 200 → 100. Answer = <b>100 g</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — how many half-lives?</b> A sample falls from 240 g to 30 g. How many half-lives passed?
+        <div class="calc">Halve step by step: 240 → 120 → 60 → 30</div>
+        That is 3 halvings, so <b>n = 3 half-lives</b>. (Check: (½)³ = 1/8, and 240 ÷ 8 = 30 ✓)</div>
+
+      <div class="ex"><b class="t">Example 3 — find the time.</b> An isotope has T½ = 8 days. How long until its activity falls to 1/16 of the original?
+        <div class="calc">1/16 = (½)⁴ → so n = 4 half-lives</div>
+        <div class="calc">t = n × T½ = 4 × 8 = 32 days</div>
+        Answer = <b>32 days</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — find the original amount.</b> After 4 half-lives, 5 g of a sample is left. What was the original mass?
+        <div class="calc">Fraction left = (½)⁴ = 1/16, so 5 g = (1/16) × N₀</div>
+        <div class="calc">N₀ = 5 × 16 = 80 g</div>
+        Answer = <b>80 g</b>.</div>
+
+      <div class="ex"><b class="t">Example 5 — how much has DECAYED?</b> A 160 g sample has T½ = 2 hours. How much has decayed after 6 hours?
+        <div class="calc">n = 6 ÷ 2 = 3 half-lives → remaining = 160 × 1/8 = 20 g</div>
+        <div class="calc">Decayed = starting − remaining = 160 − 20 = 140 g</div>
+        Answer = <b>140 g decayed</b>. (Careful: the question asks how much has GONE, not how much is left.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Activity, detection &amp; background radiation</h3>
+      <ul>
+        <li><b>Activity</b> = the number of nuclei decaying per second. Unit: the <b>becquerel (Bq)</b> = 1 decay per second. Activity also falls by half every half-life.</li>
+        <li><b>Geiger–Müller (G-M) tube:</b> the standard instrument for <b>detecting and counting</b> radiation. Each particle that enters causes a pulse; connected to a counter it gives the <b>count rate</b> (counts per second).</li>
+        <li><b>Background radiation:</b> the weak radiation always around us — from rocks/soil (radon gas), cosmic rays from space, food, and medical/industrial sources. You must <b>subtract the background count</b> from your reading to get the true count rate of a source.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Fission vs Fusion</h3>
+      <table class="r">
+        <tr><th></th><th>Nuclear Fission</th><th>Nuclear Fusion</th></tr>
+        <tr><td>What happens</td><td><b>Splitting</b> a heavy nucleus into two lighter ones</td><td><b>Joining</b> two light nuclei into a heavier one</td></tr>
+        <tr><td>Example fuel</td><td>Uranium-235, Plutonium-239</td><td>Hydrogen isotopes (deuterium + tritium)</td></tr>
+        <tr><td>Trigger</td><td>A neutron hits and splits the heavy nucleus (chain reaction)</td><td>Very high temperature/pressure forces nuclei together</td></tr>
+        <tr><td>Where used</td><td>Nuclear power stations, atomic bombs</td><td>The Sun and stars; hydrogen bomb</td></tr>
+        <tr><td>Energy</td><td>Large energy released</td><td>Even larger energy released (per kg)</td></tr>
+      </table>
+      <div class="analogy">🌟 Fi<b>SS</b>ion = <b>S</b>plitting. Fu<b>S</b>ion = fu<b>S</b>e / join. The Sun runs on fusion (hydrogen joining to make helium).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Uses of radioactivity</h3>
+      <ul>
+        <li><b>Carbon dating:</b> living things absorb carbon-14 (T½ ≈ 5730 years). After death no new C-14 is taken in, so by measuring how much is left we find the age of old bones, wood and fossils.</li>
+        <li><b>Medical tracers:</b> a small amount of a gamma source (e.g. technetium-99m, iodine-131) is put into the body and followed with a detector to study organs, blood flow or find blockages/tumours.</li>
+        <li><b>Cancer treatment (radiotherapy):</b> strong gamma rays from cobalt-60 are aimed at tumours to kill cancer cells.</li>
+        <li><b>Sterilisation:</b> gamma rays kill bacteria on medical equipment, syringes and even food — without heat.</li>
+        <li><b>Power generation:</b> nuclear fission in reactors produces heat to make steam and drive turbines for electricity.</li>
+        <li><b>Industry:</b> checking thickness of paper/metal sheets, and detecting leaks or cracks in pipes/welds.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Hazards &amp; safety</h3>
+      <p>Radiation is dangerous because it ionises living cells — it can damage DNA, cause burns, radiation sickness and cancer. Safety is about reducing your <b>dose</b>:</p>
+      <ul>
+        <li><b>Shielding:</b> keep sources in lead-lined or thick-concrete containers.</li>
+        <li><b>Distance:</b> handle sources with long tongs; intensity falls with distance.</li>
+        <li><b>Time:</b> spend as little time as possible near a source.</li>
+        <li><b>Never point a source at people;</b> store safely, wear film badges/dosimeters to monitor exposure, and dispose of waste carefully.</li>
+      </ul>
+      <div class="analogy">🌟 Remember the three safety words: <b>Shielding, Distance, Time</b> — reduce all three exposures to reduce the dose.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Balance the equation, halve the amount — the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Radioactivity is best described as the…",o:["Spontaneous decay of unstable nuclei with emission of radiation","Burning of atoms in oxygen","Flow of electrons through a wire","Sharing of electrons between atoms"],c:0,e:"<span class='h'>💡 Idea</span>Radioactivity is the spontaneous disintegration of an unstable nucleus, giving off alpha, beta or gamma radiation.<span class='h'>✅</span>Spontaneous decay of unstable nuclei with emission of radiation."},
+{s:"Radioactive decay is a … process.",o:["Chemical","Nuclear","Thermal","Magnetic"],c:1,e:"<span class='h'>💡 Idea</span>The change happens inside the nucleus, so it is a NUCLEAR process. Chemical reactions only involve the outer electrons.<span class='h'>✅</span>Nuclear."},
+{s:"Which of these does NOT affect the rate of radioactive decay?",o:["The type of isotope","The number of unstable nuclei present","Temperature and pressure","The half-life of the isotope"],c:2,e:"<span class='h'>💡 Idea</span>Decay is nuclear and spontaneous, so temperature, pressure and chemical state have no effect on it.<span class='h'>✅</span>Temperature and pressure."},
+{s:"An alpha particle is identical to a…",o:["Hydrogen atom","Fast electron","Photon of light","Helium nucleus"],c:3,e:"<span class='h'>💡 Idea</span>An alpha particle is a helium nucleus, ⁴₂He (2 protons + 2 neutrons).<span class='h'>✅</span>Helium nucleus."},
+{s:"The charge on an alpha particle is…",o:["+2","−1","+1","0"],c:0,e:"<span class='h'>💡 Idea</span>Two protons and no electrons give a charge of +2.<span class='h'>✅</span>+2."},
+{s:"A beta particle is a…",o:["Helium nucleus","Fast-moving electron","Electromagnetic wave","Proton"],c:1,e:"<span class='h'>💡 Idea</span>Beta radiation is a high-speed electron, ⁰₋₁e, thrown out when a neutron turns into a proton.<span class='h'>✅</span>Fast-moving electron."},
+{s:"The charge on a beta particle is…",o:["+2","+1","−1","0"],c:2,e:"<span class='h'>💡 Idea</span>A beta particle is an electron, so its charge is −1.<span class='h'>✅</span>−1."},
+{s:"Gamma radiation is…",o:["A helium nucleus","An electron","A neutron","An electromagnetic wave with no charge or mass"],c:3,e:"<span class='h'>💡 Idea</span>Gamma is a high-energy electromagnetic wave (a photon). It has no charge and no mass.<span class='h'>✅</span>An electromagnetic wave with no charge or mass."},
+{s:"Which radiation has the GREATEST penetrating power?",o:["Gamma","Alpha","Beta","They are all equal"],c:0,e:"<span class='h'>💡 Idea</span>Penetration order: alpha &lt; beta &lt; gamma. Gamma passes through metal and needs thick lead/concrete to reduce it.<span class='h'>✅</span>Gamma."},
+{s:"Which radiation has the GREATEST ionising power?",o:["Beta","Alpha","Gamma","Radio waves"],c:1,e:"<span class='h'>💡 Idea</span>Ionising order is the reverse of penetration: alpha &gt; beta &gt; gamma. Heavy, +2 alpha ionises the most.<span class='h'>✅</span>Alpha."},
+{s:"Alpha particles can be stopped by…",o:["A few mm of aluminium","Thick lead only","A sheet of paper or the skin","Nothing can stop them"],c:2,e:"<span class='h'>💡 Idea</span>Alpha has low penetration — a sheet of paper or the outer skin stops it.<span class='h'>✅</span>A sheet of paper or the skin."},
+{s:"Which radiation is NOT deflected by an electric or magnetic field?",o:["Alpha","Beta","All three are deflected","Gamma"],c:3,e:"<span class='h'>💡 Idea</span>Gamma has no charge, so a field cannot deflect it. Alpha (+) and beta (−) are both deflected.<span class='h'>✅</span>Gamma."},
+{s:"In an electric field, alpha and beta particles are deflected in…",o:["Opposite directions","The same direction","No direction","A circle"],c:0,e:"<span class='h'>💡 Idea</span>Alpha is +2 and beta is −1 — opposite charges bend towards opposite plates, so they deflect in opposite directions.<span class='h'>✅</span>Opposite directions."},
+{s:"In the symbol ²³⁸₉₂U, the top number 238 is the…",o:["Atomic (proton) number","Mass (nucleon) number","Number of electrons","Charge"],c:1,e:"<span class='h'>💡 Idea</span>The top number is the mass (nucleon) number A = protons + neutrons. The bottom number is the atomic number Z.<span class='h'>✅</span>Mass (nucleon) number."},
+{s:"During alpha decay, the mass number A of the nucleus…",o:["Increases by 4","Stays the same","Decreases by 4","Decreases by 2"],c:2,e:"<span class='h'>💡 Idea</span>An alpha particle carries away 4 mass units, so A goes down by 4.<span class='h'>✅</span>Decreases by 4."},
+{s:"In ²³⁸₉₂U → ²³⁴₉₀Th + X, the particle X is…",o:["A beta particle","A gamma ray","A neutron","An alpha particle"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Top: 238 − 234 = 4</span><span class='calc'>Bottom: 92 − 90 = 2</span>A = 4 and Z = 2 means ⁴₂He, an alpha particle.<span class='h'>✅</span>An alpha particle."},
+{s:"During beta decay, the atomic number Z of the nucleus…",o:["Increases by 1","Decreases by 1","Stays the same","Decreases by 2"],c:0,e:"<span class='h'>💡 Idea</span>A neutron becomes a proton (plus the emitted electron), so the number of protons rises by 1.<span class='h'>✅</span>Increases by 1."},
+{s:"During beta decay, the mass number A of the nucleus…",o:["Increases by 1","Stays the same","Decreases by 1","Decreases by 4"],c:1,e:"<span class='h'>💡 Idea</span>A neutron simply changes into a proton — the total nucleon count is unchanged, so A stays the same.<span class='h'>✅</span>Stays the same."},
+{s:"When ²²⁶₈₈Ra emits an alpha particle, the daughter nucleus has atomic number…",o:["90","84","86","88"],c:2,e:"<span class='h'>✏️ Working</span>Alpha lowers Z by 2:<span class='calc'>Z = 88 − 2 = 86</span>(that daughter is radon, Rn).<span class='h'>✅</span>86."},
+{s:"Gamma emission changes the…",o:["Mass number only","Atomic number only","Both A and Z","Neither A nor Z — only energy is released"],c:3,e:"<span class='h'>💡 Idea</span>Gamma has no mass and no charge, so both A and Z are unchanged; the nucleus just loses excess energy.<span class='h'>✅</span>Neither A nor Z — only energy is released."},
+{s:"In ²⁴₁₁Na → ²⁴₁₂Mg + X, the emitted particle X is…",o:["A beta particle","An alpha particle","A proton","A neutron"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Top: 24 − 24 = 0</span><span class='calc'>Bottom: 11 − 12 = −1</span>A = 0 and Z = −1 means ⁰₋₁e, a beta particle.<span class='h'>✅</span>A beta particle."},
+{s:"The half-life of a radioactive isotope is the time taken for…",o:["All the nuclei to decay","Half the radioactive nuclei to decay","The number of nuclei to double","One single nucleus to decay"],c:1,e:"<span class='h'>💡 Idea</span>Half-life T½ is the time for half of the unstable nuclei (or the count rate) to decay.<span class='h'>✅</span>Half the radioactive nuclei to decay."},
+{s:"A sample of 800 g has a half-life of 5 years. How much remains after 15 years?",o:["400 g","200 g","100 g","50 g"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>n = 15 ÷ 5 = 3 half-lives</span><span class='calc'>Remaining = 800 × (½)³ = 800 × 1/8 = 100 g</span>Check: 800 → 400 → 200 → 100.<span class='h'>✅</span>100 g."},
+{s:"After 3 half-lives, the fraction of a radioactive sample remaining is…",o:["1/2","1/3","1/6","1/8"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Fraction = (½)³ = 1/8</span>Each half-life halves it: 1 → ½ → ¼ → ⅛.<span class='h'>✅</span>1/8."},
+{s:"A radioactive sample decays from 240 g to 30 g. How many half-lives have passed?",o:["3","2","4","8"],c:0,e:"<span class='h'>✏️ Working</span>Halve step by step:<span class='calc'>240 → 120 → 60 → 30</span>That is 3 halvings.<span class='h'>✅</span>3 half-lives."},
+{s:"An isotope has a half-life of 8 days. How long until its activity falls to 1/16 of the original?",o:["16 days","32 days","24 days","64 days"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>1/16 = (½)⁴ → n = 4 half-lives</span><span class='calc'>t = 4 × 8 = 32 days</span><span class='h'>✅</span>32 days."},
+{s:"Which pair correctly describes fission and fusion?",o:["Fission joins light nuclei; fusion splits a heavy nucleus","Both split heavy nuclei","Fission splits a heavy nucleus; fusion joins light nuclei","Both join light nuclei"],c:2,e:"<span class='h'>💡 Idea</span>Fi<b>ss</b>ion = <b>s</b>plitting a heavy nucleus (e.g. uranium). Fusion = joining light nuclei (e.g. hydrogen in the Sun).<span class='h'>✅</span>Fission splits a heavy nucleus; fusion joins light nuclei."},
+{s:"Estimating the age of ancient wood or bones is done using…",o:["Nuclear fusion","Ohm's law","Gamma sterilisation","Carbon-14 dating"],c:3,e:"<span class='h'>💡 Idea</span>Carbon dating measures the leftover carbon-14 (half-life ≈ 5730 years) in once-living material to find its age.<span class='h'>✅</span>Carbon-14 dating."},
+{s:"Gamma rays from cobalt-60 are used in hospitals mainly to…",o:["Treat cancer and sterilise equipment","Charge batteries","Measure resistance","Generate static electricity"],c:0,e:"<span class='h'>💡 Idea</span>Penetrating gamma rays kill cancer cells (radiotherapy) and kill bacteria on medical equipment (sterilisation).<span class='h'>✅</span>Treat cancer and sterilise equipment."},
+{s:"Which is a correct safety precaution when handling a radioactive source?",o:["Hold it in your bare hand","Use long tongs, shielding and limit the time near it","Point it at your body to test it","Store it in an open dish"],c:1,e:"<span class='h'>💡 Idea</span>Reduce your dose using the three ideas: shielding (lead), distance (tongs) and time (be quick). Never point a source at people.<span class='h'>✅</span>Use long tongs, shielding and limit the time near it."}
+);
+
+["basics","equations","halflife","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

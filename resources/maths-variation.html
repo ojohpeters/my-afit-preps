@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variation — Direct, Inverse, Joint &amp; Partial (Student Guide)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.86rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>📊 Variation Made Simple</h1>
+  <p>Direct, Inverse, Joint &amp; Partial Variation — taught from zero (WAEC / JAMB / Post-UTME)</p>
+  <p class="tip">Student Guide · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">The 3-step method</span><span class="pill">Step-by-step examples</span><span class="pill">Quiz with answers</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="direct">📈 Direct &amp; Inverse</div>
+    <div class="tab" data-cat="joint">🔗 Joint Variation</div>
+    <div class="tab" data-cat="partial">🧩 Partial Variation</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- =============== DIRECT & INVERSE =============== -->
+  <section class="cat direct show" id="cat-direct">
+    <h2 class="cathead">📈 Direct &amp; Inverse Variation</h2>
+
+    <div class="lesson">
+      <h3>1. What does “variation” mean?</h3>
+      <p><b>Variation</b> describes how two quantities are connected — when one changes, the other changes in a fixed, predictable way. Maths uses the symbol <b>∝</b>, which reads “<b>varies as</b>” or “<b>is proportional to</b>”.</p>
+      <div class="analogy">🌟 Real life: the more petrol you buy, the more you pay (they rise together). The more taps you open on a tank, the less time it takes to fill (one rises, the other falls). These fixed patterns are exactly what variation captures.</div>
+      <span class="key">The golden rule</span>
+      <p>Every ∝ statement becomes an equation by replacing <b>∝</b> with <b>“= k ×”</b>, where <b>k</b> is a fixed number called the <b>constant of proportionality</b> (or constant of variation). Your whole job in a variation question is usually: <b>find k</b>, then use it.</p>
+      <div class="formula">y ∝ x &nbsp;means&nbsp; y = k·x</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. DIRECT variation &nbsp;( y ∝ x → y = kx )</h3>
+      <p>In direct variation the two quantities <b>rise and fall together</b>. If x doubles, y doubles; if x is cut to a third, y is cut to a third. The ratio y ÷ x always equals k.</p>
+      <span class="key">The 3-step method (memorise this)</span>
+      <ul>
+        <li><b>Step 1 – Find k:</b> write y = kx, put in the pair of values you are given, and solve for k.</li>
+        <li><b>Step 2 – Write the equation:</b> put that k back to get the full rule (e.g. y = 4x).</li>
+        <li><b>Step 3 – Use it:</b> substitute the new value to get the answer.</li>
+      </ul>
+
+      <div class="ex"><b class="t">Worked Example 1:</b> y varies directly as x. When x = 5, y = 20. Find y when x = 8.
+        <div class="calc">Step 1 – find k:  y = kx → 20 = k×5 → k = 20÷5 = 4</div>
+        <div class="calc">Step 2 – equation:  y = 4x</div>
+        <div class="calc">Step 3 – use it:  x = 8 → y = 4×8 = 32</div>
+        <b>Answer: y = 32</b>
+      </div>
+
+      <div class="ex"><b class="t">Worked Example 2 (word problem):</b> The cost C of oranges varies directly as the number n bought. 6 oranges cost ₦150. Find the cost of 10 oranges.
+        <div class="calc">Step 1:  C = kn → 150 = k×6 → k = 150÷6 = 25 (₦ per orange)</div>
+        <div class="calc">Step 2:  C = 25n</div>
+        <div class="calc">Step 3:  n = 10 → C = 25×10 = ₦250</div>
+        <b>Answer: ₦250</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. INVERSE variation &nbsp;( y ∝ 1/x → y = k/x )</h3>
+      <p>In inverse variation the quantities <b>move in opposite directions</b>. As x increases, y decreases; if x doubles, y is halved. The <b>product</b> x × y stays constant and equals k.</p>
+      <div class="formula">y ∝ 1/x &nbsp;means&nbsp; y = k/x &nbsp; (so k = xy)</div>
+      <div class="analogy">💡 Trick: for inverse variation, k is simply the two given numbers <b>multiplied</b> together (k = xy). For direct variation, k is one <b>divided</b> by the other (k = y ÷ x).</div>
+
+      <div class="ex"><b class="t">Worked Example 1:</b> y varies inversely as x. When x = 4, y = 3. Find y when x = 6.
+        <div class="calc">Step 1:  y = k/x → 3 = k/4 → k = 3×4 = 12</div>
+        <div class="calc">Step 2:  y = 12/x</div>
+        <div class="calc">Step 3:  x = 6 → y = 12÷6 = 2</div>
+        <b>Answer: y = 2</b>
+      </div>
+
+      <div class="ex"><b class="t">Worked Example 2 (word problem):</b> The time t to finish a job varies inversely as the number of men m. 8 men take 10 days. How long will 5 men take?
+        <div class="calc">Step 1:  t = k/m → 10 = k/8 → k = 10×8 = 80</div>
+        <div class="calc">Step 2:  t = 80/m</div>
+        <div class="calc">Step 3:  m = 5 → t = 80÷5 = 16 days</div>
+        <b>Answer: 16 days &nbsp;(fewer men → more time, as expected)</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Variation with POWERS &nbsp;( x², √x, 1/x² )</h3>
+      <p>Sometimes y varies as a <b>power</b> of x. The method is exactly the same — the power just travels with the x.</p>
+      <table class="r">
+        <tr><th>Statement</th><th>Equation</th><th>Meaning</th></tr>
+        <tr><td>y varies as the square of x</td><td>y = kx²</td><td>uses x²</td></tr>
+        <tr><td>y varies as the square root of x</td><td>y = k√x</td><td>uses √x</td></tr>
+        <tr><td>y varies inversely as the square of x</td><td>y = k/x²</td><td>x² on the bottom</td></tr>
+      </table>
+
+      <div class="ex"><b class="t">Example (square, y ∝ x²):</b> y varies as x². When x = 3, y = 18. Find y when x = 5.
+        <div class="calc">y = kx² → 18 = k×3² = k×9 → k = 18÷9 = 2</div>
+        <div class="calc">y = 2x² → x = 5: y = 2×5² = 2×25 = 50</div>
+        <b>Answer: y = 50</b>
+      </div>
+
+      <div class="ex"><b class="t">Example (root, y ∝ √x):</b> y varies as √x. When x = 16, y = 12. Find y when x = 25.
+        <div class="calc">y = k√x → 12 = k×√16 = k×4 → k = 12÷4 = 3</div>
+        <div class="calc">y = 3√x → x = 25: y = 3×√25 = 3×5 = 15</div>
+        <b>Answer: y = 15</b>
+      </div>
+
+      <div class="ex"><b class="t">Example (inverse square, y ∝ 1/x²):</b> y varies inversely as x². When x = 3, y = 4. Find y when x = 6.
+        <div class="calc">y = k/x² → 4 = k/3² = k/9 → k = 4×9 = 36</div>
+        <div class="calc">y = 36/x² → x = 6: y = 36÷6² = 36÷36 = 1</div>
+        <b>Answer: y = 1</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== JOINT VARIATION =============== -->
+  <section class="cat joint" id="cat-joint">
+    <h2 class="cathead">🔗 Joint &amp; Combined Variation</h2>
+
+    <div class="lesson">
+      <h3>1. What is joint variation?</h3>
+      <p><b>Joint variation</b> is when one quantity depends on <b>two or more</b> other quantities at the same time, all <b>multiplied</b> together with a single constant k.</p>
+      <div class="formula">y varies jointly as x and z &nbsp;→&nbsp; y = kxz</div>
+      <div class="analogy">🌟 Real life: the wages you earn depend jointly on the number of days worked <b>and</b> the rate per day. Both go up → wages go up. That is joint variation.</div>
+      <span class="key">Same 3-step method</span>
+      <p>Find k from the first complete set of values, write the equation, then substitute the new values. The only difference is that you plug in <b>two (or more) numbers</b> instead of one.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Combined variation (direct AND inverse together)</h3>
+      <p>Very often a quantity varies <b>directly</b> as one thing and <b>inversely</b> as another. Directly-as goes <b>on top</b>, inversely-as goes <b>underneath</b>.</p>
+      <div class="formula">y varies directly as x and inversely as z &nbsp;→&nbsp; y = kx/z</div>
+      <p class="tip">⚠️ Read the words carefully: “jointly as x and z” = kxz (both on top), but “directly as x, inversely as z” = kx/z (z on the bottom).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Fully worked examples</h3>
+
+      <div class="ex"><b class="t">Example 1 (pure joint):</b> y varies jointly as x and z. When x = 2, z = 3, y = 24. Find y when x = 4, z = 5.
+        <div class="calc">Step 1:  y = kxz → 24 = k×2×3 = 6k → k = 24÷6 = 4</div>
+        <div class="calc">Step 2:  y = 4xz</div>
+        <div class="calc">Step 3:  x = 4, z = 5 → y = 4×4×5 = 80</div>
+        <b>Answer: y = 80</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 2 (joint with a square):</b> y varies jointly as x and the square of z. When x = 3, z = 2, y = 36. Find y when x = 5, z = 3.
+        <div class="calc">Step 1:  y = kxz² → 36 = k×3×2² = k×3×4 = 12k → k = 36÷12 = 3</div>
+        <div class="calc">Step 2:  y = 3xz²</div>
+        <div class="calc">Step 3:  x = 5, z = 3 → y = 3×5×3² = 3×5×9 = 135</div>
+        <b>Answer: y = 135</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 3 (combined, direct &amp; inverse):</b> y varies directly as x and inversely as z. When x = 8, z = 2, y = 12. Find y when x = 10, z = 5.
+        <div class="calc">Step 1:  y = kx/z → 12 = k×8/2 = 4k → k = 12÷4 = 3</div>
+        <div class="calc">Step 2:  y = 3x/z</div>
+        <div class="calc">Step 3:  x = 10, z = 5 → y = 3×10/5 = 30÷5 = 6</div>
+        <b>Answer: y = 6</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 4 (percentage / factor change — no numbers for k needed):</b> y varies jointly as x and z. If x is increased by 20% and z is decreased by 10%, find the percentage change in y.
+        <div class="calc">y = kxz. New x = 1.20x, new z = 0.90z</div>
+        <div class="calc">New y = k(1.20x)(0.90z) = (1.20×0.90)·kxz = 1.08·kxz</div>
+        <div class="calc">1.08 means the new y is 108% of the old → an 8% increase</div>
+        <b>Answer: y increases by 8%</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 5 (factor change with a power):</b> y varies directly as x and inversely as the square of z. If x is doubled and z is halved, what happens to y?
+        <div class="calc">y = kx/z². New x = 2x, new z = ½z → z² = (½z)² = ¼z²</div>
+        <div class="calc">New y = k(2x)/(¼z²) = 2 ÷ ¼ × (kx/z²) = 8·(kx/z²) = 8y</div>
+        <b>Answer: y becomes 8 times as large</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== PARTIAL VARIATION =============== -->
+  <section class="cat partial" id="cat-partial">
+    <h2 class="cathead">🧩 Partial Variation — the big one</h2>
+
+    <div class="lesson">
+      <h3>1. What is partial variation?</h3>
+      <p><b>Partial variation</b> is when a quantity is made of <b>two parts joined by a plus sign</b>: one part is <b>constant</b> (it never changes) and the other part <b>varies</b> (it changes with x). The most common form is:</p>
+      <div class="formula">y = a + bx &nbsp; (a = the fixed part, &nbsp; bx = the varying part)</div>
+      <p>Here there are <b>two unknown constants</b>, a and b. Notice a is <b>not</b> multiplied by x — it stands alone.</p>
+      <div class="analogy">🌟 Real life is FULL of partial variation:
+        <ul>
+          <li><b>Taxi fare</b> = a fixed drop charge + a rate per kilometre.</li>
+          <li><b>Electricity bill</b> = a fixed standing charge + a charge per unit used.</li>
+          <li><b>Cost of production</b> = fixed overhead (rent, machines) + a cost per item made.</li>
+          <li><b>Printing</b> = a fixed set-up fee + a cost per copy.</li>
+        </ul>
+        Whenever you see “a fixed charge PLUS a rate”, it is partial variation.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Other partial forms</h3>
+      <p>The two parts do not have to be “constant + straight line”. Two parts of any kind can be combined:</p>
+      <table class="r">
+        <tr><th>Words</th><th>Equation</th></tr>
+        <tr><td>Partly constant, partly varies as x</td><td>y = a + bx</td></tr>
+        <tr><td>Partly constant, partly varies inversely as x</td><td>y = a + b/x</td></tr>
+        <tr><td>Partly varies as x, partly as the square of x</td><td>y = ax + bx²</td></tr>
+      </table>
+      <p>Whatever the form, there are always <b>two unknown constants</b> to find.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. THE METHOD (why you always get TWO equations)</h3>
+      <p>Because there are <b>two</b> unknowns (a and b), you need <b>two equations</b> to pin them down — and to get two equations you must be given <b>two sets of data</b>. You then solve them <b>simultaneously</b>.</p>
+      <div class="formula">
+        Step 1: Write the general form (e.g. y = a + bx).<br>
+        Step 2: Put in the FIRST set of data → equation ①.<br>
+        Step 3: Put in the SECOND set of data → equation ②.<br>
+        Step 4: Solve ① and ② SIMULTANEOUSLY (subtract to remove a, find b, then find a).<br>
+        Step 5: Write the complete equation.<br>
+        Step 6: Use it to answer the question.
+      </div>
+      <p class="tip">💡 Fast tip: when the fixed part a appears in both equations, <b>subtracting</b> equation ① from ② cancels a immediately and hands you b.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Fully worked examples (easy → hard)</h3>
+
+      <div class="ex"><b class="t">Example 1 (basic linear partial):</b> y is partly constant and partly varies as x. When x = 2, y = 7; when x = 4, y = 11. Find the equation and hence y when x = 6.
+        <div class="calc">General form:  y = a + bx</div>
+        <div class="calc">① x = 2, y = 7:   7 = a + 2b</div>
+        <div class="calc">② x = 4, y = 11:  11 = a + 4b</div>
+        <div class="calc">② − ①:  (a + 4b) − (a + 2b) = 11 − 7 → 2b = 4 → b = 2</div>
+        <div class="calc">Put b = 2 into ①:  7 = a + 2(2) = a + 4 → a = 3</div>
+        <div class="calc">Complete equation:  y = 3 + 2x</div>
+        <div class="calc">x = 6:  y = 3 + 2(6) = 3 + 12 = 15</div>
+        <b>Answer: y = 3 + 2x, and y = 15 when x = 6</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 2 (real-life, bigger numbers):</b> The cost C of running a school is partly constant and partly varies as the number of students n. When n = 100, C = ₦800,000; when n = 150, C = ₦1,050,000. Find C when n = 200.
+        <div class="calc">General form:  C = a + bn</div>
+        <div class="calc">① 800000 = a + 100b</div>
+        <div class="calc">② 1050000 = a + 150b</div>
+        <div class="calc">② − ①:  250000 = 50b → b = 250000÷50 = 5000</div>
+        <div class="calc">Put b = 5000 into ①:  800000 = a + 100(5000) = a + 500000 → a = 300000</div>
+        <div class="calc">Complete equation:  C = 300000 + 5000n</div>
+        <div class="calc">n = 200:  C = 300000 + 5000(200) = 300000 + 1,000,000 = ₦1,300,000</div>
+        <b>Answer: fixed cost ₦300,000, ₦5,000 per student; C = ₦1,300,000 for 200 students</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 3 (partial with a square, y = ax + bx²):</b> y partly varies as x and partly as the square of x. When x = 2, y = 14; when x = 3, y = 27. Find y when x = 5.
+        <div class="calc">General form:  y = ax + bx²</div>
+        <div class="calc">① x = 2:  14 = 2a + 4b   → divide by 2:  7 = a + 2b</div>
+        <div class="calc">② x = 3:  27 = 3a + 9b</div>
+        <div class="calc">From ①:  a = 7 − 2b. Substitute into ②:</div>
+        <div class="calc">27 = 3(7 − 2b) + 9b = 21 − 6b + 9b = 21 + 3b → 3b = 6 → b = 2</div>
+        <div class="calc">a = 7 − 2(2) = 3</div>
+        <div class="calc">Complete equation:  y = 3x + 2x²</div>
+        <div class="calc">x = 5:  y = 3(5) + 2(5²) = 15 + 2(25) = 15 + 50 = 65</div>
+        <b>Answer: y = 3x + 2x², and y = 65 when x = 5</b>
+      </div>
+
+      <div class="ex"><b class="t">Example 4 (harder — solve, then work BACKWARDS):</b> A printer charges partly a fixed fee and partly a rate per page. Printing 200 pages costs ₦3,500; printing 500 pages costs ₦6,500. (a) Find the fixed fee and the cost per page. (b) How many pages can be printed for ₦8,000?
+        <div class="calc">General form:  C = a + bn</div>
+        <div class="calc">① 3500 = a + 200b</div>
+        <div class="calc">② 6500 = a + 500b</div>
+        <div class="calc">② − ①:  3000 = 300b → b = 3000÷300 = 10</div>
+        <div class="calc">① :  3500 = a + 200(10) = a + 2000 → a = 1500</div>
+        <div class="calc">(a) Complete equation:  C = 1500 + 10n → fixed fee ₦1,500, ₦10 per page</div>
+        <div class="calc">(b) Set C = 8000:  8000 = 1500 + 10n → 10n = 6500 → n = 650</div>
+        <b>Answer: fixed fee ₦1,500 and ₦10/page; 650 pages for ₦8,000</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Comparison table — all the variation types</h3>
+      <table class="r">
+        <tr><th>Type</th><th>In words</th><th>Equation</th><th>Key feature</th></tr>
+        <tr><td><b>Direct</b></td><td>y varies as x</td><td>y = kx</td><td>rise/fall together; ratio y/x = k</td></tr>
+        <tr><td><b>Inverse</b></td><td>y varies as 1/x</td><td>y = k/x</td><td>one up, other down; product xy = k</td></tr>
+        <tr><td><b>Joint</b></td><td>y varies jointly as x and z</td><td>y = kxz</td><td>depends on 2+ things multiplied</td></tr>
+        <tr><td><b>Combined</b></td><td>y direct as x, inverse as z</td><td>y = kx/z</td><td>one on top, one underneath</td></tr>
+        <tr><td><b>Partial</b></td><td>partly constant, partly varies as x</td><td>y = a + bx</td><td>TWO constants; needs TWO data sets solved together</td></tr>
+      </table>
+      <p class="tip">Direct, inverse, joint and combined each need <b>one</b> constant (k) and <b>one</b> data set. Partial variation is special: <b>two</b> constants, <b>two</b> data sets, solved simultaneously.</p>
+    </div>
+  </section>
+
+  <!-- =============== QUIZ =============== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full worked explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Find k first, write the equation, then use it. For partial variation, two data sets → two equations → solve together. 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"If y varies directly as x and x is doubled, then y…",o:["is halved","stays the same","is doubled","becomes zero"],c:2,e:"<span class='h'>💡 Idea</span>Direct variation means y = kx. If x doubles, then kx doubles, so y doubles too.<span class='h'>✅</span>y is doubled."},
+{s:"y varies directly as x. When x = 5, y = 30. Find the constant k.",o:["5","6","25","150"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>y = kx → 30 = k×5 → k = 30÷5 = 6</span><span class='h'>✅</span>k = 6."},
+{s:"y varies directly as x, and y = 30 when x = 5. Find y when x = 9.",o:["45","60","36","54"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>k = 30÷5 = 6, so y = 6x</span><span class='calc'>x = 9: y = 6×9 = 54</span><span class='h'>✅</span>54."},
+{s:"The cost of oranges varies directly as the number bought. If 8 oranges cost ₦200, find the cost of 20 oranges.",o:["₦400","₦450","₦500","₦550"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>k = 200÷8 = 25 (₦ per orange)</span><span class='calc'>20 oranges: 25×20 = ₦500</span><span class='h'>✅</span>₦500."},
+{s:"'y varies inversely as x' means that as x increases, y…",o:["increases","doubles","stays constant","decreases"],c:3,e:"<span class='h'>💡 Idea</span>Inverse variation y = k/x: a bigger x gives a smaller y.<span class='h'>✅</span>y decreases."},
+{s:"'y varies inversely as x' is written as…",o:["y = kx","y = k/x","y = x/k","y = k + x"],c:1,e:"<span class='h'>💡 Idea</span>Inverse means y equals k divided by x.<span class='h'>✅</span>y = k/x."},
+{s:"y varies inversely as x. When x = 4, y = 5. Find the constant k.",o:["9","1.25","20","0.8"],c:2,e:"<span class='h'>✏️ Working</span>For inverse variation k = x×y.<span class='calc'>k = 4×5 = 20</span><span class='h'>✅</span>k = 20."},
+{s:"6 taps fill a tank in 8 hours. The time varies inversely as the number of taps. How long will 12 taps take?",o:["4 hours","16 hours","6 hours","2 hours"],c:0,e:"<span class='h'>💡 Idea</span>Time ∝ 1/(number of taps), so t = k/n.<span class='h'>✏️ Working</span><span class='calc'>k = 6×8 = 48</span><span class='calc'>12 taps: t = 48÷12 = 4 hours</span><span class='h'>✅</span>4 hours."},
+{s:"y varies as the square of x. When x = 2, y = 20. Find y when x = 3.",o:["30","40","60","45"],c:3,e:"<span class='h'>✏️ Working</span>y = kx².<span class='calc'>x = 2: 20 = k×4 → k = 5</span><span class='calc'>x = 3: y = 5×3² = 5×9 = 45</span><span class='h'>✅</span>45."},
+{s:"y varies as √x. When x = 9, y = 15. Find y when x = 25.",o:["20","45","25","30"],c:2,e:"<span class='h'>✏️ Working</span>y = k√x.<span class='calc'>x = 9: 15 = k×√9 = k×3 → k = 5</span><span class='calc'>x = 25: y = 5×√25 = 5×5 = 25</span><span class='h'>✅</span>25."},
+{s:"y varies inversely as the square of x. When x = 2, y = 9. Find y when x = 3.",o:["4","6","3","2"],c:0,e:"<span class='h'>✏️ Working</span>y = k/x².<span class='calc'>x = 2: 9 = k/4 → k = 9×4 = 36</span><span class='calc'>x = 3: y = 36/3² = 36/9 = 4</span><span class='h'>✅</span>4."},
+{s:"'y varies jointly as x and z' is written as…",o:["y = k(x + z)","y = kx − z","y = kx/z","y = kxz"],c:3,e:"<span class='h'>💡 Idea</span>Jointly means the quantities are multiplied together with k.<span class='h'>✅</span>y = kxz."},
+{s:"y varies jointly as x and z. When x = 2, z = 3, y = 30. Find k.",o:["3","5","6","10"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>y = kxz → 30 = k×2×3 = 6k → k = 30÷6 = 5</span><span class='h'>✅</span>k = 5."},
+{s:"y varies jointly as x and z with k = 5. Find y when x = 4 and z = 5.",o:["80","60","100","120"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>y = 5xz = 5×4×5 = 100</span><span class='h'>✅</span>100."},
+{s:"y varies jointly as x and the square of z. When x = 2, z = 3, y = 36. Find k.",o:["2","3","4","6"],c:0,e:"<span class='h'>✏️ Working</span>y = kxz².<span class='calc'>36 = k×2×3² = k×2×9 = 18k → k = 36÷18 = 2</span><span class='h'>✅</span>k = 2."},
+{s:"Using y = 2xz², find y when x = 3 and z = 2.",o:["24","12","48","36"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>y = 2xz² = 2×3×2² = 2×3×4 = 24</span><span class='h'>✅</span>24."},
+{s:"y varies jointly as x and z. If x is doubled and z is tripled, y becomes…",o:["5 times as large","1.5 times as large","unchanged","6 times as large"],c:3,e:"<span class='h'>💡 Idea</span>y = kxz, so new y = k(2x)(3z) = 6kxz.<span class='calc'>2×3 = 6</span><span class='h'>✅</span>y becomes 6 times as large."},
+{s:"y varies jointly as x and z. If x increases by 10% and z increases by 20%, the percentage increase in y is…",o:["30%","20%","32%","15%"],c:2,e:"<span class='h'>✏️ Working</span>New y = k(1.1x)(1.2z) = 1.32kxz.<span class='calc'>1.1×1.2 = 1.32 → 32% increase</span><span class='h'>✅</span>32%."},
+{s:"'y varies directly as x and inversely as z' is written as…",o:["y = kxz","y = kx/z","y = kz/x","y = k/(xz)"],c:1,e:"<span class='h'>💡 Idea</span>Directly-as goes on top, inversely-as goes underneath.<span class='h'>✅</span>y = kx/z."},
+{s:"y varies directly as x and inversely as z. When x = 6, z = 2, y = 9. Find k.",o:["2","9","6","3"],c:3,e:"<span class='h'>✏️ Working</span>y = kx/z.<span class='calc'>9 = k×6/2 = 3k → k = 9÷3 = 3</span><span class='h'>✅</span>k = 3."},
+{s:"y = 3x/z. Find y when x = 8 and z = 4.",o:["6","24","12","2"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>y = 3x/z = 3×8/4 = 24÷4 = 6</span><span class='h'>✅</span>6."},
+{s:"Which of these represents PARTIAL variation?",o:["y = kx","y = k/x","y = a + bx","y = kxz"],c:2,e:"<span class='h'>💡 Idea</span>Partial variation has a fixed part plus a varying part.<span class='h'>✅</span>y = a + bx."},
+{s:"A taxi fare made up of a fixed charge plus a rate per kilometre is an example of…",o:["direct variation","inverse variation","joint variation","partial variation"],c:3,e:"<span class='h'>💡 Idea</span>A fixed charge (constant) plus a rate per km (varies with distance) = partial variation.<span class='h'>✅</span>Partial variation."},
+{s:"y is partly constant and partly varies as x. When x = 2, y = 7 and when x = 4, y = 11. Which pair of equations is correct?",o:["7 = a + 2b and 11 = a + 4b","7 = 2a + b and 11 = 4a + b","7 = ab + 2 and 11 = ab + 4","7 = a/2 + b and 11 = a/4 + b"],c:0,e:"<span class='h'>✏️ Working</span>Use y = a + bx and substitute each pair.<span class='calc'>x = 2: 7 = a + 2b</span><span class='calc'>x = 4: 11 = a + 4b</span><span class='h'>✅</span>7 = a + 2b and 11 = a + 4b."},
+{s:"From 7 = a + 2b and 11 = a + 4b, find b.",o:["1","2","3","4"],c:1,e:"<span class='h'>✏️ Working</span>Subtract equation ① from ②:<span class='calc'>(a + 4b) − (a + 2b) = 11 − 7 → 2b = 4 → b = 2</span><span class='h'>✅</span>b = 2."},
+{s:"With b = 2 and 7 = a + 2b, find a.",o:["3","4","5","2"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>7 = a + 2(2) → 7 = a + 4 → a = 3</span><span class='h'>✅</span>a = 3."},
+{s:"The partial equation is y = 3 + 2x. Find y when x = 10.",o:["20","32","23","25"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>y = 3 + 2x = 3 + 2×10 = 3 + 20 = 23</span><span class='h'>✅</span>23."},
+{s:"y is partly constant and partly varies as x. y = 5 when x = 1 and y = 11 when x = 3. Find y when x = 4.",o:["12","14","17","11"],c:1,e:"<span class='h'>✏️ Working</span>y = a + bx.<span class='calc'>x = 1: a + b = 5</span><span class='calc'>x = 3: a + 3b = 11</span><span class='calc'>Subtract: 2b = 6 → b = 3, a = 2</span><span class='calc'>x = 4: y = 2 + 3×4 = 14</span><span class='h'>✅</span>14."},
+{s:"y partly varies as x and partly as the square of x. When x = 1, y = 5 and when x = 2, y = 16. Find y when x = 3.",o:["27","24","39","33"],c:3,e:"<span class='h'>✏️ Working</span>y = ax + bx².<span class='calc'>x = 1: a + b = 5</span><span class='calc'>x = 2: 2a + 4b = 16 → a + 2b = 8</span><span class='calc'>Subtract: b = 3, a = 2</span><span class='calc'>x = 3: y = 2×3 + 3×3² = 6 + 27 = 33</span><span class='h'>✅</span>33."},
+{s:"Production cost is partly fixed and partly varies as the number of units n. 100 units cost ₦700,000 and 200 units cost ₦1,200,000. Find the cost of 350 units.",o:["₦1,750,000","₦1,950,000","₦1,850,000","₦2,000,000"],c:1,e:"<span class='h'>✏️ Working</span>C = a + bn.<span class='calc'>a + 100b = 700000</span><span class='calc'>a + 200b = 1200000</span><span class='calc'>Subtract: 100b = 500000 → b = 5000, a = 200000</span><span class='calc'>n = 350: C = 200000 + 5000×350 = 200000 + 1,750,000 = ₦1,950,000</span><span class='h'>✅</span>₦1,950,000."}
+);
+
+["direct","joint","partial","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

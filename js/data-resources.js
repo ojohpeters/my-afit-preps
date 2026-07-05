@@ -15,6 +15,10 @@
 window.RESOURCES = [
 
   /* ---------- Maths ---------- */
+  {file:"maths-variation.html", subject:"Maths",
+   title:"Variation — Direct, Inverse, Joint & Partial",
+   desc:"The constant k and the 3-step method for direct, inverse and power variation, plus a deep dive on joint and partial variation (solving for two constants).",
+   meta:"30-question quiz"},
   {file:"maths-calculus-student.html", subject:"Maths",
    title:"Calculus — Differentiation & Integration",
    desc:"Taught from zero: power rule, chain/product/quotient, turning points, integration, area under a curve + Further Maths extras.",
@@ -37,6 +41,10 @@ window.RESOURCES = [
    title:"A.C. Circuits",
    desc:"Alternating current, r.m.s. vs peak, reactance (ELI the ICE man), impedance, RLC resonance, power factor and transformers.",
    meta:"30-question quiz"},
+  {file:"physics-radioactivity.html", subject:"Physics",
+   title:"Radioactivity",
+   desc:"Alpha, beta & gamma radiation compared, balancing nuclear equations, half-life calculations, fission vs fusion, uses and safety.",
+   meta:"30-question quiz"},
 
   /* ---------- Chemistry ---------- */
   {file:"chemistry-mixed-practice.html", subject:"Chemistry",
@@ -46,6 +54,14 @@ window.RESOURCES = [
   {file:"chemistry-separation.html", subject:"Chemistry",
    title:"Separation Techniques",
    desc:"Every method — filtration, distillation, sublimation, chromatography, separating funnel — with the 'spot the difference' master table.",
+   meta:"30-question quiz"},
+  {file:"chemistry-isoelectronic.html", subject:"Chemistry",
+   title:"Isoelectronic Species (Ions)",
+   desc:"Counting electrons in ions, the 10- and 18-electron families (Ne & Ar series), and why ionic size falls as nuclear charge rises.",
+   meta:"30-question quiz"},
+  {file:"chemistry-metals-nonmetals.html", subject:"Chemistry",
+   title:"Metals, Non-metals & Their Compounds",
+   desc:"Physical & chemical differences, the reactivity series, reactions with oxygen/water/acid, and classifying oxides (basic/acidic/amphoteric/neutral).",
    meta:"30-question quiz"},
 
   /* ---------- Biology ---------- */
