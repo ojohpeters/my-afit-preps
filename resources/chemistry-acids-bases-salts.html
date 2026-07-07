@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acids, Bases &amp; Salts A–Z — Definitions, pH, Salt Prep &amp; Titration (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧪 Acids, Bases &amp; Salts A–Z</h1>
+  <p>Definitions · pH &amp; Indicators · Salt Preparation · Titration — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every equation balanced</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="acidsbases">🧪 Acids &amp; Bases</div>
+    <div class="tab" data-cat="ph">📊 pH &amp; Indicators</div>
+    <div class="tab" data-cat="salts">⚗️ Salts &amp; Preparation</div>
+    <div class="tab" data-cat="titration">🔬 Titration &amp; Hydrolysis</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: ACIDS & BASES ============ -->
+  <section class="cat acidsbases show" id="cat-acidsbases">
+    <h2 class="cathead">🧪 PART 1 — Acids &amp; Bases from Zero</h2>
+
+    <div class="lesson">
+      <h3>1. Three ways to define an acid and a base</h3>
+      <p>Chemists have three definitions. They get wider and wider — each one includes more substances than the one before.</p>
+
+      <h4>(a) Arrhenius definition (the water definition)</h4>
+      <ul>
+        <li>An <b>acid</b> is a substance that <b>produces hydrogen ions, H⁺ (really H₃O⁺, the hydroxonium ion), in water.</b></li>
+        <li>A <b>base</b> is a substance that <b>produces hydroxide ions, OH⁻, in water.</b></li>
+      </ul>
+      <div class="formula">HCl → H⁺ + Cl⁻&nbsp;&nbsp;·&nbsp;&nbsp;NaOH → Na⁺ + OH⁻</div>
+      <p>Strictly, the H⁺ never floats alone — it joins a water molecule: H⁺ + H₂O → H₃O⁺ (hydroxonium ion). We usually just write H⁺ for short.</p>
+
+      <h4>(b) Brønsted–Lowry definition (the proton definition)</h4>
+      <ul>
+        <li>An <b>acid</b> is a <b>proton (H⁺) donor</b> — it gives away an H⁺.</li>
+        <li>A <b>base</b> is a <b>proton (H⁺) acceptor</b> — it takes an H⁺.</li>
+      </ul>
+      <p>When an acid loses its proton it becomes a <b>conjugate base</b>; when a base gains a proton it becomes a <b>conjugate acid</b>. They come in <b>conjugate pairs</b> that differ by exactly one H⁺.</p>
+      <div class="formula">HCl + H₂O → H₃O⁺ + Cl⁻</div>
+      <div class="ex"><b class="t">Reading the conjugate pairs:</b>
+        <ul>
+          <li>HCl gives away an H⁺ → so HCl is the acid; its conjugate base is <b>Cl⁻</b>.</li>
+          <li>H₂O takes the H⁺ → so H₂O is the base; its conjugate acid is <b>H₃O⁺</b>.</li>
+        </ul>
+        Pairs: (HCl / Cl⁻) and (H₃O⁺ / H₂O). Each pair differs by one proton.</div>
+      <div class="analogy">🌟 Memory: Brønsted <b>A</b>cid = <b>A</b>way with the proton (donor). Base = <b>B</b>rings it in (acceptor).</div>
+
+      <h4>(c) Lewis definition (the electron-pair definition — the widest)</h4>
+      <ul>
+        <li>A <b>Lewis acid</b> is an <b>electron-pair acceptor</b>.</li>
+        <li>A <b>Lewis base</b> is an <b>electron-pair donor</b>.</li>
+      </ul>
+      <p>This is the broadest idea — it covers substances with no hydrogen at all (like BF₃ or AlCl₃, which accept a lone pair). NH₃, which has a lone pair to give, is a Lewis base.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Properties of acids</h3>
+      <ul>
+        <li>They have a <b>sour taste</b> (e.g. lemon, vinegar) — never actually taste lab acids.</li>
+        <li>They <b>turn blue litmus red</b> and have a <b>pH below 7</b>.</li>
+        <li>They are <b>electrolytes</b> — they conduct electricity in solution because they form ions.</li>
+        <li><b>Acid + reactive metal → salt + hydrogen gas.</b>
+          <div class="formula">Zn + 2HCl → ZnCl₂ + H₂↑</div>
+          Only metals above hydrogen in the activity series react this way. The H₂ gives a "pop" with a lighted splint.</li>
+        <li><b>Acid + carbonate (or hydrogencarbonate) → salt + water + carbon dioxide.</b>
+          <div class="formula">Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑</div>
+          The CO₂ turns limewater milky — the standard test.</li>
+        <li><b>Acid + base → salt + water</b> (neutralisation).
+          <div class="formula">HCl + NaOH → NaCl + H₂O</div></li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Properties of bases and alkalis</h3>
+      <p>A <b>base</b> is any substance that neutralises an acid (metal oxides and hydroxides). An <b>alkali</b> is simply a <b>base that dissolves in water</b> (e.g. NaOH, KOH, aqueous NH₃). Every alkali is a base, but not every base is an alkali (CuO is a base but is insoluble, so it is not an alkali).</p>
+      <ul>
+        <li>Alkalis have a <b>bitter taste</b> and feel <b>soapy / slippery</b>.</li>
+        <li>They <b>turn red litmus blue</b> and have a <b>pH above 7</b>.</li>
+        <li><b>Base + acid → salt + water</b> (neutralisation).</li>
+        <li><b>Alkali + ammonium salt → salt + water + ammonia gas.</b>
+          <div class="formula">NaOH + NH₄Cl → NaCl + H₂O + NH₃↑</div>
+          Ammonia turns damp red litmus blue — a test for ammonium salts.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Strong vs weak — it is about ionisation, not concentration</h3>
+      <p>"Strong/weak" tells you <b>how completely the substance splits into ions</b> (its degree of ionisation). "Concentrated/dilute" is a different idea — that is just how much is dissolved in the water.</p>
+      <table class="r">
+        <tr><th></th><th>Strong</th><th>Weak</th></tr>
+        <tr><td>Acids</td><td><b>Fully ionised</b> — HCl, H₂SO₄, HNO₃</td><td><b>Partly ionised</b> — CH₃COOH (ethanoic), H₂CO₃, H₂S</td></tr>
+        <tr><td>Bases</td><td><b>Fully ionised</b> — NaOH, KOH</td><td><b>Partly ionised</b> — aqueous NH₃ (NH₄OH)</td></tr>
+      </table>
+      <div class="analogy">🌟 A strong acid ionises 100%. A weak acid may ionise only a few % — most of it stays as whole molecules. You can have a dilute strong acid and a concentrated weak acid; the two words are unrelated.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Basicity of an acid</h3>
+      <p>The <b>basicity</b> of an acid is the <b>number of replaceable hydrogen (H⁺) ions in one molecule</b> — i.e. the number of H⁺ it can donate.</p>
+      <table class="r">
+        <tr><th>Acid</th><th>Formula</th><th>Replaceable H⁺</th><th>Basicity</th></tr>
+        <tr><td>Hydrochloric acid</td><td>HCl</td><td>1</td><td><b>Monobasic (1)</b></td></tr>
+        <tr><td>Ethanoic acid</td><td>CH₃COOH</td><td>1 (only the –COOH hydrogen)</td><td><b>Monobasic (1)</b></td></tr>
+        <tr><td>Tetraoxosulphate(VI) acid</td><td>H₂SO₄</td><td>2</td><td><b>Dibasic (2)</b></td></tr>
+        <tr><td>Trioxocarbonate(IV) acid</td><td>H₂CO₃</td><td>2</td><td><b>Dibasic (2)</b></td></tr>
+        <tr><td>Trioxophosphate(V)/phosphoric acid</td><td>H₃PO₄</td><td>3</td><td><b>Tribasic (3)</b></td></tr>
+      </table>
+      <div class="analogy">🌟 Careful: in CH₃COOH there are 4 hydrogens written, but only the ONE on –COOH is replaceable, so its basicity is 1, not 4.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: pH & INDICATORS ============ -->
+  <section class="cat ph" id="cat-ph">
+    <h2 class="cathead">📊 PART 2 — The pH Scale &amp; Indicators</h2>
+
+    <div class="lesson">
+      <h3>1. The pH scale (0 to 14)</h3>
+      <p><b>pH</b> is a number that tells how acidic or alkaline a solution is. It runs from <b>0 to 14</b>:</p>
+      <ul>
+        <li><b>pH below 7 → acidic</b> (the lower the number, the stronger the acid). pH 0–1 is a strong acid.</li>
+        <li><b>pH exactly 7 → neutral</b> (pure water at 25 °C).</li>
+        <li><b>pH above 7 → alkaline/basic</b> (the higher the number, the stronger the alkali). pH 13–14 is a strong alkali.</li>
+      </ul>
+      <div class="analogy">🌟 Small pH = "small friendly acid number." Big pH = "big basic number." 7 sits neutral in the middle.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The pH and pOH formulas</h3>
+      <div class="formula">pH = −log[H⁺]&nbsp;&nbsp;·&nbsp;&nbsp;pOH = −log[OH⁻]</div>
+      <div class="formula">pH + pOH = 14</div>
+      <p>Here [H⁺] means "the concentration of hydrogen ions in mol/dm³". The square brackets always mean concentration. Because pH + pOH = 14, once you know one you can always get the other.</p>
+      <p>A neat trick: if a concentration is a clean power of ten (like 10⁻² or 10⁻³), the log is easy — the pH is just that power made positive.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked pH calculations</h3>
+      <div class="ex"><b class="t">Example 1 — a strong acid.</b> Find the pH of 0.01 M hydrochloric acid (HCl).
+        <div class="calc">HCl is strong → fully ionised, so [H⁺] = 0.01 = 10⁻² mol/dm³</div>
+        <div class="calc">pH = −log(10⁻²) = 2</div>
+        Answer: <b>pH = 2</b> (acidic, as expected).</div>
+
+      <div class="ex"><b class="t">Example 2 — a stronger acid.</b> Find the pH of 0.1 M HCl.
+        <div class="calc">[H⁺] = 0.1 = 10⁻¹</div>
+        <div class="calc">pH = −log(10⁻¹) = 1</div>
+        Answer: <b>pH = 1</b>. (More concentrated → lower pH.)</div>
+
+      <div class="ex"><b class="t">Example 3 — a strong alkali (go through pOH).</b> Find the pH of 0.001 M sodium hydroxide (NaOH).
+        <div class="calc">NaOH is strong → fully ionised, so [OH⁻] = 0.001 = 10⁻³</div>
+        <div class="calc">pOH = −log(10⁻³) = 3</div>
+        <div class="calc">pH = 14 − pOH = 14 − 3 = 11</div>
+        Answer: <b>pH = 11</b> (alkaline, as expected).</div>
+
+      <div class="ex"><b class="t">Example 4 — another alkali.</b> Find the pH of 0.01 M NaOH.
+        <div class="calc">[OH⁻] = 0.01 = 10⁻² → pOH = 2</div>
+        <div class="calc">pH = 14 − 2 = 12</div>
+        Answer: <b>pH = 12</b>.</div>
+      <div class="analogy">🌟 Golden rule: for an acid, work out [H⁺] then use pH = −log[H⁺]. For an alkali, work out [OH⁻] → pOH → then pH = 14 − pOH.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Indicators and their colours</h3>
+      <p>An <b>indicator</b> is a dye that changes colour depending on whether it is in acid or alkali. The three you must know:</p>
+      <table class="r">
+        <tr><th>Indicator</th><th>Colour in ACID</th><th>Colour in ALKALI/BASE</th><th>Neutral</th></tr>
+        <tr><td><b>Litmus</b></td><td><b>Red</b></td><td><b>Blue</b></td><td>Purple</td></tr>
+        <tr><td><b>Methyl orange</b></td><td><b>Red / pink</b></td><td><b>Yellow</b></td><td>Orange</td></tr>
+        <tr><td><b>Phenolphthalein</b></td><td><b>Colourless</b></td><td><b>Pink</b></td><td>Colourless</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory hooks: "phenolphthale<b>in</b> is p<b>in</b>k in alkal<b>i</b>ne, and colourless in acid." Methyl orange goes <b>red</b> when things get <b>rough</b> (acidic).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Choosing the right indicator for a titration</h3>
+      <p>At the end point the pH jumps sharply. You pick an indicator whose colour change happens inside that jump — it depends on which acid and base you are using.</p>
+      <table class="r">
+        <tr><th>Titration type</th><th>Best indicator</th></tr>
+        <tr><td>Strong acid + strong base</td><td>Methyl orange OR phenolphthalein (both work)</td></tr>
+        <tr><td>Strong acid + weak base</td><td><b>Methyl orange</b></td></tr>
+        <tr><td>Weak acid + strong base</td><td><b>Phenolphthalein</b></td></tr>
+        <tr><td>Weak acid + weak base</td><td>No suitable indicator (change is too gradual)</td></tr>
+      </table>
+      <div class="analogy">🌟 Quick rule: match the indicator to the STRONG partner — strong base ⇒ phenolphthalein (works in alkali region); strong acid (with weak base) ⇒ methyl orange.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: SALTS & PREPARATION ============ -->
+  <section class="cat salts" id="cat-salts">
+    <h2 class="cathead">⚗️ PART 3 — Salts &amp; How to Prepare Them</h2>
+
+    <div class="lesson">
+      <h3>1. What is a salt?</h3>
+      <p>A <b>salt</b> is the compound formed when the <b>replaceable hydrogen ions of an acid are replaced by a metal (or ammonium, NH₄⁺) ion.</b> Salts are the product of neutralisation.</p>
+      <div class="formula">Acid + Base → Salt + Water</div>
+      <div class="ex"><b class="t">Example:</b> in HCl the H⁺ is replaced by Na⁺ to give the salt <b>NaCl</b>; in H₂SO₄ both H⁺ are replaced to give <b>Na₂SO₄</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Types of salt (by structure)</h3>
+      <ul>
+        <li><b>Normal salt:</b> ALL the replaceable H⁺ of the acid have been replaced by a metal. Examples: NaCl, Na₂SO₄, KNO₃, ZnCl₂.</li>
+        <li><b>Acid salt:</b> only PART of the replaceable H⁺ has been replaced — some H is still there. Only dibasic/tribasic acids can form these. Examples: NaHSO₄ (sodium hydrogensulphate), NaHCO₃ (sodium hydrogencarbonate), Ca(HCO₃)₂.</li>
+        <li><b>Basic salt:</b> contains OH⁻ or O²⁻ in addition to the normal salt part (from incomplete neutralisation of a base). Example: Pb(OH)Cl, basic lead carbonate.</li>
+        <li><b>Double salt:</b> two simple salts crystallised together in one crystal; it splits back into the two salts when dissolved. Examples: potash alum KAl(SO₄)₂·12H₂O; Mohr's salt FeSO₄·(NH₄)₂SO₄·6H₂O.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Acidic, basic or neutral salts (by hydrolysis in water)</h3>
+      <p>Even a "normal" salt can give an acidic or alkaline solution, because of the acid and base it came from:</p>
+      <ul>
+        <li><b>Salt of strong acid + strong base → NEUTRAL</b> (pH 7). Example: NaCl, KNO₃.</li>
+        <li><b>Salt of strong acid + weak base → ACIDIC</b> (pH &lt; 7). Example: NH₄Cl, (NH₄)₂SO₄.</li>
+        <li><b>Salt of weak acid + strong base → ALKALINE</b> (pH &gt; 7). Example: Na₂CO₃, CH₃COONa.</li>
+      </ul>
+      <div class="analogy">🌟 The stronger parent wins: strong acid parent pulls the solution acidic; strong base parent pulls it alkaline; when both are strong they cancel to neutral.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Four methods of preparing salts</h3>
+      <p>Which method to use depends on whether the salt (and its starting metal/base) is soluble.</p>
+      <ul>
+        <li><b>(a) Neutralisation / titration</b> — for soluble salts of sodium, potassium and ammonium. Titrate the acid against the alkali using an indicator, then repeat without the indicator and evaporate.
+          <div class="calc">HCl + NaOH → NaCl + H₂O</div></li>
+        <li><b>(b) Metal + acid</b> — for a soluble salt of a fairly reactive metal (above H, but not the violent ones like Na/K). Add excess metal to the acid, filter off the leftover metal, evaporate.
+          <div class="calc">Zn + H₂SO₄ → ZnSO₄ + H₂↑</div></li>
+        <li><b>(c) Insoluble base / carbonate + acid</b> — for a soluble salt of an unreactive metal (Cu, Pb). Add the insoluble base/carbonate in excess to the warm acid, filter off the excess solid, evaporate.
+          <div class="calc">CuO + H₂SO₄ → CuSO₄ + H₂O</div></li>
+        <li><b>(d) Precipitation (double decomposition)</b> — for an INSOLUBLE salt. Mix two solutions of soluble salts; the insoluble salt drops out as a precipitate, which you filter, wash and dry.
+          <div class="calc">AgNO₃ + NaCl → AgCl↓ + NaNO₃</div>
+          <div class="calc">BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl</div></li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Solubility rules (learn these — they decide the method)</h3>
+      <ul>
+        <li><b>All sodium, potassium and ammonium salts are soluble.</b></li>
+        <li><b>All nitrates (NO₃⁻) are soluble.</b></li>
+        <li><b>All chlorides are soluble EXCEPT silver chloride (AgCl) and lead(II) chloride (PbCl₂).</b></li>
+        <li><b>All sulphates are soluble EXCEPT barium sulphate (BaSO₄) and lead(II) sulphate (PbSO₄)</b> (calcium sulphate is only slightly soluble).</li>
+        <li><b>All carbonates are INSOLUBLE EXCEPT those of sodium, potassium and ammonium.</b></li>
+        <li><b>Most hydroxides are insoluble EXCEPT NaOH, KOH and aqueous NH₃</b> (Ca(OH)₂ slightly soluble).</li>
+      </ul>
+      <div class="analogy">🌟 Chant: "Nitrates always; sodium/potassium/ammonium always; chlorides except silver &amp; lead; sulphates except barium &amp; lead; carbonates only Na, K, NH₄."</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Water of crystallisation, deliquescence &amp; efflorescence</h3>
+      <ul>
+        <li><b>Water of crystallisation:</b> a fixed number of water molecules chemically built into a crystal. Such a salt is <b>hydrated</b>. Examples: CuSO₄·5H₂O (blue), Na₂CO₃·10H₂O. Heating drives off the water to leave the white <b>anhydrous</b> salt (anhydrous CuSO₄ is white; it turns blue with water — a test for water).</li>
+        <li><b>Deliquescence:</b> a solid absorbs so much water vapour from the air that it dissolves into a solution. Examples: NaOH, CaCl₂.</li>
+        <li><b>Efflorescence:</b> a hydrated crystal LOSES its water of crystallisation to the air and turns powdery. Example: Na₂CO₃·10H₂O.</li>
+        <li><b>Hygroscopic:</b> absorbs water vapour but does NOT dissolve (used as drying agents). Examples: concentrated H₂SO₄, CaO.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: TITRATION & HYDROLYSIS ============ -->
+  <section class="cat titration" id="cat-titration">
+    <h2 class="cathead">🔬 PART 4 — Titration Calculations &amp; Salt Hydrolysis</h2>
+
+    <div class="lesson">
+      <h3>1. What is a titration?</h3>
+      <p>A <b>titration</b> is a method of finding an unknown concentration by reacting it exactly with a solution of known concentration, using an indicator to spot the <b>end point</b> (the moment neutralisation is complete). You measure the volumes and calculate.</p>
+      <p>Equipment: the known solution goes in the <b>burette</b>; a fixed volume of the unknown is measured with a <b>pipette</b> into a conical flask with a few drops of indicator; you run the burette in until the colour just changes.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The titration formula</h3>
+      <div class="formula">CₐVₐ / CᵦVᵦ = nₐ / nᵦ</div>
+      <ul>
+        <li><b>Cₐ, Vₐ</b> = concentration and volume of the ACID</li>
+        <li><b>Cᵦ, Vᵦ</b> = concentration and volume of the BASE</li>
+        <li><b>nₐ : nᵦ</b> = the mole ratio of acid to base taken straight from the balanced equation</li>
+      </ul>
+      <p>The volumes can be in cm³ or dm³ as long as both use the same unit (they cancel). Concentration is in mol/dm³.</p>
+      <p>Get nₐ : nᵦ from the equation. For HCl + NaOH → NaCl + H₂O the ratio is <b>1 : 1</b>. For H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O the ratio is <b>1 : 2</b> (one acid to two base).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked titration calculations</h3>
+      <div class="ex"><b class="t">Example 1 — find an unknown concentration (1 : 1).</b> 25.0 cm³ of sodium hydroxide is exactly neutralised by 20.0 cm³ of 0.10 M HCl. Find the concentration of the NaOH.
+        <div class="calc">Equation: HCl + NaOH → NaCl + H₂O, so nₐ : nᵦ = 1 : 1</div>
+        <div class="calc">CₐVₐ / CᵦVᵦ = 1/1 → Cᵦ = CₐVₐ / Vᵦ</div>
+        <div class="calc">Cᵦ = (0.10 × 20.0) / 25.0 = 2.0 / 25.0 = 0.08 M</div>
+        Answer: <b>[NaOH] = 0.08 mol/dm³</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — a 1 : 2 ratio (dibasic acid).</b> What volume of 0.10 M NaOH is needed to neutralise 25.0 cm³ of 0.10 M H₂SO₄?
+        <div class="calc">Equation: H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O, so nₐ : nᵦ = 1 : 2</div>
+        <div class="calc">CₐVₐ / CᵦVᵦ = 1/2 → CᵦVᵦ = 2 × CₐVₐ</div>
+        <div class="calc">Vᵦ = (2 × 0.10 × 25.0) / 0.10 = 5.0 / 0.10 = 50.0 cm³</div>
+        Answer: <b>50.0 cm³</b> (it needs twice as much base, which makes sense — each H₂SO₄ gives 2 H⁺).</div>
+
+      <div class="ex"><b class="t">Example 3 — find the acid concentration.</b> 20.0 cm³ of HCl is neutralised by 25.0 cm³ of 0.20 M NaOH (1 : 1). Find [HCl].
+        <div class="calc">Cₐ = CᵦVᵦ / Vₐ = (0.20 × 25.0) / 20.0</div>
+        <div class="calc">Cₐ = 5.0 / 20.0 = 0.25 M</div>
+        Answer: <b>[HCl] = 0.25 mol/dm³</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Salt hydrolysis (why a salt solution can be acidic or alkaline)</h3>
+      <p>When a salt dissolves, its ions can react with water (hydrolysis). Whether the solution ends up acidic, basic or neutral depends on the acid and base that made the salt:</p>
+      <table class="r">
+        <tr><th>Salt made from…</th><th>Solution is…</th><th>Example</th></tr>
+        <tr><td>Strong acid + strong base</td><td><b>Neutral (pH 7)</b> — no hydrolysis</td><td>NaCl, KNO₃</td></tr>
+        <tr><td>Strong acid + weak base</td><td><b>Acidic (pH &lt; 7)</b></td><td>NH₄Cl, (NH₄)₂SO₄</td></tr>
+        <tr><td>Weak acid + strong base</td><td><b>Alkaline (pH &gt; 7)</b></td><td>Na₂CO₃, CH₃COONa</td></tr>
+      </table>
+      <div class="analogy">🌟 The stronger parent decides: strong-acid parent ⇒ acidic salt; strong-base parent ⇒ alkaline salt; both strong ⇒ neutral. So common salt (NaCl) is neutral, ammonium chloride is acidic, and washing soda (Na₂CO₃) is alkaline.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Balance the equation, replace the hydrogen — the salt follows. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"According to Arrhenius, an acid is a substance that…",o:["Produces hydroxide ions (OH⁻) in water","Produces hydrogen ions (H⁺ or H₃O⁺) in water","Accepts a pair of electrons","Donates a pair of electrons"],c:1,e:"<span class='h'>💡 Idea</span>Arrhenius defined an acid by what it does in water — it releases H⁺ (which joins water as H₃O⁺). A base releases OH⁻.<span class='h'>✅</span>Produces hydrogen ions (H⁺ or H₃O⁺) in water."},
+{s:"In the Brønsted–Lowry theory, an acid is a…",o:["Proton (H⁺) donor","Proton (H⁺) acceptor","Electron-pair donor","Electron-pair acceptor"],c:0,e:"<span class='h'>💡 Idea</span>Brønsted–Lowry: acid = proton donor (gives away H⁺), base = proton acceptor.<span class='h'>✅</span>Proton (H⁺) donor."},
+{s:"A Brønsted–Lowry base is best described as a…",o:["Proton donor","Electron-pair acceptor","Substance that always contains OH⁻","Proton (H⁺) acceptor"],c:3,e:"<span class='h'>💡 Idea</span>A Brønsted–Lowry base accepts a proton (H⁺). It need not contain OH⁻ — for example NH₃ accepts a proton.<span class='h'>✅</span>Proton (H⁺) acceptor."},
+{s:"A Lewis acid is defined as an…",o:["Electron-pair donor","Proton donor","Electron-pair acceptor","Proton acceptor"],c:2,e:"<span class='h'>💡 Idea</span>Lewis (the widest definition): acid = electron-pair acceptor, base = electron-pair donor.<span class='h'>✅</span>Electron-pair acceptor."},
+{s:"In the reaction HCl + H₂O → H₃O⁺ + Cl⁻, the conjugate base of HCl is…",o:["Cl⁻","H₃O⁺","OH⁻","H₂"],c:0,e:"<span class='h'>💡 Idea</span>When the acid HCl donates its proton it becomes Cl⁻, so Cl⁻ is its conjugate base (they differ by one H⁺).<span class='h'>✅</span>Cl⁻."},
+{s:"Acids turn blue litmus paper…",o:["Blue","Green","Red","Colourless"],c:2,e:"<span class='h'>💡 Idea</span>Acids turn blue litmus red; alkalis turn red litmus blue.<span class='h'>✅</span>Red."},
+{s:"When a reactive metal such as zinc reacts with a dilute acid, the gas given off is…",o:["Carbon dioxide","Hydrogen","Oxygen","Chlorine"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Zn + 2HCl → ZnCl₂ + H₂↑</span>Acid + reactive metal → salt + hydrogen. The gas pops with a lighted splint.<span class='h'>✅</span>Hydrogen."},
+{s:"When a dilute acid is added to a carbonate such as Na₂CO₃, the gas produced is…",o:["Hydrogen","Oxygen","Ammonia","Carbon dioxide"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Na₂CO₃ + 2HCl → 2NaCl + H₂O + CO₂↑</span>Acid + carbonate → salt + water + CO₂, which turns limewater milky.<span class='h'>✅</span>Carbon dioxide."},
+{s:"The basicity of tetraoxosulphate(VI) acid, H₂SO₄, is…",o:["2","1","3","4"],c:0,e:"<span class='h'>💡 Idea</span>Basicity = number of replaceable H⁺ per molecule. H₂SO₄ has 2 replaceable hydrogens, so it is dibasic.<span class='h'>✅</span>2."},
+{s:"Which of the following is a WEAK acid?",o:["Hydrochloric acid (HCl)","Trioxonitrate(V) / nitric acid (HNO₃)","Ethanoic acid (CH₃COOH)","Tetraoxosulphate(VI) acid (H₂SO₄)"],c:2,e:"<span class='h'>💡 Idea</span>Weak acids ionise only partly. Ethanoic acid ionises to a small degree, while HCl, HNO₃ and H₂SO₄ are strong (fully ionised).<span class='h'>✅</span>Ethanoic acid (CH₃COOH)."},
+{s:"An alkali is best defined as…",o:["An acid that is very concentrated","A salt formed from neutralisation","Any base, whether soluble or not","A base that is soluble in water"],c:3,e:"<span class='h'>💡 Idea</span>Every alkali is a base, but an alkali is specifically a base that dissolves in water (e.g. NaOH, KOH). Insoluble CuO is a base but not an alkali.<span class='h'>✅</span>A base that is soluble in water."},
+{s:"Which statement about bases/alkalis is TRUE?",o:["They taste sour and turn litmus red","They feel soapy, taste bitter and turn red litmus blue","They release hydrogen when they react with metals","They have a pH below 7"],c:1,e:"<span class='h'>💡 Idea</span>Alkalis feel soapy, taste bitter, turn red litmus blue and have pH above 7. Sour taste and turning litmus red are acid properties.<span class='h'>✅</span>They feel soapy, taste bitter and turn red litmus blue."},
+{s:"The correct formula for pH is…",o:["pH = −log[H⁺]","pH = log[H⁺]","pH = −log[OH⁻]","pH = [H⁺] × 14"],c:0,e:"<span class='h'>💡 Idea</span>pH is the negative logarithm of the hydrogen-ion concentration: pH = −log[H⁺].<span class='h'>✅</span>pH = −log[H⁺]."},
+{s:"The pH of a neutral solution (pure water at 25 °C) is…",o:["0","14","7","1"],c:2,e:"<span class='h'>💡 Idea</span>The scale runs 0–14; exactly 7 is neutral, below 7 is acidic, above 7 is alkaline.<span class='h'>✅</span>7."},
+{s:"What is the pH of 0.01 M hydrochloric acid (HCl)?",o:["1","2","12","0.01"],c:1,e:"<span class='h'>✏️ Working</span>HCl is strong, so [H⁺] = 0.01 = 10⁻².<span class='calc'>pH = −log(10⁻²) = 2</span><span class='h'>✅</span>2."},
+{s:"What is the pH of 0.001 M sodium hydroxide (NaOH)?",o:["3","13","7","11"],c:3,e:"<span class='h'>✏️ Working</span>NaOH is strong, so [OH⁻] = 0.001 = 10⁻³.<span class='calc'>pOH = −log(10⁻³) = 3</span><span class='calc'>pH = 14 − 3 = 11</span><span class='h'>✅</span>11."},
+{s:"For any aqueous solution at 25 °C, pH + pOH equals…",o:["14","7","1","0"],c:0,e:"<span class='h'>💡 Idea</span>pH and pOH always add up to 14, so if you know one you can find the other.<span class='h'>✅</span>14."},
+{s:"The colour of phenolphthalein in an alkaline solution is…",o:["Colourless","Pink","Red","Yellow"],c:1,e:"<span class='h'>💡 Idea</span>Phenolphthalein is colourless in acid and pink in alkali.<span class='h'>✅</span>Pink."},
+{s:"The colour of methyl orange in an acidic solution is…",o:["Yellow","Blue","Colourless","Red (pink)"],c:3,e:"<span class='h'>💡 Idea</span>Methyl orange is red/pink in acid and yellow in alkali (orange when neutral).<span class='h'>✅</span>Red (pink)."},
+{s:"What is the pH of 0.1 M HCl?",o:["2","0.1","1","13"],c:2,e:"<span class='h'>✏️ Working</span>[H⁺] = 0.1 = 10⁻¹.<span class='calc'>pH = −log(10⁻¹) = 1</span><span class='h'>✅</span>1."},
+{s:"A salt is a compound formed when…",o:["The replaceable hydrogen of an acid is replaced by a metal (or ammonium) ion","A substance turns litmus red","Any compound dissolves in water","A base accepts a proton"],c:0,e:"<span class='h'>💡 Idea</span>Salts come from neutralisation: the H⁺ of the acid is replaced by a metal or NH₄⁺ ion (acid + base → salt + water).<span class='h'>✅</span>The replaceable hydrogen of an acid is replaced by a metal (or ammonium) ion."},
+{s:"Sodium hydrogencarbonate, NaHCO₃, is an example of a(n)…",o:["Normal salt","Acid salt","Basic salt","Double salt"],c:1,e:"<span class='h'>💡 Idea</span>Only PART of the replaceable hydrogen of the parent acid (H₂CO₃) has been replaced — one H remains — so it is an acid salt.<span class='h'>✅</span>Acid salt."},
+{s:"Potash alum, KAl(SO₄)₂·12H₂O, is an example of a(n)…",o:["Normal salt","Acid salt","Basic salt","Double salt"],c:3,e:"<span class='h'>💡 Idea</span>A double salt is two simple salts crystallised together in one crystal; alum is K₂SO₄ and Al₂(SO₄)₃ combined.<span class='h'>✅</span>Double salt."},
+{s:"Which of these salts is INSOLUBLE in water?",o:["Sodium chloride (NaCl)","Potassium nitrate (KNO₃)","Barium sulphate (BaSO₄)","Ammonium chloride (NH₄Cl)"],c:2,e:"<span class='h'>💡 Idea</span>All sulphates are soluble except BaSO₄ and PbSO₄. Sodium, potassium, ammonium and all nitrate salts are soluble.<span class='h'>✅</span>Barium sulphate (BaSO₄)."},
+{s:"With respect to solubility in water, all nitrates are…",o:["Soluble","Insoluble","Insoluble except sodium nitrate","Soluble only when heated"],c:0,e:"<span class='h'>💡 Idea</span>A key solubility rule: every nitrate (NO₃⁻) salt is soluble in water.<span class='h'>✅</span>Soluble."},
+{s:"All chlorides are soluble in water EXCEPT those of…",o:["Sodium and potassium","Calcium and barium","Copper and zinc","Silver and lead"],c:3,e:"<span class='h'>💡 Idea</span>Chlorides are soluble except silver chloride (AgCl) and lead(II) chloride (PbCl₂).<span class='h'>✅</span>Silver and lead."},
+{s:"An insoluble salt such as silver chloride (AgCl) is best prepared by…",o:["Titration of an acid with an alkali","Precipitation (double decomposition) — mixing two soluble solutions","Adding a metal to an acid","Heating a hydrated salt"],c:1,e:"<span class='h'>💡 Idea</span>Insoluble salts are made by precipitation: mix two soluble salts so the insoluble one drops out, e.g. AgNO₃ + NaCl → AgCl↓ + NaNO₃.<span class='h'>✅</span>Precipitation (double decomposition) — mixing two soluble solutions."},
+{s:"The '5H₂O' in blue hydrated copper(II) sulphate, CuSO₄·5H₂O, represents its…",o:["Water of neutralisation","Deliquescent water","Water of crystallisation","Water vapour on the surface"],c:2,e:"<span class='h'>💡 Idea</span>Water of crystallisation is water chemically built into the crystal. Heating drives it off to leave white anhydrous CuSO₄.<span class='h'>✅</span>Water of crystallisation."},
+{s:"In a titration, 25.0 cm³ of NaOH is exactly neutralised by 20.0 cm³ of 0.10 M HCl (reacting 1 : 1). The concentration of the NaOH is…",o:["0.08 M","0.10 M","0.125 M","0.8 M"],c:0,e:"<span class='h'>✏️ Working</span>Using CₐVₐ/CᵦVᵦ = nₐ/nᵦ = 1/1, so Cᵦ = CₐVₐ/Vᵦ.<span class='calc'>Cᵦ = (0.10 × 20.0) / 25.0</span><span class='calc'>Cᵦ = 2.0 / 25.0 = 0.08 M</span><span class='h'>✅</span>0.08 M."},
+{s:"An aqueous solution of ammonium chloride (NH₄Cl), the salt of a strong acid and a weak base, is…",o:["Neutral (pH = 7)","Acidic (pH < 7)","Alkaline (pH > 7)","Unable to conduct electricity"],c:1,e:"<span class='h'>💡 Idea</span>The stronger parent wins. NH₄Cl comes from a strong acid (HCl) and a weak base (NH₃), so hydrolysis makes the solution acidic.<span class='h'>✅</span>Acidic (pH < 7)."}
+);
+
+["acidsbases","ph","salts","titration","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

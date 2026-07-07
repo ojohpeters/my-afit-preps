@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mole Concept & Stoichiometry A–Z — Moles, Formulae, Reacting Masses & Concentration (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>⚖️ Mole Concept & Stoichiometry A–Z</h1>
+  <p>The Mole · Formulae · Reacting Masses · Concentration — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with lots of worked calculations and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every step shown</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="mole">⚖️ The Mole</div>
+    <div class="tab" data-cat="formulae">🧮 Formulae &amp; Composition</div>
+    <div class="tab" data-cat="stoich">🔥 Stoichiometry &amp; Equations</div>
+    <div class="tab" data-cat="solutions">💧 Solutions &amp; Concentration</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: THE MOLE ============ -->
+  <section class="cat mole show" id="cat-mole">
+    <h2 class="cathead">⚖️ PART 1 — The Mole: Counting by Weighing</h2>
+
+    <div class="lesson">
+      <h3>1. Why chemists invented the mole</h3>
+      <p>Atoms are far too small and too many to count one by one. A single spoon of water holds billions of billions of molecules. So chemists count atoms the same way a shopkeeper counts rice — <b>by weighing a known bundle</b>.</p>
+      <p>The <b>mole</b> is that bundle. It is simply <b>a fixed NUMBER of particles</b> — just like a "dozen" always means 12 and a "pair" always means 2. A mole always means the same huge number of particles.</p>
+      <div class="analogy">🌟 Memory: a <b>dozen</b> eggs = 12 eggs. A <b>mole</b> of atoms = 6.02×10²³ atoms. Same idea, just a much bigger count.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Avogadro's number</h3>
+      <p>The number of particles in one mole is called <b>Avogadro's number (or constant)</b>:</p>
+      <div class="formula">1 mole = 6.02 × 10²³ particles</div>
+      <p>"Particles" can mean atoms, molecules, ions or electrons — whatever the substance is made of. So:</p>
+      <ul>
+        <li>1 mole of carbon atoms = 6.02×10²³ carbon atoms</li>
+        <li>1 mole of water molecules = 6.02×10²³ H₂O molecules</li>
+        <li>1 mole of sodium ions = 6.02×10²³ Na⁺ ions</li>
+      </ul>
+      <span class="key">Number ↔ moles</span>
+      <div class="formula">moles = number of particles ÷ 6.02×10²³</div>
+      <div class="formula">number of particles = moles × 6.02×10²³</div>
+      <div class="ex"><b class="t">Worked example — particles in 2 mol:</b> How many molecules are in 2 mol of CO₂?
+        <div class="calc">particles = moles × 6.02×10²³</div>
+        <div class="calc">particles = 2 × 6.02×10²³ = 1.204 × 10²⁴ molecules</div>
+        Answer = <b>1.204 × 10²⁴ molecules</b>.</div>
+      <div class="ex"><b class="t">Worked example — moles from particles:</b> How many moles are in 3.01×10²³ atoms of iron?
+        <div class="calc">moles = 3.01×10²³ ÷ 6.02×10²³ = 0.5 mol</div>
+        Answer = <b>0.5 mol</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Molar mass — the weight of one mole</h3>
+      <p>Here is the beautiful trick: <b>one mole of a substance has a mass, in grams, equal to its relative atomic / molecular / formula mass.</b> That mass is called the <b>molar mass</b> (units: g/mol or g per mole).</p>
+      <ul>
+        <li>Relative atomic mass of carbon = 12, so <b>molar mass of C = 12 g/mol</b>.</li>
+        <li>Relative molecular mass of water (H₂O) = 18, so <b>molar mass of H₂O = 18 g/mol</b>.</li>
+        <li>Relative molecular mass of CO₂ = 44, so <b>molar mass of CO₂ = 44 g/mol</b>.</li>
+      </ul>
+      <span class="key">How to work out a molar mass</span>
+      <p>Add up the relative atomic masses of every atom in the formula. Common values to remember: H=1, C=12, N=14, O=16, Na=23, Mg=24, S=32, Cl=35.5, K=39, Ca=40, Fe=56, Cu=64, Zn=65.</p>
+      <div class="ex"><b class="t">Worked example — molar mass of NaOH:</b>
+        <div class="calc">Na = 23, O = 16, H = 1</div>
+        <div class="calc">Molar mass = 23 + 16 + 1 = 40 g/mol</div></div>
+      <div class="ex"><b class="t">Worked example — molar mass of CaCO₃:</b>
+        <div class="calc">Ca = 40, C = 12, O₃ = 3 × 16 = 48</div>
+        <div class="calc">Molar mass = 40 + 12 + 48 = 100 g/mol</div></div>
+      <div class="ex"><b class="t">Worked example — molar mass of H₂SO₄:</b>
+        <div class="calc">H₂ = 2 × 1 = 2, S = 32, O₄ = 4 × 16 = 64</div>
+        <div class="calc">Molar mass = 2 + 32 + 64 = 98 g/mol</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The master formula: moles ↔ mass</h3>
+      <p>This is the most-used equation in the whole topic. Learn it three ways:</p>
+      <div class="formula">moles = mass ÷ molar mass</div>
+      <div class="formula">mass = moles × molar mass</div>
+      <div class="formula">molar mass = mass ÷ moles</div>
+      <div class="analogy">🌟 Triangle trick: put <b>mass</b> on top, with <b>moles</b> and <b>molar mass</b> below. Cover what you want to find and the triangle tells you to multiply or divide.</div>
+      <div class="ex"><b class="t">Worked example — moles in 44 g of CO₂:</b>
+        <div class="calc">molar mass of CO₂ = 44 g/mol</div>
+        <div class="calc">moles = mass ÷ molar mass = 44 ÷ 44 = 1 mol</div>
+        Answer = <b>1 mole</b>. (So 44 g of CO₂ is exactly one mole.)</div>
+      <div class="ex"><b class="t">Worked example — moles in 9 g of water:</b>
+        <div class="calc">molar mass of H₂O = 18 g/mol</div>
+        <div class="calc">moles = 9 ÷ 18 = 0.5 mol</div>
+        Answer = <b>0.5 mol</b>.</div>
+      <div class="ex"><b class="t">Worked example — mass of 0.5 mol NaOH:</b>
+        <div class="calc">molar mass of NaOH = 40 g/mol</div>
+        <div class="calc">mass = moles × molar mass = 0.5 × 40 = 20 g</div>
+        Answer = <b>20 g</b>.</div>
+      <div class="ex"><b class="t">Worked example — mass of 3 mol CO₂:</b>
+        <div class="calc">mass = 3 × 44 = 132 g</div>
+        Answer = <b>132 g</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Molar volume of a gas at s.t.p.</h3>
+      <p>For gases there is a shortcut. <b>Avogadro's law</b> says equal volumes of any gas (at the same temperature and pressure) contain equal numbers of molecules. So one mole of ANY gas takes up the same volume:</p>
+      <div class="formula">At s.t.p., 1 mole of any gas = 22.4 dm³ (22 400 cm³)</div>
+      <p>s.t.p. means <b>standard temperature and pressure</b> (0 °C and 1 atmosphere). The 22.4 dm³ is called the <b>molar volume</b>.</p>
+      <span class="key">Volume ↔ moles of gas</span>
+      <div class="formula">moles of gas = volume (dm³) ÷ 22.4</div>
+      <div class="formula">volume (dm³) = moles × 22.4</div>
+      <div class="ex"><b class="t">Worked example — volume of 2 mol of gas:</b>
+        <div class="calc">volume = moles × 22.4 = 2 × 22.4 = 44.8 dm³</div>
+        Answer = <b>44.8 dm³</b>.</div>
+      <div class="ex"><b class="t">Worked example — moles in 11.2 dm³ of gas:</b>
+        <div class="calc">moles = volume ÷ 22.4 = 11.2 ÷ 22.4 = 0.5 mol</div>
+        Answer = <b>0.5 mol</b>.</div>
+      <div class="analogy">🌟 Remember: 1 dm³ = 1 litre = 1000 cm³. Always change cm³ to dm³ (÷1000) before using 22.4.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. The mole map — one picture to rule them all</h3>
+      <p>Every mole problem is just moving between four boxes, and <b>moles</b> sits in the middle:</p>
+      <table class="r">
+        <tr><th>To find…</th><th>From…</th><th>Use</th></tr>
+        <tr><td>moles</td><td>mass</td><td>÷ molar mass</td></tr>
+        <tr><td>mass</td><td>moles</td><td>× molar mass</td></tr>
+        <tr><td>moles</td><td>number of particles</td><td>÷ 6.02×10²³</td></tr>
+        <tr><td>number of particles</td><td>moles</td><td>× 6.02×10²³</td></tr>
+        <tr><td>moles (gas)</td><td>volume at s.t.p.</td><td>÷ 22.4 dm³</td></tr>
+        <tr><td>volume (gas)</td><td>moles</td><td>× 22.4 dm³</td></tr>
+      </table>
+      <div class="analogy">🌟 Golden rule: whenever you are stuck, <b>convert everything to MOLES first</b>. Moles is the hub that connects mass, particles and gas volume.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: FORMULAE & COMPOSITION ============ -->
+  <section class="cat formulae" id="cat-formulae">
+    <h2 class="cathead">🧮 PART 2 — Formulae &amp; Percentage Composition</h2>
+
+    <div class="lesson">
+      <h3>1. Empirical vs molecular formula</h3>
+      <ul>
+        <li><b>Empirical formula</b> = the <b>simplest whole-number ratio</b> of the atoms in a compound.</li>
+        <li><b>Molecular formula</b> = the <b>actual number</b> of each atom in one molecule.</li>
+      </ul>
+      <p>Example: glucose is <b>C₆H₁₂O₆</b> (molecular formula). Divide every subscript by 6 and you get <b>CH₂O</b> (empirical formula). The molecular formula is always the empirical formula multiplied by some whole number n.</p>
+      <div class="formula">Molecular formula = (Empirical formula) × n</div>
+      <div class="analogy">🌟 Empirical = the recipe ratio (1 : 2 : 1). Molecular = the real batch size (6 : 12 : 6).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Finding the empirical formula from % composition</h3>
+      <p>The method is always the same four steps. Treat percentages as grams (imagine 100 g of the compound).</p>
+      <span class="key">The 4 steps</span>
+      <ul>
+        <li><b>Step 1:</b> Write the mass (or %) of each element.</li>
+        <li><b>Step 2:</b> Divide each by its relative atomic mass → gives moles of each element.</li>
+        <li><b>Step 3:</b> Divide every answer by the SMALLEST of them → gives the ratio.</li>
+        <li><b>Step 4:</b> If the ratio is not whole numbers, multiply all by a small whole number to clear it.</li>
+      </ul>
+      <div class="ex"><b class="t">Worked example:</b> A compound contains 40% carbon, 6.7% hydrogen and 53.3% oxygen. Find its empirical formula. (C=12, H=1, O=16)
+        <div class="calc">C: 40 ÷ 12 = 3.33 &nbsp;|&nbsp; H: 6.7 ÷ 1 = 6.7 &nbsp;|&nbsp; O: 53.3 ÷ 16 = 3.33</div>
+        <div class="calc">Divide by smallest (3.33): C = 1, H = 2, O = 1</div>
+        Empirical formula = <b>CH₂O</b>.</div>
+      <div class="ex"><b class="t">Worked example — when the ratio isn't whole:</b> An oxide of iron is 70% Fe and 30% O. Find its empirical formula. (Fe=56, O=16)
+        <div class="calc">Fe: 70 ÷ 56 = 1.25 &nbsp;|&nbsp; O: 30 ÷ 16 = 1.875</div>
+        <div class="calc">Divide by smallest (1.25): Fe = 1, O = 1.5</div>
+        <div class="calc">Multiply both by 2 to clear the 0.5: Fe = 2, O = 3</div>
+        Empirical formula = <b>Fe₂O₃</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Finding the molecular formula</h3>
+      <p>Once you have the empirical formula, you only need the compound's molar mass to find the molecular formula.</p>
+      <div class="formula">n = molar mass ÷ empirical formula mass</div>
+      <div class="formula">Molecular formula = (empirical formula) × n</div>
+      <div class="ex"><b class="t">Worked example:</b> A compound has empirical formula CH₂O and a molar mass of 180 g/mol. Find its molecular formula. (C=12, H=1, O=16)
+        <div class="calc">Empirical mass of CH₂O = 12 + (2×1) + 16 = 30</div>
+        <div class="calc">n = 180 ÷ 30 = 6</div>
+        <div class="calc">Molecular formula = (CH₂O) × 6 = C₆H₁₂O₆</div>
+        Answer = <b>C₆H₁₂O₆</b> (glucose).</div>
+      <div class="ex"><b class="t">Worked example:</b> Empirical formula NO₂, molar mass 92 g/mol. Find the molecular formula. (N=14, O=16)
+        <div class="calc">Empirical mass of NO₂ = 14 + (2×16) = 46</div>
+        <div class="calc">n = 92 ÷ 46 = 2</div>
+        <div class="calc">Molecular formula = (NO₂) × 2 = N₂O₄</div>
+        Answer = <b>N₂O₄</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Percentage composition of an element</h3>
+      <p>To find what fraction of a compound's mass comes from one element:</p>
+      <div class="formula">% of element = (total mass of that element in the formula ÷ molar mass) × 100</div>
+      <div class="ex"><b class="t">Worked example — % of nitrogen in NH₄NO₃:</b> (N=14, H=1, O=16)
+        <div class="calc">Molar mass = 2 N + 4 H + 3 O = (2×14) + (4×1) + (3×16)</div>
+        <div class="calc">= 28 + 4 + 48 = 80 g/mol</div>
+        <div class="calc">Mass of N = 2 × 14 = 28 (there are TWO nitrogen atoms)</div>
+        <div class="calc">% N = (28 ÷ 80) × 100 = 35%</div>
+        Answer = <b>35% nitrogen</b>.</div>
+      <div class="ex"><b class="t">Worked example — % of oxygen in water (H₂O):</b> (H=1, O=16)
+        <div class="calc">Molar mass = 2 + 16 = 18</div>
+        <div class="calc">% O = (16 ÷ 18) × 100 = 88.9%</div>
+        Answer = <b>88.9% oxygen</b> (so water is only about 11.1% hydrogen by mass).</div>
+      <div class="ex"><b class="t">Worked example — % of calcium in CaCO₃:</b> (Ca=40, molar mass 100)
+        <div class="calc">% Ca = (40 ÷ 100) × 100 = 40%</div>
+        Answer = <b>40% calcium</b>.</div>
+      <div class="analogy">🌟 Watch the subscripts: if there are 2 nitrogen atoms, you must use 2 × 14 = 28, not just 14.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: STOICHIOMETRY & EQUATIONS ============ -->
+  <section class="cat stoich" id="cat-stoich">
+    <h2 class="cathead">🔥 PART 3 — Stoichiometry: Reacting Masses &amp; Gas Volumes</h2>
+
+    <div class="lesson">
+      <h3>1. Balancing chemical equations</h3>
+      <p>The law of <b>conservation of mass</b> says atoms are never created or destroyed in a reaction — they are only rearranged. So an equation must have the <b>same number of each atom on both sides</b>. We balance by putting big numbers (coefficients) in front of formulae — never by changing a formula's subscripts.</p>
+      <div class="ex"><b class="t">Worked example — burning hydrogen:</b> H₂ + O₂ → H₂O
+        <div class="calc">Oxygen: 2 on the left, only 1 on the right — put a 2 before H₂O</div>
+        <div class="calc">H₂ + O₂ → 2H₂O &nbsp; (now 4 H on the right)</div>
+        <div class="calc">Balance hydrogen: put a 2 before H₂</div>
+        <div class="calc">2H₂ + O₂ → 2H₂O ✓ (H: 4 = 4, O: 2 = 2)</div></div>
+      <div class="ex"><b class="t">Worked example — heating limestone:</b>
+        <div class="calc">CaCO₃ → CaO + CO₂ ✓ (Ca: 1=1, C: 1=1, O: 3 = 1+2 = 3)</div>
+        Already balanced.</div>
+      <div class="ex"><b class="t">Worked example — zinc + acid:</b>
+        <div class="calc">Zn + 2HCl → ZnCl₂ + H₂ ✓ (Zn: 1=1, H: 2=2, Cl: 2=2)</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Mole ratios from a balanced equation</h3>
+      <p>The big numbers in a balanced equation give the <b>mole ratio</b> — the recipe of the reaction. This ratio is the bridge from one substance to another.</p>
+      <div class="ex"><b class="t">Read the ratios:</b> In <b>2Mg + O₂ → 2MgO</b>
+        <ul>
+          <li>Mg : O₂ = 2 : 1 (2 moles of magnesium react with 1 mole of oxygen)</li>
+          <li>Mg : MgO = 2 : 2 = 1 : 1 (2 moles of Mg give 2 moles of MgO)</li>
+          <li>O₂ : MgO = 1 : 2</li>
+        </ul></div>
+      <span class="key">The universal method for reacting-mass problems</span>
+      <ul>
+        <li><b>Step 1:</b> Write the balanced equation.</li>
+        <li><b>Step 2:</b> Change the mass you are GIVEN into moles (÷ molar mass).</li>
+        <li><b>Step 3:</b> Use the mole ratio to find moles of the thing you WANT.</li>
+        <li><b>Step 4:</b> Change those moles back into mass (× molar mass) or into volume (× 22.4 dm³).</li>
+      </ul>
+      <div class="analogy">🌟 Mantra: <b>mass → moles → ratio → moles → mass</b>. Never jump straight from mass to mass.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked reacting-mass calculations</h3>
+
+      <div class="ex"><b class="t">Problem 1 — mass of CaO from heating CaCO₃:</b> What mass of calcium oxide (CaO) is formed when 50 g of calcium carbonate (CaCO₃) is heated? (CaCO₃ = 100, CaO = 56)
+        <div class="calc">Equation: CaCO₃ → CaO + CO₂</div>
+        <div class="calc">moles of CaCO₃ = 50 ÷ 100 = 0.5 mol</div>
+        <div class="calc">ratio CaCO₃ : CaO = 1 : 1, so moles of CaO = 0.5 mol</div>
+        <div class="calc">mass of CaO = 0.5 × 56 = 28 g</div>
+        Answer = <b>28 g of CaO</b>.</div>
+
+      <div class="ex"><b class="t">Problem 2 — mass of MgO from Mg:</b> What mass of magnesium oxide is formed when 6 g of magnesium burns in excess oxygen? (Mg = 24, MgO = 40)
+        <div class="calc">Equation: 2Mg + O₂ → 2MgO</div>
+        <div class="calc">moles of Mg = 6 ÷ 24 = 0.25 mol</div>
+        <div class="calc">ratio Mg : MgO = 2 : 2 = 1 : 1, so moles of MgO = 0.25 mol</div>
+        <div class="calc">mass of MgO = 0.25 × 40 = 10 g</div>
+        Answer = <b>10 g of MgO</b>.</div>
+
+      <div class="ex"><b class="t">Problem 3 — mass of water from hydrogen:</b> What mass of water is produced when 4 g of hydrogen burns in excess oxygen? (H₂ = 2, H₂O = 18)
+        <div class="calc">Equation: 2H₂ + O₂ → 2H₂O</div>
+        <div class="calc">moles of H₂ = 4 ÷ 2 = 2 mol</div>
+        <div class="calc">ratio H₂ : H₂O = 2 : 2 = 1 : 1, so moles of H₂O = 2 mol</div>
+        <div class="calc">mass of H₂O = 2 × 18 = 36 g</div>
+        Answer = <b>36 g of water</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked gas-volume calculations</h3>
+
+      <div class="ex"><b class="t">Problem 4 — volume of CO₂ from CaCO₃:</b> What volume of carbon dioxide (measured at s.t.p.) is produced when 25 g of CaCO₃ is heated? (CaCO₃ = 100)
+        <div class="calc">Equation: CaCO₃ → CaO + CO₂</div>
+        <div class="calc">moles of CaCO₃ = 25 ÷ 100 = 0.25 mol</div>
+        <div class="calc">ratio CaCO₃ : CO₂ = 1 : 1, so moles of CO₂ = 0.25 mol</div>
+        <div class="calc">volume of CO₂ = 0.25 × 22.4 = 5.6 dm³</div>
+        Answer = <b>5.6 dm³ of CO₂</b>.</div>
+
+      <div class="ex"><b class="t">Problem 5 — volume of hydrogen from zinc:</b> What volume of hydrogen gas (at s.t.p.) is produced when 13 g of zinc reacts with excess dilute hydrochloric acid? (Zn = 65)
+        <div class="calc">Equation: Zn + 2HCl → ZnCl₂ + H₂</div>
+        <div class="calc">moles of Zn = 13 ÷ 65 = 0.2 mol</div>
+        <div class="calc">ratio Zn : H₂ = 1 : 1, so moles of H₂ = 0.2 mol</div>
+        <div class="calc">volume of H₂ = 0.2 × 22.4 = 4.48 dm³</div>
+        Answer = <b>4.48 dm³ of H₂</b>.</div>
+
+      <div class="ex"><b class="t">Problem 6 — using the 2:1 ratio:</b> What volume of oxygen (at s.t.p.) is needed to burn 8 g of hydrogen completely? (H₂ = 2)
+        <div class="calc">Equation: 2H₂ + O₂ → 2H₂O</div>
+        <div class="calc">moles of H₂ = 8 ÷ 2 = 4 mol</div>
+        <div class="calc">ratio H₂ : O₂ = 2 : 1, so moles of O₂ = 4 ÷ 2 = 2 mol</div>
+        <div class="calc">volume of O₂ = 2 × 22.4 = 44.8 dm³</div>
+        Answer = <b>44.8 dm³ of O₂</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The limiting reagent idea</h3>
+      <p>When two reactants are mixed, one usually runs out first. The reactant that runs out is the <b>limiting reagent</b> — it controls (limits) how much product can form. The other is said to be <b>in excess</b>.</p>
+      <div class="ex"><b class="t">Simple example:</b> In 2H₂ + O₂ → 2H₂O, suppose you mix 3 mol of H₂ with 3 mol of O₂.
+        <div class="calc">The ratio needs H₂ : O₂ = 2 : 1</div>
+        <div class="calc">3 mol H₂ only needs 1.5 mol O₂ — but 3 mol O₂ is present</div>
+        <div class="calc">So H₂ runs out first → H₂ is the limiting reagent; O₂ is in excess</div>
+        The amount of water made is decided by the H₂.</div>
+      <div class="analogy">🌟 Think of making sandwiches: 2 slices of bread + 1 filling. However much filling you have, if you only have bread for 3 sandwiches, bread is the limiting reagent.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: SOLUTIONS & CONCENTRATION ============ -->
+  <section class="cat solutions" id="cat-solutions">
+    <h2 class="cathead">💧 PART 4 — Solutions &amp; Concentration</h2>
+
+    <div class="lesson">
+      <h3>1. What concentration means</h3>
+      <p><b>Concentration</b> tells you how much solute (the dissolved substance) is packed into a given volume of solution. The more solute per litre, the more concentrated. There are two common ways to measure it.</p>
+      <ul>
+        <li><b>Concentration in g/dm³</b> — grams of solute per dm³ of solution.</li>
+        <li><b>Concentration in mol/dm³</b> — moles of solute per dm³. This is also called <b>molarity</b> (a "1 molar" solution = 1 mol/dm³).</li>
+      </ul>
+      <div class="formula">Concentration (g/dm³) = mass (g) ÷ volume (dm³)</div>
+      <div class="formula">Concentration (mol/dm³) = moles ÷ volume (dm³)</div>
+      <div class="analogy">🌟 Always change the volume to dm³ first: 1 dm³ = 1000 cm³. So 500 cm³ = 0.5 dm³, 25 cm³ = 0.025 dm³.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Worked concentration calculations</h3>
+      <div class="ex"><b class="t">Worked example — both units at once:</b> 4 g of NaOH is dissolved to make 500 cm³ of solution. Find the concentration in g/dm³ and in mol/dm³. (NaOH = 40)
+        <div class="calc">Volume = 500 cm³ = 0.5 dm³</div>
+        <div class="calc">Concentration (g/dm³) = 4 ÷ 0.5 = 8 g/dm³</div>
+        <div class="calc">moles of NaOH = 4 ÷ 40 = 0.1 mol</div>
+        <div class="calc">Concentration (mol/dm³) = 0.1 ÷ 0.5 = 0.2 mol/dm³</div>
+        Answer = <b>8 g/dm³ = 0.2 mol/dm³</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Converting between g/dm³ and mol/dm³</h3>
+      <p>The molar mass is the bridge between the two units — exactly like mass ↔ moles.</p>
+      <div class="formula">g/dm³ = mol/dm³ × molar mass</div>
+      <div class="formula">mol/dm³ = g/dm³ ÷ molar mass</div>
+      <div class="ex"><b class="t">Worked example:</b> Convert 0.5 mol/dm³ H₂SO₄ into g/dm³. (H₂SO₄ = 98)
+        <div class="calc">g/dm³ = 0.5 × 98 = 49 g/dm³</div>
+        Answer = <b>49 g/dm³</b>.</div>
+      <div class="ex"><b class="t">Worked example:</b> A solution of NaOH is 8 g/dm³. What is its molarity? (NaOH = 40)
+        <div class="calc">mol/dm³ = 8 ÷ 40 = 0.2 mol/dm³</div>
+        Answer = <b>0.2 mol/dm³</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Making up a solution</h3>
+      <p>To prepare a solution of a chosen concentration, first find the moles you need, then the mass.</p>
+      <div class="formula">moles needed = concentration (mol/dm³) × volume (dm³)</div>
+      <div class="formula">mass to weigh out = moles × molar mass</div>
+      <div class="ex"><b class="t">Worked example:</b> What mass of NaOH is needed to make 250 cm³ of a 0.1 mol/dm³ solution? (NaOH = 40)
+        <div class="calc">Volume = 250 cm³ = 0.25 dm³</div>
+        <div class="calc">moles = 0.1 × 0.25 = 0.025 mol</div>
+        <div class="calc">mass = 0.025 × 40 = 1.0 g</div>
+        Answer = <b>1.0 g of NaOH</b>, dissolved and made up to 250 cm³.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Dilution — adding water</h3>
+      <p>Diluting a solution adds water but does NOT change the number of moles of solute already there. So the moles before = moles after, which gives the dilution formula:</p>
+      <div class="formula">C₁V₁ = C₂V₂</div>
+      <p>C₁, V₁ = concentration and volume before; C₂, V₂ = after. (Any matching units work, as long as you are consistent.)</p>
+      <div class="ex"><b class="t">Worked example:</b> 25 cm³ of 2 mol/dm³ acid is diluted with water to a final volume of 100 cm³. Find the new concentration.
+        <div class="calc">C₁V₁ = C₂V₂</div>
+        <div class="calc">2 × 25 = C₂ × 100</div>
+        <div class="calc">C₂ = 50 ÷ 100 = 0.5 mol/dm³</div>
+        Answer = <b>0.5 mol/dm³</b>.</div>
+      <div class="analogy">🌟 Diluting 4× (25 cm³ → 100 cm³) makes the concentration 4× weaker (2 → 0.5). Volume up ⇒ concentration down.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. A simple titration calculation</h3>
+      <p>In a titration, an acid and a base react exactly. If you measure the volumes and know one concentration, you can find the other. The method is the same mole route as stoichiometry.</p>
+      <div class="ex"><b class="t">Worked example:</b> 25 cm³ of NaOH is exactly neutralised by 20 cm³ of 0.1 mol/dm³ HCl. Find the concentration of the NaOH.
+        <div class="calc">Equation: NaOH + HCl → NaCl + H₂O (ratio 1 : 1)</div>
+        <div class="calc">moles of HCl = conc × volume = 0.1 × (20 ÷ 1000) = 0.002 mol</div>
+        <div class="calc">ratio 1 : 1, so moles of NaOH = 0.002 mol</div>
+        <div class="calc">conc of NaOH = moles ÷ volume = 0.002 ÷ (25 ÷ 1000) = 0.002 ÷ 0.025</div>
+        <div class="calc">= 0.08 mol/dm³</div>
+        Answer = <b>0.08 mol/dm³</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Convert to moles first, then follow the ratio — the numbers fall into place. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Avogadro's number (the number of particles in one mole) is approximately…",o:["6.02×10²³","6.02×10²²","3.01×10²³","6.02×10²⁴"],c:0,e:"<span class='h'>💡 Idea</span>One mole always contains 6.02×10²³ particles, just as a dozen always means 12.<span class='h'>✅</span>6.02×10²³."},
+{s:"One mole of any substance contains…",o:["10²³ particles","6.02×10²³ particles","1 particle","100 particles"],c:1,e:"<span class='h'>💡 Idea</span>A mole is a fixed count of particles — always Avogadro's number, 6.02×10²³.<span class='h'>✅</span>6.02×10²³ particles."},
+{s:"How many moles are in 44 g of CO₂? (C=12, O=16)",o:["0.5 mol","2 mol","1 mol","44 mol"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>molar mass of CO₂ = 12 + (2×16) = 44 g/mol</span><span class='calc'>moles = mass ÷ molar mass = 44 ÷ 44 = 1 mol</span><span class='h'>✅</span>1 mol."},
+{s:"The molar mass of NaOH is… (Na=23, O=16, H=1)",o:["23 g/mol","24 g/mol","56 g/mol","40 g/mol"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Molar mass = 23 + 16 + 1 = 40 g/mol</span><span class='h'>✅</span>40 g/mol."},
+{s:"How many moles are in 9 g of water, H₂O? (H=1, O=16)",o:["0.5 mol","1 mol","2 mol","0.25 mol"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>molar mass of H₂O = (2×1) + 16 = 18 g/mol</span><span class='calc'>moles = 9 ÷ 18 = 0.5 mol</span><span class='h'>✅</span>0.5 mol."},
+{s:"The mass of 0.5 mol of NaOH is… (molar mass = 40 g/mol)",o:["40 g","20 g","80 g","10 g"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>mass = moles × molar mass = 0.5 × 40 = 20 g</span><span class='h'>✅</span>20 g."},
+{s:"How many molecules are in 2 mol of a gas?",o:["6.02×10²³","3.01×10²³","1.204×10²⁴","2×10²³"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>particles = moles × 6.02×10²³</span><span class='calc'>= 2 × 6.02×10²³ = 1.204×10²⁴</span><span class='h'>✅</span>1.204×10²⁴."},
+{s:"At s.t.p., one mole of any gas occupies a volume of…",o:["1 dm³","10 dm³","44.8 dm³","22.4 dm³"],c:3,e:"<span class='h'>💡 Idea</span>The molar volume of any gas at s.t.p. is 22.4 dm³ per mole.<span class='h'>✅</span>22.4 dm³."},
+{s:"What volume does 0.5 mol of a gas occupy at s.t.p.?",o:["11.2 dm³","22.4 dm³","5.6 dm³","44.8 dm³"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>volume = moles × 22.4 = 0.5 × 22.4 = 11.2 dm³</span><span class='h'>✅</span>11.2 dm³."},
+{s:"How many moles of gas are present in 11.2 dm³ measured at s.t.p.?",o:["1 mol","0.5 mol","2 mol","0.25 mol"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>moles = volume ÷ 22.4 = 11.2 ÷ 22.4 = 0.5 mol</span><span class='h'>✅</span>0.5 mol."},
+{s:"The molar mass of CaCO₃ is… (Ca=40, C=12, O=16)",o:["56 g/mol","44 g/mol","100 g/mol","84 g/mol"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Molar mass = 40 + 12 + (3×16) = 40 + 12 + 48 = 100 g/mol</span><span class='h'>✅</span>100 g/mol."},
+{s:"Which type of formula shows the simplest whole-number ratio of atoms in a compound?",o:["Molecular formula","Structural formula","Displayed formula","Empirical formula"],c:3,e:"<span class='h'>💡 Idea</span>The empirical formula is the simplest whole-number ratio; the molecular formula shows the actual numbers.<span class='h'>✅</span>Empirical formula."},
+{s:"A compound contains 40% C, 6.7% H and 53.3% O. Its empirical formula is… (C=12, H=1, O=16)",o:["CH₂O","CHO","C₂H₄O₂","CH₄O"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>C: 40÷12 = 3.33 | H: 6.7÷1 = 6.7 | O: 53.3÷16 = 3.33</span><span class='calc'>Divide by smallest (3.33): C=1, H=2, O=1</span><span class='h'>✅</span>CH₂O."},
+{s:"A compound has empirical formula CH₂O (empirical mass 30) and molar mass 180 g/mol. Its molecular formula is…",o:["CH₂O","C₆H₁₂O₆","C₃H₆O₃","C₂H₄O₂"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>n = molar mass ÷ empirical mass = 180 ÷ 30 = 6</span><span class='calc'>Molecular formula = (CH₂O) × 6 = C₆H₁₂O₆</span><span class='h'>✅</span>C₆H₁₂O₆."},
+{s:"The percentage by mass of nitrogen in NH₄NO₃ is… (N=14, H=1, O=16)",o:["14%","17.5%","35%","28%"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Molar mass = (2×14) + (4×1) + (3×16) = 28 + 4 + 48 = 80</span><span class='calc'>mass of N = 2 × 14 = 28</span><span class='calc'>% N = (28 ÷ 80) × 100 = 35%</span><span class='h'>✅</span>35%."},
+{s:"The percentage by mass of oxygen in water (H₂O) is… (H=1, O=16)",o:["11.1%","50%","16%","88.9%"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Molar mass of H₂O = 18</span><span class='calc'>% O = (16 ÷ 18) × 100 = 88.9%</span><span class='h'>✅</span>88.9%."},
+{s:"An oxide of iron contains 70% Fe and 30% O. Its empirical formula is… (Fe=56, O=16)",o:["Fe₂O₃","FeO","Fe₃O₄","FeO₂"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Fe: 70÷56 = 1.25 | O: 30÷16 = 1.875</span><span class='calc'>Divide by 1.25: Fe=1, O=1.5 → ×2 → Fe=2, O=3</span><span class='h'>✅</span>Fe₂O₃."},
+{s:"In the equation 2Mg + O₂ → 2MgO, the mole ratio of Mg to MgO is…",o:["2:1","1:1","1:2","2:3"],c:1,e:"<span class='h'>💡 Idea</span>The coefficients are 2 for Mg and 2 for MgO, so the ratio is 2:2 = 1:1.<span class='h'>✅</span>1:1."},
+{s:"CaCO₃ → CaO + CO₂. What mass of CaO forms when 50 g of CaCO₃ is heated? (CaCO₃=100, CaO=56)",o:["56 g","50 g","28 g","14 g"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>moles CaCO₃ = 50 ÷ 100 = 0.5 mol</span><span class='calc'>ratio 1:1 → moles CaO = 0.5 mol</span><span class='calc'>mass CaO = 0.5 × 56 = 28 g</span><span class='h'>✅</span>28 g."},
+{s:"What volume of CO₂ (at s.t.p.) is produced when 25 g of CaCO₃ is heated? (CaCO₃=100)",o:["22.4 dm³","11.2 dm³","2.24 dm³","5.6 dm³"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>moles CaCO₃ = 25 ÷ 100 = 0.25 mol</span><span class='calc'>ratio 1:1 → moles CO₂ = 0.25 mol</span><span class='calc'>volume = 0.25 × 22.4 = 5.6 dm³</span><span class='h'>✅</span>5.6 dm³."},
+{s:"2Mg + O₂ → 2MgO. What mass of MgO forms from 6 g of Mg in excess oxygen? (Mg=24, MgO=40)",o:["10 g","6 g","24 g","40 g"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>moles Mg = 6 ÷ 24 = 0.25 mol</span><span class='calc'>ratio Mg:MgO = 1:1 → moles MgO = 0.25 mol</span><span class='calc'>mass MgO = 0.25 × 40 = 10 g</span><span class='h'>✅</span>10 g."},
+{s:"Zn + 2HCl → ZnCl₂ + H₂. What volume of H₂ (at s.t.p.) is made from 13 g of Zn? (Zn=65)",o:["22.4 dm³","4.48 dm³","2.24 dm³","6.5 dm³"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>moles Zn = 13 ÷ 65 = 0.2 mol</span><span class='calc'>ratio Zn:H₂ = 1:1 → moles H₂ = 0.2 mol</span><span class='calc'>volume = 0.2 × 22.4 = 4.48 dm³</span><span class='h'>✅</span>4.48 dm³."},
+{s:"In a balanced equation the total mass of reactants equals the total mass of products. This is the law of…",o:["Multiple proportions","Definite proportions","Conservation of mass","Constant volume"],c:2,e:"<span class='h'>💡 Idea</span>Atoms are only rearranged in a reaction, never created or destroyed, so total mass is conserved.<span class='h'>✅</span>Conservation of mass."},
+{s:"2H₂ + O₂ → 2H₂O. What mass of water forms from 4 g of hydrogen in excess oxygen? (H₂=2, H₂O=18)",o:["18 g","4 g","9 g","36 g"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>moles H₂ = 4 ÷ 2 = 2 mol</span><span class='calc'>ratio H₂:H₂O = 2:2 = 1:1 → moles H₂O = 2 mol</span><span class='calc'>mass H₂O = 2 × 18 = 36 g</span><span class='h'>✅</span>36 g."},
+{s:"Concentration in mol/dm³ (molarity) is calculated as…",o:["moles ÷ volume (dm³)","mass ÷ moles","moles × volume","volume ÷ moles"],c:0,e:"<span class='h'>💡 Idea</span>Molarity is the number of moles of solute per dm³ of solution: moles ÷ volume (dm³).<span class='h'>✅</span>moles ÷ volume (dm³)."},
+{s:"4 g of NaOH is dissolved to make 500 cm³ of solution. The concentration in g/dm³ is…",o:["4 g/dm³","8 g/dm³","2 g/dm³","40 g/dm³"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>500 cm³ = 0.5 dm³</span><span class='calc'>conc = mass ÷ volume = 4 ÷ 0.5 = 8 g/dm³</span><span class='h'>✅</span>8 g/dm³."},
+{s:"For the same solution (4 g NaOH in 0.5 dm³, NaOH=40), the molarity is…",o:["0.1 mol/dm³","2 mol/dm³","0.2 mol/dm³","0.4 mol/dm³"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>moles = 4 ÷ 40 = 0.1 mol</span><span class='calc'>conc = 0.1 ÷ 0.5 = 0.2 mol/dm³</span><span class='h'>✅</span>0.2 mol/dm³."},
+{s:"What is the concentration in g/dm³ of a 0.5 mol/dm³ H₂SO₄ solution? (H₂SO₄=98)",o:["98 g/dm³","196 g/dm³","24.5 g/dm³","49 g/dm³"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>g/dm³ = mol/dm³ × molar mass</span><span class='calc'>= 0.5 × 98 = 49 g/dm³</span><span class='h'>✅</span>49 g/dm³."},
+{s:"Using C₁V₁ = C₂V₂, 25 cm³ of 2 mol/dm³ acid diluted to 100 cm³ gives a concentration of…",o:["0.5 mol/dm³","1 mol/dm³","0.25 mol/dm³","8 mol/dm³"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>C₁V₁ = C₂V₂ → 2 × 25 = C₂ × 100</span><span class='calc'>C₂ = 50 ÷ 100 = 0.5 mol/dm³</span><span class='h'>✅</span>0.5 mol/dm³."},
+{s:"In a titration, 25 cm³ of NaOH is neutralised by 20 cm³ of 0.1 mol/dm³ HCl (NaOH + HCl → NaCl + H₂O). The concentration of NaOH is…",o:["0.1 mol/dm³","0.08 mol/dm³","0.2 mol/dm³","0.05 mol/dm³"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>moles HCl = 0.1 × (20÷1000) = 0.002 mol</span><span class='calc'>ratio 1:1 → moles NaOH = 0.002 mol</span><span class='calc'>conc NaOH = 0.002 ÷ (25÷1000) = 0.002 ÷ 0.025 = 0.08 mol/dm³</span><span class='h'>✅</span>0.08 mol/dm³."}
+);
+
+["mole","formulae","stoich","solutions","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

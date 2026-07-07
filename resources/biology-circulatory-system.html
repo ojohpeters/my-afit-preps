@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Circulatory System A–Z — Heart, Blood Vessels, Blood & Circulation (Biology)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>❤️ The Circulatory System A–Z</h1>
+  <p>The Heart · Blood Vessels · Blood · Circulation &amp; Transport — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with clear tables and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Labelled comparison tables</span><span class="pill">Blood groups made simple</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="heart">❤️ The Heart</div>
+    <div class="tab" data-cat="vessels">🩸 Blood Vessels &amp; Blood</div>
+    <div class="tab" data-cat="circulation">🔄 Circulation &amp; Transport</div>
+    <div class="tab" data-cat="groups">🧬 Blood Groups &amp; Health</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: THE HEART ============ -->
+  <section class="cat heart show" id="cat-heart">
+    <h2 class="cathead">❤️ PART 1 — The Mammalian Heart</h2>
+
+    <div class="lesson">
+      <h3>1. Why do we need a circulatory system?</h3>
+      <p>Every cell in your body needs a constant supply of <b>oxygen</b> and <b>digested food</b>, and must get rid of <b>wastes</b> such as carbon dioxide and urea. In a large animal, simple diffusion is far too slow to reach every cell. So we have a <b>transport (circulatory) system</b> — a pump (the heart) plus a network of tubes (blood vessels) carrying a transport fluid (blood).</p>
+      <span class="key">The three parts of the transport system</span>
+      <ul>
+        <li><b>The heart</b> — a muscular pump that pushes blood around the body.</li>
+        <li><b>Blood vessels</b> — arteries, veins and capillaries that carry the blood.</li>
+        <li><b>Blood</b> — the liquid that actually carries oxygen, food, wastes, heat and defence cells.</li>
+      </ul>
+      <div class="analogy">🌟 Picture a city: the heart is the pumping station, the vessels are the pipes, and the blood is the water delivering supplies and washing away waste.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The four chambers</h3>
+      <p>The mammalian heart is a hollow bag of muscle divided into <b>four chambers</b>. The two <b>upper</b> chambers are the <b>atria</b> (singular: atrium); the two <b>lower</b> chambers are the <b>ventricles</b>. A wall called the <b>septum</b> separates the left side from the right side, so oxygenated and deoxygenated blood never mix.</p>
+      <ul>
+        <li><b>Right atrium</b> — receives deoxygenated blood from the body.</li>
+        <li><b>Right ventricle</b> — pumps deoxygenated blood to the lungs.</li>
+        <li><b>Left atrium</b> — receives oxygenated blood from the lungs.</li>
+        <li><b>Left ventricle</b> — pumps oxygenated blood to the whole body.</li>
+      </ul>
+      <span class="key">Each chamber and its vessel</span>
+      <table class="r">
+        <tr><th>Chamber</th><th>Receives blood FROM</th><th>Sends blood TO (vessel leaving)</th></tr>
+        <tr><td><b>Right atrium</b></td><td>Body — via the <b>vena cava</b></td><td>Right ventricle</td></tr>
+        <tr><td><b>Right ventricle</b></td><td>Right atrium</td><td>Lungs — via the <b>pulmonary artery</b></td></tr>
+        <tr><td><b>Left atrium</b></td><td>Lungs — via the <b>pulmonary vein</b></td><td>Left ventricle</td></tr>
+        <tr><td><b>Left ventricle</b></td><td>Left atrium</td><td>Whole body — via the <b>aorta</b></td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>A</b>tria are <b>A</b>bove and <b>A</b>ccept blood coming in; <b>V</b>entricles are below and eject blood out with a <b>V</b>igorous push.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Double circulation</h3>
+      <p>In mammals the blood passes through the heart <b>twice</b> for each complete trip around the body. This is called <b>double circulation</b>, and it is made of two loops:</p>
+      <ul>
+        <li><b>Pulmonary circulation</b> — heart ↔ lungs. The right side pumps deoxygenated blood to the lungs to pick up oxygen, and it returns to the left side. (<i>Pulmo</i> = lung.)</li>
+        <li><b>Systemic circulation</b> — heart ↔ body. The left side pumps oxygenated blood to all the body tissues, and it returns to the right side.</li>
+      </ul>
+      <div class="formula">Body → RIGHT heart → Lungs → LEFT heart → Body</div>
+      <p><b>Why double circulation is better:</b> blood is re-pressurised by the heart after it leaves the lungs, so it can be pushed to the whole body at <b>high pressure</b> and high speed. This keeps oxygen delivery fast — perfect for active, warm-blooded animals.</p>
+      <div class="analogy">🌟 Two loops, one shared pump: the RIGHT side always deals with the LUNGS, the LEFT side always deals with the BODY.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Why the left ventricle has the thickest wall</h3>
+      <p>All four chambers are muscular, but the <b>left ventricle has by far the thickest, most muscular wall</b>. Here is why:</p>
+      <ul>
+        <li>The left ventricle must pump oxygenated blood through the <b>aorta to the ENTIRE body</b> — a very long journey against high resistance.</li>
+        <li>This needs a <b>high pressure</b>, so it needs a thick, powerful muscle wall to squeeze hard.</li>
+        <li>The <b>right ventricle</b> only pumps to the nearby lungs (a short trip at lower pressure), so its wall is thinner.</li>
+        <li>The <b>atria</b> have the thinnest walls — they only push blood a short way down into the ventricles.</li>
+      </ul>
+      <div class="analogy">🌟 The left ventricle is the body's long-distance pump; the right ventricle is the short-hop pump. Longer journey = thicker muscle = higher pressure.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Valves — preventing backflow</h3>
+      <p>Blood must flow in <b>one direction only</b>. The heart has valves that snap shut to stop blood flowing backwards.</p>
+      <ul>
+        <li><b>Bicuspid (mitral) valve</b> — between the <b>left</b> atrium and left ventricle. (Bi = two flaps; think <b>L</b>eft = mitra<b>L</b>.)</li>
+        <li><b>Tricuspid valve</b> — between the <b>right</b> atrium and right ventricle. (Tri = three flaps.)</li>
+        <li><b>Semilunar valves</b> — half-moon shaped valves at the exits, in the <b>pulmonary artery</b> and the <b>aorta</b>. They stop blood falling back into the ventricles.</li>
+      </ul>
+      <p>The valves make the familiar <b>"lub-dub"</b> heart sounds as they close. If a valve leaks, blood flows backwards and the heart works less efficiently.</p>
+      <div class="analogy">🌟 <b>Tri</b>cuspid is on the <b>R</b>ight (TRIcuspid, think "TRy the Right"); the bicuspid/mitral is on the left.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. The cardiac cycle &amp; heartbeat (simply)</h3>
+      <p>One complete heartbeat is called the <b>cardiac cycle</b>. It has two main phases:</p>
+      <ul>
+        <li><b>Systole</b> = <b>contraction</b>. The muscle squeezes and pushes blood out. (When the ventricles undergo systole, blood is forced into the arteries.)</li>
+        <li><b>Diastole</b> = <b>relaxation</b>. The muscle relaxes and the chambers fill up with blood again.</li>
+      </ul>
+      <p>The beat is triggered by the heart's own natural pacemaker (the <b>SA node</b> in the right atrium), which is why the heart can beat on its own rhythm. A resting human heart beats about <b>70 times a minute</b>. The pulse you feel in an artery is this pressure wave from each ventricular systole.</p>
+      <div class="analogy">🌟 <b>Systole = Squeeze</b> (both start with S). <b>Diastole = Dilate/rest</b>. Squeeze then rest, over and over.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: BLOOD VESSELS & BLOOD ============ -->
+  <section class="cat vessels" id="cat-vessels">
+    <h2 class="cathead">🩸 PART 2 — Blood Vessels &amp; Blood</h2>
+
+    <div class="lesson">
+      <h3>1. The three kinds of blood vessel</h3>
+      <p>There are three types of blood vessel, each built for its job:</p>
+      <ul>
+        <li><b>Arteries</b> carry blood <b>away from</b> the heart, at high pressure.</li>
+        <li><b>Veins</b> carry blood <b>back to</b> the heart, at low pressure.</li>
+        <li><b>Capillaries</b> are tiny vessels that link arteries to veins and allow <b>exchange</b> of materials with the cells.</li>
+      </ul>
+      <span class="key">Full comparison table</span>
+      <table class="r">
+        <tr><th>Feature</th><th>Artery</th><th>Vein</th><th>Capillary</th></tr>
+        <tr><td>Direction of blood</td><td><b>Away from</b> the heart</td><td><b>Towards</b> the heart</td><td>Links artery to vein</td></tr>
+        <tr><td>Wall</td><td>Thick, muscular &amp; elastic</td><td>Thinner, less muscular</td><td><b>One cell thick</b></td></tr>
+        <tr><td>Lumen (inner space)</td><td>Narrow</td><td>Wide</td><td>Very tiny (one cell wide)</td></tr>
+        <tr><td>Valves?</td><td><b>No</b> (except at heart exit)</td><td><b>Yes</b> — prevent backflow</td><td>No</td></tr>
+        <tr><td>Blood pressure</td><td><b>High</b></td><td><b>Low</b></td><td>Falling</td></tr>
+        <tr><td>Blood flow</td><td>Fast, in pulses/spurts</td><td>Slow, smooth</td><td>Very slow (for exchange)</td></tr>
+        <tr><td>Oxygenation (usually)</td><td>Oxygenated <b>*</b></td><td>Deoxygenated <b>*</b></td><td>Changes along its length</td></tr>
+      </table>
+      <p><b>* The famous exceptions:</b> the <b>pulmonary artery</b> carries <b>deoxygenated</b> blood (heart → lungs), and the <b>pulmonary vein</b> carries <b>oxygenated</b> blood (lungs → heart). So the rule "arteries = oxygenated" is only <i>usually</i> true.</p>
+      <div class="analogy">🌟 Remember by the JOB, not the blood: an <b>A</b>rtery <b>A</b>lways carries blood <b>A</b>way from the heart. Veins bring it back.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. What is blood made of?</h3>
+      <p>Blood is a tissue made of a liquid part and cells floating in it. About 55% is plasma and 45% is cells.</p>
+      <span class="key">The components of blood</span>
+      <table class="r">
+        <tr><th>Component</th><th>Description</th><th>Main job</th></tr>
+        <tr><td><b>Plasma</b></td><td>Pale yellow liquid, mostly water (about 90%)</td><td>Carries dissolved food, CO₂, urea, hormones, salts, heat</td></tr>
+        <tr><td><b>Red blood cells</b> (erythrocytes)</td><td>Biconcave disc, contain <b>haemoglobin</b>, <b>no nucleus</b> when mature</td><td>Carry <b>oxygen</b> (as oxyhaemoglobin)</td></tr>
+        <tr><td><b>White blood cells</b> (leucocytes)</td><td>Larger, have a nucleus, fewer in number</td><td><b>Defence</b> — fight germs, give immunity</td></tr>
+        <tr><td><b>Platelets</b> (thrombocytes)</td><td>Tiny cell fragments, no nucleus</td><td>Help <b>blood clotting</b></td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Red blood cells &amp; haemoglobin</h3>
+      <p>Red blood cells are perfectly designed to carry oxygen:</p>
+      <ul>
+        <li>They contain the red pigment <b>haemoglobin</b>, which combines with oxygen to form <b>oxyhaemoglobin</b>.</li>
+        <li>Mature mammalian red cells have <b>no nucleus</b> — this leaves more room for haemoglobin (more oxygen carried).</li>
+        <li>They are a <b>biconcave disc</b> (dented on both sides) — this gives a large surface area for fast gas exchange and lets them squeeze through narrow capillaries.</li>
+      </ul>
+      <div class="analogy">🌟 Think of a red blood cell as a tiny oxygen delivery van — it throws out its "office desk" (the nucleus) to carry more cargo (haemoglobin).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. White blood cells &amp; platelets</h3>
+      <ul>
+        <li><b>White blood cells</b> protect the body against disease. Some (<i>phagocytes</i>) engulf and digest germs; others (<i>lymphocytes</i>) make <b>antibodies</b> that destroy germs and give immunity.</li>
+        <li><b>Platelets</b> are cell fragments that gather at a wound and help the blood to <b>clot</b>, sealing the cut and stopping bleeding and germ entry.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The functions of blood</h3>
+      <p>Blood does three big jobs — remember <b>T-D-R</b>:</p>
+      <ul>
+        <li><b>Transport:</b> oxygen, carbon dioxide, digested food, hormones, urea, and heat around the body.</li>
+        <li><b>Defence:</b> white blood cells and antibodies fight infection; platelets clot to seal wounds.</li>
+        <li><b>Regulation:</b> helps keep body temperature, pH and water balance steady (homeostasis).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: CIRCULATION & TRANSPORT ============ -->
+  <section class="cat circulation" id="cat-circulation">
+    <h2 class="cathead">🔄 PART 3 — Circulation &amp; Transport</h2>
+
+    <div class="lesson">
+      <h3>1. The full path of blood</h3>
+      <p>Follow one drop of blood around the whole double circulation. Learn this order — it is a favourite exam question:</p>
+      <div class="formula">Body → vena cava → RIGHT ATRIUM → RIGHT VENTRICLE → pulmonary artery → LUNGS → pulmonary vein → LEFT ATRIUM → LEFT VENTRICLE → aorta → Body</div>
+      <ul>
+        <li>Deoxygenated blood from the body enters the <b>right atrium</b> through the <b>vena cava</b>.</li>
+        <li>It drops into the <b>right ventricle</b>, which pumps it through the <b>pulmonary artery</b> to the <b>lungs</b>.</li>
+        <li>In the lungs it picks up oxygen and drops off CO₂, then returns through the <b>pulmonary vein</b> to the <b>left atrium</b>.</li>
+        <li>It drops into the <b>left ventricle</b>, the strongest chamber, which pumps it through the <b>aorta</b> to the whole body.</li>
+      </ul>
+      <div class="analogy">🌟 Rule to never forget the order: <b>Right side = to the lungs, Left side = to the body</b>. Blood always visits the lungs between the two sides.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. What the blood transports</h3>
+      <table class="r">
+        <tr><th>Substance</th><th>How it is carried</th><th>From → To</th></tr>
+        <tr><td><b>Oxygen</b></td><td>As <b>oxyhaemoglobin</b> in red blood cells</td><td>Lungs → body cells</td></tr>
+        <tr><td><b>Carbon dioxide</b></td><td>Mostly as bicarbonate dissolved in plasma</td><td>Body cells → lungs</td></tr>
+        <tr><td><b>Digested food</b> (glucose, amino acids)</td><td>Dissolved in plasma</td><td>Gut (small intestine) → body cells</td></tr>
+        <tr><td><b>Hormones</b></td><td>Dissolved in plasma</td><td>Glands → target organs</td></tr>
+        <tr><td><b>Urea</b> (waste)</td><td>Dissolved in plasma</td><td>Liver → kidneys (to be removed)</td></tr>
+        <tr><td><b>Heat</b></td><td>Carried by the warm plasma</td><td>Active organs → whole body/skin</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Blood clotting — the simple steps</h3>
+      <p>When a blood vessel is cut, clotting seals the wound:</p>
+      <ul>
+        <li><b>Step 1:</b> <b>Platelets</b> stick to the wound and release chemicals.</li>
+        <li><b>Step 2:</b> These chemicals (with vitamin K and calcium) turn the soluble protein <b>fibrinogen</b> into insoluble threads of <b>fibrin</b>.</li>
+        <li><b>Step 3:</b> The fibrin threads form a mesh that traps red blood cells, making a <b>clot</b>.</li>
+        <li><b>Step 4:</b> The clot dries into a <b>scab</b>, which stops bleeding and blocks germs while the skin heals.</li>
+      </ul>
+      <div class="analogy">🌟 Fibrino<b>gen</b> (liquid) becomes fibri<b>n</b> (net). The net catches blood cells and plugs the leak.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Tissue fluid &amp; lymph</h3>
+      <p>At the capillaries, some plasma leaks out through the thin walls to bathe the cells — this is <b>tissue fluid</b>. It delivers oxygen and food to cells and collects their wastes.</p>
+      <p>Most tissue fluid returns to the blood, but some is drained away by separate tubes called <b>lymph vessels</b>. Inside these vessels the fluid is called <b>lymph</b>. Lymph is eventually returned to the bloodstream, and lymph nodes along the way help filter out germs.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Open vs closed circulatory systems</h3>
+      <table class="r">
+        <tr><th>Feature</th><th>Open system</th><th>Closed system</th></tr>
+        <tr><td>Blood stays in vessels?</td><td><b>No</b> — it bathes the organs directly in open spaces (haemocoel)</td><td><b>Yes</b> — blood always stays inside vessels</td></tr>
+        <tr><td>Pressure &amp; speed</td><td>Low pressure, slow</td><td>High pressure, fast</td></tr>
+        <tr><td>Example animals</td><td><b>Insects</b> and most arthropods</td><td><b>Vertebrates</b> (fish, birds, mammals) and earthworms</td></tr>
+      </table>
+      <div class="analogy">🌟 <b>Insects = open</b> (blood sloshes around inside); <b>vertebrates like us = closed</b> (blood stays in pipes). A closed system delivers oxygen faster, which active animals need.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: BLOOD GROUPS & HEALTH ============ -->
+  <section class="cat groups" id="cat-groups">
+    <h2 class="cathead">🧬 PART 4 — Blood Groups &amp; Health</h2>
+
+    <div class="lesson">
+      <h3>1. Antigens &amp; antibodies — the basic idea</h3>
+      <p>Blood groups depend on tiny marker molecules called <b>antigens</b> on the surface of red blood cells, and matching <b>antibodies</b> floating in the plasma.</p>
+      <ul>
+        <li><b>Antigen</b> — a marker on the red cell. In the ABO system these are antigen <b>A</b> and antigen <b>B</b>.</li>
+        <li><b>Antibody</b> — a protein in the plasma that attacks a foreign antigen and makes red cells clump together (<b>agglutinate</b>).</li>
+        <li><b>Golden rule:</b> your plasma never contains the antibody against your own antigen (or your own blood would clump!). So group A has anti-B, group B has anti-A.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The ABO blood groups</h3>
+      <table class="r">
+        <tr><th>Group</th><th>Antigen on red cells</th><th>Antibody in plasma</th><th>Can DONATE to</th><th>Can RECEIVE from</th></tr>
+        <tr><td><b>A</b></td><td>A</td><td>anti-B</td><td>A, AB</td><td>A, O</td></tr>
+        <tr><td><b>B</b></td><td>B</td><td>anti-A</td><td>B, AB</td><td>B, O</td></tr>
+        <tr><td><b>AB</b></td><td>A and B</td><td>none</td><td>AB only</td><td><b>All — universal recipient</b></td></tr>
+        <tr><td><b>O</b></td><td>none</td><td>anti-A and anti-B</td><td><b>All — universal donor</b></td><td>O only</td></tr>
+      </table>
+      <ul>
+        <li><b>Group O = universal donor.</b> Its red cells carry <b>no</b> A or B antigen, so no one's antibodies attack them — O blood can be given to anyone.</li>
+        <li><b>Group AB = universal recipient.</b> Its plasma has <b>no</b> antibodies, so it will not attack any donated cells — AB can receive from anyone.</li>
+      </ul>
+      <div class="analogy">🌟 <b>O = zerO antigens = gives to all</b> (universal donor). <b>AB = zero antibodies = takes from all</b> (universal recipient).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The Rhesus (Rh) factor</h3>
+      <p>Besides ABO, there is another antigen called the <b>Rhesus (Rh or D) factor</b>.</p>
+      <ul>
+        <li>If your red cells carry the Rh antigen, you are <b>Rhesus positive (Rh+)</b>. If not, you are <b>Rhesus negative (Rh−)</b>.</li>
+        <li>So a full blood group is written like <b>"A positive"</b> or <b>"O negative"</b> — the letter is the ABO group and the sign is the Rh factor.</li>
+        <li>The Rh factor matters in pregnancy: an Rh− mother carrying an Rh+ baby can make antibodies that harm a later Rh+ baby, so doctors watch this carefully.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Safe blood transfusion</h3>
+      <p>In a <b>transfusion</b> a patient is given donated blood. The donor's red cells must NOT be attacked by the patient's antibodies, or the cells clump and block vessels — which can be fatal. That is why groups are always matched (and cross-checked) first.</p>
+      <div class="formula">O gives to everyone · AB receives from everyone</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Common circulatory issues &amp; immunity</h3>
+      <ul>
+        <li><b>Anaemia</b> — too few red blood cells or too little haemoglobin (often from lack of iron). The blood carries less oxygen, so the person feels tired, weak and pale.</li>
+        <li><b>Hypertension (high blood pressure)</b> — blood pushes too hard on artery walls. Over time it strains the heart and can lead to stroke or heart disease. It is linked to too much salt, obesity, stress and lack of exercise.</li>
+        <li><b>Immunity &amp; vaccination</b> — white blood cells make antibodies against germs. A <b>vaccine</b> gives a harmless dose of a germ (or its markers) so the body makes antibodies and "memory" cells in advance — giving protection (immunity) before the real disease ever strikes.</li>
+      </ul>
+      <div class="analogy">🌟 A vaccine is like a fire drill for your immune system: it practises on a safe copy so it can react instantly to the real thing.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Follow the blood: right side to the lungs, left side to the body. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"How many chambers does the mammalian heart have?",o:["Four","Two","Three","Six"],c:0,e:"<span class='h'>💡 Idea</span>The mammalian heart has four chambers: two atria on top and two ventricles below.<span class='h'>✅</span>Four."},
+{s:"The two UPPER chambers of the heart are called the…",o:["Ventricles","Atria","Septa","Valves"],c:1,e:"<span class='h'>💡 Idea</span>The upper receiving chambers are the atria; the lower pumping chambers are the ventricles.<span class='h'>✅</span>Atria."},
+{s:"Which chamber has the thickest, most muscular wall?",o:["Right atrium","Left atrium","Right ventricle","Left ventricle"],c:3,e:"<span class='h'>💡 Idea</span>The left ventricle pumps blood to the whole body at high pressure, so it has the thickest wall.<span class='h'>✅</span>Left ventricle."},
+{s:"Why does the left ventricle have the thickest wall?",o:["It receives blood coming from the lungs","It pumps blood only to the nearby lungs","It pumps oxygenated blood at high pressure to the whole body","It stores deoxygenated blood before it decays"],c:2,e:"<span class='h'>💡 Idea</span>The left ventricle must push blood all the way round the body, which needs a strong, thick muscle to create high pressure.<span class='h'>✅</span>It pumps oxygenated blood at high pressure to the whole body."},
+{s:"In double circulation, the blood passes through the heart…",o:["Only once for each circuit","Twice for each complete circuit","Three times for each circuit","It never actually enters the heart"],c:1,e:"<span class='h'>💡 Idea</span>Blood goes heart → lungs → heart → body, so it passes through the heart twice per full circuit.<span class='h'>✅</span>Twice for each complete circuit."},
+{s:"Pulmonary circulation carries blood…",o:["Between the heart and the lungs","Between the heart and the legs","Between the heart and the brain","Between the liver and the gut"],c:0,e:"<span class='h'>💡 Idea</span>Pulmo means lung. Pulmonary circulation is the loop between the heart and the lungs.<span class='h'>✅</span>Between the heart and the lungs."},
+{s:"Systemic circulation carries blood between the heart and…",o:["Only the lungs","Only the heart muscle","Only the kidneys","The rest of the body"],c:3,e:"<span class='h'>💡 Idea</span>Systemic circulation is the loop that supplies the whole body (systems) with oxygenated blood from the left side of the heart.<span class='h'>✅</span>The rest of the body."},
+{s:"The valve between the LEFT atrium and left ventricle is the…",o:["Tricuspid valve","Aortic valve","Bicuspid (mitral) valve","Pulmonary valve"],c:2,e:"<span class='h'>💡 Idea</span>On the left side sits the bicuspid, also called the mitral valve. Left links with mitraL.<span class='h'>✅</span>Bicuspid (mitral) valve."},
+{s:"The valve between the RIGHT atrium and right ventricle is the…",o:["Tricuspid valve","Bicuspid valve","Mitral valve","Aortic valve"],c:0,e:"<span class='h'>💡 Idea</span>The right side has the tricuspid valve (three flaps). Think TRIcuspid on the Right.<span class='h'>✅</span>Tricuspid valve."},
+{s:"The main function of heart valves is to…",o:["Pump the blood forward","Prevent the backflow of blood","Make new blood cells","Store oxygen"],c:1,e:"<span class='h'>💡 Idea</span>Valves open one way and snap shut to stop blood flowing backwards, keeping it moving in one direction.<span class='h'>✅</span>Prevent the backflow of blood."},
+{s:"Which blood vessel carries blood AWAY from the heart?",o:["Vein","Capillary","Venule","Artery"],c:3,e:"<span class='h'>💡 Idea</span>An Artery Always carries blood Away from the heart. Veins bring it back.<span class='h'>✅</span>Artery."},
+{s:"Which vessels have valves to prevent backflow?",o:["Arteries","Capillaries","Veins","The aorta"],c:2,e:"<span class='h'>💡 Idea</span>Because veins carry blood at low pressure, they need valves to stop it slipping backwards.<span class='h'>✅</span>Veins."},
+{s:"The exchange of oxygen and food between blood and cells happens in the…",o:["Capillaries","Arteries","Veins","The aorta"],c:0,e:"<span class='h'>💡 Idea</span>Capillaries have walls only one cell thick, perfect for exchange between the blood and the body cells.<span class='h'>✅</span>Capillaries."},
+{s:"Which vessel has the thickest, most muscular and elastic wall?",o:["Capillary","Artery","Vein","Venule"],c:1,e:"<span class='h'>💡 Idea</span>Arteries carry blood at high pressure, so they have thick, muscular, elastic walls to cope with it.<span class='h'>✅</span>Artery."},
+{s:"Unusually, the pulmonary artery carries…",o:["Oxygenated blood","Only blood plasma","Clotted blood","Deoxygenated blood"],c:3,e:"<span class='h'>💡 Idea</span>The pulmonary artery is the exception to the rule: it carries deoxygenated blood from the heart to the lungs.<span class='h'>✅</span>Deoxygenated blood."},
+{s:"The pulmonary vein is unusual because it carries…",o:["Oxygenated blood","Deoxygenated blood","No blood at all","Only white cells"],c:0,e:"<span class='h'>💡 Idea</span>The pulmonary vein is the exception among veins: it brings oxygenated blood from the lungs back to the heart.<span class='h'>✅</span>Oxygenated blood."},
+{s:"The pale yellow LIQUID part of the blood is called…",o:["Haemoglobin","Plasma","Lymph","Platelets"],c:1,e:"<span class='h'>💡 Idea</span>Plasma is the liquid (mostly water) that carries the blood cells and dissolved substances.<span class='h'>✅</span>Plasma."},
+{s:"The red pigment in red blood cells that carries oxygen is…",o:["Melanin","Chlorophyll","Haemoglobin","Fibrin"],c:2,e:"<span class='h'>💡 Idea</span>Haemoglobin combines with oxygen to form oxyhaemoglobin, carrying oxygen around the body.<span class='h'>✅</span>Haemoglobin."},
+{s:"Mature mammalian red blood cells are unusual because they have no…",o:["Nucleus","Cell membrane","Cytoplasm","Haemoglobin"],c:0,e:"<span class='h'>💡 Idea</span>Losing the nucleus leaves more room for haemoglobin, so each cell can carry more oxygen.<span class='h'>✅</span>Nucleus."},
+{s:"White blood cells are mainly responsible for…",o:["Carrying oxygen","Clotting the blood","Transporting digested food","Defending the body against disease"],c:3,e:"<span class='h'>💡 Idea</span>White blood cells fight germs by engulfing them or making antibodies, giving the body defence and immunity.<span class='h'>✅</span>Defending the body against disease."},
+{s:"The tiny cell fragments responsible for blood clotting are the…",o:["Red blood cells","White blood cells","Platelets","Plasma cells"],c:2,e:"<span class='h'>💡 Idea</span>Platelets gather at a wound and trigger clotting to seal the cut and stop bleeding.<span class='h'>✅</span>Platelets."},
+{s:"Oxygen is transported in the blood mainly as…",o:["A dissolved gas in the plasma","Oxyhaemoglobin","Carbonic acid","Undissolved bubbles"],c:1,e:"<span class='h'>💡 Idea</span>Oxygen binds to haemoglobin in red cells to form oxyhaemoglobin, the main way oxygen travels.<span class='h'>✅</span>Oxyhaemoglobin."},
+{s:"Which vessel returns deoxygenated blood from the body to the heart?",o:["The vena cava","The aorta","The pulmonary vein","The pulmonary artery"],c:0,e:"<span class='h'>💡 Idea</span>The vena cava brings deoxygenated blood from the body into the right atrium.<span class='h'>✅</span>The vena cava."},
+{s:"Blood leaving the LEFT ventricle enters which vessel?",o:["The vena cava","The pulmonary artery","The aorta","The pulmonary vein"],c:2,e:"<span class='h'>💡 Idea</span>The left ventricle pumps oxygenated blood into the aorta, the body's main artery.<span class='h'>✅</span>The aorta."},
+{s:"After picking up oxygen in the lungs, blood returns to which chamber?",o:["The right atrium","The left atrium","The right ventricle","The left ventricle"],c:1,e:"<span class='h'>💡 Idea</span>Oxygenated blood flows through the pulmonary vein into the left atrium.<span class='h'>✅</span>The left atrium."},
+{s:"During clotting, the soluble protein fibrinogen is changed into insoluble…",o:["Haemoglobin","Plasma","Platelets","Fibrin"],c:3,e:"<span class='h'>💡 Idea</span>Fibrinogen turns into fibrin, forming a mesh of threads that traps blood cells to make the clot.<span class='h'>✅</span>Fibrin."},
+{s:"Insects have which type of circulatory system?",o:["An open circulatory system","A closed circulatory system","No circulation at all","A double circulation like humans"],c:0,e:"<span class='h'>💡 Idea</span>In insects the blood is not always in vessels; it bathes the organs directly, which is an open system.<span class='h'>✅</span>An open circulatory system."},
+{s:"In the ABO system, the UNIVERSAL DONOR blood group is…",o:["AB","A","O","B"],c:2,e:"<span class='h'>💡 Idea</span>Group O has no A or B antigens on its red cells, so it can be given safely to anyone. O has zerO antigens.<span class='h'>✅</span>O."},
+{s:"The UNIVERSAL RECIPIENT blood group is…",o:["O","A","B","AB"],c:3,e:"<span class='h'>💡 Idea</span>Group AB has no antibodies in its plasma, so it will not attack donated cells and can receive from anyone.<span class='h'>✅</span>AB."},
+{s:"A person who is Rhesus positive (Rh+) has…",o:["No antigens present at all","The Rhesus (D) antigen on the red cells","Only antibodies and no red cells","Automatically blood group O"],c:1,e:"<span class='h'>💡 Idea</span>Being Rh positive means the red cells carry the Rhesus (D) antigen; Rh negative means they do not.<span class='h'>✅</span>The Rhesus (D) antigen on the red cells."}
+);
+
+["heart","vessels","circulation","groups","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

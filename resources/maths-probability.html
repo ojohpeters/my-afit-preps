@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability A–Z — Basic, Addition, Multiplication & Exam Problems (Maths)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🎲 Probability A–Z</h1>
+  <p>Basic Probability · Addition Rule · Multiplication Rule · Exam Problems — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every fraction reduced</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basic">🎲 Basic Probability</div>
+    <div class="tab" data-cat="addition">➕ Addition Rule (OR)</div>
+    <div class="tab" data-cat="multiply">✖️ Multiplication Rule (AND) &amp; Independence</div>
+    <div class="tab" data-cat="exam">🧩 Exam-Style Problems</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: BASIC PROBABILITY ============ -->
+  <section class="cat basic show" id="cat-basic">
+    <h2 class="cathead">🎲 PART 1 — Basic Probability</h2>
+
+    <div class="lesson">
+      <h3>1. What is probability?</h3>
+      <p><b>Probability</b> is a number that tells you <b>how likely an event is to happen</b>. We work it out by counting.</p>
+      <div class="formula">Probability = (number of favourable outcomes) ÷ (total number of possible outcomes)</div>
+      <p>A <b>favourable outcome</b> is a result you are asking about. The <b>total outcomes</b> are all the equally likely results that could happen.</p>
+      <div class="ex"><b class="t">Quick example:</b> A fair die has 6 faces (1,2,3,4,5,6). What is the probability of rolling a 3?
+        <div class="calc">Favourable outcomes = 1 (only the face "3")</div>
+        <div class="calc">Total outcomes = 6</div>
+        <div class="calc">P(3) = 1/6</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Probability always lies between 0 and 1</h3>
+      <p>A probability can never be smaller than 0 or bigger than 1.</p>
+      <div class="formula">0 ≤ P(event) ≤ 1</div>
+      <ul>
+        <li><b>P = 0</b> means the event is <b>impossible</b> (it can never happen). Example: rolling a 7 on an ordinary die.</li>
+        <li><b>P = 1</b> means the event is <b>certain</b> (it must happen). Example: rolling a number less than 7 on a die.</li>
+        <li>Everything real sits <b>in between</b> — the closer to 1, the more likely; the closer to 0, the less likely.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: a probability is like a mark out of 1. You can never score more than "full marks" (1) and never less than "zero".</div>
+      <p><b>Note:</b> probabilities can be written as a <b>fraction</b> (1/6), a <b>decimal</b> (0.5) or a <b>percentage</b> (50%). In exams the fraction form is usually cleanest — always reduce it to lowest terms.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The sample space</h3>
+      <p>The <b>sample space</b> is the <b>list of ALL possible outcomes</b> of an experiment. Writing it out makes counting easy.</p>
+      <ul>
+        <li>Tossing a coin: sample space = {Head, Tail} → 2 outcomes.</li>
+        <li>Rolling a die: sample space = {1, 2, 3, 4, 5, 6} → 6 outcomes.</li>
+        <li>Drawing one card from a pack: sample space has 52 outcomes (4 suits × 13 cards).</li>
+      </ul>
+      <div class="analogy">🌟 Tip: when a question confuses you, quickly write the full sample space and just count. Probability is mostly careful counting.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The complement — P(event) + P(not event) = 1</h3>
+      <p>For any event, either it <b>happens</b> or it <b>does not happen</b>. These two cover everything, so their probabilities add up to 1.</p>
+      <div class="formula">P(event) + P(not event) = 1</div>
+      <div class="formula">P(not event) = 1 − P(event)</div>
+      <p>This is a huge time-saver: sometimes the "not" is far easier to count than the event itself.</p>
+      <div class="ex"><b class="t">Worked example:</b> The probability of passing an exam is 3/4. What is the probability of failing?
+        <div class="calc">P(fail) = 1 − P(pass) = 1 − 3/4 = 1/4</div>
+      </div>
+      <div class="ex"><b class="t">Worked example:</b> A die is rolled. What is the probability of NOT getting a 6?
+        <div class="calc">P(6) = 1/6, so P(not 6) = 1 − 1/6 = 5/6</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked examples — dice, coins, cards and bags</h3>
+      <div class="ex"><b class="t">Die — even number:</b> P(even) on a die.
+        <div class="calc">Even faces = {2, 4, 6} → 3 favourable outcomes out of 6</div>
+        <div class="calc">P(even) = 3/6 = 1/2</div>
+      </div>
+      <div class="ex"><b class="t">Coin — a tail:</b> A fair coin has {Head, Tail}.
+        <div class="calc">P(tail) = 1/2</div>
+      </div>
+      <div class="ex"><b class="t">Cards — an ace:</b> A pack has 4 aces out of 52 cards.
+        <div class="calc">P(ace) = 4/52 = 1/13</div>
+      </div>
+      <div class="ex"><b class="t">Balls in a bag:</b> A bag has 4 red, 3 green and 5 yellow balls (total = 12). Find P(green).
+        <div class="calc">Favourable (green) = 3, total = 4 + 3 + 5 = 12</div>
+        <div class="calc">P(green) = 3/12 = 1/4</div>
+      </div>
+      <div class="ex"><b class="t">Balls — the "not" trick:</b> Same bag. Find P(not red).
+        <div class="calc">P(red) = 4/12 = 1/3, so P(not red) = 1 − 1/3 = 2/3</div>
+        Check by counting: not red = green + yellow = 3 + 5 = 8, and 8/12 = 2/3. ✓
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: ADDITION RULE (OR) ============ -->
+  <section class="cat addition" id="cat-addition">
+    <h2 class="cathead">➕ PART 2 — The Addition Rule (OR)</h2>
+
+    <div class="lesson">
+      <h3>1. "OR" means ADD</h3>
+      <p>The addition rule is used when a question asks for the probability of <b>one event OR another</b> happening. The word <b>OR</b> is your signal to <b>add</b>.</p>
+      <p>But there is one thing to check first: can the two events <b>happen at the same time</b> or not? That decides which formula to use.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Mutually exclusive events</h3>
+      <p><b>Mutually exclusive</b> events are events that <b>cannot happen together</b> in a single trial. If one happens, the other cannot.</p>
+      <ul>
+        <li>Rolling a 2 OR a 5 on one die — a single roll cannot be both a 2 and a 5.</li>
+        <li>A card being a king OR a queen — one card cannot be both.</li>
+      </ul>
+      <div class="formula">If mutually exclusive:&nbsp; P(A or B) = P(A) + P(B)</div>
+      <div class="ex"><b class="t">Worked example:</b> A die is rolled. Find P(2 or 5).
+        <div class="calc">P(2) = 1/6, P(5) = 1/6</div>
+        <div class="calc">P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3</div>
+      </div>
+      <div class="ex"><b class="t">Worked example:</b> A bag has 4 red, 3 green and 2 blue balls (total = 9). Find P(green or blue).
+        <div class="calc">P(green) = 3/9, P(blue) = 2/9</div>
+        <div class="calc">P(green or blue) = 3/9 + 2/9 = 5/9</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Non-mutually-exclusive events (they can overlap)</h3>
+      <p>Some events <b>can happen together</b>. If you just add, you would count the overlap twice — so you must <b>subtract the overlap once</b>.</p>
+      <div class="formula">If they can overlap:&nbsp; P(A or B) = P(A) + P(B) − P(A and B)</div>
+      <p>P(A and B) is the probability that <b>both</b> happen at once — that is the overlap.</p>
+      <div class="ex"><b class="t">The classic example — king OR heart:</b> A card is drawn from 52. Find P(king or heart).
+        <div class="calc">P(king) = 4/52 &nbsp; (4 kings)</div>
+        <div class="calc">P(heart) = 13/52 &nbsp; (13 hearts)</div>
+        <div class="calc">P(king AND heart) = 1/52 &nbsp; (only the king of hearts is both)</div>
+        <div class="calc">P(king or heart) = 4/52 + 13/52 − 1/52 = 16/52 = 4/13</div>
+        If we had NOT subtracted, we would have counted the king of hearts twice.
+      </div>
+      <div class="ex"><b class="t">Worked example:</b> A die is rolled. Find P(even or greater than 3).
+        <div class="calc">Even = {2,4,6} → 3/6; &nbsp; &gt;3 = {4,5,6} → 3/6</div>
+        <div class="calc">Overlap (even AND &gt;3) = {4,6} → 2/6</div>
+        <div class="calc">P(even or &gt;3) = 3/6 + 3/6 − 2/6 = 4/6 = 2/3</div>
+        Check the union {2,4,5,6} = 4 outcomes → 4/6 = 2/3. ✓
+      </div>
+      <div class="analogy">🌟 Rule of thumb: if the two events share NO outcomes, just add. If they can both happen, add then subtract the shared part once.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: MULTIPLICATION RULE (AND) ============ -->
+  <section class="cat multiply" id="cat-multiply">
+    <h2 class="cathead">✖️ PART 3 — The Multiplication Rule (AND) &amp; Independence</h2>
+
+    <div class="lesson">
+      <h3>1. "AND" means MULTIPLY</h3>
+      <p>When a question asks for the probability that <b>one event AND another both happen</b> (often in a sequence — this then that), you <b>multiply</b>.</p>
+      <div class="formula">P(A and B) = P(A) × P(B) &nbsp;(when A and B are independent)</div>
+      <p>The word <b>AND</b> is your signal to multiply. The word <b>OR</b> was your signal to add — keep them straight.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Independent events</h3>
+      <p><b>Independent</b> events are events where the outcome of one <b>does NOT affect</b> the outcome of the other. The second probability stays the same no matter what happened first.</p>
+      <ul>
+        <li>Tossing a coin twice — the first toss does not change the second.</li>
+        <li>Rolling a die and tossing a coin — completely separate.</li>
+      </ul>
+      <div class="ex"><b class="t">Worked example 1 — two coins:</b> Find P(two heads).
+        <div class="calc">P(head) = 1/2 each, and the tosses are independent</div>
+        <div class="calc">P(HH) = 1/2 × 1/2 = 1/4</div>
+      </div>
+      <div class="ex"><b class="t">Worked example 2 — die and coin:</b> Find P(a 6 and a head).
+        <div class="calc">P(6) = 1/6, P(head) = 1/2</div>
+        <div class="calc">P(6 and head) = 1/6 × 1/2 = 1/12</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. With replacement vs WITHOUT replacement</h3>
+      <p>This is a very common exam trap with balls in a bag. It decides whether the events are independent.</p>
+      <table class="r">
+        <tr><th></th><th>WITH replacement</th><th>WITHOUT replacement</th></tr>
+        <tr><td>What you do</td><td>Put the first ball back before the second draw</td><td>Keep the first ball out — do not return it</td></tr>
+        <tr><td>Total for 2nd draw</td><td>Same as before (unchanged)</td><td>One less than before</td></tr>
+        <tr><td>Type of events</td><td><b>Independent</b> — probabilities do not change</td><td><b>Dependent</b> — probabilities change on the 2nd draw</td></tr>
+      </table>
+      <div class="ex"><b class="t">Worked example 3 — WITHOUT replacement:</b> A bag has 5 red and 3 white balls (total = 8). Two balls are drawn one after another <b>without replacement</b>. Find P(both red).
+        <div class="calc">1st draw: P(red) = 5/8</div>
+        <div class="calc">2nd draw: one red is gone, so 4 reds remain out of 7 → P(red) = 4/7</div>
+        <div class="calc">P(both red) = 5/8 × 4/7 = 20/56 = 5/14</div>
+        Notice the second denominator became 7 (not 8) because a ball was removed.
+      </div>
+      <div class="ex"><b class="t">Compare — WITH replacement:</b> same bag, but the first ball is put back.
+        <div class="calc">Both draws stay at 5/8 → P(both red) = 5/8 × 5/8 = 25/64</div>
+        Different answer! Always check whether the ball is replaced.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Tree diagrams — the idea</h3>
+      <p>A <b>tree diagram</b> draws each stage as branches. You <b>multiply ALONG the branches</b> (that is the AND) to get the probability of a path, and you <b>add DOWN</b> the finished paths (that is the OR) when several paths satisfy the question.</p>
+      <div class="analogy">🌟 Golden pair: multiply along a branch (AND), add between branches (OR). Every tree question is just these two moves.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The "at least one" trick — use the complement</h3>
+      <p>"At least one" means "one or more". Counting all those cases is slow. It is far quicker to find the probability of the <b>opposite</b> (none at all) and subtract from 1.</p>
+      <div class="formula">P(at least one) = 1 − P(none)</div>
+      <div class="ex"><b class="t">Worked example 4 — at least one head:</b> A coin is tossed twice. Find P(at least one head).
+        <div class="calc">P(no heads) = P(tail) × P(tail) = 1/2 × 1/2 = 1/4</div>
+        <div class="calc">P(at least one head) = 1 − 1/4 = 3/4</div>
+      </div>
+      <div class="ex"><b class="t">Another one — at least one six:</b> A die is rolled twice. Find P(at least one six).
+        <div class="calc">P(no six on a roll) = 5/6, so P(no six twice) = 5/6 × 5/6 = 25/36</div>
+        <div class="calc">P(at least one six) = 1 − 25/36 = 11/36</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: EXAM-STYLE PROBLEMS ============ -->
+  <section class="cat exam" id="cat-exam">
+    <h2 class="cathead">🧩 PART 4 — Exam-Style Problems (fully worked)</h2>
+
+    <div class="lesson">
+      <h3>1. "Both" — coloured balls without replacement</h3>
+      <div class="ex"><b class="t">Problem:</b> A box contains 6 red and 4 blue balls. Two balls are picked at random without replacement. Find the probability that <b>both are red</b>.
+        <div class="calc">Total = 6 + 4 = 10</div>
+        <div class="calc">1st red: 6/10 &nbsp; ; &nbsp; 2nd red (5 reds left of 9): 5/9</div>
+        <div class="calc">P(both red) = 6/10 × 5/9 = 30/90 = 1/3</div>
+        <b>Answer = 1/3.</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. "At least one" using the complement</h3>
+      <div class="ex"><b class="t">Problem:</b> A box contains 6 red and 4 blue balls. Two balls are picked without replacement. Find the probability that <b>at least one is blue</b>.
+        <div class="calc">Opposite of "at least one blue" is "no blue" = both red</div>
+        <div class="calc">P(both red) = 6/10 × 5/9 = 1/3 &nbsp;(from Problem 1)</div>
+        <div class="calc">P(at least one blue) = 1 − 1/3 = 2/3</div>
+        <b>Answer = 2/3.</b> Doing it the long way (BB + BR + RB) gives the same result but takes longer.
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. "One of each" — add the two orders</h3>
+      <div class="ex"><b class="t">Problem:</b> A bag has 3 white and 2 black balls. Two are drawn without replacement. Find the probability of getting <b>one white and one black</b> (in any order).
+        <div class="calc">Total = 5. Two possible orders: white-then-black, OR black-then-white</div>
+        <div class="calc">P(WB) = 3/5 × 2/4 = 6/20</div>
+        <div class="calc">P(BW) = 2/5 × 3/4 = 6/20</div>
+        <div class="calc">P(one of each) = 6/20 + 6/20 = 12/20 = 3/5</div>
+        <b>Answer = 3/5.</b> (Multiply along each order = AND; add the two orders = OR.)
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. "Neither" — both events fail</h3>
+      <div class="ex"><b class="t">Problem:</b> The probability that Ada passes maths is 0.7 and that she passes English is 0.6. The results are independent. Find the probability that she passes <b>neither</b> subject.
+        <div class="calc">P(fail maths) = 1 − 0.7 = 0.3</div>
+        <div class="calc">P(fail English) = 1 − 0.6 = 0.4</div>
+        <div class="calc">P(neither) = P(fail maths) × P(fail English) = 0.3 × 0.4 = 0.12</div>
+        <b>Answer = 0.12.</b>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Two dice — working with sums</h3>
+      <div class="ex"><b class="t">Problem:</b> Two fair dice are thrown together. Find the probability that the <b>sum of the scores is 8</b>.
+        <div class="calc">Total outcomes = 6 × 6 = 36</div>
+        <div class="calc">Ways to get 8: (2,6)(3,5)(4,4)(5,3)(6,2) = 5 ways</div>
+        <div class="calc">P(sum 8) = 5/36</div>
+        <b>Answer = 5/36.</b> For two dice always remember there are 36 equally likely pairs — list the ones that fit and count.
+      </div>
+      <div class="ex"><b class="t">Follow-up:</b> Same two dice — find P(sum is 7).
+        <div class="calc">Ways: (1,6)(2,5)(3,4)(4,3)(5,2)(6,1) = 6 ways</div>
+        <div class="calc">P(sum 7) = 6/36 = 1/6</div>
+        A sum of 7 is the most likely total on two dice.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Count the outcomes, reduce the fraction — the answer follows. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"A fair die is rolled once. What is the probability of getting a 4?",o:["1/6","1/2","1/3","1/4"],c:0,e:"<span class='h'>💡 Idea</span>Probability = favourable outcomes ÷ total outcomes. There is one 4 out of six faces.<span class='h'>✏️ Working</span><span class='calc'>P(4) = 1/6</span><span class='h'>✅</span>1/6."},
+{s:"A fair die is rolled once. What is the probability of getting an even number?",o:["1/6","1/3","1/2","2/3"],c:2,e:"<span class='h'>💡 Idea</span>The even faces are 2, 4 and 6 — that is 3 favourable outcomes out of 6.<span class='h'>✏️ Working</span><span class='calc'>P(even) = 3/6 = 1/2</span><span class='h'>✅</span>1/2."},
+{s:"A fair coin is tossed once. What is the probability of getting a head?",o:["1/4","1/2","1","0"],c:1,e:"<span class='h'>💡 Idea</span>A coin has 2 equally likely sides, and only one of them is a head.<span class='h'>✏️ Working</span><span class='calc'>P(head) = 1/2</span><span class='h'>✅</span>1/2."},
+{s:"A fair die is rolled once. What is the probability of getting a number greater than 4?",o:["1/6","2/3","1/2","1/3"],c:3,e:"<span class='h'>💡 Idea</span>Numbers greater than 4 are 5 and 6 — that is 2 favourable outcomes out of 6.<span class='h'>✏️ Working</span><span class='calc'>P(&gt;4) = 2/6 = 1/3</span><span class='h'>✅</span>1/3."},
+{s:"A bag contains 3 red and 5 blue balls. One ball is picked at random. What is the probability that it is red?",o:["3/8","5/8","3/5","1/8"],c:0,e:"<span class='h'>💡 Idea</span>Total balls = 3 + 5 = 8, and 3 of them are red.<span class='h'>✏️ Working</span><span class='calc'>P(red) = 3/8</span><span class='h'>✅</span>3/8."},
+{s:"A card is drawn from a well-shuffled pack of 52 cards. What is the probability that it is a king?",o:["1/52","1/4","1/13","4/13"],c:2,e:"<span class='h'>💡 Idea</span>There are 4 kings in a pack of 52 cards.<span class='h'>✏️ Working</span><span class='calc'>P(king) = 4/52 = 1/13</span><span class='h'>✅</span>1/13."},
+{s:"A card is drawn from a pack of 52 cards. What is the probability that it is a heart?",o:["1/13","1/2","1/3","1/4"],c:3,e:"<span class='h'>💡 Idea</span>There are 13 hearts in a pack of 52 cards.<span class='h'>✏️ Working</span><span class='calc'>P(heart) = 13/52 = 1/4</span><span class='h'>✅</span>1/4."},
+{s:"The probability that it will rain tomorrow is 0.3. What is the probability that it will NOT rain?",o:["0.3","0.7","1.3","0.5"],c:1,e:"<span class='h'>💡 Idea</span>P(event) + P(not event) = 1, so P(not rain) = 1 − P(rain).<span class='h'>✏️ Working</span><span class='calc'>P(not rain) = 1 − 0.3 = 0.7</span><span class='h'>✅</span>0.7."},
+{s:"A fair die is rolled once. What is the probability of NOT getting a 6?",o:["5/6","1/6","1/2","2/3"],c:0,e:"<span class='h'>💡 Idea</span>Use the complement: P(not 6) = 1 − P(6).<span class='h'>✏️ Working</span><span class='calc'>P(not 6) = 1 − 1/6 = 5/6</span><span class='h'>✅</span>5/6."},
+{s:"A number is chosen at random from 1 to 10. What is the probability that it is a prime number?",o:["1/10","3/10","1/2","2/5"],c:3,e:"<span class='h'>💡 Idea</span>The primes from 1 to 10 are 2, 3, 5 and 7 (note: 1 is NOT prime) — that is 4 numbers.<span class='h'>✏️ Working</span><span class='calc'>P(prime) = 4/10 = 2/5</span><span class='h'>✅</span>2/5."},
+{s:"A fair die is rolled. What is the probability of getting a 2 or a 5?",o:["1/6","1/36","1/3","5/6"],c:2,e:"<span class='h'>💡 Idea</span>Getting a 2 and getting a 5 cannot happen together (mutually exclusive), so add them.<span class='h'>✏️ Working</span><span class='calc'>P(2 or 5) = 1/6 + 1/6 = 2/6 = 1/3</span><span class='h'>✅</span>1/3."},
+{s:"A bag has 4 red, 3 green and 2 blue balls. One ball is drawn. What is the probability that it is green or blue?",o:["4/9","5/9","2/9","1/3"],c:1,e:"<span class='h'>💡 Idea</span>Green and blue are mutually exclusive, so add their probabilities. Total = 4 + 3 + 2 = 9.<span class='h'>✏️ Working</span><span class='calc'>P(green or blue) = 3/9 + 2/9 = 5/9</span><span class='h'>✅</span>5/9."},
+{s:"A card is drawn from 52 cards. What is the probability that it is a king or a queen?",o:["2/13","1/13","4/13","1/26"],c:0,e:"<span class='h'>💡 Idea</span>Kings and queens are mutually exclusive (a card cannot be both). There are 4 of each.<span class='h'>✏️ Working</span><span class='calc'>P(king or queen) = 4/52 + 4/52 = 8/52 = 2/13</span><span class='h'>✅</span>2/13."},
+{s:"A card is drawn from 52 cards. What is the probability that it is a king OR a heart?",o:["1/13","17/52","1/4","4/13"],c:3,e:"<span class='h'>💡 Idea</span>A card CAN be both a king and a heart (the king of hearts), so subtract the overlap once.<span class='h'>✏️ Working</span><span class='calc'>P(king) = 4/52, P(heart) = 13/52, P(king and heart) = 1/52</span><span class='calc'>P = 4/52 + 13/52 − 1/52 = 16/52 = 4/13</span><span class='h'>✅</span>4/13."},
+{s:"A fair die is rolled. What is the probability of getting an even number or a number greater than 3?",o:["1/2","1/3","2/3","5/6"],c:2,e:"<span class='h'>💡 Idea</span>Even = {2,4,6}, greater than 3 = {4,5,6}. They overlap at 4 and 6, so subtract the overlap.<span class='h'>✏️ Working</span><span class='calc'>3/6 + 3/6 − 2/6 = 4/6 = 2/3</span>The union is {2,4,5,6} = 4 outcomes.<span class='h'>✅</span>2/3."},
+{s:"Two fair coins are tossed together. What is the probability of getting two heads?",o:["1/2","1/4","1/8","3/4"],c:1,e:"<span class='h'>💡 Idea</span>The tosses are independent, so multiply. P(head) = 1/2 for each.<span class='h'>✏️ Working</span><span class='calc'>P(HH) = 1/2 × 1/2 = 1/4</span><span class='h'>✅</span>1/4."},
+{s:"A fair die is rolled twice. What is the probability of getting a 6 on both rolls?",o:["1/36","1/6","1/12","1/3"],c:0,e:"<span class='h'>💡 Idea</span>The two rolls are independent, so multiply the probabilities.<span class='h'>✏️ Working</span><span class='calc'>P(two sixes) = 1/6 × 1/6 = 1/36</span><span class='h'>✅</span>1/36."},
+{s:"A bag has 5 red and 3 white balls. Two balls are drawn one after another WITH replacement. What is the probability both are red?",o:["10/64","5/14","1/4","25/64"],c:3,e:"<span class='h'>💡 Idea</span>With replacement the ball goes back, so the second draw is unchanged (independent). Total = 8.<span class='h'>✏️ Working</span><span class='calc'>P(both red) = 5/8 × 5/8 = 25/64</span><span class='h'>✅</span>25/64."},
+{s:"A bag has 5 red and 3 white balls. Two balls are drawn WITHOUT replacement. What is the probability both are red?",o:["25/64","20/64","5/14","1/2"],c:2,e:"<span class='h'>💡 Idea</span>Without replacement the numbers change: after one red, 4 reds remain out of 7 balls.<span class='h'>✏️ Working</span><span class='calc'>P(both red) = 5/8 × 4/7 = 20/56 = 5/14</span><span class='h'>✅</span>5/14."},
+{s:"A coin is tossed and a die is rolled. What is the probability of getting a head and a 3?",o:["1/6","1/12","1/8","1/2"],c:1,e:"<span class='h'>💡 Idea</span>The coin and die are independent, so multiply.<span class='h'>✏️ Working</span><span class='calc'>P(head and 3) = 1/2 × 1/6 = 1/12</span><span class='h'>✅</span>1/12."},
+{s:"A bag has 4 red and 6 blue balls. Two balls are drawn WITHOUT replacement. What is the probability both are blue?",o:["1/3","3/5","9/25","2/5"],c:0,e:"<span class='h'>💡 Idea</span>Total = 10. After one blue, 5 blues remain out of 9 balls.<span class='h'>✏️ Working</span><span class='calc'>P(both blue) = 6/10 × 5/9 = 30/90 = 1/3</span><span class='h'>✅</span>1/3."},
+{s:"A fair coin is tossed twice. What is the probability of getting at least one head?",o:["1/4","1/2","3/4","1"],c:2,e:"<span class='h'>💡 Idea</span>Use the complement: P(at least one head) = 1 − P(no heads at all).<span class='h'>✏️ Working</span><span class='calc'>P(no heads) = 1/2 × 1/2 = 1/4</span><span class='calc'>P(at least one head) = 1 − 1/4 = 3/4</span><span class='h'>✅</span>3/4."},
+{s:"Two independent events A and B have P(A) = 1/3 and P(B) = 1/4. What is P(A and B)?",o:["7/12","1/2","1/7","1/12"],c:3,e:"<span class='h'>💡 Idea</span>For independent events, multiply the probabilities.<span class='h'>✏️ Working</span><span class='calc'>P(A and B) = 1/3 × 1/4 = 1/12</span><span class='h'>✅</span>1/12."},
+{s:"A bag has 3 red and 2 black balls. Two are drawn WITHOUT replacement. What is the probability both are red?",o:["9/25","3/10","2/5","1/2"],c:1,e:"<span class='h'>💡 Idea</span>Total = 5. After one red, 2 reds remain out of 4 balls.<span class='h'>✏️ Working</span><span class='calc'>P(both red) = 3/5 × 2/4 = 6/20 = 3/10</span><span class='h'>✅</span>3/10."},
+{s:"A bag has 3 red and 2 black balls. Two are drawn WITHOUT replacement. What is the probability of one red and one black (in any order)?",o:["3/5","2/5","6/25","1/2"],c:0,e:"<span class='h'>💡 Idea</span>Two orders work: red-then-black OR black-then-red. Work out each and add.<span class='h'>✏️ Working</span><span class='calc'>P(RB) = 3/5 × 2/4 = 6/20</span><span class='calc'>P(BR) = 2/5 × 3/4 = 6/20</span><span class='calc'>Total = 6/20 + 6/20 = 12/20 = 3/5</span><span class='h'>✅</span>3/5."},
+{s:"Two independent events have P(A) = 0.4 and P(B) = 0.5. What is the probability that NEITHER happens?",o:["0.9","0.2","0.3","0.7"],c:2,e:"<span class='h'>💡 Idea</span>Neither means NOT A and NOT B. P(not A) = 0.6, P(not B) = 0.5; multiply.<span class='h'>✏️ Working</span><span class='calc'>P(neither) = 0.6 × 0.5 = 0.3</span><span class='h'>✅</span>0.3."},
+{s:"Two fair dice are thrown together. What is the probability that the sum of the scores is 7?",o:["1/12","1/6","5/36","1/9"],c:1,e:"<span class='h'>💡 Idea</span>There are 36 equally likely outcomes. Count the pairs that add to 7.<span class='h'>✏️ Working</span><span class='calc'>(1,6)(2,5)(3,4)(4,3)(5,2)(6,1) = 6 ways</span><span class='calc'>P(sum 7) = 6/36 = 1/6</span><span class='h'>✅</span>1/6."},
+{s:"Two fair dice are thrown together. What is the probability that the sum is 12?",o:["1/6","1/12","2/36","1/36"],c:3,e:"<span class='h'>💡 Idea</span>A sum of 12 needs a 6 and a 6 — only one outcome out of 36.<span class='h'>✏️ Working</span><span class='calc'>P(sum 12) = 1/36</span><span class='h'>✅</span>1/36."},
+{s:"A bag contains 2 red, 3 green and 5 yellow balls. One ball is drawn. What is the probability that it is NOT yellow?",o:["1/2","1/10","3/10","1/5"],c:0,e:"<span class='h'>💡 Idea</span>Total = 10. Not yellow means red or green = 2 + 3 = 5 balls. (Or use 1 − P(yellow).)<span class='h'>✏️ Working</span><span class='calc'>P(not yellow) = 5/10 = 1/2</span><span class='h'>✅</span>1/2."},
+{s:"A box has 6 good and 4 defective bulbs. Two are drawn WITHOUT replacement. What is the probability that both are defective?",o:["4/25","2/9","2/15","1/6"],c:2,e:"<span class='h'>💡 Idea</span>Total = 10. After one defective, 3 defective remain out of 9 bulbs.<span class='h'>✏️ Working</span><span class='calc'>P(both defective) = 4/10 × 3/9 = 12/90 = 2/15</span><span class='h'>✅</span>2/15."}
+);
+
+["basic","addition","multiply","exam","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

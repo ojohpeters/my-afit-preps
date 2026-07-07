@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indices, Logarithms &amp; Surds A–Z — Laws of Powers, Logs & Roots (Maths)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔢 Indices, Logarithms &amp; Surds A–Z</h1>
+  <p>Laws of Powers · Logarithms · Surds &amp; Rationalising — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every law shown</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="indices">🔢 Indices (Laws of Powers)</div>
+    <div class="tab" data-cat="logs">📈 Logarithms</div>
+    <div class="tab" data-cat="surds">√ Surds</div>
+    <div class="tab" data-cat="mixed">🧩 Mixed &amp; Exam Problems</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: INDICES ============ -->
+  <section class="cat indices show" id="cat-indices">
+    <h2 class="cathead">🔢 PART 1 — Indices (Laws of Powers)</h2>
+
+    <div class="lesson">
+      <h3>1. What is an index?</h3>
+      <p>An <b>index</b> (plural: indices), also called a <b>power</b> or <b>exponent</b>, tells you how many times a number multiplies itself.</p>
+      <div class="formula">aⁿ = a × a × a × … (n times)</div>
+      <p>In <b>aⁿ</b>: the bottom number <b>a</b> is the <b>base</b>, and the small raised number <b>n</b> is the <b>index/power</b>.</p>
+      <ul>
+        <li><b>2³</b> means 2 × 2 × 2 = 8. Here the base is 2 and the index is 3.</li>
+        <li><b>5²</b> means 5 × 5 = 25.</li>
+        <li><b>a⁴</b> means a × a × a × a.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: the index just <b>counts how many copies of the base</b> are multiplied together. It is NOT the base times the index — 2³ is 8, not 6.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The seven laws of indices</h3>
+      <p>These laws let you combine powers without writing them all out. Learn this table by heart — nearly every indices question uses one of them.</p>
+      <table class="r">
+        <tr><th>Law</th><th>Rule</th><th>Quick example</th></tr>
+        <tr><td>Multiply (same base)</td><td><b>aᵐ × aⁿ = aᵐ⁺ⁿ</b></td><td>2³ × 2² = 2⁵ = 32</td></tr>
+        <tr><td>Divide (same base)</td><td><b>aᵐ ÷ aⁿ = aᵐ⁻ⁿ</b></td><td>a⁵ ÷ a² = a³</td></tr>
+        <tr><td>Power of a power</td><td><b>(aᵐ)ⁿ = aᵐⁿ</b></td><td>(x²)³ = x⁶</td></tr>
+        <tr><td>Zero index</td><td><b>a⁰ = 1</b></td><td>7⁰ = 1, 100⁰ = 1</td></tr>
+        <tr><td>Negative index</td><td><b>a⁻ⁿ = 1/aⁿ</b></td><td>2⁻³ = 1/2³ = 1/8</td></tr>
+        <tr><td>Fractional (root)</td><td><b>a^(1/n) = ⁿ√a</b></td><td>8^(1/3) = ³√8 = 2</td></tr>
+        <tr><td>Fractional (power &amp; root)</td><td><b>a^(m/n) = (ⁿ√a)ᵐ</b></td><td>27^(2/3) = (³√27)² = 9</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: when the <b>bases are the same</b>, you <b>add</b> the powers to multiply and <b>subtract</b> them to divide. A power of a power <b>multiplies</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked examples — simplifying</h3>
+      <div class="ex"><b class="t">Example 1:</b> Simplify x⁴ × x⁵.
+        <div class="calc">Same base x, so ADD the powers: x⁴ × x⁵ = x⁴⁺⁵ = x⁹</div>
+        Answer = <b>x⁹</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Simplify (2a²)³.
+        <div class="calc">Cube everything inside: 2³ × (a²)³ = 8 × a⁶</div>
+        Answer = <b>8a⁶</b> (remember to cube the 2 as well).</div>
+      <div class="ex"><b class="t">Example 3:</b> Simplify (a⁶ × a²) ÷ a³.
+        <div class="calc">Top: a⁶ × a² = a⁸</div>
+        <div class="calc">Then divide: a⁸ ÷ a³ = a⁸⁻³ = a⁵</div>
+        Answer = <b>a⁵</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples — evaluating (getting a number)</h3>
+      <div class="ex"><b class="t">Example 1:</b> Evaluate 2³ × 2².
+        <div class="calc">Add powers: 2³⁺² = 2⁵ = 2×2×2×2×2 = 32</div>
+        Answer = <b>32</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Evaluate 27^(2/3).
+        <div class="calc">Denominator = root, numerator = power: (³√27)² </div>
+        <div class="calc">³√27 = 3, then 3² = 9</div>
+        Answer = <b>9</b>.</div>
+      <div class="ex"><b class="t">Example 3:</b> Evaluate 16^(−1/2).
+        <div class="calc">Negative → flip: 16^(−1/2) = 1 ÷ 16^(1/2) = 1 ÷ √16</div>
+        <div class="calc">√16 = 4, so answer = 1/4</div>
+        Answer = <b>¼</b>.</div>
+      <div class="ex"><b class="t">Example 4:</b> Evaluate 5⁰ + 2⁻¹.
+        <div class="calc">5⁰ = 1 and 2⁻¹ = 1/2</div>
+        <div class="calc">1 + ½ = 3/2 = 1½</div>
+        Answer = <b>1½</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Solving indicial (index) equations</h3>
+      <p>An <b>indicial equation</b> has the unknown in the power, like 2ˣ = 32. The trick: make BOTH sides have the <b>same base</b>, then the powers must be equal.</p>
+      <div class="formula">If aˣ = aⁿ, then x = n</div>
+      <div class="ex"><b class="t">Example 1:</b> Solve 2ˣ = 32.
+        <div class="calc">Write 32 as a power of 2: 32 = 2⁵</div>
+        <div class="calc">So 2ˣ = 2⁵ → x = 5</div>
+        Answer = <b>x = 5</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Solve 3^(x+1) = 81.
+        <div class="calc">81 = 3⁴, so 3^(x+1) = 3⁴</div>
+        <div class="calc">Powers equal: x + 1 = 4 → x = 3</div>
+        Answer = <b>x = 3</b>.</div>
+      <div class="ex"><b class="t">Example 3:</b> Solve 4ˣ = 8.
+        <div class="calc">Use base 2: 4 = 2² and 8 = 2³, so (2²)ˣ = 2³</div>
+        <div class="calc">2^(2x) = 2³ → 2x = 3 → x = 3/2</div>
+        Answer = <b>x = 1½</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: LOGARITHMS ============ -->
+  <section class="cat logs" id="cat-logs">
+    <h2 class="cathead">📈 PART 2 — Logarithms</h2>
+
+    <div class="lesson">
+      <h3>1. What is a logarithm?</h3>
+      <p>A <b>logarithm answers the question: "to what power must I raise the base to get this number?"</b> It is simply the <b>inverse (opposite) of an index</b>.</p>
+      <div class="formula">If aˣ = b, then log<sub>a</sub> b = x&nbsp;&nbsp;(and back again)</div>
+      <p>So the log and the power are two ways of saying the same fact:</p>
+      <ul>
+        <li>Because 2³ = 8, we can write <b>log₂ 8 = 3</b>.</li>
+        <li>Because 10² = 100, we can write <b>log₁₀ 100 = 2</b>.</li>
+        <li>Because 5² = 25, we can write <b>log₅ 25 = 2</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: the log <b>gives you back the power</b>. "log base a of b" asks: a to what power equals b? Read it as the missing exponent.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Common logarithms (base 10)</h3>
+      <p>When no base is written, it usually means <b>base 10</b> — the <b>common logarithm</b>. So "log 1000" means log₁₀ 1000.</p>
+      <div class="calc">log 10 = 1&nbsp;&nbsp;(because 10¹ = 10)</div>
+      <div class="calc">log 100 = 2&nbsp;&nbsp;(because 10² = 100)</div>
+      <div class="calc">log 1000 = 3&nbsp;&nbsp;(because 10³ = 1000)</div>
+      <p>Notice: for powers of 10, the common log is just the <b>number of zeros</b>. That is why base 10 was so useful in the old log tables.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The laws of logarithms</h3>
+      <p>These mirror the laws of indices (because logs ARE indices in disguise). Multiplying numbers becomes ADDING their logs; dividing becomes SUBTRACTING.</p>
+      <table class="r">
+        <tr><th>Law</th><th>Rule</th><th>In words</th></tr>
+        <tr><td>Product law</td><td><b>log(M × N) = log M + log N</b></td><td>Multiply inside → add the logs</td></tr>
+        <tr><td>Quotient law</td><td><b>log(M ÷ N) = log M − log N</b></td><td>Divide inside → subtract the logs</td></tr>
+        <tr><td>Power law</td><td><b>log(Mⁿ) = n × log M</b></td><td>A power inside comes to the front</td></tr>
+        <tr><td>Log of base</td><td><b>log<sub>a</sub> a = 1</b></td><td>a¹ = a, so the answer is 1</td></tr>
+        <tr><td>Log of one</td><td><b>log<sub>a</sub> 1 = 0</b></td><td>a⁰ = 1, so the answer is 0</td></tr>
+        <tr><td>Change of base</td><td><b>log<sub>a</sub> b = (log b) ÷ (log a)</b></td><td>Turn any base into base 10</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples — evaluating &amp; using the laws</h3>
+      <div class="ex"><b class="t">Example 1:</b> Evaluate log₂ 8.
+        <div class="calc">Ask: 2 to what power gives 8? 2³ = 8</div>
+        Answer = <b>3</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Evaluate log₁₀ 1000.
+        <div class="calc">10 to what power gives 1000? 10³ = 1000</div>
+        Answer = <b>3</b>.</div>
+      <div class="ex"><b class="t">Example 3 — use the laws:</b> Simplify log 6 + log 4 − log 3.
+        <div class="calc">Add → multiply, subtract → divide: log(6 × 4 ÷ 3)</div>
+        <div class="calc">= log(24 ÷ 3) = log 8</div>
+        Answer = <b>log 8</b>.</div>
+      <div class="ex"><b class="t">Example 4 — power law:</b> Write 2 log 5 + log 4 as a single log.
+        <div class="calc">2 log 5 = log 5² = log 25</div>
+        <div class="calc">log 25 + log 4 = log(25 × 4) = log 100 = 2</div>
+        Answer = <b>2</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Solving log equations</h3>
+      <div class="ex"><b class="t">Example 1:</b> Solve log₃ x = 2.
+        <div class="calc">Turn the log back into a power: x = 3² </div>
+        <div class="calc">x = 9</div>
+        Answer = <b>x = 9</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Solve log₂ x = 5.
+        <div class="calc">x = 2⁵ = 32</div>
+        Answer = <b>x = 32</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Antilogarithm — going backwards</h3>
+      <p>The <b>antilog</b> undoes a log. If log N = x, then the <b>antilog of x is N = 10ˣ</b> (for base 10). It simply takes you back from the log to the original number.</p>
+      <div class="calc">If log N = 2, then N = 10² = 100 (antilog of 2 is 100)</div>
+      <div class="analogy">🌟 Memory: <b>log</b> turns a number into its power; <b>antilog</b> turns the power back into the number. They cancel each other out, just like squaring and square-rooting.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: SURDS ============ -->
+  <section class="cat surds" id="cat-surds">
+    <h2 class="cathead">√ PART 3 — Surds</h2>
+
+    <div class="lesson">
+      <h3>1. What is a surd?</h3>
+      <p>A <b>surd</b> is a root (usually a square root) that <b>cannot be simplified to an exact whole number or fraction</b> — its value is an <b>irrational</b> never-ending, non-repeating decimal, so we leave it in root form.</p>
+      <ul>
+        <li><b>√2, √3, √5, √7</b> are surds — √2 = 1.41421… goes on forever.</li>
+        <li><b>√4 = 2, √9 = 3, √25 = 5</b> are NOT surds — they give exact whole numbers (perfect squares).</li>
+      </ul>
+      <div class="analogy">🌟 Memory: if the number under the root is a <b>perfect square</b> (4, 9, 16, 25…), the root is a whole number and it is NOT a surd. Otherwise it stays as a surd.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The two basic rules</h3>
+      <table class="r">
+        <tr><th>Rule</th><th>Example</th></tr>
+        <tr><td><b>√(a × b) = √a × √b</b></td><td>√6 = √2 × √3</td></tr>
+        <tr><td><b>√(a ÷ b) = √a ÷ √b</b></td><td>√(9/4) = √9 ÷ √4 = 3/2</td></tr>
+      </table>
+      <p>These let us split a surd into pieces — which is exactly how we simplify.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Simplifying surds</h3>
+      <p>To simplify a surd, split off the <b>largest perfect square</b> hidden inside it, then take its root out.</p>
+      <div class="ex"><b class="t">Example 1:</b> Simplify √50.
+        <div class="calc">50 = 25 × 2, and 25 is a perfect square</div>
+        <div class="calc">√50 = √25 × √2 = 5√2</div>
+        Answer = <b>5√2</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Simplify √18.
+        <div class="calc">18 = 9 × 2 → √18 = √9 × √2 = 3√2</div>
+        Answer = <b>3√2</b>.</div>
+      <div class="ex"><b class="t">Example 3:</b> Simplify √72.
+        <div class="calc">72 = 36 × 2 → √72 = √36 × √2 = 6√2</div>
+        Answer = <b>6√2</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Adding and subtracting surds</h3>
+      <p>You can only add or subtract <b>like surds</b> (the same root part) — just like adding "apples to apples". Simplify first so hidden like surds appear.</p>
+      <div class="ex"><b class="t">Example 1:</b> 3√2 + 5√2.
+        <div class="calc">Same √2, so add the numbers: (3 + 5)√2 = 8√2</div>
+        Answer = <b>8√2</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> √50 + √18.
+        <div class="calc">Simplify each: √50 = 5√2, √18 = 3√2</div>
+        <div class="calc">5√2 + 3√2 = 8√2</div>
+        Answer = <b>8√2</b>.</div>
+      <p><b>Warning:</b> √2 + √3 does NOT combine — they are unlike surds, so leave it as √2 + √3.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Multiplying surds</h3>
+      <div class="ex"><b class="t">Example 1:</b> √3 × √3.
+        <div class="calc">√a × √a = a, so √3 × √3 = 3</div>
+        Answer = <b>3</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> √2 × √8.
+        <div class="calc">√2 × √8 = √(2 × 8) = √16 = 4</div>
+        Answer = <b>4</b>.</div>
+      <div class="ex"><b class="t">Example 3:</b> 2√3 × 4√5.
+        <div class="calc">Multiply numbers and roots separately: (2 × 4)(√3 × √5) = 8√15</div>
+        Answer = <b>8√15</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Rationalising the denominator</h3>
+      <p><b>Rationalising</b> means <b>clearing the surd out of the bottom</b> of a fraction, so the denominator becomes a whole number. It is a standard exam requirement.</p>
+      <h4>(a) Single surd on the bottom</h4>
+      <p>Multiply top and bottom by that same surd.</p>
+      <div class="ex"><b class="t">Example 1:</b> Rationalise 1/√2.
+        <div class="calc">Multiply top &amp; bottom by √2: (1 × √2) ÷ (√2 × √2)</div>
+        <div class="calc">= √2 ÷ 2 = √2/2</div>
+        Answer = <b>√2/2</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> Rationalise 6/√3.
+        <div class="calc">Multiply by √3: (6√3) ÷ (√3 × √3) = 6√3 ÷ 3</div>
+        <div class="calc">= 2√3</div>
+        Answer = <b>2√3</b>.</div>
+      <h4>(b) Using the conjugate (a + √b type)</h4>
+      <p>When the bottom is like <b>3 − √2</b>, multiply top and bottom by its <b>conjugate</b> (same terms, opposite sign: 3 + √2). This uses (x − y)(x + y) = x² − y² to remove the surd.</p>
+      <div class="ex"><b class="t">Example 3:</b> Rationalise 1/(3 − √2).
+        <div class="calc">Multiply top &amp; bottom by the conjugate (3 + √2):</div>
+        <div class="calc">Bottom: (3 − √2)(3 + √2) = 3² − (√2)² = 9 − 2 = 7</div>
+        <div class="calc">Top: 1 × (3 + √2) = 3 + √2</div>
+        Answer = <b>(3 + √2)/7</b>.</div>
+      <div class="analogy">🌟 Memory: the conjugate just <b>flips the middle sign</b>. Multiplying a surd pair by its conjugate always kills the surd, leaving a clean whole number on the bottom.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: MIXED & EXAM PROBLEMS ============ -->
+  <section class="cat mixed" id="cat-mixed">
+    <h2 class="cathead">🧩 PART 4 — Mixed &amp; Exam-Style Problems</h2>
+
+    <div class="lesson">
+      <h3>1. Linking indices and logs</h3>
+      <div class="ex"><b class="t">Example:</b> Given that log₂ 8 = x, find x, then find 2ˣ.
+        <div class="calc">log₂ 8 asks: 2 to what power = 8? 2³ = 8, so x = 3</div>
+        <div class="calc">Then 2ˣ = 2³ = 8 (we simply return to where we started)</div>
+        Answer: <b>x = 3</b>, and <b>2ˣ = 8</b>. This shows log and index are inverses.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Harder indicial equation</h3>
+      <div class="ex"><b class="t">Example:</b> Solve 9ˣ = 27.
+        <div class="calc">Use base 3: 9 = 3² and 27 = 3³</div>
+        <div class="calc">(3²)ˣ = 3³ → 3^(2x) = 3³ → 2x = 3</div>
+        <div class="calc">x = 3/2</div>
+        Answer = <b>x = 1½</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Combining log laws to a number</h3>
+      <div class="ex"><b class="t">Example:</b> Evaluate log 2 + log 50 (base 10).
+        <div class="calc">Add → multiply inside: log(2 × 50) = log 100</div>
+        <div class="calc">log 100 = 2 (because 10² = 100)</div>
+        Answer = <b>2</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Surd expression with rationalising</h3>
+      <div class="ex"><b class="t">Example:</b> Simplify (√5)² + √16 − 1/√2 rationalised.
+        <div class="calc">(√5)² = 5 and √16 = 4, so far 5 + 4 = 9</div>
+        <div class="calc">1/√2 rationalised = √2/2, so the value is 9 − √2/2</div>
+        Answer = <b>9 − √2/2</b> (an exact surd form is the expected answer).</div>
+      <div class="ex"><b class="t">Example — pure evaluation:</b> Simplify √98 − √8.
+        <div class="calc">√98 = √(49 × 2) = 7√2, and √8 = √(4 × 2) = 2√2</div>
+        <div class="calc">7√2 − 2√2 = 5√2</div>
+        Answer = <b>5√2</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Same base, add the powers; log undoes the index; rationalise the surd — the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Evaluate 2³ × 2².",o:["64","12","32","16"],c:2,e:"<span class='h'>✏️ Working</span>Same base, so add the powers.<span class='calc'>2³ × 2² = 2³⁺² = 2⁵</span><span class='calc'>2⁵ = 32</span>(12 is the slip of adding 8 + 4).<span class='h'>✅</span>32."},
+{s:"Simplify a⁵ ÷ a².",o:["a³","a⁷","a²","a¹⁰"],c:0,e:"<span class='h'>✏️ Working</span>Same base, so subtract the powers.<span class='calc'>a⁵ ÷ a² = a⁵⁻² = a³</span>(a⁷ adds them; a¹⁰ multiplies them — both wrong).<span class='h'>✅</span>a³."},
+{s:"Simplify (x²)³.",o:["x⁵","x⁶","x⁸","x⁹"],c:1,e:"<span class='h'>✏️ Working</span>Power of a power, so multiply the indices.<span class='calc'>(x²)³ = x²ˣ³ = x⁶</span>(x⁵ comes from adding 2 + 3 by mistake).<span class='h'>✅</span>x⁶."},
+{s:"Evaluate 5⁰.",o:["0","5","∞","1"],c:3,e:"<span class='h'>💡 Idea</span>Any non-zero number to the power zero is 1.<span class='calc'>5⁰ = 1</span><span class='h'>✅</span>1."},
+{s:"Evaluate 2⁻³.",o:["1/8","−8","−6","8"],c:0,e:"<span class='h'>✏️ Working</span>A negative index means take the reciprocal.<span class='calc'>2⁻³ = 1 ÷ 2³ = 1/8</span>(a negative index does NOT make the answer negative).<span class='h'>✅</span>1/8."},
+{s:"Evaluate 27^(2/3).",o:["18","6","9","27"],c:2,e:"<span class='h'>✏️ Working</span>Bottom of the fraction is the root, top is the power.<span class='calc'>27^(2/3) = (³√27)² = 3²</span><span class='calc'>3² = 9</span><span class='h'>✅</span>9."},
+{s:"Evaluate 16^(−1/2).",o:["4","1/4","−8","1/8"],c:1,e:"<span class='h'>✏️ Working</span>Negative index → flip; the half means square root.<span class='calc'>16^(−1/2) = 1 ÷ √16 = 1 ÷ 4</span><span class='calc'>= 1/4</span>(4 forgets the negative sign).<span class='h'>✅</span>1/4."},
+{s:"Evaluate 8^(1/3).",o:["2","4","24","8/3"],c:0,e:"<span class='h'>✏️ Working</span>A power of 1/3 means the cube root.<span class='calc'>8^(1/3) = ³√8 = 2</span>(because 2 × 2 × 2 = 8).<span class='h'>✅</span>2."},
+{s:"Solve 2ˣ = 32.",o:["4","6","16","5"],c:3,e:"<span class='h'>✏️ Working</span>Write 32 as a power of 2.<span class='calc'>32 = 2⁵, so 2ˣ = 2⁵</span><span class='calc'>x = 5</span><span class='h'>✅</span>5."},
+{s:"Solve 3^(x+1) = 81.",o:["4","2","3","27"],c:2,e:"<span class='h'>✏️ Working</span>Write 81 as a power of 3.<span class='calc'>81 = 3⁴, so 3^(x+1) = 3⁴</span><span class='calc'>x + 1 = 4 → x = 3</span><span class='h'>✅</span>3."},
+{s:"If aˣ = b, then log<sub>a</sub> b equals…",o:["x","a","b","1"],c:0,e:"<span class='h'>💡 Idea</span>A log gives back the exponent. Since aˣ = b, the power needed is x.<span class='calc'>log_a b = x</span><span class='h'>✅</span>x."},
+{s:"Evaluate log₂ 8.",o:["2","3","4","8"],c:1,e:"<span class='h'>✏️ Working</span>Ask: 2 to what power gives 8?<span class='calc'>2³ = 8, so log₂ 8 = 3</span><span class='h'>✅</span>3."},
+{s:"Evaluate log₁₀ 1000.",o:["10","100","2","3"],c:3,e:"<span class='h'>✏️ Working</span>Ask: 10 to what power gives 1000?<span class='calc'>10³ = 1000, so log₁₀ 1000 = 3</span>(count the zeros — there are three).<span class='h'>✅</span>3."},
+{s:"What is the value of log<sub>a</sub> a?",o:["1","0","a","∞"],c:0,e:"<span class='h'>💡 Idea</span>a to the power 1 is a, so the log of the base itself is 1.<span class='calc'>log_a a = 1</span><span class='h'>✅</span>1."},
+{s:"What is the value of log<sub>a</sub> 1?",o:["1","a","0","∞"],c:2,e:"<span class='h'>💡 Idea</span>a to the power 0 is 1, so the log of 1 is always 0.<span class='calc'>log_a 1 = 0</span><span class='h'>✅</span>0."},
+{s:"log M + log N is equal to…",o:["log(M + N)","log(MN)","log(M ÷ N)","(log M)(log N)"],c:1,e:"<span class='h'>💡 Idea</span>By the product law, adding logs means multiplying the numbers inside.<span class='calc'>log M + log N = log(MN)</span><span class='h'>✅</span>log(MN)."},
+{s:"log(M ÷ N) is equal to…",o:["log M + log N","(log M) ÷ (log N)","(log M)(log N)","log M − log N"],c:3,e:"<span class='h'>💡 Idea</span>By the quotient law, dividing inside means subtracting the logs.<span class='calc'>log(M ÷ N) = log M − log N</span><span class='h'>✅</span>log M − log N."},
+{s:"log(Mⁿ) is equal to…",o:["n log M","log M + n","(log M)ⁿ","n + log M"],c:0,e:"<span class='h'>💡 Idea</span>By the power law, a power inside comes out to the front as a multiplier.<span class='calc'>log(Mⁿ) = n × log M</span><span class='h'>✅</span>n log M."},
+{s:"Evaluate log₅ 25.",o:["5","25","2","3"],c:2,e:"<span class='h'>✏️ Working</span>Ask: 5 to what power gives 25?<span class='calc'>5² = 25, so log₅ 25 = 2</span><span class='h'>✅</span>2."},
+{s:"Solve log₃ x = 2.",o:["6","9","8","23"],c:1,e:"<span class='h'>✏️ Working</span>Turn the log back into a power.<span class='calc'>x = 3² = 9</span><span class='h'>✅</span>9."},
+{s:"Which of the following is a surd?",o:["√4","√9","√25","√2"],c:3,e:"<span class='h'>💡 Idea</span>A surd is an irrational root. √4, √9 and √25 give whole numbers (2, 3, 5), but √2 = 1.414… never ends.<span class='h'>✅</span>√2."},
+{s:"Simplify √50.",o:["5√2","25√2","2√5","10√5"],c:0,e:"<span class='h'>✏️ Working</span>Split off the largest perfect square.<span class='calc'>50 = 25 × 2</span><span class='calc'>√50 = √25 × √2 = 5√2</span><span class='h'>✅</span>5√2."},
+{s:"Simplify √18.",o:["9√2","2√3","3√2","6√3"],c:2,e:"<span class='h'>✏️ Working</span>Split off the perfect square 9.<span class='calc'>18 = 9 × 2</span><span class='calc'>√18 = √9 × √2 = 3√2</span><span class='h'>✅</span>3√2."},
+{s:"Simplify 3√2 + 5√2.",o:["8√4","8√2","15√2","8"],c:1,e:"<span class='h'>✏️ Working</span>They are like surds (both √2), so add the numbers only.<span class='calc'>(3 + 5)√2 = 8√2</span>(the √2 does not change).<span class='h'>✅</span>8√2."},
+{s:"Simplify √3 × √3.",o:["3","9","√6","2√3"],c:0,e:"<span class='h'>✏️ Working</span>A surd times itself gives the number inside.<span class='calc'>√3 × √3 = √(3 × 3) = √9 = 3</span><span class='h'>✅</span>3."},
+{s:"√a × √b is equal to…",o:["√a + √b","ab","√(a + b)","√(ab)"],c:3,e:"<span class='h'>💡 Idea</span>By the multiplication rule for surds, the roots combine under one sign.<span class='calc'>√a × √b = √(ab)</span><span class='h'>✅</span>√(ab)."},
+{s:"Rationalise 1/√2.",o:["2√2","1/2","√2/2","√2"],c:2,e:"<span class='h'>✏️ Working</span>Multiply top and bottom by √2.<span class='calc'>(1 × √2) ÷ (√2 × √2) = √2 ÷ 2</span><span class='calc'>= √2/2</span><span class='h'>✅</span>√2/2."},
+{s:"Express 6/√3 in simplest form.",o:["6√3","2√3","3√3","2/√3"],c:1,e:"<span class='h'>✏️ Working</span>Multiply top and bottom by √3.<span class='calc'>(6√3) ÷ (√3 × √3) = 6√3 ÷ 3</span><span class='calc'>= 2√3</span><span class='h'>✅</span>2√3."},
+{s:"Solve 4ˣ = 8.",o:["2","1","4","3/2"],c:3,e:"<span class='h'>✏️ Working</span>Use base 2: 4 = 2² and 8 = 2³.<span class='calc'>2^(2x) = 2³ → 2x = 3</span><span class='calc'>x = 3/2</span><span class='h'>✅</span>3/2."},
+{s:"Rationalise 1/(3 − √2) using the conjugate.",o:["(3 − √2)/7","3 + √2","(3 + √2)/7","(3 + √2)/11"],c:2,e:"<span class='h'>✏️ Working</span>Multiply top and bottom by the conjugate (3 + √2).<span class='calc'>Bottom: 3² − (√2)² = 9 − 2 = 7</span><span class='calc'>Top: 3 + √2</span><span class='h'>✅</span>(3 + √2)/7."}
+);
+
+["indices","logs","surds","mixed","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

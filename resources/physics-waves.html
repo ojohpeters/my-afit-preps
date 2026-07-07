@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waves A–Z — Types, Wave Equation, Sound &amp; EM Spectrum (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🌊 Waves A–Z</h1>
+  <p>Wave Types · The Wave Equation · Sound &amp; the EM Spectrum — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">🌊 Wave Basics</div>
+    <div class="tab" data-cat="terms">📏 Wave Terms &amp; Equation</div>
+    <div class="tab" data-cat="behaviour">🔊 Wave Behaviour</div>
+    <div class="tab" data-cat="standing">🎵 Standing Waves &amp; Resonance</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: WAVE BASICS ============ -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">🌊 PART 1 — What a Wave Is &amp; the Types</h2>
+
+    <div class="lesson">
+      <h3>1. What is a wave?</h3>
+      <p>A <b>wave</b> is <b>a disturbance that travels through a medium (or through space), transferring energy from one point to another without transferring matter.</b></p>
+      <p>The key idea: the energy moves along, but the material stays put. When a wave passes, each particle only <b>vibrates about its own fixed position</b> — it does not travel with the wave.</p>
+      <span class="key">The three things a wave carries and does not carry</span>
+      <ul>
+        <li><b>It transfers ENERGY</b> — that is the whole point of a wave.</li>
+        <li><b>It transfers INFORMATION</b> — e.g. sound and radio carry signals.</li>
+        <li><b>It does NOT transfer MATTER</b> — the particles just wobble in place and return.</li>
+      </ul>
+      <div class="analogy">🌟 Picture a Mexican wave in a stadium: the "wave" runs right round the ground, but each person only stands up and sits down on the spot. Energy moves; the people do not.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Transverse waves</h3>
+      <p>A <b>transverse wave</b> is one in which the particles of the medium <b>vibrate at right angles (perpendicular) to the direction in which the wave travels.</b></p>
+      <p>A transverse wave has <b>crests</b> (the high points) and <b>troughs</b> (the low points).</p>
+      <span class="key">Examples of transverse waves</span>
+      <ul>
+        <li><b>Light</b> and all <b>electromagnetic waves</b> (radio, X-rays, etc.).</li>
+        <li><b>Water waves / ripples</b> on a pond.</li>
+        <li>A <b>wave on a rope or string</b> flicked up and down.</li>
+      </ul>
+      <div class="analogy">🌟 Flick one end of a rope up and down: the wave runs FORWARD along the rope, but every part of the rope moves UP and DOWN — across the direction of travel. That is transverse.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Longitudinal waves</h3>
+      <p>A <b>longitudinal wave</b> is one in which the particles of the medium <b>vibrate back and forth ALONG the same direction that the wave travels.</b></p>
+      <p>Instead of crests and troughs, a longitudinal wave has <b>compressions</b> and <b>rarefactions</b>:</p>
+      <ul>
+        <li><b>Compression</b> — a region where the particles are squeezed close together (high pressure).</li>
+        <li><b>Rarefaction</b> — a region where the particles are spread far apart (low pressure).</li>
+      </ul>
+      <span class="key">Main example</span>
+      <p><b>Sound</b> is the classic longitudinal wave. As a loudspeaker cone pushes forward it squeezes the air (compression); as it pulls back it stretches the air (rarefaction). These pressure changes race outward to your ear.</p>
+      <div class="analogy">🌟 A slinky (spring) shows both: push it front-to-back and a squeeze travels ALONG it — longitudinal (like sound). Shake it side-to-side and the wave crosses it — transverse.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Transverse vs longitudinal — quick table</h3>
+      <table class="r">
+        <tr><th>Feature</th><th>Transverse</th><th>Longitudinal</th></tr>
+        <tr><td>Direction of vibration</td><td>Perpendicular (across) travel</td><td>Parallel (along) travel</td></tr>
+        <tr><td>Shape parts</td><td>Crests and troughs</td><td>Compressions and rarefactions</td></tr>
+        <tr><td>Examples</td><td>Light, water, EM waves, rope</td><td>Sound, waves in a spring (push-pull)</td></tr>
+        <tr><td>Can it be polarised?</td><td>Yes (proof it is transverse)</td><td>No</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Mechanical vs electromagnetic waves</h3>
+      <p>Waves are also grouped by <b>whether they need a medium</b> to travel through.</p>
+      <span class="key">Mechanical waves</span>
+      <ul>
+        <li>Need a <b>material medium</b> (solid, liquid or gas) — they cannot travel through empty space.</li>
+        <li>The medium's particles pass the vibration on from one to the next.</li>
+        <li>Examples: <b>sound</b>, <b>water waves</b>, waves on a string, seismic waves.</li>
+      </ul>
+      <span class="key">Electromagnetic (EM) waves</span>
+      <ul>
+        <li>Need <b>no medium</b> — they can travel through a <b>vacuum</b> (empty space).</li>
+        <li>All are <b>transverse</b> and travel at the speed of light, <b>3 × 10⁸ m/s</b>, in a vacuum.</li>
+        <li>Examples: <b>light</b>, radio, microwaves, infrared, ultraviolet, X-rays, gamma rays.</li>
+      </ul>
+      <div class="analogy">🌟 Sound cannot travel through space (no air), but sunlight reaches us across the vacuum — that is the difference between mechanical (needs a medium) and EM (does not).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Progressive vs stationary waves</h3>
+      <ul>
+        <li><b>Progressive (travelling) wave:</b> the wave <b>moves along</b>, carrying energy from one place to another — e.g. a ripple spreading across water.</li>
+        <li><b>Stationary (standing) wave:</b> the wave pattern <b>stays in one place</b> and does not move along; it is formed when two identical waves travel in opposite directions and overlap — e.g. a plucked guitar string. (Full details in Part 4.)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: WAVE TERMS & EQUATION ============ -->
+  <section class="cat terms" id="cat-terms">
+    <h2 class="cathead">📏 PART 2 — Wave Terms &amp; the Wave Equation</h2>
+
+    <div class="lesson">
+      <h3>1. The words you must know</h3>
+      <ul>
+        <li><b>Amplitude (A):</b> the <b>maximum displacement</b> of a particle from its rest (middle) position. Measured in metres. Bigger amplitude = more energy.</li>
+        <li><b>Wavelength (λ):</b> the <b>distance for one complete wave</b> — measured crest-to-crest, trough-to-trough, or compression-to-compression. Unit: metre (m). (λ is the Greek letter "lambda".)</li>
+        <li><b>Frequency (f):</b> the <b>number of complete waves passing a point each second</b>. Unit: <b>hertz (Hz)</b>, where 1 Hz = 1 wave per second.</li>
+        <li><b>Period (T):</b> the <b>time taken for one complete wave</b> (one full oscillation). Unit: second (s).</li>
+        <li><b>Wave speed (v):</b> how fast the wave (the energy) travels. Unit: metre per second (m/s).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Frequency and period are opposites</h3>
+      <p>Frequency and period are the reciprocal of each other. If 5 waves pass each second (f = 5 Hz), then each wave takes 1/5 = 0.2 s (T = 0.2 s).</p>
+      <div class="formula">f = 1 / T&nbsp;&nbsp;&nbsp;and&nbsp;&nbsp;&nbsp;T = 1 / f</div>
+      <div class="ex"><b class="t">Worked example:</b> A wave has a period of 0.02 s. Find its frequency.
+        <div class="calc">f = 1 ÷ T = 1 ÷ 0.02</div>
+        <div class="calc">f = 50 Hz</div>
+        So 50 complete waves pass every second.</div>
+      <div class="ex"><b class="t">Worked example (the other way):</b> A tuning fork has a frequency of 250 Hz. Find its period.
+        <div class="calc">T = 1 ÷ f = 1 ÷ 250</div>
+        <div class="calc">T = 0.004 s</div>
+        Each vibration lasts 0.004 s.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The WAVE EQUATION: v = fλ</h3>
+      <p>This is the single most important equation for waves. It links speed, frequency and wavelength:</p>
+      <div class="formula">v = f × λ&nbsp;&nbsp;&nbsp;(speed = frequency × wavelength)</div>
+      <p>where <b>v</b> = wave speed (m/s), <b>f</b> = frequency (Hz), <b>λ</b> = wavelength (m).</p>
+      <p>Rearranged versions you will need:</p>
+      <div class="formula">λ = v / f&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;f = v / λ</div>
+      <div class="analogy">🌟 Why it works: if f waves each of length λ pass every second, then the total length that passes each second is f × λ — and length per second IS the speed.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples on v = fλ</h3>
+      <div class="ex"><b class="t">Example 1 — find the speed.</b> A wave has a frequency of 50 Hz and a wavelength of 4 m. Find its speed.
+        <div class="calc">v = f × λ = 50 × 4</div>
+        <div class="calc">v = 200 m/s</div>
+        Answer = <b>200 m/s</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — find the wavelength.</b> A sound wave travels at 340 m/s and has a frequency of 170 Hz. Find its wavelength.
+        <div class="calc">λ = v ÷ f = 340 ÷ 170</div>
+        <div class="calc">λ = 2 m</div>
+        Answer = <b>2 m</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — find the frequency.</b> A wave of wavelength 0.5 m travels at 300 m/s. Find its frequency.
+        <div class="calc">f = v ÷ λ = 300 ÷ 0.5</div>
+        <div class="calc">f = 600 Hz</div>
+        Answer = <b>600 Hz</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — combine with T.</b> Water waves of wavelength 2 m pass a post every 0.25 s (period). Find the wave speed.
+        <div class="calc">First f = 1 ÷ T = 1 ÷ 0.25 = 4 Hz</div>
+        <div class="calc">Then v = f × λ = 4 × 2 = 8 m/s</div>
+        Answer = <b>8 m/s</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Wavefront and phase (briefly)</h3>
+      <ul>
+        <li><b>Wavefront:</b> a line (or surface) joining all the points of a wave that are <b>in step</b> — for example, the line along the top of one ripple. Wavefronts are always at right angles to the direction the wave travels.</li>
+        <li><b>Phase:</b> describes the stage a vibrating point has reached in its cycle. Two points are <b>in phase</b> if they move together (e.g. two neighbouring crests, one wavelength apart) and <b>out of phase</b> if one is up while the other is down.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: WAVE BEHAVIOUR ============ -->
+  <section class="cat behaviour" id="cat-behaviour">
+    <h2 class="cathead">🔊 PART 3 — How Waves Behave, Sound &amp; the EM Spectrum</h2>
+
+    <div class="lesson">
+      <h3>1. The four behaviours of waves</h3>
+      <ul>
+        <li><b>Reflection:</b> a wave <b>bounces back</b> when it hits a barrier or surface. The angle of incidence equals the angle of reflection. (An echo is reflected sound; a mirror reflects light.)</li>
+        <li><b>Refraction:</b> a wave <b>changes direction (bends)</b> when it passes from one medium into another and its <b>speed changes</b>. (Light bends as it enters water, making a straw look bent.)</li>
+        <li><b>Diffraction:</b> a wave <b>spreads out</b> as it passes through a narrow gap or around an obstacle. It is most noticeable when the gap is about the same size as the wavelength.</li>
+        <li><b>Interference:</b> when two waves meet, they <b>add together</b>. Crest-on-crest gives a bigger wave (<b>constructive</b>); crest-on-trough cancels out (<b>destructive</b>).</li>
+      </ul>
+      <div class="analogy">🌟 Memory hook: <b>Re</b>flect = <b>re</b>turn (bounce back). <b>Re</b>fract = re-route (bend into a new medium). <b>Diff</b>ract = spread through a gap. <b>Inter</b>fere = two waves interact.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Sound waves — the basics</h3>
+      <ul>
+        <li>Sound is a <b>longitudinal, mechanical wave</b>: it needs a medium and cannot travel through a vacuum.</li>
+        <li>Its <b>speed depends on the medium</b> — sound is fastest in solids, slower in liquids, slowest in gases. In air it is about <b>340 m/s</b>.</li>
+        <li>Sound travels much slower than light — that is why you see lightning before you hear the thunder.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Echoes — reflected sound</h3>
+      <p>An <b>echo</b> is sound reflected off a hard surface (a wall or cliff) and heard again. Because the sound travels <b>to the surface and back</b>, the total path is <b>twice the distance (2d)</b>.</p>
+      <div class="formula">2d = v × t&nbsp;&nbsp;→&nbsp;&nbsp;d = (v × t) / 2</div>
+      <p>where d = distance to the surface, v = speed of sound, t = time for the echo to return.</p>
+      <div class="ex"><b class="t">Worked example.</b> A man shouts at a cliff and hears the echo 3 s later. If the speed of sound is 340 m/s, how far away is the cliff?
+        <div class="calc">2d = v × t = 340 × 3 = 1020 m</div>
+        <div class="calc">d = 1020 ÷ 2 = 510 m</div>
+        Answer = <b>510 m</b>. (Remember to halve — the 1020 m is the there-and-back distance.)</div>
+      <div class="ex"><b class="t">Worked example — find the speed.</b> An echo returns from a wall 85 m away in 0.5 s. Find the speed of sound.
+        <div class="calc">Total path = 2d = 2 × 85 = 170 m</div>
+        <div class="calc">v = 2d ÷ t = 170 ÷ 0.5 = 340 m/s</div>
+        Answer = <b>340 m/s</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Characteristics of a musical sound</h3>
+      <table class="r">
+        <tr><th>What you hear</th><th>Depends on</th><th>Meaning</th></tr>
+        <tr><td><b>Pitch</b> (high or low note)</td><td><b>Frequency</b></td><td>Higher frequency = higher pitch</td></tr>
+        <tr><td><b>Loudness</b> (soft or loud)</td><td><b>Amplitude</b></td><td>Bigger amplitude = louder sound</td></tr>
+        <tr><td><b>Quality / timbre</b> (tone)</td><td>Waveform / overtones</td><td>Why a piano and a flute at the same note sound different</td></tr>
+      </table>
+      <div class="analogy">🌟 Don't mix them up: <b>Pitch → frequency</b>; <b>Loudness → amplitude</b>. Quality is what lets you tell two instruments apart.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The electromagnetic (EM) spectrum</h3>
+      <p>The EM spectrum is the full family of electromagnetic waves, arranged in order. All of them are <b>transverse</b> and <b>all travel at 3 × 10⁸ m/s in a vacuum</b> — they differ only in frequency and wavelength.</p>
+      <span class="key">Order (longest wavelength / lowest frequency → shortest wavelength / highest frequency)</span>
+      <div class="formula">Radio → Microwave → Infrared → Visible → Ultraviolet → X-ray → Gamma</div>
+      <ul>
+        <li><b>Radio</b> — longest wavelength, lowest frequency (TV and radio broadcasting).</li>
+        <li><b>Microwave</b> — cooking, mobile phones, satellite links.</li>
+        <li><b>Infrared</b> — heat radiation, remote controls, night-vision.</li>
+        <li><b>Visible light</b> — the only part our eyes can see (red → violet).</li>
+        <li><b>Ultraviolet</b> — from the Sun; causes sunburn, used in sterilisation.</li>
+        <li><b>X-ray</b> — sees through soft tissue to image bones.</li>
+        <li><b>Gamma</b> — shortest wavelength, highest frequency; from nuclei; kills cancer cells.</li>
+      </ul>
+      <div class="analogy">🌟 Mnemonic for the order: <b>R</b>ich <b>M</b>en <b>I</b>n <b>V</b>ans <b>U</b>se e<b>X</b>pensive <b>G</b>adgets — Radio, Microwave, Infrared, Visible, Ultraviolet, X-ray, Gamma. As you go right, wavelength gets SHORTER and frequency gets HIGHER.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: STANDING WAVES & RESONANCE ============ -->
+  <section class="cat standing" id="cat-standing">
+    <h2 class="cathead">🎵 PART 4 — Standing Waves, Resonance &amp; Harmonics</h2>
+
+    <div class="lesson">
+      <h3>1. What is a stationary (standing) wave?</h3>
+      <p>A <b>stationary wave</b> is formed when <b>two identical progressive waves travelling in opposite directions overlap (superpose).</b> This usually happens when a wave reflects back on itself — for example on a plucked string or in an air column.</p>
+      <p>Unlike a travelling wave, the pattern <b>stays in one place</b> and does not move along — so <b>no net energy is transported</b> along it.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Nodes and antinodes</h3>
+      <ul>
+        <li><b>Node (N):</b> a point that is <b>always at rest</b> — zero displacement. Here the two waves always cancel.</li>
+        <li><b>Antinode (A):</b> a point that vibrates with <b>maximum amplitude</b>. Here the two waves always reinforce.</li>
+      </ul>
+      <p>Nodes and antinodes alternate along the wave. Useful distances:</p>
+      <div class="formula">Node → next Node = λ / 2&nbsp;&nbsp;·&nbsp;&nbsp;Node → next Antinode = λ / 4</div>
+      <div class="analogy">🌟 On a skipping rope shaken at the right speed you see loops that stand still: the still points where the rope crosses are NODES; the fat middle of each loop is an ANTINODE.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Resonance</h3>
+      <p><b>Resonance</b> is when an object is made to vibrate at its own <b>natural frequency</b> by a driving force of the same frequency, giving a <b>large-amplitude</b> vibration.</p>
+      <p>It is why a wine glass can shatter at exactly the right note, why a swing goes higher when you push in time with it, and how musical instruments produce loud, clear notes.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Vibrating strings</h3>
+      <p>A string fixed at both ends must have a <b>node at each end</b>. The simplest pattern — one loop, one antinode in the middle — is the <b>fundamental (1st harmonic)</b>.</p>
+      <p>For the fundamental, the string length holds half a wavelength, so <b>λ = 2L</b>, giving:</p>
+      <div class="formula">Fundamental frequency:&nbsp; f₁ = v / (2L)</div>
+      <p>Higher notes (harmonics) are whole-number multiples of this: <b>fₙ = n × f₁</b> (n = 1, 2, 3 …). A string can produce <b>all</b> harmonics.</p>
+      <div class="ex"><b class="t">Worked example.</b> A string of length 0.5 m carries waves of speed 200 m/s. Find its fundamental frequency.
+        <div class="calc">f₁ = v ÷ (2L) = 200 ÷ (2 × 0.5)</div>
+        <div class="calc">f₁ = 200 ÷ 1 = 200 Hz</div>
+        Answer = <b>200 Hz</b>. (The 2nd harmonic would be 400 Hz, the 3rd 600 Hz, and so on.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Air columns — open and closed pipes</h3>
+      <p>Sound in a pipe forms a standing wave too. The rule: an <b>open end is an antinode</b> and a <b>closed end is a node</b>.</p>
+      <span class="key">Open pipe (both ends open)</span>
+      <ul>
+        <li>Antinode at both ends. Fundamental: <b>f₁ = v / (2L)</b>.</li>
+        <li>Produces <b>all</b> harmonics (1st, 2nd, 3rd, 4th …).</li>
+      </ul>
+      <span class="key">Closed pipe (one end closed)</span>
+      <ul>
+        <li>Node at the closed end, antinode at the open end. Fundamental: <b>f₁ = v / (4L)</b>.</li>
+        <li>Produces <b>only the ODD harmonics</b> (1st, 3rd, 5th …).</li>
+      </ul>
+      <div class="ex"><b class="t">Worked example.</b> A pipe closed at one end is 0.25 m long. If the speed of sound is 340 m/s, find its fundamental frequency.
+        <div class="calc">f₁ = v ÷ (4L) = 340 ÷ (4 × 0.25)</div>
+        <div class="calc">f₁ = 340 ÷ 1 = 340 Hz</div>
+        Answer = <b>340 Hz</b>. (Next note is the 3rd harmonic, 3 × 340 = 1020 Hz — even harmonics are missing.)</div>
+      <div class="analogy">🌟 Remember: <b>Closed pipe = Cut in half the frequency</b> (v/4L, not v/2L) and only <b>odd</b> harmonics survive.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Remember v = fλ, halve the echo, order the spectrum — the marks follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"A wave is best described as…",o:["A disturbance that transfers energy from one point to another without transferring matter","A flow of matter from one place to another","A stream of electrons moving through a wire","A chemical reaction that gives off heat"],c:0,e:"<span class='h'>💡 Idea</span>A wave carries ENERGY through a medium (or space) without the medium itself travelling along — the particles only vibrate about fixed points.<span class='h'>✅</span>A disturbance that transfers energy from one point to another without transferring matter."},
+{s:"In a transverse wave, the particles of the medium vibrate…",o:["Along the same direction as the wave travels","At right angles (perpendicular) to the direction the wave travels","In complete circles around the source","Only after the wave has stopped"],c:1,e:"<span class='h'>💡 Idea</span>Transverse = vibration is PERPENDICULAR to the direction of travel. Examples: water waves, light and all EM waves.<span class='h'>✅</span>At right angles (perpendicular) to the direction the wave travels."},
+{s:"Which of the following is a longitudinal wave?",o:["Light","Water ripples","Sound","Radio waves"],c:2,e:"<span class='h'>💡 Idea</span>In sound the air particles vibrate back and forth ALONG the direction of travel, forming compressions and rarefactions — that is longitudinal. Light, water and radio are transverse.<span class='h'>✅</span>Sound."},
+{s:"Light waves are classified as…",o:["Longitudinal waves","Sound waves","Pressure waves","Transverse waves"],c:3,e:"<span class='h'>💡 Idea</span>Light is a transverse electromagnetic wave — its fields vibrate at right angles to the direction of travel.<span class='h'>✅</span>Transverse waves."},
+{s:"Compressions and rarefactions are features of…",o:["Longitudinal waves such as sound","Transverse waves such as light","Stationary water waves","Radio waves only"],c:0,e:"<span class='h'>💡 Idea</span>A compression is where particles are squeezed together; a rarefaction is where they are spread apart. These occur only in longitudinal waves like sound.<span class='h'>✅</span>Longitudinal waves such as sound."},
+{s:"A mechanical wave differs from an electromagnetic wave because a mechanical wave…",o:["Can travel through a vacuum","Needs a material medium to travel through","Always travels at the speed of light","Carries no energy at all"],c:1,e:"<span class='h'>💡 Idea</span>Mechanical waves (sound, water, waves on a string) need particles of a medium to pass the vibration on. EM waves need no medium and can cross empty space.<span class='h'>✅</span>Needs a material medium to travel through."},
+{s:"Which type of wave can travel through the vacuum of space?",o:["Sound waves","Water waves","Waves on a string","Electromagnetic waves such as light"],c:3,e:"<span class='h'>💡 Idea</span>EM waves (light, radio, X-rays) need no medium, so they cross the vacuum of space. That is how sunlight reaches Earth, while sound cannot travel through space.<span class='h'>✅</span>Electromagnetic waves such as light."},
+{s:"The amplitude of a wave is…",o:["The distance between two successive crests","The number of waves passing per second","The maximum displacement of a particle from its rest position","The time for one complete oscillation"],c:2,e:"<span class='h'>💡 Idea</span>Amplitude is how far a particle moves from the middle (rest) position at most. A bigger amplitude means more energy (and, for sound, a louder note).<span class='h'>✅</span>The maximum displacement of a particle from its rest position."},
+{s:"The wavelength (λ) of a wave is…",o:["The distance between two successive points in phase, e.g. crest to crest","The height of a crest above the rest line","The number of crests passing a point each second","The speed at which the wave travels"],c:0,e:"<span class='h'>💡 Idea</span>Wavelength is the length of one complete wave — measured crest-to-crest or compression-to-compression. Its unit is the metre (m).<span class='h'>✅</span>The distance between two successive points in phase, e.g. crest to crest."},
+{s:"The SI unit of frequency is the…",o:["Metre","Hertz","Second","Newton"],c:1,e:"<span class='h'>💡 Idea</span>Frequency is the number of complete waves per second; its unit is the hertz (Hz), where 1 Hz = 1 wave per second.<span class='h'>✅</span>Hertz."},
+{s:"A wave has a period of 0.02 s. Its frequency is…",o:["2 Hz","5 Hz","20 Hz","50 Hz"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>f = 1 ÷ T = 1 ÷ 0.02</span><span class='calc'>f = 50 Hz</span><span class='h'>✅</span>50 Hz."},
+{s:"The period (T) of a wave is…",o:["The number of waves per second","The maximum displacement from rest","The time taken for one complete oscillation","The distance between two crests"],c:2,e:"<span class='h'>💡 Idea</span>Period is the time for ONE full wave (one complete vibration). It is the reciprocal of frequency: T = 1/f.<span class='h'>✅</span>The time taken for one complete oscillation."},
+{s:"A wave has a frequency of 50 Hz and a wavelength of 4 m. Its speed is…",o:["200 m/s","54 m/s","12.5 m/s","0.08 m/s"],c:0,e:"<span class='h'>✏️ Working</span>Use the wave equation v = fλ:<span class='calc'>v = 50 × 4</span><span class='calc'>v = 200 m/s</span><span class='h'>✅</span>200 m/s."},
+{s:"A sound wave travels at 340 m/s with a frequency of 170 Hz. Its wavelength is…",o:["0.5 m","2 m","510 m","57 800 m"],c:1,e:"<span class='h'>✏️ Working</span>Rearrange v = fλ to λ = v ÷ f:<span class='calc'>λ = 340 ÷ 170</span><span class='calc'>λ = 2 m</span><span class='h'>✅</span>2 m."},
+{s:"A wave of wavelength 0.5 m travels at 300 m/s. Its frequency is…",o:["150 Hz","0.5 Hz","60 Hz","600 Hz"],c:3,e:"<span class='h'>✏️ Working</span>Rearrange v = fλ to f = v ÷ λ:<span class='calc'>f = 300 ÷ 0.5</span><span class='calc'>f = 600 Hz</span><span class='h'>✅</span>600 Hz."},
+{s:"Water waves of wavelength 2 m pass a point at 5 waves per second. The speed of the waves is…",o:["2.5 m/s","7 m/s","10 m/s","0.4 m/s"],c:2,e:"<span class='h'>✏️ Working</span>5 waves per second means f = 5 Hz. Then v = fλ:<span class='calc'>v = 5 × 2</span><span class='calc'>v = 10 m/s</span><span class='h'>✅</span>10 m/s."},
+{s:"The bouncing back of a wave when it meets a barrier is called…",o:["Reflection","Refraction","Diffraction","Interference"],c:0,e:"<span class='h'>💡 Idea</span>Reflection is when a wave hits a surface and bounces back. An echo is reflected sound; a mirror reflects light.<span class='h'>✅</span>Reflection."},
+{s:"The bending of a wave as it passes from one medium into another, because its speed changes, is called…",o:["Reflection","Refraction","Diffraction","Dispersion"],c:1,e:"<span class='h'>💡 Idea</span>Refraction is the change of direction of a wave when it enters a new medium and its speed changes — like light bending as it enters water.<span class='h'>✅</span>Refraction."},
+{s:"The spreading of a wave as it passes through a narrow gap or around an obstacle is called…",o:["Reflection","Refraction","Interference","Diffraction"],c:3,e:"<span class='h'>💡 Idea</span>Diffraction is the spreading out of waves through a gap or around an edge. It is most noticeable when the gap is about the same size as the wavelength.<span class='h'>✅</span>Diffraction."},
+{s:"When two waves meet and combine to give a larger or smaller resultant wave, the effect is called…",o:["Reflection","Refraction","Interference","Absorption"],c:2,e:"<span class='h'>💡 Idea</span>Interference is the adding together of two waves. Crest-on-crest gives a bigger wave (constructive); crest-on-trough cancels out (destructive).<span class='h'>✅</span>Interference."},
+{s:"A man shouts at a cliff and hears the echo 3 s later. If the speed of sound is 340 m/s, how far away is the cliff?",o:["510 m","1020 m","113 m","340 m"],c:0,e:"<span class='h'>✏️ Working</span>The sound travels to the cliff and back, so 2d = v × t:<span class='calc'>2d = 340 × 3 = 1020 m</span><span class='calc'>d = 1020 ÷ 2 = 510 m</span><span class='h'>✅</span>510 m."},
+{s:"The pitch of a musical note depends on its…",o:["Amplitude","Frequency","Speed in air","Loudness"],c:1,e:"<span class='h'>💡 Idea</span>Higher frequency = higher pitch. Loudness (not pitch) depends on amplitude.<span class='h'>✅</span>Frequency."},
+{s:"The loudness of a sound depends mainly on its…",o:["Frequency","Pitch","Speed","Amplitude"],c:3,e:"<span class='h'>💡 Idea</span>The bigger the amplitude, the more energy the sound carries and the louder it is. Frequency controls pitch, not loudness.<span class='h'>✅</span>Amplitude."},
+{s:"Which member of the electromagnetic spectrum has the HIGHEST frequency?",o:["Radio waves","Infrared","Gamma rays","Visible light"],c:2,e:"<span class='h'>💡 Idea</span>Order of increasing frequency: radio, microwave, infrared, visible, ultraviolet, X-ray, gamma. Gamma has the highest frequency (and shortest wavelength).<span class='h'>✅</span>Gamma rays."},
+{s:"Which member of the electromagnetic spectrum has the LONGEST wavelength?",o:["Radio waves","Ultraviolet","X-rays","Gamma rays"],c:0,e:"<span class='h'>💡 Idea</span>The longest wavelength (lowest frequency) is at the radio end of the spectrum; the shortest wavelength is at the gamma end.<span class='h'>✅</span>Radio waves."},
+{s:"In a vacuum, all electromagnetic waves travel at a speed of about…",o:["340 m/s","1500 m/s","3 × 10⁶ m/s","3 × 10⁸ m/s"],c:3,e:"<span class='h'>💡 Idea</span>Every EM wave — radio, light, X-rays, gamma — travels through a vacuum at the same speed, the speed of light, c = 3 × 10⁸ m/s.<span class='h'>✅</span>3 × 10⁸ m/s."},
+{s:"In a stationary (standing) wave, a point that is always at rest (zero displacement) is called a…",o:["Crest","Compression","Node","Antinode"],c:2,e:"<span class='h'>💡 Idea</span>A node is a point of zero movement in a standing wave. Halfway between two nodes is an antinode, where the vibration is greatest.<span class='h'>✅</span>Node."},
+{s:"In a stationary wave, the point of maximum displacement is called a…",o:["Node","Antinode","Rarefaction","Wavefront"],c:1,e:"<span class='h'>💡 Idea</span>An antinode is where the medium vibrates with the largest amplitude. Nodes (no motion) and antinodes (maximum motion) alternate along a standing wave.<span class='h'>✅</span>Antinode."},
+{s:"A pipe closed at one end produces…",o:["All harmonics","Even harmonics only","No harmonics at all","Odd harmonics only"],c:3,e:"<span class='h'>💡 Idea</span>A closed pipe has a node at the closed end and an antinode at the open end, so it can only produce the odd harmonics (1st, 3rd, 5th …).<span class='h'>✅</span>Odd harmonics only."},
+{s:"A string of length 0.5 m carries waves of speed 200 m/s. Its fundamental frequency is…",o:["200 Hz","100 Hz","400 Hz","50 Hz"],c:0,e:"<span class='h'>✏️ Working</span>For a string fixed at both ends the fundamental is f = v ÷ (2L):<span class='calc'>f = 200 ÷ (2 × 0.5)</span><span class='calc'>f = 200 ÷ 1 = 200 Hz</span><span class='h'>✅</span>200 Hz."}
+);
+
+["basics","terms","behaviour","standing","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

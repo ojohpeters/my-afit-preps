@@ -27,6 +27,14 @@ window.RESOURCES = [
    title:"Calculus — Tutor Guide",
    desc:"A teaching companion: lesson plan, what to say, common mistakes, check-questions and a practice set with full solutions.",
    meta:"Teaching guide", note:"For tutors"},
+  {file:"maths-indices-logarithms-surds.html", subject:"Maths",
+   title:"Indices, Logarithms & Surds",
+   desc:"All the laws of indices and logs, solving indicial & log equations, simplifying surds and rationalising denominators (single & conjugate).",
+   meta:"30-question quiz"},
+  {file:"maths-probability.html", subject:"Maths",
+   title:"Probability",
+   desc:"Single events, the complement, addition rule (OR), multiplication rule (AND), independence, with/without replacement and 'at least one' problems.",
+   meta:"30-question quiz"},
 
   /* ---------- Physics ---------- */
   {file:"physics-electricity.html", subject:"Physics",
@@ -49,6 +57,14 @@ window.RESOURCES = [
    title:"Vectors & Lami's Theorem",
    desc:"Scalars vs vectors, resolving into components, the parallelogram law, equilibrium, Lami's theorem and complex problems (inclines, strings, tensions).",
    meta:"30-question quiz"},
+  {file:"physics-work-energy-power.html", subject:"Physics",
+   title:"Work, Energy & Power",
+   desc:"Work (F·d, F·d·cosθ, mgh), kinetic & potential energy, conservation and transformation of energy, power (W/t, F·v) and efficiency.",
+   meta:"30-question quiz"},
+  {file:"physics-waves.html", subject:"Physics",
+   title:"Waves",
+   desc:"Transverse vs longitudinal, wave terms, the wave equation v = fλ, reflection/refraction/diffraction, sound & echoes, EM spectrum, nodes & harmonics.",
+   meta:"30-question quiz"},
 
   /* ---------- Chemistry ---------- */
   {file:"chemistry-mixed-practice.html", subject:"Chemistry",
@@ -67,6 +83,14 @@ window.RESOURCES = [
    title:"Metals, Non-metals & Their Compounds",
    desc:"Physical & chemical differences, the reactivity series, reactions with oxygen/water/acid, and classifying oxides (basic/acidic/amphoteric/neutral).",
    meta:"30-question quiz"},
+  {file:"chemistry-acids-bases-salts.html", subject:"Chemistry",
+   title:"Acids, Bases & Salts",
+   desc:"Arrhenius/Brønsted/Lewis definitions, pH & indicators, salt types & preparation, solubility rules, titration calculations and salt hydrolysis.",
+   meta:"30-question quiz"},
+  {file:"chemistry-mole-stoichiometry.html", subject:"Chemistry",
+   title:"Mole Concept & Stoichiometry",
+   desc:"The mole & Avogadro's number, molar mass & molar volume, empirical/molecular formulae, % composition, reacting-mass sums and concentration.",
+   meta:"30-question quiz"},
 
   /* ---------- Biology ---------- */
   {file:"biology-genetics.html", subject:"Biology",
@@ -76,6 +100,14 @@ window.RESOURCES = [
   {file:"biology-pollination.html", subject:"Biology",
    title:"Insect vs Wind Pollination",
    desc:"Flower structure and every adaptation of insect- and wind-pollinated flowers, with the key side-by-side comparison table.",
+   meta:"30-question quiz"},
+  {file:"biology-circulatory-system.html", subject:"Biology",
+   title:"Circulatory System",
+   desc:"The heart & double circulation, arteries/veins/capillaries, blood components, the circulation pathway, and ABO/Rhesus blood groups.",
+   meta:"30-question quiz"},
+  {file:"biology-digestion-nutrition.html", subject:"Biology",
+   title:"Food, Nutrition & Digestion",
+   desc:"Food classes & tests, vitamin deficiencies, the alimentary canal, digestive enzymes (substrate→product), absorption via villi and modes of nutrition.",
    meta:"30-question quiz"},
 
   /* ---------- English ---------- */

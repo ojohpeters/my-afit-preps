@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food, Nutrition &amp; Digestion A–Z — Food Classes, Enzymes &amp; Absorption (Biology)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🍎 Food, Nutrition &amp; Digestion A–Z</h1>
+  <p>Classes of Food · The Digestive System · Enzymes · Absorption — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with clear notes and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Food tests &amp; deficiency diseases</span><span class="pill">Every enzyme mapped</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="food">🍎 Classes of Food</div>
+    <div class="tab" data-cat="digestion">🦷 The Digestive System</div>
+    <div class="tab" data-cat="enzymes">🧪 Enzymes &amp; Chemical Digestion</div>
+    <div class="tab" data-cat="absorption">🌿 Absorption &amp; Modes of Nutrition</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: CLASSES OF FOOD ============ -->
+  <section class="cat food show" id="cat-food">
+    <h2 class="cathead">🍎 PART 1 — The Classes of Food</h2>
+
+    <div class="lesson">
+      <h3>1. What is food and nutrition?</h3>
+      <p><b>Food</b> is any substance which, when taken into the body, provides <b>energy, materials for growth and repair, or substances to protect the body and keep it working properly</b>.</p>
+      <p><b>Nutrition</b> is the process by which living things obtain and use food. The useful substances inside food are called <b>nutrients</b>.</p>
+      <span class="key">The classes (groups) of food</span>
+      <ul>
+        <li><b>Carbohydrates</b> — the main energy foods</li>
+        <li><b>Proteins</b> — for growth and repair (body-building)</li>
+        <li><b>Fats and oils (lipids)</b> — a concentrated energy store</li>
+        <li><b>Vitamins</b> — tiny amounts needed to protect the body</li>
+        <li><b>Mineral salts</b> — needed for bones, blood, etc.</li>
+        <li><b>Water</b> — the medium in which everything happens</li>
+      </ul>
+      <p>We also need <b>roughage (dietary fibre)</b>. It is not really a nutrient — the body cannot digest it — but it is important for a healthy gut.</p>
+      <div class="analogy">🌟 Memory: the <b>energy</b> group (carbohydrates + fats), the <b>body-building</b> group (proteins) and the <b>protective</b> group (vitamins, minerals, water). Learn them in these three families.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Carbohydrates — the main energy food</h3>
+      <p><b>Function:</b> the body&#39;s main and cheapest source of energy. They are broken down to <b>glucose</b>, which is burned in respiration to release energy.</p>
+      <p><b>Food sources:</b> yam, cassava (garri), rice, maize, bread, potatoes, sugar, honey, fruits.</p>
+      <p><b>Elements present:</b> <b>Carbon, Hydrogen and Oxygen only</b> (the H and O are in the ratio 2:1, as in water).</p>
+      <p><b>Types:</b> sugars (glucose, sucrose), starch, and cellulose (fibre). Excess carbohydrate is stored as <b>glycogen</b> in the liver and muscles, or turned into fat.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Proteins — for growth and repair</h3>
+      <p><b>Function:</b> building new cells and tissues, growth, and repair of worn-out or damaged parts. Proteins also make <b>enzymes, hormones and antibodies</b>, and can supply energy in emergencies.</p>
+      <p><b>Food sources:</b> meat, fish, eggs, milk, beans, groundnut, soya beans, melon (egusi).</p>
+      <p><b>Elements present:</b> <b>Carbon, Hydrogen, Oxygen and Nitrogen</b> (some also contain sulphur and phosphorus). The presence of <b>nitrogen</b> is what makes proteins different from carbohydrates and fats.</p>
+      <p><b>Building blocks:</b> proteins are made of small units called <b>amino acids</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Fats and oils (lipids) — a concentrated energy store</h3>
+      <p><b>Function:</b> a store of energy (they give about twice as much energy per gram as carbohydrate); they insulate the body against heat loss and protect delicate organs; they also carry the fat-soluble vitamins A, D, E and K.</p>
+      <p><b>Food sources:</b> groundnut oil, palm oil, butter, margarine, milk, cheese, meat fat, coconut, egg yolk.</p>
+      <p><b>Elements present:</b> <b>Carbon, Hydrogen and Oxygen</b> (like carbohydrates, but with far less oxygen).</p>
+      <p><b>Building blocks:</b> fats are made of <b>fatty acids and glycerol</b>. Fats are solid at room temperature; oils are liquid.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Vitamins — small amounts, big jobs</h3>
+      <p><b>Function:</b> needed only in <b>very small quantities</b> to keep the body healthy and working. They do not give energy, but a lack of a vitamin causes a <b>deficiency disease</b>.</p>
+      <span class="key">Vitamins &amp; their deficiency diseases</span>
+      <table class="r">
+        <tr><th>Vitamin</th><th>Rich food sources</th><th>Deficiency disease</th></tr>
+        <tr><td>Vitamin A</td><td>Carrots, palm oil, liver, green vegetables</td><td><b>Night blindness</b></td></tr>
+        <tr><td>Vitamin B₁ (thiamine)</td><td>Whole grains, beans, yeast</td><td><b>Beriberi</b></td></tr>
+        <tr><td>Vitamin C (ascorbic acid)</td><td>Oranges, lemon, guava, fresh vegetables</td><td><b>Scurvy</b> (bleeding gums)</td></tr>
+        <tr><td>Vitamin D</td><td>Sunlight on skin, fish oil, egg yolk, milk</td><td><b>Rickets</b> (soft, bent bones)</td></tr>
+        <tr><td>Vitamin K</td><td>Green leafy vegetables</td><td><b>Poor blood clotting</b> (bleeding)</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>A</b>–<b>N</b>ight (A → Night blindness), <b>C</b>–<b>S</b>curvy, <b>D</b>–Rickets (bones), <b>K</b>–<b>K</b>lotting (K helps blood clot), <b>B₁</b>–Beriberi.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Mineral salts — for bones, blood and balance</h3>
+      <p><b>Function:</b> needed in small amounts to build certain tissues and control body processes.</p>
+      <table class="r">
+        <tr><th>Mineral</th><th>Main use in the body</th><th>Deficiency causes</th></tr>
+        <tr><td><b>Calcium</b></td><td>Strong bones and teeth; helps blood clot and muscles work</td><td>Weak bones/teeth; rickets in children</td></tr>
+        <tr><td><b>Iron</b></td><td>Makes <b>haemoglobin</b> in red blood cells (carries oxygen)</td><td><b>Anaemia</b> (tiredness, paleness)</td></tr>
+        <tr><td><b>Iodine</b></td><td>Needed by the thyroid gland to make its hormone</td><td><b>Goitre</b> (swollen thyroid in the neck)</td></tr>
+      </table>
+      <p>Other useful minerals include sodium and potassium (nerve and fluid balance) and phosphorus (bones, teeth, with calcium).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Water and roughage</h3>
+      <p><b>Water</b> makes up about two-thirds of the body. It is the medium in which reactions happen, it carries dissolved food and waste, and it helps control body temperature (through sweating). We get it from drinks and from food.</p>
+      <p><b>Roughage (dietary fibre)</b> is mainly cellulose from plant foods (vegetables, whole grains, fruit skins). It is <b>not digested</b>, but it adds <b>bulk</b> that the gut muscles can grip. This helps <b>peristalsis</b> push food along and <b>prevents constipation</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Food tests — how to identify each nutrient</h3>
+      <p>These simple laboratory tests are examiner favourites. Learn the reagent, what you do, and the colour change.</p>
+      <table class="r">
+        <tr><th>Food substance</th><th>Test (reagent)</th><th>Positive result</th></tr>
+        <tr><td><b>Starch</b></td><td>Add <b>iodine solution</b></td><td>Turns <b>blue-black</b></td></tr>
+        <tr><td><b>Reducing sugar</b> (e.g. glucose)</td><td>Add <b>Benedict&#39;s (or Fehling&#39;s) solution and heat</b></td><td>Blue changes to a <b>brick-red</b> precipitate</td></tr>
+        <tr><td><b>Protein</b></td><td><b>Biuret test</b> (NaOH then a little copper(II) sulphate)</td><td>Turns <b>purple / violet</b></td></tr>
+        <tr><td><b>Fat / oil</b></td><td>Rub on paper (or add <b>Sudan III</b>)</td><td><b>Translucent (greasy) spot</b> on paper; Sudan III stains fat <b>red</b></td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>I</b>odine → star<b>ch</b> (blue-black); <b>B</b>enedict&#39;s → sugar (<b>b</b>rick-red on heating); <b>Biuret</b> → protein (purple); grease spot → fat.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>9. A balanced diet</h3>
+      <p>A <b>balanced diet</b> is a diet that contains <b>all the classes of food in the correct proportions (amounts)</b> needed by the body for health.</p>
+      <p>It must supply enough energy (carbohydrate and fat), enough body-building food (protein), and the protective foods (vitamins, minerals, water) plus roughage. The exact amounts depend on age, sex, size and how active a person is — a growing child or a labourer needs more than an office worker.</p>
+      <p>Eating too much (especially fat and sugar) leads to <b>obesity</b>; eating too little protein and energy leads to <b>malnutrition</b> such as <b>kwashiorkor</b> (protein deficiency) and <b>marasmus</b>.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: THE DIGESTIVE SYSTEM ============ -->
+  <section class="cat digestion" id="cat-digestion">
+    <h2 class="cathead">🦷 PART 2 — The Digestive System</h2>
+
+    <div class="lesson">
+      <h3>1. Why do we digest food?</h3>
+      <p>Most food is made of large, <b>insoluble</b> molecules (starch, protein, fat) that are too big to pass into the blood. <b>Digestion</b> is the breaking down of large, insoluble food into small, <b>soluble</b> molecules that can be absorbed and used by the body.</p>
+      <span class="key">Two kinds of digestion</span>
+      <ul>
+        <li><b>Physical (mechanical) digestion:</b> the <b>breaking up of food into smaller pieces without changing it chemically</b> — chewing by the teeth and churning by the stomach. This increases the surface area for enzymes to work on.</li>
+        <li><b>Chemical digestion:</b> the breaking down of food molecules by <b>enzymes</b> into simpler substances (e.g. starch → glucose). This does change the food chemically.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The alimentary canal (gut) — in order</h3>
+      <p>The <b>alimentary canal</b> is the long tube from the mouth to the anus through which food passes. Food travels through these parts in order:</p>
+      <div class="formula">Mouth → Oesophagus → Stomach → Small intestine → Large intestine → Rectum → Anus</div>
+      <ul>
+        <li><b>Mouth (buccal cavity):</b> teeth chew the food; saliva mixes with it and starts digesting starch. The tongue rolls it into a ball (bolus).</li>
+        <li><b>Oesophagus (gullet):</b> a muscular tube that carries food from the mouth to the stomach by <b>peristalsis</b>.</li>
+        <li><b>Stomach:</b> a muscular bag that stores food and churns it with gastric juice (contains HCl and pepsin). Protein digestion begins here.</li>
+        <li><b>Small intestine:</b> the longest part, in two main regions — the <b>duodenum</b> (first part; receives bile and pancreatic juice) and the <b>ileum</b> (where digestion is completed and food is absorbed).</li>
+        <li><b>Large intestine (colon):</b> absorbs most of the remaining <b>water</b> and mineral salts from the undigested material.</li>
+        <li><b>Rectum:</b> stores the solid waste (faeces).</li>
+        <li><b>Anus:</b> the opening through which faeces are passed out (egestion).</li>
+      </ul>
+      <span class="key">Associated glands (help digestion but food does not pass through them)</span>
+      <ul>
+        <li><b>Salivary glands</b> — in the mouth; make saliva (contains salivary amylase / ptyalin).</li>
+        <li><b>Liver</b> — makes bile.</li>
+        <li><b>Pancreas</b> — makes pancreatic juice (and the hormones insulin and glucagon).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Teeth — types and functions</h3>
+      <p>Humans have different-shaped teeth for different jobs (this is called being <b>heterodont</b>).</p>
+      <table class="r">
+        <tr><th>Type of tooth</th><th>Shape</th><th>Function</th></tr>
+        <tr><td><b>Incisors</b></td><td>Chisel-shaped, sharp edge (front teeth)</td><td>Biting and cutting food</td></tr>
+        <tr><td><b>Canines</b></td><td>Pointed</td><td>Tearing and gripping (flesh)</td></tr>
+        <tr><td><b>Premolars</b></td><td>Broad with cusps</td><td>Grinding and chewing</td></tr>
+        <tr><td><b>Molars</b></td><td>Large, broad, flat-topped (back teeth)</td><td>Grinding and crushing food</td></tr>
+      </table>
+      <p>Chewing is physical digestion: it breaks food into small pieces and mixes it with saliva, giving enzymes a <b>larger surface area</b> to work on.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Peristalsis — how food moves</h3>
+      <p><b>Peristalsis</b> is the <b>wave of muscular contraction and relaxation of the gut wall that pushes food along the alimentary canal</b>. The muscles behind the food squeeze (contract) while the muscles in front relax, so the food is pushed forward — like squeezing toothpaste along a tube.</p>
+      <div class="analogy">🌟 It is peristalsis (not gravity) that moves food. This is why an astronaut, or a person lying down, can still swallow food normally.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The liver and pancreas</h3>
+      <h4>The liver — the body&#39;s chemical factory</h4>
+      <ul>
+        <li>Produces <b>bile</b>, which helps digest fats.</li>
+        <li><b>Regulates blood sugar</b> — stores excess glucose as <b>glycogen</b> and releases it when needed.</li>
+        <li><b>Deamination</b> — breaks down excess amino acids, forming <b>urea</b> (removed by the kidneys).</li>
+        <li><b>Detoxification</b> — makes poisons (e.g. alcohol) harmless.</li>
+        <li>Stores iron and some vitamins; produces heat for the body.</li>
+      </ul>
+      <h4>The pancreas</h4>
+      <ul>
+        <li>Makes <b>pancreatic juice</b>, which contains three enzymes: <b>amylase, trypsin and lipase</b> (poured into the duodenum).</li>
+        <li>Also makes the hormones <b>insulin and glucagon</b>, which control the level of glucose in the blood.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: ENZYMES & CHEMICAL DIGESTION ============ -->
+  <section class="cat enzymes" id="cat-enzymes">
+    <h2 class="cathead">🧪 PART 3 — Enzymes &amp; Chemical Digestion</h2>
+
+    <div class="lesson">
+      <h3>1. What is an enzyme?</h3>
+      <p>An <b>enzyme</b> is a <b>biological catalyst</b> — a substance (made of protein) produced by living cells that <b>speeds up a chemical reaction without being used up</b> in it.</p>
+      <span class="key">Key properties of enzymes</span>
+      <ul>
+        <li><b>They are proteins</b> and are made by living cells.</li>
+        <li><b>They are specific</b> — each enzyme works on only one type of substrate (a lock-and-key fit). Amylase only digests starch; it cannot digest protein.</li>
+        <li><b>They are affected by temperature.</b> They work fastest at about <b>37&nbsp;°C</b> (body temperature). Too cold and they slow down; too hot and they are <b>denatured</b> (destroyed) — a change that cannot be reversed.</li>
+        <li><b>They are affected by pH.</b> Each enzyme has its own best pH — pepsin works in <b>acid</b>, but enzymes in the small intestine work in <b>alkaline</b> conditions.</li>
+        <li>They are needed only in <b>small amounts</b> (they are re-used).</li>
+      </ul>
+      <div class="analogy">🌟 Lock and key: the substrate (key) fits exactly into the enzyme (lock). If the shape is wrong, or heat has bent the lock (denatured it), the key no longer fits.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The digestive enzymes — where and what they do</h3>
+      <p>Learn each enzyme as: <b>where it is made → what it acts on (substrate) → what it produces (product)</b>.</p>
+      <table class="r">
+        <tr><th>Enzyme</th><th>Where produced / acts</th><th>Substrate → Product</th></tr>
+        <tr><td><b>Salivary amylase (ptyalin)</b></td><td>Salivary glands / mouth</td><td>Starch → Maltose</td></tr>
+        <tr><td><b>Pepsin</b></td><td>Stomach (acidic, needs HCl)</td><td>Protein → Peptides</td></tr>
+        <tr><td><b>Rennin</b></td><td>Stomach (of young mammals)</td><td>Curdles (clots) milk protein</td></tr>
+        <tr><td><b>Pancreatic amylase</b></td><td>Pancreas / duodenum</td><td>Starch → Maltose</td></tr>
+        <tr><td><b>Trypsin</b></td><td>Pancreas / duodenum (alkaline)</td><td>Protein &amp; peptides → Peptides / amino acids</td></tr>
+        <tr><td><b>Lipase</b></td><td>Pancreas / duodenum</td><td>Fats → Fatty acids + Glycerol</td></tr>
+        <tr><td><b>Maltase</b></td><td>Small intestine (ileum)</td><td>Maltose → Glucose</td></tr>
+        <tr><td><b>Sucrase</b></td><td>Small intestine (ileum)</td><td>Sucrose → Glucose + Fructose</td></tr>
+        <tr><td><b>Lactase</b></td><td>Small intestine (ileum)</td><td>Lactose → Glucose + Galactose</td></tr>
+        <tr><td><b>Peptidase (erepsin)</b></td><td>Small intestine (ileum)</td><td>Peptides → Amino acids</td></tr>
+      </table>
+      <p><b>The big picture:</b> carbohydrates end up as <b>glucose</b>, proteins as <b>amino acids</b>, and fats as <b>fatty acids and glycerol</b> — all small and soluble, ready to be absorbed.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The role of hydrochloric acid (HCl) in the stomach</h3>
+      <p>Cells in the stomach wall release <b>hydrochloric acid</b>. Its jobs are:</p>
+      <ul>
+        <li>To provide the <b>acidic conditions (about pH 2)</b> that the enzyme <b>pepsin</b> needs to work.</li>
+        <li>To <b>kill bacteria</b> (germs) swallowed with the food.</li>
+        <li>To activate pepsin from its inactive form (pepsinogen).</li>
+      </ul>
+      <div class="analogy">🌟 Exam trap: pepsin works in <b>ACID</b>, not alkali. The stomach is the one acidic part of the gut.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Bile — an emulsifier, not an enzyme</h3>
+      <p><b>Bile</b> is a greenish-yellow fluid made in the <b>liver</b> and stored in the <b>gall bladder</b>. It flows into the <b>duodenum</b>.</p>
+      <ul>
+        <li><b>Bile is NOT an enzyme</b> — it contains no enzymes.</li>
+        <li>It <b>emulsifies fats</b> — it breaks large fat globules into many tiny droplets. This gives a <b>much larger surface area</b> for the enzyme <b>lipase</b> to act on, so fat is digested faster.</li>
+        <li>It is <b>alkaline</b>, so it neutralises the acidic food coming from the stomach, providing the right conditions for the intestinal and pancreatic enzymes.</li>
+      </ul>
+      <div class="analogy">🌟 Remember: bile <b>emulsifies</b> (physically breaks up) fat — it does not chemically digest it. The enzyme lipase does the actual digestion.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Summary — chemical digestion region by region</h3>
+      <ul>
+        <li><b>Mouth:</b> salivary amylase starts starch → maltose.</li>
+        <li><b>Stomach:</b> pepsin (in acid) starts protein → peptides; rennin curdles milk.</li>
+        <li><b>Duodenum:</b> bile emulsifies fat; pancreatic amylase, trypsin and lipase continue digestion.</li>
+        <li><b>Ileum:</b> maltase, sucrase, lactase and peptidase complete digestion to glucose, other sugars and amino acids — then absorption takes place.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: ABSORPTION & MODES OF NUTRITION ============ -->
+  <section class="cat absorption" id="cat-absorption">
+    <h2 class="cathead">🌿 PART 4 — Absorption &amp; Modes of Nutrition</h2>
+
+    <div class="lesson">
+      <h3>1. Absorption in the ileum</h3>
+      <p><b>Absorption</b> is the <b>passage of the small, soluble products of digestion from the gut into the blood (and lymph)</b>. This happens mainly in the <b>ileum</b> (the second part of the small intestine).</p>
+      <span class="key">The villi — built for absorption</span>
+      <p>The inner wall of the ileum is folded into millions of tiny finger-like projections called <b>villi</b> (singular: villus). They are perfectly adapted to absorb food quickly:</p>
+      <ul>
+        <li><b>Very many, finger-like</b> — this gives an <b>enormous surface area</b> for absorption.</li>
+        <li><b>Thin wall (one cell thick)</b> — so food passes through easily and quickly.</li>
+        <li><b>Rich blood supply (blood capillaries)</b> — glucose and amino acids are absorbed into the blood.</li>
+        <li>Each villus contains a <b>lacteal</b> (a tiny lymph vessel) — this absorbs the digested <b>fats</b> (fatty acids and glycerol).</li>
+      </ul>
+      <div class="analogy">🌟 Absorption happens in the <b>ileum</b>; the <b>large intestine</b> mainly absorbs <b>water</b> — do not mix them up.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Assimilation and egestion</h3>
+      <ul>
+        <li><b>Assimilation:</b> the use of absorbed food by the body cells — for example, glucose is used in respiration to release energy, and amino acids are built into new proteins for growth.</li>
+        <li><b>Egestion (defaecation):</b> the removal of <b>undigested</b> food (faeces) through the anus. Note: this is different from excretion, which removes waste made by the body&#39;s own reactions.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Modes of nutrition</h3>
+      <p>Living things feed in two broad ways:</p>
+      <h4>A. Autotrophic nutrition (self-feeding)</h4>
+      <p>The organism <b>makes its own food</b> from simple raw materials. Green plants do this by <b>photosynthesis</b> (using light and chlorophyll). Autotrophs are the producers of food.</p>
+      <h4>B. Heterotrophic nutrition (feeding on others)</h4>
+      <p>The organism <b>cannot make its own food</b> and must take in ready-made organic food. There are three types:</p>
+      <ul>
+        <li><b>Holozoic:</b> taking in <b>solid organic food</b>, then digesting and absorbing it — the way animals (including humans) feed.</li>
+        <li><b>Saprophytic:</b> feeding on <b>dead and decaying organic matter</b> — e.g. many fungi (mushrooms, <i>Rhizopus</i>) and bacteria. They are important decomposers.</li>
+        <li><b>Parasitic:</b> feeding on or inside a <b>living host</b>, harming it — e.g. tapeworm, roundworm, <i>Plasmodium</i> (malaria).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Photosynthesis — how green plants make food</h3>
+      <p><b>Photosynthesis</b> is the process by which green plants use <b>light energy</b> (trapped by the green pigment <b>chlorophyll</b>) to make <b>glucose</b> from <b>carbon dioxide and water</b>, releasing <b>oxygen</b>.</p>
+      <div class="formula">6CO₂ + 6H₂O &nbsp;—(light + chlorophyll)→&nbsp; C₆H₁₂O₆ + 6O₂</div>
+      <p>In words: carbon dioxide + water → glucose + oxygen. The raw materials are carbon dioxide (from the air) and water (from the soil); the essential conditions are <b>sunlight</b> and <b>chlorophyll</b>.</p>
+      <div class="analogy">🌟 Notice: photosynthesis is the <b>reverse</b> of respiration. Photosynthesis stores energy in glucose and gives out oxygen; respiration releases that energy and gives out carbon dioxide.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Chew the notes, digest the ideas, absorb the marks. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Which class of food is the body's main and cheapest source of energy?",o:["Carbohydrates","Proteins","Vitamins","Mineral salts"],c:0,e:"<span class='h'>💡 Idea</span>Carbohydrates such as starch and sugars are broken down to glucose, which is burned in respiration to give energy.<span class='h'>✅</span>Carbohydrates."},
+{s:"The main function of proteins in the body is…",o:["To lubricate the joints","Growth and repair of body tissues (body-building)","To provide roughage","To dissolve fat-soluble vitamins"],c:1,e:"<span class='h'>💡 Idea</span>Proteins build new cells and tissues for growth and for repairing worn-out parts; they also make enzymes, hormones and antibodies.<span class='h'>✅</span>Growth and repair of body tissues."},
+{s:"Carbohydrates are made up of which elements only?",o:["Carbon and nitrogen","Carbon, hydrogen and nitrogen","Carbon, hydrogen and oxygen","Carbon, oxygen and sulphur"],c:2,e:"<span class='h'>💡 Idea</span>Carbohydrates contain only carbon, hydrogen and oxygen, with the H and O in a 2:1 ratio (as in water).<span class='h'>✅</span>Carbon, hydrogen and oxygen."},
+{s:"In addition to carbon, hydrogen and oxygen, every protein always contains the element…",o:["Iron","Phosphorus","Iodine","Nitrogen"],c:3,e:"<span class='h'>💡 Idea</span>Proteins always contain nitrogen (and some contain sulphur). This nitrogen is what makes proteins different from carbohydrates and fats.<span class='h'>✅</span>Nitrogen."},
+{s:"When iodine solution is added to a food and it turns blue-black, the food contains…",o:["Starch","Reducing sugar","Protein","Fat"],c:0,e:"<span class='h'>💡 Idea</span>The iodine test gives a blue-black colour when starch is present.<span class='h'>✅</span>Starch."},
+{s:"A food is heated with Benedict's (or Fehling's) solution and a brick-red precipitate forms. This shows the presence of…",o:["Starch","Reducing sugar such as glucose","Protein","Vitamin C"],c:1,e:"<span class='h'>💡 Idea</span>Benedict's or Fehling's solution changes from blue to a brick-red precipitate on heating with a reducing sugar such as glucose.<span class='h'>✅</span>Reducing sugar such as glucose."},
+{s:"In the Biuret test, a purple/violet colour shows that the food contains…",o:["Fat","Starch","Protein","Water"],c:2,e:"<span class='h'>💡 Idea</span>The Biuret reagent turns purple/violet in the presence of protein.<span class='h'>✅</span>Protein."},
+{s:"Rubbing a food on paper leaves a permanent translucent (greasy) spot. The food contains…",o:["Reducing sugar","Protein","Starch","Fat or oil"],c:3,e:"<span class='h'>💡 Idea</span>Fats and oils leave a translucent (greasy) spot on paper; Sudan III also stains fat red.<span class='h'>✅</span>Fat or oil."},
+{s:"A prolonged shortage of vitamin C in the diet causes…",o:["Scurvy","Night blindness","Rickets","Beriberi"],c:0,e:"<span class='h'>💡 Idea</span>Vitamin C (found in citrus fruits and fresh vegetables) prevents scurvy, which causes bleeding gums and poor healing.<span class='h'>✅</span>Scurvy."},
+{s:"Deficiency of vitamin A leads to…",o:["Rickets","Night blindness","Scurvy","Goitre"],c:1,e:"<span class='h'>💡 Idea</span>Vitamin A is needed for seeing in dim light; a lack of it causes night blindness.<span class='h'>✅</span>Night blindness."},
+{s:"Rickets, in which children's bones become soft and bend, is caused by lack of…",o:["Vitamin C","Vitamin A","Vitamin D","Vitamin K"],c:2,e:"<span class='h'>💡 Idea</span>Vitamin D helps the body absorb calcium to harden bones; without it, bones stay soft and bend — this is rickets.<span class='h'>✅</span>Vitamin D."},
+{s:"Beriberi is a deficiency disease caused by the lack of…",o:["Vitamin C","Vitamin D","Vitamin A","Vitamin B₁ (thiamine)"],c:3,e:"<span class='h'>💡 Idea</span>Vitamin B₁ (thiamine) prevents beriberi, a disease that affects the nerves and muscles.<span class='h'>✅</span>Vitamin B₁ (thiamine)."},
+{s:"Which mineral is most needed for the formation of strong bones and teeth?",o:["Calcium","Iron","Iodine","Sodium"],c:0,e:"<span class='h'>💡 Idea</span>Calcium (helped by phosphorus and vitamin D) hardens bones and teeth.<span class='h'>✅</span>Calcium."},
+{s:"Iron is required in the diet mainly to…",o:["Harden the teeth","Make haemoglobin in red blood cells","Control the thyroid gland","Provide instant energy"],c:1,e:"<span class='h'>💡 Idea</span>Iron is used to make haemoglobin, the red pigment that carries oxygen. A lack of iron causes anaemia.<span class='h'>✅</span>Make haemoglobin in red blood cells."},
+{s:"A lack of iodine in the diet causes…",o:["Anaemia","Rickets","Goitre (swollen thyroid)","Scurvy"],c:2,e:"<span class='h'>💡 Idea</span>Iodine is needed by the thyroid gland; its deficiency causes goitre, a swelling of the gland in the neck.<span class='h'>✅</span>Goitre (swollen thyroid)."},
+{s:"Roughage (dietary fibre) is important in the diet because it…",o:["Supplies most of our energy","Is digested into amino acids","Builds strong bones","Adds bulk that helps the gut push food along and prevents constipation"],c:3,e:"<span class='h'>💡 Idea</span>Fibre is not digested, but it adds bulk that the gut muscles can grip, so peristalsis moves food along and constipation is prevented.<span class='h'>✅</span>Adds bulk that helps the gut push food along and prevents constipation."},
+{s:"Which shows the correct order in which food passes through the alimentary canal?",o:["Mouth → oesophagus → stomach → small intestine → large intestine → anus","Mouth → stomach → oesophagus → large intestine → small intestine → anus","Mouth → stomach → small intestine → oesophagus → large intestine → anus","Mouth → oesophagus → small intestine → stomach → large intestine → anus"],c:0,e:"<span class='h'>💡 Idea</span>Food travels: mouth, oesophagus (gullet), stomach, small intestine, large intestine, rectum and out at the anus.<span class='h'>✅</span>Mouth → oesophagus → stomach → small intestine → large intestine → anus."},
+{s:"The chemical digestion of starch begins in the…",o:["Stomach","Mouth","Ileum","Rectum"],c:1,e:"<span class='h'>💡 Idea</span>Saliva contains salivary amylase (ptyalin), which starts breaking starch into maltose while the food is still in the mouth.<span class='h'>✅</span>Mouth."},
+{s:"The wave of muscular contraction that pushes food along the gut is called…",o:["Digestion","Diffusion","Peristalsis","Absorption"],c:2,e:"<span class='h'>💡 Idea</span>Peristalsis is the rhythmic contraction and relaxation of the gut wall muscles that pushes food forward.<span class='h'>✅</span>Peristalsis."},
+{s:"Which teeth are pointed and used mainly for tearing flesh?",o:["Incisors","Premolars","Molars","Canines"],c:3,e:"<span class='h'>💡 Idea</span>Canines are pointed for tearing and gripping. Incisors bite and cut, while premolars and molars grind and chew.<span class='h'>✅</span>Canines."},
+{s:"Salivary amylase (ptyalin) in the mouth digests…",o:["Starch into maltose","Protein into amino acids","Fat into fatty acids","Maltose into starch"],c:0,e:"<span class='h'>💡 Idea</span>Ptyalin (a form of amylase) breaks starch down into the sugar maltose.<span class='h'>✅</span>Starch into maltose."},
+{s:"The enzyme pepsin digests protein and works best in a medium that is…",o:["Neutral","Acidic","Alkaline","Boiling hot"],c:1,e:"<span class='h'>💡 Idea</span>Pepsin acts in the stomach, where hydrochloric acid provides the acidic conditions it needs. (Do not confuse it with intestinal enzymes, which need alkali.)<span class='h'>✅</span>Acidic."},
+{s:"Lipase digests fats (lipids) into…",o:["Glucose and water","Amino acids only","Fatty acids and glycerol","Maltose"],c:2,e:"<span class='h'>💡 Idea</span>Lipase breaks fats down into fatty acids and glycerol.<span class='h'>✅</span>Fatty acids and glycerol."},
+{s:"What is the main role of hydrochloric acid (HCl) in the stomach?",o:["To digest fats directly","To emulsify fats","To provide energy","To kill germs and give the acidic conditions pepsin needs"],c:3,e:"<span class='h'>💡 Idea</span>HCl kills bacteria swallowed with food and provides the acidic medium (about pH 2) that the enzyme pepsin needs to work.<span class='h'>✅</span>To kill germs and give the acidic conditions pepsin needs."},
+{s:"Which statement about bile is correct?",o:["It is not an enzyme; it emulsifies fats into tiny droplets","It is an enzyme that digests protein","It is made in the pancreas","It turns starch into glucose"],c:0,e:"<span class='h'>💡 Idea</span>Bile is made in the liver and contains no enzymes. It emulsifies fats (breaks large globules into tiny droplets) so lipase can act faster.<span class='h'>✅</span>It is not an enzyme; it emulsifies fats into tiny droplets."},
+{s:"Bile is made in the liver but stored in the…",o:["Pancreas","Gall bladder","Stomach","Duodenum"],c:1,e:"<span class='h'>💡 Idea</span>Bile is produced by the liver and stored in the gall bladder before it is released into the duodenum.<span class='h'>✅</span>Gall bladder."},
+{s:"Most of the soluble products of digestion are absorbed into the blood through the…",o:["Walls of the stomach","Large intestine","Villi of the ileum (small intestine)","Salivary glands"],c:2,e:"<span class='h'>💡 Idea</span>The wall of the ileum is folded into millions of tiny finger-like villi, where digested food is absorbed. (The large intestine mainly absorbs water.)<span class='h'>✅</span>Villi of the ileum (small intestine)."},
+{s:"Which feature of the villi helps to increase the rate of absorption?",o:["A thick, tough outer wall","Being very few in number","Having no blood supply","Being very many with thin walls, blood capillaries and a lacteal"],c:3,e:"<span class='h'>💡 Idea</span>Villi are numerous (huge surface area), have thin one-cell walls, a rich blood supply and a lacteal — all of which speed up absorption.<span class='h'>✅</span>Being very many with thin walls, blood capillaries and a lacteal."},
+{s:"Feeding on dead and decaying organic matter, as fungi and many bacteria do, is called…",o:["Saprophytic nutrition","Autotrophic nutrition","Holozoic nutrition","Parasitic nutrition"],c:0,e:"<span class='h'>💡 Idea</span>Saprophytes (e.g. mushrooms and Rhizopus) feed on dead organic matter. Holozoic = taking in solid food like animals; parasitic = feeding on a living host; autotrophic = making your own food.<span class='h'>✅</span>Saprophytic nutrition."},
+{s:"Which is the correct balanced equation for photosynthesis?",o:["C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O","6O₂ + 6H₂O → C₆H₁₂O₆ + 6CO₂","6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂","6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O"],c:2,e:"<span class='h'>💡 Idea</span>Using light energy and chlorophyll, plants combine carbon dioxide and water to make glucose and release oxygen. (Option A is respiration, the reverse process.)<span class='h'>✅</span>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂."}
+);
+
+["food","digestion","enzymes","absorption","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
