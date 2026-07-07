@@ -45,6 +45,10 @@ window.RESOURCES = [
    title:"Radioactivity",
    desc:"Alpha, beta & gamma radiation compared, balancing nuclear equations, half-life calculations, fission vs fusion, uses and safety.",
    meta:"30-question quiz"},
+  {file:"physics-vectors.html", subject:"Physics",
+   title:"Vectors & Lami's Theorem",
+   desc:"Scalars vs vectors, resolving into components, the parallelogram law, equilibrium, Lami's theorem and complex problems (inclines, strings, tensions).",
+   meta:"30-question quiz"},
 
   /* ---------- Chemistry ---------- */
   {file:"chemistry-mixed-practice.html", subject:"Chemistry",

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vectors & Lami's Theorem — Physics (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.85rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧭 Vectors &amp; Lami's Theorem</h1>
+  <p>Scalars vs vectors · resolution · equilibrium · Lami's theorem — taught from zero</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Complex problems solved</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">🧭 Vector Basics</div>
+    <div class="tab" data-cat="addres">➕ Add &amp; Resolve</div>
+    <div class="tab" data-cat="equilibrium">⚖️ Equilibrium &amp; Lami</div>
+    <div class="tab" data-cat="complex">🧩 Complex Problems</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== BASICS ===================== -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">🧭 Vector Basics</h2>
+
+    <div class="lesson">
+      <h3>1. Scalars vs vectors</h3>
+      <ul>
+        <li>A <b>scalar</b> has <b>magnitude (size) only</b>. Examples: mass, time, distance, speed, energy, work, temperature, electric charge.</li>
+        <li>A <b>vector</b> has <b>magnitude AND direction</b>. Examples: displacement, velocity, acceleration, force, weight, momentum, electric field.</li>
+      </ul>
+      <div class="analogy">🌟 "5 kg" fully describes a mass (scalar). But "5 N" is not enough for a force — you must say <b>which way</b> it pushes (e.g. 5 N to the right). That "which way" is what makes it a vector.</div>
+      <table class="r">
+        <tr><th>Scalars</th><th>Vectors</th></tr>
+        <tr><td>Distance, speed</td><td>Displacement, velocity</td></tr>
+        <tr><td>Mass, time</td><td>Force, weight</td></tr>
+        <tr><td>Energy, work, power</td><td>Acceleration, momentum</td></tr>
+        <tr><td>Temperature, charge</td><td>Electric field, torque</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>2. How we draw and write a vector</h3>
+      <ul>
+        <li>A vector is drawn as an <b>arrow</b>: the <b>length</b> shows the magnitude (to scale) and the <b>arrowhead</b> shows the direction.</li>
+        <li>Written in <b>bold</b> (<b>F</b>) or with an arrow (F&#8407;). Its magnitude is written |<b>F</b>| or just F.</li>
+      </ul>
+      <span class="key">Useful vector words</span>
+      <ul>
+        <li><b>Equal vectors</b> — same magnitude AND same direction.</li>
+        <li><b>Negative vector</b> — same magnitude but <b>opposite</b> direction (−<b>F</b>).</li>
+        <li><b>Unit vector</b> — a vector of magnitude <b>1</b>, used just to show direction.</li>
+        <li><b>Resultant</b> — the single vector that has the <b>same effect</b> as two or more vectors added together.</li>
+        <li><b>Equilibrant</b> — the single force that <b>balances</b> the others (equal in size but <b>opposite</b> to the resultant).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The idea of a resultant</h3>
+      <p>If two people push a box — one with 3 N east and another with 4 N north — the box moves as if a <b>single</b> force acted on it. That single equivalent force is the <b>resultant</b>. Finding resultants is what most of this topic is about.</p>
+      <div class="analogy">💡 Two forces in the <b>same direction</b> simply add (3 N + 4 N = 7 N). In <b>opposite</b> directions they subtract (4 N − 3 N = 1 N). At an <b>angle</b>, we need the parallelogram law or resolution (next tab).</div>
+    </div>
+  </section>
+
+  <!-- ===================== ADD & RESOLVE ===================== -->
+  <section class="cat addres" id="cat-addres">
+    <h2 class="cathead">➕ Adding &amp; Resolving Vectors</h2>
+
+    <div class="lesson">
+      <h3>1. Two vectors in a line</h3>
+      <ul>
+        <li><b>Same direction:</b> add them. Max resultant of P and Q = <b>P + Q</b>.</li>
+        <li><b>Opposite directions:</b> subtract. Min resultant of P and Q = <b>|P − Q|</b>.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Two vectors at 90° (perpendicular)</h3>
+      <p>Use Pythagoras for the size, and tan for the direction:</p>
+      <div class="formula">R = √(P² + Q²) &nbsp;&nbsp;|&nbsp;&nbsp; tan θ = opposite ÷ adjacent</div>
+      <div class="ex"><b class="t">Worked example:</b> Forces 3 N (east) and 4 N (north) act at a point. Find the resultant.
+        <div class="calc">R = √(3² + 4²) = √(9 + 16) = √25 = 5 N</div>
+        <div class="calc">Direction: tan θ = 4 ÷ 3 = 1.333 → θ = 53° north of east</div>
+        So the resultant is <b>5 N at 53°</b> to the 3 N force. (The famous 3-4-5 triangle.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Two vectors at any angle — the parallelogram law</h3>
+      <p>If two vectors P and Q act at a point with angle θ <b>between them</b>, the resultant is the diagonal of the parallelogram they form:</p>
+      <div class="formula">R = √(P² + Q² + 2PQ·cos θ)</div>
+      <div class="formula">Direction: tan α = Q·sin θ ÷ (P + Q·cos θ)</div>
+      <div class="ex"><b class="t">Worked example:</b> Two forces 5 N and 8 N act at a point with 60° between them. Find the resultant.
+        <div class="calc">R = √(5² + 8² + 2·5·8·cos60°)</div>
+        <div class="calc">= √(25 + 64 + 80 × 0.5) = √(89 + 40) = √129 ≈ 11.4 N</div></div>
+      <div class="analogy">🧠 Note: when θ = 0° (same direction) this gives R = P + Q; when θ = 180° (opposite) it gives R = |P − Q|; when θ = 90° it reduces to √(P²+Q²). One formula covers all cases.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Resolving a vector into components (the master skill)</h3>
+      <p>Any single vector F at angle θ to the horizontal can be split into two perpendicular parts — a horizontal part and a vertical part:</p>
+      <div class="formula">Horizontal: Fₓ = F·cos θ &nbsp;&nbsp;|&nbsp;&nbsp; Vertical: F_y = F·sin θ</div>
+      <div class="analogy">💡 Golden rule: the component <b>along the angle you measured from</b> uses <b>cos</b>; the component <b>across it</b> uses <b>sin</b>. (Angle from horizontal → horizontal part is cos.)</div>
+      <div class="ex"><b class="t">Worked example:</b> Resolve a 100 N force acting at 30° to the horizontal.
+        <div class="calc">Fₓ = 100·cos30° = 100 × 0.866 = 86.6 N</div>
+        <div class="calc">F_y = 100·sin30° = 100 × 0.5 = 50 N</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Many vectors at once — the component method (always works)</h3>
+      <p>For 3 or more vectors, resolve each into x and y parts, add them up, then recombine:</p>
+      <ul>
+        <li>① Find every Fₓ and add them → <b>ΣFₓ</b></li>
+        <li>② Find every F_y and add them → <b>ΣF_y</b></li>
+        <li>③ Resultant <b>R = √(ΣFₓ² + ΣF_y²)</b></li>
+        <li>④ Direction <b>tan θ = ΣF_y ÷ ΣFₓ</b></li>
+      </ul>
+      <p class="tip">Watch the signs: forces pointing left or down are <b>negative</b>. This method is your safest tool for any messy problem.</p>
+    </div>
+  </section>
+
+  <!-- ===================== EQUILIBRIUM & LAMI ===================== -->
+  <section class="cat equilibrium" id="cat-equilibrium">
+    <h2 class="cathead">⚖️ Equilibrium &amp; Lami's Theorem</h2>
+
+    <div class="lesson">
+      <h3>1. What "equilibrium" means</h3>
+      <p>A body is in <b>equilibrium</b> when the forces on it are balanced — there is <b>no resultant force</b>, so it stays at rest (or moves at constant velocity).</p>
+      <div class="formula">For equilibrium: ΣFₓ = 0 &nbsp;AND&nbsp; ΣF_y = 0 &nbsp;(the vector sum of all forces = 0)</div>
+      <p>If three forces act on a body in equilibrium, drawn head-to-tail they form a <b>closed triangle</b> (the "triangle of forces").</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Lami's Theorem (the shortcut for THREE forces)</h3>
+      <p><b>Lami's theorem</b> is a neat way to solve problems with exactly <b>three concurrent forces</b> (all acting at one point) that are in equilibrium.</p>
+      <div class="formula">P / sin α = Q / sin β = R / sin γ</div>
+      <p>where each force is divided by the <b>sine of the angle between the OTHER two forces</b>:</p>
+      <ul>
+        <li>α = angle between Q and R (the angle "opposite" force P)</li>
+        <li>β = angle between R and P (opposite Q)</li>
+        <li>γ = angle between P and Q (opposite R)</li>
+        <li>and the three angles add up: <b>α + β + γ = 360°</b></li>
+      </ul>
+      <div class="analogy">🧠 Memory: "each force ÷ sine of the angle FACING it." Use Lami only when you have <b>three</b> forces meeting at a point, in equilibrium, with the angles between them known.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Lami worked example — a hanging load on two strings</h3>
+      <p>A load of weight <b>30 N</b> hangs from two strings. String A makes <b>30°</b> with the ceiling on the left; string B makes <b>60°</b> with the ceiling on the right. Find the tensions T_A and T_B.</p>
+      <div class="ex"><b class="t">Step 1 — find the angles between the three forces at the load.</b>
+        <p>Weight pulls straight down. String A pulls up-left (30° above horizontal); string B pulls up-right (60° above horizontal).</p>
+        <div class="calc">Angle between the two strings (T_A &amp; T_B) = 180° − 30° − 60° = 90°</div>
+        <div class="calc">Angle between T_B and the weight W = 90° + 60° = 150°</div>
+        <div class="calc">Angle between W and T_A = 90° + 30° = 120°</div>
+        Check: 90° + 150° + 120° = 360° ✓
+      </div>
+      <div class="ex"><b class="t">Step 2 — apply Lami's theorem.</b> Each force ÷ sine of the angle opposite it:
+        <div class="calc">T_A / sin150° = T_B / sin120° = W / sin90°</div>
+        <div class="calc">W / sin90° = 30 / 1 = 30</div>
+        <div class="calc">T_A = 30 × sin150° = 30 × 0.5 = 15 N</div>
+        <div class="calc">T_B = 30 × sin120° = 30 × 0.866 = 26 N (approx)</div>
+        <b>Answer: T_A = 15 N, T_B ≈ 26 N.</b>
+      </div>
+      <div class="analogy">✅ Cross-check by resolution: ΣFₓ = 0 gives T_B = √3·T_A, and ΣF_y = 0 gives 0.5T_A + 0.866T_B = 30 → T_A = 15 N, T_B ≈ 26 N. Same answer — proof both methods agree.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. When to use which method</h3>
+      <table class="r">
+        <tr><th>Situation</th><th>Best method</th></tr>
+        <tr><td>Two vectors, find resultant</td><td>Parallelogram law (or Pythagoras if 90°)</td></tr>
+        <tr><td>Three forces in equilibrium, angles known</td><td>Lami's theorem (fastest)</td></tr>
+        <tr><td>Any number of forces / messy angles</td><td>Component method (ΣFₓ = 0, ΣF_y = 0)</td></tr>
+      </table>
+      <p class="tip">Lami and the component method give the same answers — Lami is just quicker for the classic "three-string / hanging-mass" questions.</p>
+    </div>
+  </section>
+
+  <!-- ===================== COMPLEX PROBLEMS ===================== -->
+  <section class="cat complex" id="cat-complex">
+    <h2 class="cathead">🧩 Solving Complex Vector Problems</h2>
+
+    <div class="lesson">
+      <h3>A universal 4-step strategy</h3>
+      <ul>
+        <li>① <b>Draw</b> a clear diagram; mark every force and every angle.</li>
+        <li>② <b>Pick a method</b>: parallelogram (2 forces), Lami (3 forces in equilibrium), or components (anything else).</li>
+        <li>③ For equilibrium, write <b>ΣFₓ = 0</b> and <b>ΣF_y = 0</b>.</li>
+        <li>④ <b>Solve</b> the equations for the unknowns.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>Problem 1 — Object on an inclined plane</h3>
+      <p>A block of weight <b>50 N</b> rests on a smooth (frictionless) plane inclined at <b>30°</b>. Find (a) the component of weight along the plane and (b) the normal reaction.</p>
+      <div class="ex"><b class="t">Key idea:</b> resolve the weight into two parts — one <b>down the slope</b> and one <b>into the slope</b>.
+        <div class="calc">Component down the plane = W·sin θ = 50·sin30° = 50 × 0.5 = 25 N</div>
+        <div class="calc">Component into the plane = W·cos θ = 50·cos30° = 50 × 0.866 = 43.3 N</div>
+        <div class="calc">Normal reaction N = W·cos θ = 43.3 N</div>
+        To hold the block still (no friction), a force of <b>25 N up the plane</b> is needed.</div>
+      <div class="analogy">⚠️ Common trap: students swap them. On an incline the <b>down-slope</b> pull is W·<b>sin</b>θ and the <b>normal</b> reaction is W·<b>cos</b>θ. Steeper slope (bigger θ) → bigger sin → block slides more easily. That sanity-check helps you remember.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Problem 2 — Weight held by two symmetric strings</h3>
+      <p>A weight <b>W = 100 N</b> hangs from a point supported by two strings, each making <b>30°</b> with the vertical. Find the tension in each string.</p>
+      <div class="ex"><b class="t">By symmetry</b> both tensions are equal (= T). Their vertical parts together hold up the weight:
+        <div class="calc">2·T·cos θ = W  (each vertical component is T·cos30°)</div>
+        <div class="calc">2·T·cos30° = 100 → 2 × 0.866 × T = 100 → 1.732·T = 100</div>
+        <div class="calc">T = 100 ÷ 1.732 = 57.7 N</div>
+        <b>Each string carries ≈ 57.7 N.</b></div>
+      <div class="analogy">💡 Notice: the wider apart the strings (angle to vertical grows), the <b>larger</b> the tension — which is why a tightly stretched clothesline can snap under a small weight.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Problem 3 — Resultant of three forces (component method)</h3>
+      <p>Three forces act at a point: 6 N along +x (east), 8 N along +y (north), and 4 N along −x (west). Find the resultant.</p>
+      <div class="ex">
+        <div class="calc">ΣFₓ = 6 − 4 = 2 N &nbsp;&nbsp; ΣF_y = 8 N</div>
+        <div class="calc">R = √(ΣFₓ² + ΣF_y²) = √(2² + 8²) = √(4 + 64) = √68 ≈ 8.25 N</div>
+        <div class="calc">Direction: tan θ = 8 ÷ 2 = 4 → θ ≈ 76° north of east</div>
+        <b>Resultant ≈ 8.25 N at 76° to the east direction.</b></div>
+    </div>
+
+    <div class="lesson">
+      <h3>Problem 4 — Force pulling a hanging body sideways (three forces, Lami or components)</h3>
+      <p>A body of weight <b>20 N</b> hangs from a string. A <b>horizontal</b> force P pulls it aside until the string makes <b>30°</b> with the vertical. Find the tension T in the string and the force P.</p>
+      <div class="ex"><b class="t">Three forces:</b> weight W (down), tension T (along string), horizontal pull P. Resolve about the body:
+        <div class="calc">Vertical:  T·cos30° = W → T = 20 ÷ cos30° = 20 ÷ 0.866 = 23.1 N</div>
+        <div class="calc">Horizontal: P = T·sin30° = 23.1 × 0.5 = 11.55 N</div>
+        <b>Answer: T ≈ 23.1 N, P ≈ 11.6 N.</b></div>
+      <div class="analogy">🧠 Same problem by Lami: angle between T and P = 120°, between P and W = 90°, between W and T = 150°. Then W/sin(angle between T&amp;P) etc. — gives the identical T and P. Choose whichever is faster for you.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Exam traps to avoid</h3>
+      <ul>
+        <li>Mixing up <b>cos</b> and <b>sin</b> — the component along the measured angle uses <b>cos</b>.</li>
+        <li>Forgetting <b>direction/signs</b> — leftward and downward forces are negative in the component method.</li>
+        <li>Using Lami when the forces are <b>not</b> three, or <b>not</b> in equilibrium, or <b>not</b> concurrent.</li>
+        <li>On inclines: down-slope = W sin θ, normal = W cos θ (not the other way round).</li>
+        <li>Reading the angle from the wrong reference line — always note whether it's measured from the horizontal or the vertical.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Draw it, resolve it, balance it. Vectors reward a clear diagram. You've got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Which of the following is a vector quantity?",o:["Force","Mass","Speed","Energy"],c:0,e:"<span class='h'>💡 Idea</span>A vector needs magnitude AND direction. <b>Force</b> qualifies (5 N to the left). Mass, speed and energy are scalars (size only).<span class='h'>✅</span>Force."},
+{s:"Which of the following is a scalar quantity?",o:["Velocity","Energy","Displacement","Acceleration"],c:1,e:"<span class='h'>💡 Idea</span><b>Energy</b> has size only — no direction. Velocity, displacement and acceleration all have direction, so they are vectors.<span class='h'>✅</span>Energy."},
+{s:"A vector quantity is one that has…",o:["Magnitude only","Direction only","Both magnitude and direction","Neither magnitude nor direction"],c:2,e:"<span class='h'>💡 Idea</span>By definition a vector carries <b>both magnitude and direction</b> (e.g. 10 m/s due east).<span class='h'>✅</span>Both magnitude and direction."},
+{s:"Two perpendicular forces of 3 N and 4 N act at a point. Their resultant is…",o:["7 N","1 N","12 N","5 N"],c:3,e:"<span class='h'>✏️ Working</span>At 90° use Pythagoras.<span class='calc'>R = √(3² + 4²) = √25 = 5 N</span><span class='h'>✅</span>5 N (the classic 3-4-5)."},
+{s:"Two forces of 6 N and 8 N act at right angles. The magnitude of their resultant is…",o:["10 N","14 N","2 N","48 N"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>R = √(6² + 8²) = √(36+64) = √100 = 10 N</span><span class='h'>✅</span>10 N."},
+{s:"Two forces of 5 N and 12 N act perpendicular to each other. Their resultant is…",o:["7 N","13 N","17 N","60 N"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>R = √(5² + 12²) = √(25+144) = √169 = 13 N</span><span class='h'>✅</span>13 N."},
+{s:"The horizontal component of a 100 N force acting at 30° to the horizontal is…",o:["50 N","100 N","86.6 N","57.7 N"],c:2,e:"<span class='h'>✏️ Working</span>Component along the measured angle uses cos.<span class='calc'>Fₓ = 100·cos30° = 100 × 0.866 = 86.6 N</span><span class='h'>✅</span>86.6 N."},
+{s:"The vertical component of a 100 N force acting at 30° to the horizontal is…",o:["86.6 N","100 N","30 N","50 N"],c:3,e:"<span class='h'>✏️ Working</span>The component across the measured angle uses sin.<span class='calc'>F_y = 100·sin30° = 100 × 0.5 = 50 N</span><span class='h'>✅</span>50 N."},
+{s:"The maximum possible resultant of two forces P and Q occurs when the angle between them is…",o:["0° (same direction)","90°","180° (opposite)","45°"],c:0,e:"<span class='h'>💡 Idea</span>Forces add up most when they point the same way, giving R = P + Q. That happens at <b>0°</b>.<span class='h'>✅</span>0° (same direction)."},
+{s:"The minimum possible resultant of two forces P and Q (P > Q) is…",o:["P + Q","P − Q","P × Q","Zero always"],c:1,e:"<span class='h'>💡 Idea</span>Forces cancel most when opposite (180° apart), leaving R = <b>P − Q</b>.<span class='h'>✅</span>P − Q."},
+{s:"When resolving a vector F at angle θ to the horizontal, the horizontal component is…",o:["F·sin θ","F·tan θ","F·cos θ","F ÷ cos θ"],c:2,e:"<span class='h'>💡 Idea</span>Along the horizontal (the line the angle is measured from) uses cos: Fₓ = F·cos θ.<span class='h'>✅</span>F·cos θ."},
+{s:"For two forces P and Q with angle θ between them, the resultant magnitude is…",o:["P + Q","√(P² + Q²)","PQ·sin θ","√(P² + Q² + 2PQ·cos θ)"],c:3,e:"<span class='h'>💡 Idea</span>The parallelogram law: R = √(P² + Q² + 2PQ·cos θ). It reduces to √(P²+Q²) when θ = 90°.<span class='h'>✅</span>√(P² + Q² + 2PQ·cos θ)."},
+{s:"Two forces of 5 N and 8 N act with 60° between them. Their resultant is about…",o:["11.4 N","13 N","3 N","6.5 N"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>R = √(25 + 64 + 2·5·8·cos60°) = √(89 + 40) = √129 ≈ 11.4 N</span><span class='h'>✅</span>11.4 N."},
+{s:"A body is in equilibrium under several forces when…",o:["The forces are all equal","The resultant force is zero","All forces point up","The largest force wins"],c:1,e:"<span class='h'>💡 Idea</span>Equilibrium means balanced — the vector sum (resultant) of all forces is <b>zero</b>, so ΣFₓ = 0 and ΣF_y = 0.<span class='h'>✅</span>The resultant force is zero."},
+{s:"Three forces acting at a point and in equilibrium can be represented in magnitude and direction by the three sides of a…",o:["Square","Circle","Closed triangle taken in order","Straight line"],c:2,e:"<span class='h'>💡 Idea</span>This is the triangle of forces: three balanced forces drawn head-to-tail form a <b>closed triangle</b>.<span class='h'>✅</span>Closed triangle taken in order."},
+{s:"Lami's theorem applies to a body in equilibrium under exactly…",o:["Two forces","Four forces","Any number of forces","Three concurrent forces"],c:3,e:"<span class='h'>💡 Idea</span>Lami's theorem is specifically for <b>three concurrent forces</b> (meeting at a point) in equilibrium.<span class='h'>✅</span>Three concurrent forces."},
+{s:"Lami's theorem states that each force is proportional to the…",o:["Sine of the angle between the other two forces","Cosine of its own angle","Sum of the other two forces","Product of the other two forces"],c:0,e:"<span class='h'>💡 Idea</span>P/sin α = Q/sin β = R/sin γ, where each force is divided by the sine of the angle between the <b>other two</b> forces.<span class='h'>✅</span>Sine of the angle between the other two forces."},
+{s:"In Lami's theorem, the three angles between the forces add up to…",o:["90°","360°","180°","270°"],c:1,e:"<span class='h'>💡 Idea</span>The angles measured all the way around the point of concurrency sum to a full turn = <b>360°</b>.<span class='h'>✅</span>360°."},
+{s:"Three forces P, Q and W keep a point in equilibrium. If W = 30 N and the angle opposite W is 90° while the angle opposite P is 150°, then P equals…",o:["30 N","26 N","15 N","45 N"],c:2,e:"<span class='h'>✏️ Working</span>By Lami: P/sin150° = W/sin90°.<span class='calc'>P = 30 × sin150° ÷ sin90° = 30 × 0.5 ÷ 1 = 15 N</span><span class='h'>✅</span>15 N."},
+{s:"For that same system (W = 30 N, angle opposite Q = 120°, angle opposite W = 90°), the force Q is about…",o:["15 N","30 N","52 N","26 N"],c:3,e:"<span class='h'>✏️ Working</span>By Lami: Q/sin120° = W/sin90°.<span class='calc'>Q = 30 × sin120° = 30 × 0.866 ≈ 26 N</span><span class='h'>✅</span>≈ 26 N."},
+{s:"On a smooth plane inclined at angle θ, the component of a body's weight W acting DOWN the plane is…",o:["W·sin θ","W·cos θ","W·tan θ","W ÷ sin θ"],c:0,e:"<span class='h'>💡 Idea</span>The down-slope pull is <b>W·sin θ</b> (it grows as the slope steepens). The into-slope part is W·cos θ.<span class='h'>✅</span>W·sin θ."},
+{s:"On an inclined plane at angle θ, the normal reaction on a body of weight W is…",o:["W·sin θ","W·cos θ","W","W·tan θ"],c:1,e:"<span class='h'>💡 Idea</span>The normal reaction balances the component of weight pressing INTO the surface = <b>W·cos θ</b>.<span class='h'>✅</span>W·cos θ."},
+{s:"A 50 N block rests on a smooth 30° incline. The force needed to hold it, acting up the plane, is…",o:["43.3 N","50 N","25 N","100 N"],c:2,e:"<span class='h'>✏️ Working</span>Balance the down-slope component.<span class='calc'>W·sin θ = 50·sin30° = 50 × 0.5 = 25 N</span><span class='h'>✅</span>25 N."},
+{s:"A weight W hangs from two strings, each making angle θ with the vertical. The tension in each string is…",o:["W·cos θ","2W·cos θ","W ÷ sin θ","W ÷ (2·cos θ)"],c:3,e:"<span class='h'>💡 Idea</span>The two vertical components share the weight: 2·T·cos θ = W, so T = <b>W ÷ (2·cos θ)</b>.<span class='h'>✅</span>W ÷ (2·cos θ)."},
+{s:"A negative vector has…",o:["The same magnitude but opposite direction","A larger magnitude","Zero magnitude","A different unit"],c:0,e:"<span class='h'>💡 Idea</span>−F is the same size as F but points the <b>opposite way</b>.<span class='h'>✅</span>The same magnitude but opposite direction."},
+{s:"A unit vector is a vector whose magnitude is…",o:["Zero","One","Equal to the force","Very large"],c:1,e:"<span class='h'>💡 Idea</span>A unit vector has magnitude <b>1</b>; it is used only to indicate direction.<span class='h'>✅</span>One."},
+{s:"The single force that balances two or more forces (equal in size but opposite to their resultant) is called the…",o:["Resultant","Component","Equilibrant","Moment"],c:2,e:"<span class='h'>💡 Idea</span>The <b>equilibrant</b> is equal and opposite to the resultant, so together they give zero — the body stays in equilibrium.<span class='h'>✅</span>Equilibrant."},
+{s:"Forces of 2 N (east) and 2 N (north) act at a point. The resultant makes what angle with the east direction?",o:["30°","60°","90°","45°"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>tan θ = 2 ÷ 2 = 1 → θ = 45°</span>Equal perpendicular forces give a 45° resultant.<span class='h'>✅</span>45°."},
+{s:"Which method works for ANY number of forces at any angles?",o:["The component method (ΣFₓ, ΣF_y)","Lami's theorem","Simple addition","The 3-4-5 rule"],c:0,e:"<span class='h'>💡 Idea</span>Resolving into x and y components and summing (ΣFₓ, ΣF_y) handles any number of forces at any angles. Lami is limited to three concurrent forces.<span class='h'>✅</span>The component method."},
+{s:"A body of weight 20 N on a string is pulled aside by a horizontal force until the string makes 30° with the vertical. The tension in the string is about…",o:["10 N","23.1 N","17.3 N","40 N"],c:1,e:"<span class='h'>✏️ Working</span>Vertical balance: T·cos30° = 20.<span class='calc'>T = 20 ÷ cos30° = 20 ÷ 0.866 = 23.1 N</span><span class='h'>✅</span>≈ 23.1 N."}
+);
+
+["basics","addres","equilibrium","complex","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
