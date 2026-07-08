@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heat &amp; Temperature A–Z — Thermal Physics, Specific &amp; Latent Heat, Expansion (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🌡️ Heat &amp; Temperature A–Z</h1>
+  <p>Temperature Scales · Specific &amp; Latent Heat · Expansion &amp; Gas Laws — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="temperature">🌡️ Temperature &amp; Thermometers</div>
+    <div class="tab" data-cat="heatcap">🔥 Heat &amp; Specific Heat</div>
+    <div class="tab" data-cat="latent">💧 Latent Heat &amp; Change of State</div>
+    <div class="tab" data-cat="expansion">📐 Expansion &amp; Heat Transfer</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: TEMPERATURE & THERMOMETERS ============ -->
+  <section class="cat temperature show" id="cat-temperature">
+    <h2 class="cathead">🌡️ PART 1 — Temperature, Scales &amp; Thermometers</h2>
+
+    <div class="lesson">
+      <h3>1. Heat vs Temperature — the key difference</h3>
+      <p>These two words feel the same in everyday life, but in physics they mean very different things. Getting this right unlocks the whole topic.</p>
+      <ul>
+        <li><b>Heat</b> is a <b>form of energy</b> — the energy that <b>flows from a hotter body to a colder body</b> because of the temperature difference between them. Its unit is the <b>joule (J)</b>.</li>
+        <li><b>Temperature</b> is the <b>degree of hotness or coldness</b> of a body — it tells you which way heat will flow, not how much energy is stored. Its SI unit is the <b>kelvin (K)</b>.</li>
+      </ul>
+      <p>Heat always flows <b>from high temperature to low temperature</b>, never the other way on its own — just as water flows downhill.</p>
+      <div class="analogy">🌟 Idea: a full bucket of warm water can hold far more heat energy than a tiny red-hot spark, even though the spark is at a much higher temperature. Temperature is the "level"; heat is the "amount".</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three temperature scales</h3>
+      <p>We measure temperature on three common scales. You must be able to move between them.</p>
+      <span class="key">Celsius (°C)</span>
+      <p>Built on water: ice melts at <b>0 °C</b> and water boils at <b>100 °C</b> (at normal pressure).</p>
+      <span class="key">Kelvin (K) — the SI / absolute scale</span>
+      <p>Starts at <b>absolute zero</b> (0 K = −273 °C), the coldest possible temperature. A change of 1 K equals a change of 1 °C — the divisions are the same size, only the zero is shifted.</p>
+      <div class="formula">K = °C + 273&nbsp;&nbsp;·&nbsp;&nbsp;°C = K − 273</div>
+      <span class="key">Fahrenheit (°F)</span>
+      <p>Ice melts at 32 °F and water boils at 212 °F. It is converted from Celsius by:</p>
+      <div class="formula">°F = (9/5) × °C + 32&nbsp;&nbsp;·&nbsp;&nbsp;°C = (5/9) × (°F − 32)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked conversions</h3>
+      <div class="ex"><b class="t">Example 1 — Celsius to Kelvin.</b> Convert 27 °C to kelvin.
+        <div class="calc">K = °C + 273 = 27 + 273 = 300 K</div>
+        Answer = <b>300 K</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — Kelvin to Celsius.</b> Convert 373 K to degrees Celsius.
+        <div class="calc">°C = K − 273 = 373 − 273 = 100 °C</div>
+        Answer = <b>100 °C</b> (this is the boiling point of water).</div>
+
+      <div class="ex"><b class="t">Example 3 — Celsius to Fahrenheit.</b> Convert 20 °C to °F.
+        <div class="calc">°F = (9/5) × 20 + 32 = 36 + 32 = 68 °F</div>
+        Answer = <b>68 °F</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — body temperature both ways.</b> Normal body temperature is 37 °C. Find it in K and in °F.
+        <div class="calc">K = 37 + 273 = 310 K</div>
+        <div class="calc">°F = (9/5) × 37 + 32 = 66.6 + 32 = 98.6 °F</div>
+        So 37 °C = <b>310 K</b> = <b>98.6 °F</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Fixed points — how a scale is defined</h3>
+      <p>To mark a scale on a thermometer we need two known, repeatable temperatures called <b>fixed points</b>.</p>
+      <table class="r">
+        <tr><th>Fixed point</th><th>What it is</th><th>Celsius</th><th>Kelvin</th></tr>
+        <tr><td>Lower (ice) point</td><td>Temperature of pure melting ice</td><td>0 °C</td><td>273 K</td></tr>
+        <tr><td>Upper (steam) point</td><td>Temperature of steam from water boiling at normal pressure</td><td>100 °C</td><td>373 K</td></tr>
+      </table>
+      <p>The gap between the two fixed points is called the <b>fundamental interval</b> — on the Celsius scale it is divided into 100 equal degrees.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Thermometers &amp; thermometric properties</h3>
+      <p>A thermometer works by using a physical property that <b>changes steadily and measurably with temperature</b>. Such a property is called a <b>thermometric property</b>.</p>
+      <table class="r">
+        <tr><th>Thermometer</th><th>Thermometric property used</th></tr>
+        <tr><td>Liquid-in-glass (mercury or alcohol)</td><td>Expansion of a liquid — length of the liquid column</td></tr>
+        <tr><td>Constant-volume gas thermometer</td><td>Pressure of a fixed mass of gas</td></tr>
+        <tr><td>Resistance thermometer (platinum)</td><td>Electrical resistance of a metal wire</td></tr>
+        <tr><td>Thermocouple</td><td>EMF (voltage) generated at the junction of two different metals</td></tr>
+        <tr><td>Bimetallic strip</td><td>Unequal expansion of two bonded metals (strip bends)</td></tr>
+      </table>
+      <p><b>Mercury vs alcohol:</b> mercury is used for high temperatures and reads quickly; alcohol (dyed) is used for very low temperatures because it freezes at a much lower point than mercury.</p>
+      <div class="analogy">🌟 Memory: a good thermometric property must be <b>single-valued</b> (one reading = one temperature), change by a fair amount, and be easy to measure.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: HEAT CAPACITY & SPECIFIC HEAT ============ -->
+  <section class="cat heatcap" id="cat-heatcap">
+    <h2 class="cathead">🔥 PART 2 — Heat Capacity, Specific Heat &amp; Mixtures</h2>
+
+    <div class="lesson">
+      <h3>1. The heat equation Q = mcΔT</h3>
+      <p>When you give heat to a body <b>without changing its state</b>, its temperature rises. The heat energy needed is:</p>
+      <div class="formula">Q = m c ΔT</div>
+      <ul>
+        <li><b>Q</b> = heat energy supplied, in joules (J)</li>
+        <li><b>m</b> = mass of the body, in kilograms (kg) — or grams (g) if c is per gram</li>
+        <li><b>c</b> = specific heat capacity, in J kg⁻¹ K⁻¹</li>
+        <li><b>ΔT</b> = change (rise) in temperature = final − initial, in K or °C (the size of a degree is the same on both scales)</li>
+      </ul>
+      <p><b>Specific heat capacity (c)</b> is defined as the <b>heat needed to raise the temperature of 1 kg of a substance by 1 K (or 1 °C)</b>. For water c = 4200 J kg⁻¹ K⁻¹ (that is 4.2 J g⁻¹ K⁻¹) — a large value, which is why water is a great coolant.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Heat capacity C = mc</h3>
+      <p><b>Heat capacity (C)</b> is the heat needed to raise the temperature of a <b>whole body</b> by 1 K — it depends on how much stuff there is, not just the material.</p>
+      <div class="formula">C = m c&nbsp;&nbsp;·&nbsp;&nbsp;so&nbsp;&nbsp;Q = C ΔT</div>
+      <p>Its unit is <b>J K⁻¹</b> (joules per kelvin). Note the difference: <b>specific</b> heat capacity is "per kilogram" of the material; <b>heat capacity</b> is for the object as a whole.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked heat calculations</h3>
+      <div class="ex"><b class="t">Example 1 — heat to warm water.</b> How much heat raises 2 kg of water from 20 °C to 70 °C? (c = 4200 J kg⁻¹ K⁻¹)
+        <div class="calc">ΔT = 70 − 20 = 50 °C</div>
+        <div class="calc">Q = m c ΔT = 2 × 4200 × 50 = 420000 J = 420 kJ</div>
+        Answer = <b>420 kJ</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — heat capacity of a block.</b> A metal block of mass 0.5 kg has c = 900 J kg⁻¹ K⁻¹. Find its heat capacity.
+        <div class="calc">C = m c = 0.5 × 900 = 450 J/K</div>
+        Answer = <b>450 J K⁻¹</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — find the temperature rise.</b> 6000 J is given to 0.5 kg of a liquid with c = 400 J kg⁻¹ K⁻¹. Find ΔT.
+        <div class="calc">ΔT = Q ÷ (m c) = 6000 ÷ (0.5 × 400) = 6000 ÷ 200 = 30 °C</div>
+        Answer = temperature rises by <b>30 °C</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The method of mixtures</h3>
+      <p>If a hot object is placed in a cold liquid in a well-insulated container, energy is <b>conserved</b> — no heat escapes to the surroundings. So:</p>
+      <div class="formula">Heat LOST by hot body = Heat GAINED by cold body</div>
+      <p>This single principle lets us find an unknown mass, specific heat capacity or final temperature.</p>
+      <div class="ex"><b class="t">Worked example.</b> A copper block of mass 100 g at 100 °C is dropped into 200 g of water at 20 °C. (c<sub>copper</sub> = 400 J kg⁻¹ K⁻¹, c<sub>water</sub> = 4200 J kg⁻¹ K⁻¹.) Find the final temperature θ.
+        <div class="calc">Heat lost by copper = 0.1 × 400 × (100 − θ) = 40(100 − θ)</div>
+        <div class="calc">Heat gained by water = 0.2 × 4200 × (θ − 20) = 840(θ − 20)</div>
+        <div class="calc">40(100 − θ) = 840(θ − 20)</div>
+        <div class="calc">4000 − 40θ = 840θ − 16800</div>
+        <div class="calc">4000 + 16800 = 880θ → 20800 = 880θ</div>
+        <div class="calc">θ = 20800 ÷ 880 = 23.6 °C</div>
+        Final temperature ≈ <b>23.6 °C</b>. (Note: the water, being heavier and having a huge c, barely warms up.)</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: LATENT HEAT & CHANGE OF STATE ============ -->
+  <section class="cat latent" id="cat-latent">
+    <h2 class="cathead">💧 PART 3 — Latent Heat &amp; Changes of State</h2>
+
+    <div class="lesson">
+      <h3>1. What is latent heat?</h3>
+      <p>When a substance changes state (solid → liquid, or liquid → gas) it <b>absorbs heat but its temperature does NOT change</b>. This "hidden" heat is called <b>latent heat</b> ("latent" means hidden).</p>
+      <p><b>Specific latent heat (L)</b> is the heat needed to change the state of <b>1 kg</b> of a substance at constant temperature.</p>
+      <ul>
+        <li><b>Latent heat of fusion</b> — for <b>melting</b> (solid ⇄ liquid). For ice, L<sub>f</sub> = 3.36 × 10⁵ J kg⁻¹ (about 336 J per gram).</li>
+        <li><b>Latent heat of vaporisation</b> — for <b>boiling/evaporating</b> (liquid ⇄ gas). For water, L<sub>v</sub> = 2.26 × 10⁶ J kg⁻¹.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The formula Q = mL</h3>
+      <div class="formula">Q = m L</div>
+      <ul>
+        <li><b>Q</b> = heat absorbed or released (J)</li>
+        <li><b>m</b> = mass changing state (kg)</li>
+        <li><b>L</b> = specific latent heat (J kg⁻¹) — use L<sub>f</sub> for melting/freezing, L<sub>v</sub> for boiling/condensing</li>
+      </ul>
+      <p>Notice there is <b>no ΔT</b> here — the temperature is constant during the change, so a temperature term would be meaningless.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Why temperature stays constant</h3>
+      <p>During melting or boiling the heat you supply is <b>not</b> raising the temperature. Instead it is doing work to <b>break the bonds</b> holding the particles together — pulling them apart into the more free liquid or gas state.</p>
+      <p>Because the energy goes into the potential energy of the molecules (separating them) rather than their kinetic energy (speed), the average kinetic energy — and so the temperature — <b>stays the same</b> until all the substance has changed state.</p>
+      <div class="analogy">🌟 Idea: on a heating graph, the temperature climbs, then <b>flattens out</b> at the melting point and again at the boiling point. Those flat portions are where the latent heat is being absorbed.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked latent-heat calculations</h3>
+      <div class="ex"><b class="t">Example 1 — melting ice.</b> How much heat melts 0.5 kg of ice at 0 °C? (L<sub>f</sub> = 3.36 × 10⁵ J kg⁻¹)
+        <div class="calc">Q = m L<sub>f</sub> = 0.5 × 3.36 × 10⁵ = 1.68 × 10⁵ J = 168 kJ</div>
+        Answer = <b>168 kJ</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — boiling water to steam.</b> How much heat turns 2 kg of water at 100 °C completely into steam? (L<sub>v</sub> = 2.26 × 10⁶ J kg⁻¹)
+        <div class="calc">Q = m L<sub>v</sub> = 2 × 2.26 × 10⁶ = 4.52 × 10⁶ J = 4.52 MJ</div>
+        Answer = <b>4.52 MJ</b>. (Vaporisation needs far more heat than melting — the molecules must be pulled fully apart.)</div>
+
+      <div class="ex"><b class="t">Example 3 — heat + change of state together.</b> Find the heat to change 0.2 kg of ice at 0 °C into water at 20 °C. (L<sub>f</sub> = 3.36 × 10⁵ J kg⁻¹, c<sub>water</sub> = 4200 J kg⁻¹ K⁻¹)
+        <div class="calc">Step 1 melt the ice: Q₁ = m L<sub>f</sub> = 0.2 × 3.36 × 10⁵ = 67200 J</div>
+        <div class="calc">Step 2 warm the water 0→20 °C: Q₂ = m c ΔT = 0.2 × 4200 × 20 = 16800 J</div>
+        <div class="calc">Total Q = 67200 + 16800 = 84000 J = 84 kJ</div>
+        Answer = <b>84 kJ</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: EXPANSION & HEAT TRANSFER ============ -->
+  <section class="cat expansion" id="cat-expansion">
+    <h2 class="cathead">📐 PART 4 — Expansion, Heat Transfer &amp; Gas Laws</h2>
+
+    <div class="lesson">
+      <h3>1. Thermal expansion of solids</h3>
+      <p>Most solids <b>expand when heated</b> and contract when cooled, because the particles vibrate more and push each other slightly further apart. We describe this with three expansivities.</p>
+      <table class="r">
+        <tr><th>Type</th><th>Symbol</th><th>Applies to</th><th>Relation</th></tr>
+        <tr><td>Linear expansivity</td><td>α (alpha)</td><td>Length</td><td>—</td></tr>
+        <tr><td>Area (superficial) expansivity</td><td>β (beta)</td><td>Area</td><td>β = 2α</td></tr>
+        <tr><td>Cubic (volume) expansivity</td><td>γ (gamma)</td><td>Volume</td><td>γ = 3α</td></tr>
+      </table>
+      <div class="formula">β = 2α&nbsp;&nbsp;·&nbsp;&nbsp;γ = 3α&nbsp;&nbsp;·&nbsp;&nbsp;so α : β : γ = 1 : 2 : 3</div>
+      <p>The increase in length when a rod is heated is found from:</p>
+      <div class="formula">ΔL = L₀ × α × ΔT</div>
+      <div class="ex"><b class="t">Worked example.</b> A steel rod 10 m long is heated through 50 °C. If α = 1.2 × 10⁻⁵ K⁻¹, find its increase in length.
+        <div class="calc">ΔL = L₀ α ΔT = 10 × 1.2 × 10⁻⁵ × 50</div>
+        <div class="calc">ΔL = 6 × 10⁻³ m = 0.006 m = 6 mm</div>
+        Answer = <b>6 mm</b>.</div>
+      <div class="analogy">🌟 Real life: gaps are left in railway lines and bridges so expansion in the hot sun does not buckle them.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three modes of heat transfer</h3>
+      <p>Heat can move from one place to another in exactly three ways:</p>
+      <span class="key">Conduction</span>
+      <ul>
+        <li>Heat passes <b>through a material</b> without the material itself moving as a whole — energy is handed on from particle to particle (and by free electrons in metals).</li>
+        <li>Best in <b>solids, especially metals</b> (good conductors). Liquids and gases are poor conductors.</li>
+        <li><b>Everyday examples:</b> a metal spoon in hot tea soon feels hot; pot handles are made of wood/plastic (insulators) so they stay cool.</li>
+      </ul>
+      <span class="key">Convection</span>
+      <ul>
+        <li>Heat moves by the <b>actual movement of the fluid</b> — hot fluid becomes less dense and <b>rises</b>, cooler fluid sinks to take its place, setting up a <b>convection current</b>.</li>
+        <li>Happens only in <b>fluids (liquids and gases)</b>, never in solids.</li>
+        <li><b>Everyday examples:</b> boiling water in a pot, sea/land breezes, a room warmed by a radiator, hot-air balloons.</li>
+      </ul>
+      <span class="key">Radiation</span>
+      <ul>
+        <li>Heat travels as <b>electromagnetic (infrared) waves</b> and needs <b>no medium</b> — it can cross a vacuum.</li>
+        <li><b>Everyday examples:</b> the Sun's heat reaching Earth through empty space; the warmth felt in front of a fire without touching it.</li>
+        <li><b>Dull black</b> surfaces are the best absorbers and emitters; <b>shiny white/silver</b> surfaces are poor absorbers and good reflectors (why teapots and roofs are often shiny).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The gas laws (fixed mass of gas)</h3>
+      <p>For a fixed mass of gas, pressure P, volume V and (absolute) temperature T in <b>kelvin</b> are linked by three laws:</p>
+      <span class="key">Boyle's law — constant temperature</span>
+      <div class="formula">P V = constant&nbsp;&nbsp;·&nbsp;&nbsp;P₁V₁ = P₂V₂</div>
+      <p>At constant T, pressure is inversely proportional to volume: squeeze a gas into half the space and its pressure doubles.</p>
+      <span class="key">Charles' law — constant pressure</span>
+      <div class="formula">V / T = constant&nbsp;&nbsp;·&nbsp;&nbsp;V₁/T₁ = V₂/T₂</div>
+      <span class="key">Pressure (Gay-Lussac's) law — constant volume</span>
+      <div class="formula">P / T = constant&nbsp;&nbsp;·&nbsp;&nbsp;P₁/T₁ = P₂/T₂</div>
+      <span class="key">Combined (general) gas law</span>
+      <div class="formula">P V / T = constant&nbsp;&nbsp;·&nbsp;&nbsp;P₁V₁/T₁ = P₂V₂/T₂</div>
+      <div class="ex"><b class="t">Worked example (Boyle's law).</b> A gas of volume 200 cm³ at a pressure of 100 kPa is compressed at constant temperature to 50 cm³. Find the new pressure.
+        <div class="calc">P₁V₁ = P₂V₂</div>
+        <div class="calc">100 × 200 = P₂ × 50</div>
+        <div class="calc">P₂ = (100 × 200) ÷ 50 = 400 kPa</div>
+        Answer = <b>400 kPa</b> (volume quartered ÷4 → pressure ×4).</div>
+      <div class="analogy">🌟 Golden rule: in every gas-law calculation the temperature MUST be in kelvin (K = °C + 273).</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Balance the equation, halve the amount — the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Heat is best described as…",o:["The energy that flows from a hotter body to a colder one","The degree of hotness of a body","A form of temperature measured in kelvin","The heat capacity of a body"],c:0,e:"<span class='h'>💡 Idea</span>Heat is a form of energy (measured in joules) that flows from a hotter body to a colder one because of the temperature difference between them.<span class='h'>✅</span>The energy that flows from a hotter body to a colder one."},
+{s:"Temperature is best described as…",o:["The total heat energy stored inside a body","The degree of hotness or coldness of a body","The energy that flows from a hot body to a cold one","The quantity of matter in a body"],c:1,e:"<span class='h'>💡 Idea</span>Temperature measures how hot or cold a body is; it decides the direction heat will flow. Heat, not temperature, is the energy that flows.<span class='h'>✅</span>The degree of hotness or coldness of a body."},
+{s:"The SI unit of temperature is the…",o:["Degree Celsius","Joule","Kelvin","Degree Fahrenheit"],c:2,e:"<span class='h'>💡 Idea</span>The kelvin (K) is the SI unit of temperature. The joule is the unit of heat energy, not temperature.<span class='h'>✅</span>Kelvin."},
+{s:"Convert 27 °C to kelvin.",o:["27 K","246 K","573 K","300 K"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>K = °C + 273 = 27 + 273 = 300 K</span><span class='h'>✅</span>300 K."},
+{s:"Convert 373 K to degrees Celsius.",o:["100 °C","646 °C","273 °C","0 °C"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>°C = K − 273 = 373 − 273 = 100 °C</span>This is the boiling point of water.<span class='h'>✅</span>100 °C."},
+{s:"Using °F = (9/5)°C + 32, convert 20 °C to Fahrenheit.",o:["52 °F","68 °F","36 °F","293 °F"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>°F = (9/5) × 20 + 32 = 36 + 32 = 68 °F</span><span class='h'>✅</span>68 °F."},
+{s:"On the Celsius scale, the temperature of pure melting ice (the lower fixed point) is…",o:["32 °C","100 °C","0 °C","273 °C"],c:2,e:"<span class='h'>💡 Idea</span>The lower fixed point (ice point) is 0 °C, which equals 273 K. 100 °C is the upper (steam) point.<span class='h'>✅</span>0 °C."},
+{s:"A measurable physical property that varies with temperature and is used to make a thermometer is called a…",o:["Fixed point","Latent heat","Heat capacity","Thermometric property"],c:3,e:"<span class='h'>💡 Idea</span>A thermometric property (e.g. length of a liquid column, resistance of a wire, pressure of a gas) changes steadily with temperature and lets us build a thermometer.<span class='h'>✅</span>Thermometric property."},
+{s:"The heat energy needed to raise the temperature of a body (without a change of state) is given by…",o:["Q = mcΔT","Q = mL","Q = mgh","Q = ½mv²"],c:0,e:"<span class='h'>💡 Idea</span>Q = mcΔT links heat Q, mass m, specific heat capacity c and temperature change ΔT. Q = mL is for a change of state.<span class='h'>✅</span>Q = mcΔT."},
+{s:"The specific heat capacity of a substance is the heat needed to…",o:["Melt 1 kg of the substance","Raise the temperature of 1 kg of it by 1 K","Raise the temperature of the whole body by 1 K","Boil 1 kg of the substance"],c:1,e:"<span class='h'>💡 Idea</span>Specific heat capacity c is the heat to raise 1 kg by 1 K (or 1 °C). Raising the WHOLE body by 1 K is the heat capacity C.<span class='h'>✅</span>Raise the temperature of 1 kg of it by 1 K."},
+{s:"The heat capacity C of a body is related to its mass m and specific heat capacity c by…",o:["C = m/c","C = c/m","C = mc","C = mcΔT"],c:2,e:"<span class='h'>💡 Idea</span>Heat capacity C = m × c, with unit J K⁻¹. Then Q = CΔT for the whole body.<span class='h'>✅</span>C = mc."},
+{s:"How much heat raises the temperature of 2 kg of water (c = 4200 J kg⁻¹ K⁻¹) from 20 °C to 70 °C?",o:["84 kJ","210 kJ","588 kJ","420 kJ"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>ΔT = 70 − 20 = 50 °C</span><span class='calc'>Q = mcΔT = 2 × 4200 × 50 = 420000 J = 420 kJ</span><span class='h'>✅</span>420 kJ."},
+{s:"A metal block of mass 0.5 kg has a specific heat capacity of 900 J kg⁻¹ K⁻¹. Its heat capacity is…",o:["450 J/K","1800 J/K","900 J/K","225 J/K"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>C = m c = 0.5 × 900 = 450 J/K</span><span class='h'>✅</span>450 J/K."},
+{s:"6000 J of heat is supplied to 0.5 kg of a liquid of specific heat capacity 400 J kg⁻¹ K⁻¹. The temperature rise is…",o:["15 °C","30 °C","60 °C","300 °C"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>ΔT = Q ÷ (m c) = 6000 ÷ (0.5 × 400)</span><span class='calc'>ΔT = 6000 ÷ 200 = 30 °C</span><span class='h'>✅</span>30 °C."},
+{s:"In the method of mixtures (no heat lost to the surroundings), which statement is correct?",o:["The hot body gains heat from the cold liquid","Both bodies rise in temperature together","Heat lost by the hot body = heat gained by the cold liquid","No heat is transferred at all"],c:2,e:"<span class='h'>💡 Idea</span>Energy is conserved, so the heat given out by the hot body exactly equals the heat taken in by the cold liquid until they reach a common temperature.<span class='h'>✅</span>Heat lost by the hot body = heat gained by the cold liquid."},
+{s:"The heat absorbed or released during a change of state, without any change in temperature, is called…",o:["Heat capacity","Specific heat capacity","Thermal capacity","Latent heat"],c:3,e:"<span class='h'>💡 Idea</span>Latent (hidden) heat changes the state of a substance while its temperature stays constant.<span class='h'>✅</span>Latent heat."},
+{s:"During melting, the temperature of a pure solid stays constant because the heat supplied is used to…",o:["Break the bonds and change the state, not to raise the temperature","Increase the temperature of the liquid formed","Raise the pressure of the substance","Destroy the mass of the solid"],c:0,e:"<span class='h'>💡 Idea</span>The heat goes into pulling the particles apart (their potential energy), not into speeding them up, so the average kinetic energy — and hence temperature — stays the same.<span class='h'>✅</span>Break the bonds and change the state, not to raise the temperature."},
+{s:"The heat needed to change the state of a mass m of substance is given by…",o:["Q = mcΔT","Q = mL","Q = mc/L","Q = L/m"],c:1,e:"<span class='h'>💡 Idea</span>For a change of state Q = mL, where L is the specific latent heat. There is no ΔT because temperature is constant.<span class='h'>✅</span>Q = mL."},
+{s:"The specific latent heat of fusion refers to the change from…",o:["Liquid to gas","Gas to liquid","Solid to liquid","Solid to gas"],c:2,e:"<span class='h'>💡 Idea</span>Fusion means melting: solid to liquid. Liquid to gas is vaporisation.<span class='h'>✅</span>Solid to liquid."},
+{s:"How much heat is needed to melt 0.5 kg of ice at 0 °C? (specific latent heat of fusion of ice = 3.36 × 10⁵ J kg⁻¹)",o:["84 kJ","672 kJ","336 kJ","168 kJ"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = m L = 0.5 × 3.36 × 10⁵</span><span class='calc'>Q = 1.68 × 10⁵ J = 168 kJ</span><span class='h'>✅</span>168 kJ."},
+{s:"The heat required to turn 2 kg of water at 100 °C completely into steam is… (specific latent heat of vaporisation = 2.26 × 10⁶ J kg⁻¹)",o:["4.52 MJ","1.13 MJ","2.26 MJ","9.04 MJ"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = m L = 2 × 2.26 × 10⁶</span><span class='calc'>Q = 4.52 × 10⁶ J = 4.52 MJ</span><span class='h'>✅</span>4.52 MJ."},
+{s:"While a pure liquid is boiling steadily, its temperature…",o:["Rises steadily","Stays constant until all the liquid has boiled away","Falls steadily","Rises then falls"],c:1,e:"<span class='h'>💡 Idea</span>During boiling the supplied heat becomes latent heat of vaporisation, so the temperature stays fixed at the boiling point until all the liquid is gone.<span class='h'>✅</span>Stays constant until all the liquid has boiled away."},
+{s:"If the linear expansivity of a material is α, its cubic (volume) expansivity is…",o:["α","2α","3α","α/3"],c:2,e:"<span class='h'>💡 Idea</span>The expansivities are in the ratio α : β : γ = 1 : 2 : 3, so cubic expansivity γ = 3α.<span class='h'>✅</span>3α."},
+{s:"The area (superficial) expansivity β is related to the linear expansivity α by…",o:["β = α","β = 3α","β = α/2","β = 2α"],c:3,e:"<span class='h'>💡 Idea</span>Area involves two dimensions, so β = 2α (while volume involves three, giving γ = 3α).<span class='h'>✅</span>β = 2α."},
+{s:"A steel rod 10 m long is heated through 50 °C. If α = 1.2 × 10⁻⁵ K⁻¹, its increase in length is…",o:["6 mm","0.6 mm","60 mm","3 mm"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>ΔL = L₀ α ΔT = 10 × 1.2 × 10⁻⁵ × 50</span><span class='calc'>ΔL = 6 × 10⁻³ m = 6 mm</span><span class='h'>✅</span>6 mm."},
+{s:"The three ways heat can be transferred are…",o:["Melting, boiling and freezing","Conduction, convection and radiation","Reflection, refraction and diffraction","Fusion, fission and radiation"],c:1,e:"<span class='h'>💡 Idea</span>Heat travels by conduction (through solids), convection (movement of a fluid) and radiation (electromagnetic waves, no medium needed).<span class='h'>✅</span>Conduction, convection and radiation."},
+{s:"Heat travels through a solid metal bar mainly by…",o:["Convection","Radiation","Conduction","Evaporation"],c:2,e:"<span class='h'>💡 Idea</span>In solids, especially metals, heat is passed on from particle to particle (and by free electrons) without the material moving — this is conduction.<span class='h'>✅</span>Conduction."},
+{s:"Heat reaches the Earth from the Sun across empty space by…",o:["Conduction","Convection","Melting","Radiation"],c:3,e:"<span class='h'>💡 Idea</span>Space is a vacuum with no particles, so only radiation — which needs no medium — can carry the Sun's heat to us.<span class='h'>✅</span>Radiation."},
+{s:"For a fixed mass of gas at constant temperature, Boyle's law states that…",o:["PV = constant","P/V = constant","V/T = constant","PT = constant"],c:0,e:"<span class='h'>💡 Idea</span>Boyle's law: at constant temperature, pressure × volume is constant (P₁V₁ = P₂V₂); pressure is inversely proportional to volume.<span class='h'>✅</span>PV = constant."},
+{s:"For a fixed mass of gas, which single relation combines Boyle's law, Charles' law and the pressure law?",o:["PV = constant","P/T = constant","V/T = constant","PV/T = constant"],c:3,e:"<span class='h'>💡 Idea</span>The general gas law PV/T = constant (so P₁V₁/T₁ = P₂V₂/T₂) combines all three, with T always in kelvin.<span class='h'>✅</span>PV/T = constant."}
+);
+
+["temperature","heatcap","latent","expansion","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

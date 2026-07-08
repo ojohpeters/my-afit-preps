@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Theory A–Z — Sets, Operations, Venn Diagrams & Word Problems (Maths)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔢 Set Theory A–Z</h1>
+  <p>Sets &amp; Notation · Operations · Venn Diagrams · Word Problems — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every step shown</span><span class="pill">Worked word problems</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">🔢 Basics &amp; Notation</div>
+    <div class="tab" data-cat="operations">⚙️ Set Operations</div>
+    <div class="tab" data-cat="venn">⭕ Venn Diagrams &amp; Formula</div>
+    <div class="tab" data-cat="threeset">🔺 Three-set Problems</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: BASICS & NOTATION ============ -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">🔢 PART 1 — Sets, Elements &amp; Notation</h2>
+
+    <div class="lesson">
+      <h3>1. What is a set?</h3>
+      <p>A <b>set</b> is a <b>well-defined collection of distinct (different) objects</b>. The objects are called the <b>elements</b> or <b>members</b> of the set.</p>
+      <p><b>Well-defined</b> means there is a clear rule so that we can always tell whether something belongs to the set or not — no arguing. For example, the set of even numbers is well-defined, but the set of tall students is NOT (people disagree on what counts as tall).</p>
+      <p>We usually name a set with a CAPITAL letter and list its members inside <b>curly braces { }</b>.</p>
+      <div class="formula">A = {2, 4, 6, 8}&nbsp;&nbsp;·&nbsp;&nbsp;B = {a, e, i, o, u}</div>
+      <span class="key">Two rules to remember</span>
+      <ul>
+        <li><b>Order does not matter.</b> {1, 2, 3} is the same set as {3, 1, 2}.</li>
+        <li><b>No repeats.</b> Each element is listed once. {1, 1, 2} is just written {1, 2}.</li>
+      </ul>
+      <div class="analogy">🌟 Idea: think of a set as a labelled box. What matters is WHICH things are inside — not the order you put them in, and you never keep two copies of the same thing.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Elements and membership (∈ and ∉)</h3>
+      <p>To say an object is inside a set we use the symbol <b>∈</b> (is an element of). To say it is NOT inside we use <b>∉</b> (is not an element of).</p>
+      <div class="formula">x ∈ A&nbsp; means&nbsp; x is an element of A&nbsp;&nbsp;·&nbsp;&nbsp;x ∉ A&nbsp; means&nbsp; x is NOT in A</div>
+      <div class="ex"><b class="t">Worked example:</b> Let A = {2, 4, 6, 8}.
+        <div class="calc">4 ∈ A&nbsp;&nbsp;(4 is in the set — true)</div>
+        <div class="calc">5 ∉ A&nbsp;&nbsp;(5 is not listed — true)</div>
+        So 4 belongs to A, but 5 does not.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Two ways to write a set</h3>
+      <p>There are two standard methods of describing a set.</p>
+      <h4>(a) Roster (tabular) method — list every member</h4>
+      <p>You simply write out all the elements inside braces.</p>
+      <div class="formula">C = {1, 3, 5, 7, 9}</div>
+      <h4>(b) Set-builder notation — give a rule</h4>
+      <p>You describe the members by a rule instead of listing them. Read the colon ( : or | ) as <b>such that</b>.</p>
+      <div class="formula">C = {x : x is an odd number less than 10}</div>
+      <p>This reads: C is the set of all x <b>such that</b> x is an odd number less than 10 — which is exactly {1, 3, 5, 7, 9}. Both methods describe the same set.</p>
+      <div class="analogy">🌟 Roster = show me the actual list. Set-builder = tell me the rule and I will build the list myself.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Types of sets</h3>
+      <table class="r">
+        <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td><b>Finite set</b></td><td>Has a countable, ending number of elements</td><td>{days of the week} — 7 members</td></tr>
+        <tr><td><b>Infinite set</b></td><td>The members never end</td><td>{1, 2, 3, 4, …} natural numbers</td></tr>
+        <tr><td><b>Empty (null) set ∅</b></td><td>Has NO elements at all</td><td>{ } or ∅</td></tr>
+        <tr><td><b>Universal set ξ</b></td><td>Contains all elements under discussion</td><td>ξ = {1, 2, 3, …, 10}</td></tr>
+        <tr><td><b>Equal sets</b></td><td>Have exactly the same elements</td><td>{1, 2, 3} = {3, 2, 1}</td></tr>
+      </table>
+      <span class="key">Two things students confuse</span>
+      <ul>
+        <li>The empty set ∅ has <b>0</b> elements. But <b>{0}</b> is NOT empty — it contains one element, the number 0. And <b>{∅}</b> is not empty either — it contains one element (the empty set itself).</li>
+        <li>The <b>universal set</b> (symbol <b>ξ</b>, sometimes written U) is the biggest box for a problem; every other set in that problem sits inside it.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Subsets (⊂) and the power set</h3>
+      <p>Set A is a <b>subset</b> of set B (written <b>A ⊂ B</b>) if <b>every</b> element of A is also in B.</p>
+      <div class="ex"><b class="t">Worked example:</b> Let A = {1, 2} and B = {1, 2, 3, 4}.
+        <div class="calc">Is 1 in B? yes. Is 2 in B? yes.</div>
+        Every element of A is inside B, so <b>A ⊂ B</b>.</div>
+      <span class="key">Handy subset facts</span>
+      <ul>
+        <li>The empty set ∅ is a subset of <b>every</b> set.</li>
+        <li>Every set is a subset of <b>itself</b>.</li>
+        <li>A set with <b>n</b> elements has <b>2ⁿ</b> subsets in total.</li>
+      </ul>
+      <p>The <b>power set</b> of A is the set of <b>all possible subsets</b> of A.</p>
+      <div class="ex"><b class="t">Worked example:</b> If A = {a, b}, then n(A) = 2, so the number of subsets is 2² = 4:
+        <div class="calc">Power set = { ∅, {a}, {b}, {a, b} }</div>
+        Count them: 4 subsets, as predicted by 2ⁿ.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Cardinality — n(A)</h3>
+      <p>The <b>cardinality</b> of a set is simply <b>how many elements it has</b>. We write it as <b>n(A)</b>.</p>
+      <div class="ex"><b class="t">Worked example:</b>
+        <div class="calc">If A = {5, 10, 15, 20}, then n(A) = 4</div>
+        <div class="calc">If B = {a, e, i, o, u}, then n(B) = 5</div>
+        <div class="calc">For the empty set, n(∅) = 0</div>
+        (Remember: no repeats are counted twice.)</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: SET OPERATIONS ============ -->
+  <section class="cat operations" id="cat-operations">
+    <h2 class="cathead">⚙️ PART 2 — Union, Intersection, Complement &amp; Difference</h2>
+
+    <p class="tip">Throughout this part we use ξ = {1, 2, 3, 4, 5, 6, 7, 8}, A = {1, 2, 3, 4} and B = {3, 4, 5, 6}.</p>
+
+    <div class="lesson">
+      <h3>1. Union (∪) — put them together</h3>
+      <p>The <b>union</b> A ∪ B is the set of all elements that are in A, <b>or</b> in B, <b>or</b> in both. Think of the keyword <b>OR</b>.</p>
+      <div class="formula">A ∪ B = {x : x ∈ A OR x ∈ B}</div>
+      <div class="ex"><b class="t">Worked example:</b> A = {1, 2, 3, 4}, B = {3, 4, 5, 6}.
+        <div class="calc">Collect everything from both, shared items listed once:</div>
+        <div class="calc">A ∪ B = {1, 2, 3, 4, 5, 6}</div>
+        Notice 3 and 4 appear once, not twice.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Intersection (∩) — the overlap only</h3>
+      <p>The <b>intersection</b> A ∩ B is the set of elements found in <b>both</b> A and B. Think of the keyword <b>AND</b>.</p>
+      <div class="formula">A ∩ B = {x : x ∈ A AND x ∈ B}</div>
+      <div class="ex"><b class="t">Worked example:</b> A = {1, 2, 3, 4}, B = {3, 4, 5, 6}.
+        <div class="calc">Which numbers are in BOTH lists? 3 and 4.</div>
+        <div class="calc">A ∩ B = {3, 4}</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Complement (A′) — everything outside</h3>
+      <p>The <b>complement</b> A′ (read A prime, or A complement) is everything in the <b>universal set ξ</b> that is <b>not</b> in A.</p>
+      <div class="formula">A′ = {x : x ∈ ξ AND x ∉ A}</div>
+      <div class="ex"><b class="t">Worked example:</b> ξ = {1, 2, 3, 4, 5, 6, 7, 8}, A = {1, 2, 3, 4}.
+        <div class="calc">Remove A from ξ. What is left?</div>
+        <div class="calc">A′ = {5, 6, 7, 8}</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Difference (A − B) — take one away from the other</h3>
+      <p>The <b>difference</b> A − B (also written A \ B) is the set of elements in A that are <b>not</b> in B.</p>
+      <div class="formula">A − B = {x : x ∈ A AND x ∉ B}</div>
+      <div class="ex"><b class="t">Worked example:</b> A = {1, 2, 3, 4}, B = {3, 4, 5, 6}.
+        <div class="calc">Start with A = {1, 2, 3, 4}, then throw out anything also in B (3 and 4):</div>
+        <div class="calc">A − B = {1, 2}</div>
+        Watch out — B − A is different: B − A = {5, 6}. The order matters!</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Disjoint sets — no overlap</h3>
+      <p>Two sets are <b>disjoint</b> if they have <b>no elements in common</b>, i.e. their intersection is empty.</p>
+      <div class="formula">A and B are disjoint&nbsp; ⇔&nbsp; A ∩ B = ∅</div>
+      <div class="ex"><b class="t">Worked example:</b> P = {1, 2, 3} and Q = {7, 8, 9}.
+        <div class="calc">Common elements? none. P ∩ Q = ∅</div>
+        So P and Q are disjoint sets.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Quick summary of the symbols</h3>
+      <table class="r">
+        <tr><th>Symbol</th><th>Name</th><th>Keyword</th><th>Meaning</th></tr>
+        <tr><td><b>∪</b></td><td>Union</td><td>OR</td><td>Everything in either set</td></tr>
+        <tr><td><b>∩</b></td><td>Intersection</td><td>AND</td><td>Only what is in both</td></tr>
+        <tr><td><b>A′</b></td><td>Complement</td><td>NOT</td><td>Everything in ξ outside A</td></tr>
+        <tr><td><b>A − B</b></td><td>Difference</td><td>IN A NOT B</td><td>In A but not in B</td></tr>
+        <tr><td><b>∅</b></td><td>Disjoint</td><td>NONE SHARED</td><td>A ∩ B = ∅</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: VENN DIAGRAMS & THE FORMULA ============ -->
+  <section class="cat venn" id="cat-venn">
+    <h2 class="cathead">⭕ PART 3 — Venn Diagrams &amp; the Two-Set Formula</h2>
+
+    <div class="lesson">
+      <h3>1. What is a Venn diagram?</h3>
+      <p>A <b>Venn diagram</b> is a picture that shows sets as overlapping circles inside a rectangle. The rectangle is the <b>universal set ξ</b>; each circle is one set.</p>
+      <ul>
+        <li>The <b>overlap</b> of two circles shows A ∩ B (elements in both).</li>
+        <li>The <b>part of A outside the overlap</b> shows A only (A but not B).</li>
+        <li>The region <b>outside all circles</b> (but inside the rectangle) shows elements in <b>neither</b> set.</li>
+      </ul>
+      <div class="analogy">🌟 Picture two hula-hoops that overlap on the floor. The shared middle patch is the intersection; each hoop-only crescent is the “only” part; the floor outside both hoops is the neither region.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The key two-set formula</h3>
+      <p>If you just add n(A) and n(B), the people in the overlap get counted <b>twice</b>. So we subtract the overlap once to fix it:</p>
+      <div class="formula">n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</div>
+      <p>Rearranged, this also lets us find the overlap:</p>
+      <div class="formula">n(A ∩ B) = n(A) + n(B) − n(A ∪ B)</div>
+      <span class="key">The four regions of a two-set diagram</span>
+      <ul>
+        <li><b>A only</b> = n(A) − n(A ∩ B)</li>
+        <li><b>B only</b> = n(B) − n(A ∩ B)</li>
+        <li><b>Both</b> = n(A ∩ B)</li>
+        <li><b>Neither</b> = n(ξ) − n(A ∪ B)</li>
+      </ul>
+      <div class="ex"><b class="t">Quick example:</b> n(A) = 12, n(B) = 15, n(A ∩ B) = 5.
+        <div class="calc">n(A ∪ B) = 12 + 15 − 5 = 22</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked word problem — find how many do BOTH</h3>
+      <div class="ex"><b class="t">Problem:</b> In a class of 35 students, 20 offer Mathematics, 18 offer Physics, and 5 offer neither subject. How many offer BOTH?
+        <div class="calc">Step 1 — at least one = total − neither = 35 − 5 = 30</div>
+        <div class="calc">Step 2 — so n(M ∪ P) = 30</div>
+        <div class="calc">Step 3 — formula: n(M ∪ P) = n(M) + n(P) − n(both)</div>
+        <div class="calc">30 = 20 + 18 − n(both) = 38 − n(both)</div>
+        <div class="calc">n(both) = 38 − 30 = 8</div>
+        So <b>8 students offer both</b>. Check: Maths only = 20 − 8 = 12, Physics only = 18 − 8 = 10. Regions add up: 12 + 10 + 8 + 5 neither = 35 ✓</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked word problem — only one / neither</h3>
+      <div class="ex"><b class="t">Problem:</b> In a group of 40 people, 25 like rice, 22 like beans, and 8 like both. Find how many like (a) at least one, (b) neither, (c) only rice, (d) only beans.
+        <div class="calc">(a) at least one = n(R ∪ B) = 25 + 22 − 8 = 39</div>
+        <div class="calc">(b) neither = 40 − 39 = 1</div>
+        <div class="calc">(c) rice only = 25 − 8 = 17</div>
+        <div class="calc">(d) beans only = 22 − 8 = 14</div>
+        Check all regions: 17 + 14 + 8 both + 1 neither = 40 ✓</div>
+      <div class="analogy">🌟 Golden rule for these problems: fill the OVERLAP first, then subtract it to get each “only” region, then use the total to get the “neither” region.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: THREE-SET PROBLEMS ============ -->
+  <section class="cat threeset" id="cat-threeset">
+    <h2 class="cathead">🔺 PART 4 — Three-set Venn Problems</h2>
+
+    <div class="lesson">
+      <h3>1. The three-set formula</h3>
+      <p>With three sets, three pairs overlap and there is a small centre where all three meet. We subtract each pair overlap once, but that removes the centre too many times, so we add it back:</p>
+      <div class="formula">n(A ∪ B ∪ C) = n(A) + n(B) + n(C) − n(A∩B) − n(A∩C) − n(B∩C) + n(A∩B∩C)</div>
+      <div class="ex"><b class="t">Quick example:</b> n(A) = 20, n(B) = 18, n(C) = 16, n(A∩B) = 8, n(A∩C) = 6, n(B∩C) = 5, n(A∩B∩C) = 3.
+        <div class="calc">Singles: 20 + 18 + 16 = 54</div>
+        <div class="calc">Pairs: 8 + 6 + 5 = 19</div>
+        <div class="calc">n(A ∪ B ∪ C) = 54 − 19 + 3 = 38</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Filling the seven regions (the safe method)</h3>
+      <p>The reliable way to solve three-set problems is to fill the diagram from the <b>centre outward</b>:</p>
+      <ul>
+        <li><b>Step 1 — centre:</b> put n(A∩B∩C) in the very middle.</li>
+        <li><b>Step 2 — pair-only regions:</b> each pair overlap minus the centre.
+          <br>A∩B only = n(A∩B) − centre, and likewise for A∩C only and B∩C only.</li>
+        <li><b>Step 3 — single-only regions:</b> each set total minus the three pieces already inside it.</li>
+        <li><b>Step 4 — neither:</b> total − (sum of all seven regions).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Fully worked example 1</h3>
+      <div class="ex"><b class="t">Problem:</b> In a class of 50 students, 20 offer Maths (M), 25 offer English (E) and 18 offer Science (S). 8 offer Maths and English, 6 offer Maths and Science, 7 offer English and Science, and 3 offer all three. Find how many offer (a) at least one subject, (b) none, (c) only Maths.
+        <div class="calc">Centre (all three) = 3</div>
+        <div class="calc">M∩E only = 8 − 3 = 5</div>
+        <div class="calc">M∩S only = 6 − 3 = 3</div>
+        <div class="calc">E∩S only = 7 − 3 = 4</div>
+        <div class="calc">Maths only = 20 − (5 + 3 + 3) = 20 − 11 = 9</div>
+        <div class="calc">English only = 25 − (5 + 4 + 3) = 25 − 12 = 13</div>
+        <div class="calc">Science only = 18 − (3 + 4 + 3) = 18 − 10 = 8</div>
+        <div class="calc">(a) at least one = 9 + 13 + 8 + 5 + 3 + 4 + 3 = 45</div>
+        <div class="calc">(b) none = 50 − 45 = 5</div>
+        <div class="calc">(c) only Maths = 9</div>
+        Formula check: 20 + 25 + 18 − (8 + 6 + 7) + 3 = 63 − 21 + 3 = 45 ✓</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Fully worked example 2</h3>
+      <div class="ex"><b class="t">Problem:</b> In a survey of 100 people about three drinks — Tea (T), Coffee (C) and Milk (K): 40 take Tea, 45 take Coffee, 30 take Milk. 15 take Tea and Coffee, 10 take Tea and Milk, 12 take Coffee and Milk, and 5 take all three. Find (a) at least one drink, (b) none, (c) only Tea.
+        <div class="calc">Centre (all three) = 5</div>
+        <div class="calc">T∩C only = 15 − 5 = 10</div>
+        <div class="calc">T∩K only = 10 − 5 = 5</div>
+        <div class="calc">C∩K only = 12 − 5 = 7</div>
+        <div class="calc">Tea only = 40 − (10 + 5 + 5) = 40 − 20 = 20</div>
+        <div class="calc">Coffee only = 45 − (10 + 7 + 5) = 45 − 22 = 23</div>
+        <div class="calc">Milk only = 30 − (5 + 7 + 5) = 30 − 17 = 13</div>
+        <div class="calc">(a) at least one = 20 + 23 + 13 + 10 + 5 + 7 + 5 = 83</div>
+        <div class="calc">(b) none = 100 − 83 = 17</div>
+        <div class="calc">(c) only Tea = 20</div>
+        Formula check: 40 + 45 + 30 − (15 + 10 + 12) + 5 = 115 − 37 + 5 = 83 ✓</div>
+      <div class="analogy">🌟 Always finish by adding your seven regions and checking they match the number who take at least one. If the centre-outward filling and the formula agree, your answer is safe.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">List the members, fill the overlap first — the regions follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"A set is best described as…",o:["A well-defined collection of distinct objects","A random heap of numbers with repeats","A single fixed number","An algebraic equation"],c:0,e:"<span class='h'>💡 Idea</span>A set is a well-defined collection of distinct (different) objects called its elements. Well-defined means we can always tell whether something belongs or not.<span class='h'>✅</span>A well-defined collection of distinct objects."},
+{s:"The individual objects that make up a set are called its…",o:["Factors","Elements (members)","Subsets","Unions"],c:1,e:"<span class='h'>💡 Idea</span>Each object inside a set is an element or member of that set.<span class='h'>✅</span>Elements (members)."},
+{s:"The symbol ∈ means…",o:["Is a subset of","Union of two sets","Is an element of","Is not equal to"],c:2,e:"<span class='h'>💡 Idea</span>x ∈ A is read as x is an element of (belongs to) A. The crossed form ∉ means is NOT an element of.<span class='h'>✅</span>Is an element of."},
+{s:"If A = {2, 4, 6, 8}, which statement is TRUE?",o:["5 ∈ A","3 ∈ A","8 ∉ A","6 ∈ A"],c:3,e:"<span class='h'>✏️ Working</span>Only 2, 4, 6 and 8 are in A. So 6 ∈ A is true, while 5 and 3 are ∉ A, and 8 really IS in A so 8 ∉ A is false.<span class='h'>✅</span>6 ∈ A."},
+{s:"The set A = {x : x is an even number between 1 and 9} written in roster form is…",o:["{2, 4, 6, 8}","{1, 3, 5, 7}","{2, 4, 6, 8, 10}","{0, 2, 4, 6, 8}"],c:0,e:"<span class='h'>✏️ Working</span>The even numbers strictly between 1 and 9 are 2, 4, 6 and 8 (10 is above 9, and 0 is below 1).<span class='h'>✅</span>{2, 4, 6, 8}."},
+{s:"Writing a set by listing every member inside braces, e.g. {1, 2, 3}, is called the…",o:["Set-builder notation","Roster (tabular) method","Venn method","Power-set method"],c:1,e:"<span class='h'>💡 Idea</span>Listing the members is the roster or tabular method. Describing them by a rule, like {x : x is odd}, is set-builder notation.<span class='h'>✅</span>Roster (tabular) method."},
+{s:"A set that contains no elements at all is called the…",o:["Universal set","Infinite set","Empty (null) set","Equal set"],c:2,e:"<span class='h'>💡 Idea</span>A set with zero members is the empty or null set, written ∅ or { }. Its cardinality is 0.<span class='h'>✅</span>Empty (null) set."},
+{s:"Which of the following is a correct way to write the empty set?",o:["{0}","{∅}","ξ","∅ or { }"],c:3,e:"<span class='h'>💡 Idea</span>The empty set is written ∅ or as empty braces { }. Note {0} is NOT empty — it holds the element 0 — and ξ is the universal set.<span class='h'>✅</span>∅ or { }."},
+{s:"The set that contains every element under consideration in a problem is the…",o:["Universal set ξ","Empty set ∅","A proper subset","The power set"],c:0,e:"<span class='h'>💡 Idea</span>The universal set (symbol ξ, sometimes U) holds all the elements being discussed; every other set in the problem is a subset of it.<span class='h'>✅</span>Universal set ξ."},
+{s:"The number of elements in a set A is called its cardinality, written…",o:["A′","n(A)","A ∪ B","A ⊂ B"],c:1,e:"<span class='h'>💡 Idea</span>The cardinality (size) of A is written n(A). For A = {a, b, c}, n(A) = 3.<span class='h'>✅</span>n(A)."},
+{s:"If B = {a, e, i, o, u}, then n(B) =",o:["4","6","5","10"],c:2,e:"<span class='h'>✏️ Working</span>Count the members: a, e, i, o, u.<span class='calc'>n(B) = 5</span><span class='h'>✅</span>5."},
+{s:"Which of the following is a FINITE set?",o:["The set of all natural numbers","The set of all multiples of 5","The set of all integers","The set of days in a week"],c:3,e:"<span class='h'>💡 Idea</span>The days of the week are just 7, so that set is finite. Natural numbers, multiples of 5 and integers never end, so they are infinite.<span class='h'>✅</span>The set of days in a week."},
+{s:"The union A ∪ B is the set of all elements that are in…",o:["A or B (or both)","A and B only","Neither A nor B","Only A"],c:0,e:"<span class='h'>💡 Idea</span>Union ∪ collects everything in A, everything in B, or in both — the keyword OR is the clue.<span class='h'>✅</span>A or B (or both)."},
+{s:"The intersection A ∩ B is the set of elements found in…",o:["A only","Both A and B","A or B","Neither set"],c:1,e:"<span class='h'>💡 Idea</span>Intersection ∩ keeps only the elements common to BOTH sets — the keyword AND is the clue.<span class='h'>✅</span>Both A and B."},
+{s:"If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, then A ∩ B =",o:["{1, 2, 3, 4, 5, 6}","{1, 2}","{3, 4}","{5, 6}"],c:2,e:"<span class='h'>✏️ Working</span>Intersection keeps only the elements in BOTH sets. The common members are 3 and 4.<span class='calc'>A ∩ B = {3, 4}</span><span class='h'>✅</span>{3, 4}."},
+{s:"If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, then A ∪ B =",o:["{3, 4}","{1, 2}","{5, 6}","{1, 2, 3, 4, 5, 6}"],c:3,e:"<span class='h'>✏️ Working</span>Union collects every element in either set, listing the shared ones only once.<span class='calc'>A ∪ B = {1, 2, 3, 4, 5, 6}</span><span class='h'>✅</span>{1, 2, 3, 4, 5, 6}."},
+{s:"Two sets that have no elements in common are said to be…",o:["Disjoint","Equal","Universal","Subsets"],c:0,e:"<span class='h'>💡 Idea</span>If A ∩ B = ∅ (nothing shared), the two sets are disjoint.<span class='h'>✅</span>Disjoint."},
+{s:"The complement A′ of a set A contains all elements…",o:["In A","In the universal set that are NOT in A","In both A and B","In A or B"],c:1,e:"<span class='h'>💡 Idea</span>A′ (A complement) is everything in the universal set ξ that lies outside A.<span class='h'>✅</span>In the universal set that are NOT in A."},
+{s:"If ξ = {1, 2, 3, 4, 5, 6} and A = {2, 4, 6}, then A′ =",o:["{2, 4, 6}","{1, 2, 3}","{1, 3, 5}","{4, 5, 6}"],c:2,e:"<span class='h'>✏️ Working</span>A′ is everything in ξ that is not in A. Remove 2, 4 and 6 from ξ and 1, 3, 5 remain.<span class='calc'>A′ = {1, 3, 5}</span><span class='h'>✅</span>{1, 3, 5}."},
+{s:"The difference A − B means elements in A but not in B. If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, then A − B =",o:["{3, 4}","{5, 6}","{1, 2, 3, 4}","{1, 2}"],c:3,e:"<span class='h'>✏️ Working</span>Start with A = {1, 2, 3, 4} and throw out anything also in B (that is 3 and 4). Left with 1 and 2.<span class='calc'>A − B = {1, 2}</span><span class='h'>✅</span>{1, 2}."},
+{s:"The correct formula for the number of elements in A ∪ B is…",o:["n(A∪B) = n(A) + n(B) − n(A∩B)","n(A∪B) = n(A) + n(B)","n(A∪B) = n(A) − n(B)","n(A∪B) = n(A) × n(B)"],c:0,e:"<span class='h'>💡 Idea</span>Adding n(A) and n(B) counts the overlap twice, so we subtract n(A∩B) once to correct it.<span class='calc'>n(A∪B) = n(A) + n(B) − n(A∩B)</span><span class='h'>✅</span>n(A∪B) = n(A) + n(B) − n(A∩B)."},
+{s:"If n(A) = 12, n(B) = 15 and n(A∩B) = 5, then n(A∪B) =",o:["32","22","27","5"],c:1,e:"<span class='h'>✏️ Working</span>Use the formula n(A∪B) = n(A) + n(B) − n(A∩B).<span class='calc'>= 12 + 15 − 5</span><span class='calc'>= 27 − 5 = 22</span><span class='h'>✅</span>22."},
+{s:"In a class, 18 offer Maths, 15 offer Physics, and 7 offer both. How many offer Maths ONLY?",o:["18","25","11","8"],c:2,e:"<span class='h'>✏️ Working</span>Maths only = those doing Maths minus those doing both.<span class='calc'>Maths only = 18 − 7 = 11</span><span class='h'>✅</span>11."},
+{s:"Using the same data (18 offer Maths, 15 offer Physics, 7 offer both), how many offer at least one of the two subjects?",o:["33","40","7","26"],c:3,e:"<span class='h'>✏️ Working</span>At least one is the union.<span class='calc'>n(M∪P) = 18 + 15 − 7</span><span class='calc'>= 33 − 7 = 26</span><span class='h'>✅</span>26."},
+{s:"In a group of 40 students, 24 like tea, 20 like coffee and 8 like both. How many like NEITHER drink?",o:["4","36","12","8"],c:0,e:"<span class='h'>✏️ Working</span>First find those who like at least one.<span class='calc'>n(T∪C) = 24 + 20 − 8 = 36</span>Neither = total − at least one.<span class='calc'>Neither = 40 − 36 = 4</span><span class='h'>✅</span>4."},
+{s:"In a group, 30 read Newspaper A, 25 read Newspaper B and 10 read both. How many read exactly one newspaper?",o:["55","35","45","10"],c:1,e:"<span class='h'>✏️ Working</span>Exactly one = (A only) + (B only).<span class='calc'>A only = 30 − 10 = 20</span><span class='calc'>B only = 25 − 10 = 15</span><span class='calc'>Exactly one = 20 + 15 = 35</span><span class='h'>✅</span>35."},
+{s:"For three sets, n(A∪B∪C) equals…",o:["n(A) + n(B) + n(C)","n(A) + n(B) + n(C) − n(A∩B) − n(A∩C) − n(B∩C)","n(A) + n(B) + n(C) − n(A∩B) − n(A∩C) − n(B∩C) + n(A∩B∩C)","n(A) × n(B) × n(C)"],c:2,e:"<span class='h'>💡 Idea</span>Subtract each pair overlap once, but the triple overlap gets removed too many times, so add n(A∩B∩C) back at the end.<span class='h'>✅</span>n(A) + n(B) + n(C) − n(A∩B) − n(A∩C) − n(B∩C) + n(A∩B∩C)."},
+{s:"Given n(A)=20, n(B)=18, n(C)=16, n(A∩B)=8, n(A∩C)=6, n(B∩C)=5 and n(A∩B∩C)=3, find n(A∪B∪C).",o:["38","54","33","76"],c:0,e:"<span class='h'>✏️ Working</span>Apply the three-set formula.<span class='calc'>Singles = 20 + 18 + 16 = 54</span><span class='calc'>Pairs = 8 + 6 + 5 = 19</span><span class='calc'>n(A∪B∪C) = 54 − 19 + 3 = 38</span><span class='h'>✅</span>38."},
+{s:"In a three-set Venn diagram, 9 people like both A and B, and 4 of those like all three (A∩B∩C). How many like A and B but NOT C?",o:["13","4","5","9"],c:2,e:"<span class='h'>✏️ Working</span>The A-and-B-only region = n(A∩B) minus the triple overlap.<span class='calc'>A and B only = 9 − 4 = 5</span><span class='h'>✅</span>5."},
+{s:"In a class of 50, 20 offer Maths, 25 offer English, 18 offer Science; 8 offer Maths and English, 6 offer Maths and Science, 7 offer English and Science, and 3 offer all three. How many offer NONE of the subjects?",o:["45","8","15","5"],c:3,e:"<span class='h'>✏️ Working</span>First the union by the three-set formula.<span class='calc'>= (20+25+18) − (8+6+7) + 3</span><span class='calc'>= 63 − 21 + 3 = 45</span>None = total − at least one.<span class='calc'>None = 50 − 45 = 5</span><span class='h'>✅</span>5."}
+);
+
+["basics","operations","venn","threeset","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

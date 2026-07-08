@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics A–Z — Averages, Grouped Data, Spread &amp; Charts (Maths)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>📊 Statistics A–Z</h1>
+  <p>Averages · Grouped Data · Spread · Charts — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every calculation shown</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="ungrouped">📋 Data &amp; Averages</div>
+    <div class="tab" data-cat="grouped">🗂️ Grouped Data</div>
+    <div class="tab" data-cat="spread">📏 Measures of Spread</div>
+    <div class="tab" data-cat="presentation">📈 Data Presentation</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: DATA & AVERAGES (UNGROUPED) ============ -->
+  <section class="cat ungrouped show" id="cat-ungrouped">
+    <h2 class="cathead">📋 PART 1 — Data &amp; the Three Averages</h2>
+
+    <div class="lesson">
+      <h3>1. What is statistics? Types of data</h3>
+      <p><b>Statistics</b> is the branch of maths that deals with <b>collecting, organising, presenting and interpreting data</b> (information, usually numbers).</p>
+      <span class="key">Ways we split up data</span>
+      <ul>
+        <li><b>Qualitative (categorical) data</b> — describes a quality, not a number: colour of a car, favourite fruit, gender, blood group.</li>
+        <li><b>Quantitative (numerical) data</b> — a measured or counted number: height, mass, age, number of goals.</li>
+        <li><b>Discrete data</b> — counted, so it takes <b>whole-number values only</b>: number of children, number of cars (you cannot have 2.5 children).</li>
+        <li><b>Continuous data</b> — measured, so it can take <b>any value in a range</b>: height (1.72 m), mass, temperature, time.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: you <b>COUNT</b> discrete data (whole numbers) but you <b>MEASURE</b> continuous data (decimals allowed).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three averages (measures of central tendency)</h3>
+      <p>An <b>average</b> is a single value that represents the "middle" or "typical" value of a data set. There are three:</p>
+      <ul>
+        <li><b>Mean</b> — the arithmetic average; add everything up and share it out.</li>
+        <li><b>Median</b> — the middle value when the data is put in order.</li>
+        <li><b>Mode</b> — the value that appears most often.</li>
+      </ul>
+      <div class="analogy">🌟 Remember the M-words: <b>Mean</b> = add and share; <b>Median</b> = middle; <b>Mode</b> = most.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The MEAN — add up, divide by how many</h3>
+      <p>The mean is the total of all the values divided by the number of values.</p>
+      <div class="formula">Mean (x̄) = Σx ÷ n</div>
+      <p><b>Σx</b> means "the sum of all the x values" and <b>n</b> is how many values there are.</p>
+      <div class="ex"><b class="t">Worked example:</b> Find the mean of 4, 8, 6, 10, 2.
+        <div class="calc">Σx = 4 + 8 + 6 + 10 + 2 = 30</div>
+        <div class="calc">n = 5 values</div>
+        <div class="calc">Mean = 30 ÷ 5 = 6</div>
+        The mean is <b>6</b>.</div>
+      <div class="ex"><b class="t">Working backwards:</b> The mean of 5 numbers is 12. Find their total.
+        <div class="calc">Total = mean × n = 12 × 5 = 60</div>
+        The numbers add up to <b>60</b>. (Rearranging Σx = mean × n is a very common exam trick.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The MEDIAN — the middle value</h3>
+      <p>Put the numbers <b>in order first</b> (smallest to largest). The median is the one in the middle.</p>
+      <span class="key">Odd number of values</span>
+      <p>If there is an <b>odd</b> count, there is one single middle value. Its position is (n + 1) ÷ 2.</p>
+      <div class="ex"><b class="t">Odd example:</b> Find the median of 7, 2, 9, 5, 3.
+        <div class="calc">Order: 2, 3, 5, 7, 9</div>
+        <div class="calc">n = 5, middle position = (5 + 1) ÷ 2 = 3rd value</div>
+        The 3rd value is <b>5</b>, so the median is 5.</div>
+      <span class="key">Even number of values</span>
+      <p>If there is an <b>even</b> count, there are <b>two</b> middle values — the median is their <b>mean</b> (add them and divide by 2).</p>
+      <div class="ex"><b class="t">Even example:</b> Find the median of 2, 4, 6, 8, 10, 12.
+        <div class="calc">Already in order; n = 6, so the two middle values are the 3rd and 4th: 6 and 8</div>
+        <div class="calc">Median = (6 + 8) ÷ 2 = 14 ÷ 2 = 7</div>
+        The median is <b>7</b>.</div>
+      <div class="analogy">🌟 Always ORDER the data before finding the median — forgetting this is the #1 mistake.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The MODE — the most common value</h3>
+      <p>The mode is the value that appears <b>most frequently</b>. A set can have one mode, more than one mode, or no mode at all.</p>
+      <div class="ex"><b class="t">Worked example:</b> Find the mode of 2, 3, 3, 5, 7, 3, 8.
+        <div class="calc">Count each: 2 appears once, 3 appears three times, 5 once, 7 once, 8 once</div>
+        3 appears the most (three times), so the mode is <b>3</b>.</div>
+      <ul>
+        <li>Two values tie for most common → the data is <b>bimodal</b> (two modes).</li>
+        <li>Every value appears the same number of times → there is <b>no mode</b>.</li>
+      </ul>
+      <div class="analogy">🌟 The mode is the only average that works for qualitative data (e.g. the most popular colour).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Which average to use?</h3>
+      <ul>
+        <li>The <b>mean</b> uses every value, but it is <b>easily pulled by an extreme value</b> (an outlier). One huge salary can drag the mean up.</li>
+        <li>The <b>median</b> ignores how big the extremes are, so it is <b>not affected by outliers</b> — good for skewed data like incomes.</li>
+        <li>The <b>mode</b> is best for "most popular" questions and for categories.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: GROUPED DATA ============ -->
+  <section class="cat grouped" id="cat-grouped">
+    <h2 class="cathead">🗂️ PART 2 — Frequency Tables &amp; Grouped Data</h2>
+
+    <div class="lesson">
+      <h3>1. Frequency tables (ungrouped)</h3>
+      <p>When a value repeats many times we record how often with a <b>frequency (f)</b> — the number of times it occurs. This saves listing every value.</p>
+      <span class="key">Mean from a frequency table</span>
+      <div class="formula">Mean = Σfx ÷ Σf</div>
+      <p>Multiply each value <b>x</b> by its frequency <b>f</b> to get <b>fx</b>, add up the fx column (Σfx), then divide by the total frequency (Σf = n).</p>
+      <div class="ex"><b class="t">Worked example:</b> The table shows marks scored by 20 pupils.
+        <table class="r">
+          <tr><th>Mark (x)</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>Total</th></tr>
+          <tr><td>Frequency (f)</td><td>2</td><td>4</td><td>5</td><td>6</td><td>3</td><td><b>20</b></td></tr>
+          <tr><td>fx</td><td>2</td><td>8</td><td>15</td><td>24</td><td>15</td><td><b>64</b></td></tr>
+        </table>
+        <div class="calc">Σf = 2 + 4 + 5 + 6 + 3 = 20</div>
+        <div class="calc">Σfx = 2 + 8 + 15 + 24 + 15 = 64</div>
+        <div class="calc">Mean = Σfx ÷ Σf = 64 ÷ 20 = 3.2</div>
+        The mean mark is <b>3.2</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Mode and median from a frequency table</h3>
+      <p>Using the same table above:</p>
+      <ul>
+        <li><b>Mode</b> = the value with the highest frequency. The biggest f is 6, which belongs to the mark 4, so the <b>mode is 4</b>.</li>
+        <li><b>Median</b> = the middle value. With n = 20 (even), the median is between the 10th and 11th values. Building up the frequencies (cumulative): up to mark 2 we have 6 pupils; up to mark 3 we have 11 pupils. So both the 10th and 11th pupils scored 3 → the <b>median is 3</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Do not confuse the mode (the x-value with the biggest frequency) with the frequency itself. The mode is 4, NOT 6.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Grouped data — using classes</h3>
+      <p>When data is spread over a wide range (like exam marks out of 100) we group it into <b>classes (intervals)</b> such as 0–10, 10–20, and so on. We lose the exact values but the data becomes manageable.</p>
+      <span class="key">The class midpoint (mid-value)</span>
+      <p>Because we no longer know the exact values in a class, we assume they all sit at the <b>midpoint</b> of the class.</p>
+      <div class="formula">Class midpoint = (lower limit + upper limit) ÷ 2</div>
+      <div class="ex"><b class="t">Example:</b> the midpoint of the class 20–30 is
+        <div class="calc">(20 + 30) ÷ 2 = 50 ÷ 2 = 25</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Estimated mean of a grouped distribution</h3>
+      <p>Use the midpoint of each class as the x-value, then use the same formula Mean = Σfx ÷ Σf. Because midpoints are only estimates of the real values, the answer is called the <b>estimated mean</b>.</p>
+      <div class="ex"><b class="t">Worked example:</b> The table shows the marks of 20 students.
+        <table class="r">
+          <tr><th>Class</th><th>Midpoint (x)</th><th>Frequency (f)</th><th>fx</th></tr>
+          <tr><td>0–10</td><td>5</td><td>2</td><td>10</td></tr>
+          <tr><td>10–20</td><td>15</td><td>5</td><td>75</td></tr>
+          <tr><td>20–30</td><td>25</td><td>8</td><td>200</td></tr>
+          <tr><td>30–40</td><td>35</td><td>3</td><td>105</td></tr>
+          <tr><td>40–50</td><td>45</td><td>2</td><td>90</td></tr>
+          <tr><td><b>Total</b></td><td></td><td><b>20</b></td><td><b>480</b></td></tr>
+        </table>
+        <div class="calc">Σf = 2 + 5 + 8 + 3 + 2 = 20</div>
+        <div class="calc">Σfx = 10 + 75 + 200 + 105 + 90 = 480</div>
+        <div class="calc">Estimated mean = Σfx ÷ Σf = 480 ÷ 20 = 24</div>
+        The estimated mean mark is <b>24</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Modal class and median class</h3>
+      <p>With grouped data we cannot give a single mode or median value, so we name the <b>class</b> instead.</p>
+      <ul>
+        <li><b>Modal class</b> = the class with the <b>highest frequency</b>. In the table above the biggest frequency is 8, so the modal class is <b>20–30</b>.</li>
+        <li><b>Median class</b> = the class containing the middle value. With n = 20 the median lies at the 10th/11th value. Cumulative frequency reaches 7 by the end of 10–20 and reaches 15 by the end of 20–30, so the 10th and 11th values fall in <b>20–30</b>. That is the median class.</li>
+      </ul>
+      <div class="analogy">🌟 Modal class and median class are found the same way as before — just report the interval, not a single number.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: MEASURES OF SPREAD ============ -->
+  <section class="cat spread" id="cat-spread">
+    <h2 class="cathead">📏 PART 3 — Measures of Spread (Dispersion)</h2>
+
+    <div class="lesson">
+      <h3>1. Why we need spread as well as average</h3>
+      <p>Two sets can have the <b>same mean</b> but be very different. {2, 6, 10} and {5, 6, 7} both have mean 6, but the first is much more spread out. <b>Measures of spread (dispersion)</b> tell us how scattered the data is around the average.</p>
+      <p>The main ones are the <b>range</b>, the <b>mean deviation</b>, the <b>variance</b> and the <b>standard deviation</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The RANGE — the simplest spread</h3>
+      <div class="formula">Range = Largest value − Smallest value</div>
+      <div class="ex"><b class="t">Worked example:</b> Find the range of 12, 5, 20, 8, 15.
+        <div class="calc">Largest = 20, Smallest = 5</div>
+        <div class="calc">Range = 20 − 5 = 15</div>
+        The range is <b>15</b>.</div>
+      <p>The range is quick but only uses two values, so a single extreme value can make it misleading.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The MEAN DEVIATION</h3>
+      <p>The mean deviation is the <b>average distance of each value from the mean</b>. We ignore the sign (use the absolute value |x − x̄|) because we only care about the distance.</p>
+      <div class="formula">Mean deviation = Σ|x − x̄| ÷ n</div>
+      <div class="ex"><b class="t">Worked example:</b> Find the mean deviation of 2, 4, 6, 8, 10.
+        <div class="calc">Mean x̄ = (2 + 4 + 6 + 8 + 10) ÷ 5 = 30 ÷ 5 = 6</div>
+        <div class="calc">Distances |x − 6|: 4, 2, 0, 2, 4</div>
+        <div class="calc">Σ|x − x̄| = 4 + 2 + 0 + 2 + 4 = 12</div>
+        <div class="calc">Mean deviation = 12 ÷ 5 = 2.4</div>
+        The mean deviation is <b>2.4</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. VARIANCE and STANDARD DEVIATION</h3>
+      <p>The standard deviation is the <b>most important</b> measure of spread. Instead of the absolute value we <b>square</b> the deviations (which also removes minus signs), average them to get the <b>variance</b>, then square-root back to the original units.</p>
+      <div class="formula">Variance (σ²) = Σ(x − x̄)² ÷ n</div>
+      <div class="formula">Standard deviation (σ) = √[ Σ(x − x̄)² ÷ n ]</div>
+      <p>So the <b>standard deviation is simply the square root of the variance</b>. A small σ means the data is bunched close to the mean; a large σ means it is widely spread.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Fully worked standard-deviation example</h3>
+      <div class="ex"><b class="t">Find the standard deviation of 2, 4, 6, 8, 10.</b>
+        <div class="calc">Step 1 — mean: x̄ = (2 + 4 + 6 + 8 + 10) ÷ 5 = 30 ÷ 5 = 6</div>
+        <table class="r">
+          <tr><th>x</th><th>x − x̄</th><th>(x − x̄)²</th></tr>
+          <tr><td>2</td><td>−4</td><td>16</td></tr>
+          <tr><td>4</td><td>−2</td><td>4</td></tr>
+          <tr><td>6</td><td>0</td><td>0</td></tr>
+          <tr><td>8</td><td>2</td><td>4</td></tr>
+          <tr><td>10</td><td>4</td><td>16</td></tr>
+          <tr><td><b>Total</b></td><td></td><td><b>40</b></td></tr>
+        </table>
+        <div class="calc">Step 2 — sum of squared deviations: Σ(x − x̄)² = 16 + 4 + 0 + 4 + 16 = 40</div>
+        <div class="calc">Step 3 — variance: σ² = 40 ÷ 5 = 8</div>
+        <div class="calc">Step 4 — standard deviation: σ = √8 = 2.83 (to 2 d.p.)</div>
+        The standard deviation is about <b>2.83</b>.</div>
+      <div class="analogy">🌟 Four steps: (1) find the mean, (2) square each deviation and add, (3) divide by n for the variance, (4) square-root for σ.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: DATA PRESENTATION ============ -->
+  <section class="cat presentation" id="cat-presentation">
+    <h2 class="cathead">📈 PART 4 — Presenting Data with Charts</h2>
+
+    <div class="lesson">
+      <h3>1. Bar chart</h3>
+      <p>A <b>bar chart</b> shows data with <b>separate rectangular bars</b> of equal width. The <b>height (or length) of each bar shows the frequency</b>. It is used for <b>discrete or categorical</b> data (e.g. favourite subjects).</p>
+      <ul>
+        <li>The bars have <b>gaps between them</b> (this is what separates a bar chart from a histogram).</li>
+        <li>Bars can be vertical or horizontal.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Pie chart</h3>
+      <p>A <b>pie chart</b> is a circle split into <b>sectors</b>. Each sector's angle is proportional to the frequency it represents. The whole circle is 360°.</p>
+      <div class="formula">Sector angle = (frequency ÷ total frequency) × 360°</div>
+      <div class="ex"><b class="t">Worked example:</b> 60 students chose a favourite fruit — Apple 20, Banana 15, Orange 10, Mango 15. Find each sector angle.
+        <div class="calc">Apple = (20 ÷ 60) × 360° = 120°</div>
+        <div class="calc">Banana = (15 ÷ 60) × 360° = 90°</div>
+        <div class="calc">Orange = (10 ÷ 60) × 360° = 60°</div>
+        <div class="calc">Mango = (15 ÷ 60) × 360° = 90°</div>
+        <div class="calc">Check: 120° + 90° + 60° + 90° = 360° ✓</div>
+        Always check your angles add up to 360°.</div>
+      <div class="analogy">🌟 To turn a sector angle back into a percentage: percentage = (angle ÷ 360°) × 100.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Histogram</h3>
+      <p>A <b>histogram</b> is used for <b>grouped continuous</b> data. It looks like a bar chart but the bars <b>touch with no gaps</b>, because the classes run continuously.</p>
+      <ul>
+        <li>The horizontal axis shows the <b>class boundaries</b>.</li>
+        <li>For equal class widths, the <b>bar height = frequency</b>. (For unequal widths, the <b>area</b> of the bar represents the frequency and the height is the frequency density = frequency ÷ class width.)</li>
+        <li>The <b>tallest bar</b> corresponds to the <b>modal class</b>.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Frequency polygon</h3>
+      <p>A <b>frequency polygon</b> is a line graph made by <b>plotting the frequency against the class midpoint</b> and joining the points with straight lines.</p>
+      <ul>
+        <li>It is often drawn over a histogram by joining the <b>midpoints of the tops of the bars</b>.</li>
+        <li>It is useful for <b>comparing two or more distributions</b> on the same axes.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Cumulative frequency curve (ogive)</h3>
+      <p>The <b>cumulative frequency</b> is a running total — you add each frequency to the ones before it. Plotting the cumulative frequency against the <b>upper class boundary</b> and joining the points with a smooth curve gives the <b>ogive (cumulative frequency curve)</b>, an S-shaped graph.</p>
+      <span class="key">Reading values off the ogive</span>
+      <p>Let n be the total frequency (the top of the curve). Read across from these positions on the cumulative-frequency axis, down to the curve, then down to the value axis:</p>
+      <ul>
+        <li><b>Median</b> — read across at the <b>n⁄2</b> position (the middle).</li>
+        <li><b>Lower quartile (Q₁)</b> — read across at the <b>n⁄4</b> position.</li>
+        <li><b>Upper quartile (Q₃)</b> — read across at the <b>3n⁄4</b> position.</li>
+        <li><b>Interquartile range</b> = Q₃ − Q₁ (a measure of spread that ignores extremes).</li>
+      </ul>
+      <div class="ex"><b class="t">Example positions:</b> if n = 40 students, then
+        <div class="calc">Median at 40 ÷ 2 = 20th value</div>
+        <div class="calc">Q₁ at 40 ÷ 4 = 10th value</div>
+        <div class="calc">Q₃ at (3 × 40) ÷ 4 = 30th value</div>
+      </div>
+      <div class="analogy">🌟 The ogive always rises (never falls) because you keep adding on — it can only stay level or go up.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Order the data, add and share, then check the spread — the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Which type of data can only take whole-number values (e.g. the number of children in a family)?",o:["Discrete data","Continuous data","Qualitative data","Ordinal data"],c:0,e:"<span class='h'>💡 Idea</span>Discrete data is COUNTED, so it takes only whole numbers — you cannot have 2.5 children. Continuous data is measured and allows decimals.<span class='h'>✅</span>Discrete data."},
+{s:"Which of these is an example of qualitative (categorical) data?",o:["Height in cm","Mass in kg","Number of students","Colour of a car"],c:3,e:"<span class='h'>💡 Idea</span>Qualitative data describes a quality, not a number. Colour is a category. Height, mass and a count are all numerical (quantitative).<span class='h'>✅</span>Colour of a car."},
+{s:"The mean of a set of numbers is found by…",o:["Choosing the middle value","Adding all the values and dividing by how many there are","Choosing the most frequent value","Subtracting the smallest from the largest"],c:1,e:"<span class='h'>💡 Idea</span>Mean = Σx ÷ n: add every value and divide by the number of values. The middle value is the median and the most frequent is the mode.<span class='h'>✅</span>Adding all the values and dividing by how many there are."},
+{s:"Find the mean of 4, 8, 6, 10, 2.",o:["5","7","6","30"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Σx = 4 + 8 + 6 + 10 + 2 = 30</span><span class='calc'>Mean = 30 ÷ 5 = 6</span><span class='h'>✅</span>6."},
+{s:"Find the median of 2, 3, 5, 7, 9.",o:["5","3","7","9"],c:0,e:"<span class='h'>✏️ Working</span>The data is already in order and there are 5 values (odd).<span class='calc'>Middle position = (5 + 1) ÷ 2 = 3rd value = 5</span><span class='h'>✅</span>5."},
+{s:"Find the median of 2, 4, 6, 8, 10, 12.",o:["6","8","5","7"],c:3,e:"<span class='h'>✏️ Working</span>There are 6 values (even), so the median is the mean of the two middle ones (3rd and 4th): 6 and 8.<span class='calc'>Median = (6 + 8) ÷ 2 = 7</span><span class='h'>✅</span>7."},
+{s:"Find the mode of 2, 3, 3, 5, 7, 3, 8.",o:["2","3","5","8"],c:1,e:"<span class='h'>✏️ Working</span>The mode is the value that appears most often. The value 3 appears three times, more than any other.<span class='h'>✅</span>3."},
+{s:"For a data set with an EVEN number of values, the median is…",o:["The single middle value","Always the largest value","The mean of the two middle values","The most common value"],c:2,e:"<span class='h'>💡 Idea</span>With an even count there is no single middle value, so you average the two middle values.<span class='h'>✅</span>The mean of the two middle values."},
+{s:"The mean of 5 numbers is 12. What is their total sum?",o:["60","17","2.4","12"],c:0,e:"<span class='h'>✏️ Working</span>Rearrange Mean = Σx ÷ n to Σx = mean × n.<span class='calc'>Σx = 12 × 5 = 60</span><span class='h'>✅</span>60."},
+{s:"Which average is MOST affected by a single extreme (very large or very small) value?",o:["The mode","The median","The range","The mean"],c:3,e:"<span class='h'>💡 Idea</span>The mean uses every value, so one outlier pulls it up or down. The median and mode are barely affected. (The range is a measure of spread, not an average.)<span class='h'>✅</span>The mean."},
+{s:"For a frequency distribution, the mean is calculated using the formula…",o:["Σf ÷ Σx","Σfx ÷ Σf","Σx ÷ n","Σf × Σx"],c:1,e:"<span class='h'>💡 Idea</span>Multiply each value x by its frequency f, add the fx column, then divide by the total frequency: Mean = Σfx ÷ Σf.<span class='h'>✅</span>Σfx ÷ Σf."},
+{s:"For grouped data, the value used to represent each class in the mean calculation is the…",o:["Class width","Lower class boundary","Class midpoint (mid-value)","The frequency"],c:2,e:"<span class='h'>💡 Idea</span>Since we no longer know the exact values in a class, we assume they all sit at the midpoint. Midpoint = (lower + upper) ÷ 2.<span class='h'>✅</span>Class midpoint (mid-value)."},
+{s:"A table has marks x = 1, 2, 3, 4, 5 with frequencies f = 2, 4, 5, 6, 3. Find Σf (the total frequency).",o:["20","15","18","64"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Σf = 2 + 4 + 5 + 6 + 3 = 20</span><span class='h'>✅</span>20."},
+{s:"For the same table, Σfx = 64 and Σf = 20. What is the mean mark?",o:["3.0","2.8","4.0","3.2"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Mean = Σfx ÷ Σf = 64 ÷ 20 = 3.2</span><span class='h'>✅</span>3.2."},
+{s:"For that table (f = 2, 4, 5, 6, 3 for marks 1–5), the modal value (mode) is…",o:["3","4","6","5"],c:1,e:"<span class='h'>✏️ Working</span>The mode is the x-value with the highest frequency. The largest frequency is 6, which belongs to the mark 4 — so the mode is 4, not 6.<span class='h'>✅</span>4."},
+{s:"The modal class of a grouped frequency distribution is the class with the…",o:["Largest class width","Smallest midpoint","Highest frequency","Lowest frequency"],c:2,e:"<span class='h'>💡 Idea</span>The modal class is simply the interval that has the most values in it — the highest frequency.<span class='h'>✅</span>Highest frequency."},
+{s:"In a grouped distribution the totals are Σfx = 480 and Σf = 20. What is the estimated mean?",o:["24","48","20","240"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Estimated mean = Σfx ÷ Σf = 480 ÷ 20 = 24</span><span class='h'>✅</span>24."},
+{s:"What is the class midpoint (mid-value) of the class 20–30?",o:["20","30","10","25"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Midpoint = (20 + 30) ÷ 2 = 50 ÷ 2 = 25</span><span class='h'>✅</span>25."},
+{s:"The range of a data set is defined as…",o:["The most frequent value","Largest value − smallest value","The middle value","Sum ÷ number of values"],c:1,e:"<span class='h'>💡 Idea</span>The range is the simplest measure of spread: subtract the smallest value from the largest.<span class='h'>✅</span>Largest value − smallest value."},
+{s:"Find the range of 12, 5, 20, 8, 15.",o:["20","8","15","25"],c:2,e:"<span class='h'>✏️ Working</span>Largest = 20, smallest = 5.<span class='calc'>Range = 20 − 5 = 15</span><span class='h'>✅</span>15."},
+{s:"The standard deviation is the…",o:["Square root of the variance","Square of the variance","Same as the range","Mean of the data"],c:0,e:"<span class='h'>💡 Idea</span>You find the variance first (average of the squared deviations), then take its square root to get the standard deviation.<span class='h'>✅</span>Square root of the variance."},
+{s:"For the data 2, 4, 6, 8, 10 (mean = 6), the sum of squared deviations Σ(x − x̄)² is…",o:["20","30","8","40"],c:3,e:"<span class='h'>✏️ Working</span>Deviations from 6 are −4, −2, 0, 2, 4. Square them: 16, 4, 0, 4, 16.<span class='calc'>Σ(x − x̄)² = 16 + 4 + 0 + 4 + 16 = 40</span><span class='h'>✅</span>40."},
+{s:"For that data, with Σ(x − x̄)² = 40 and n = 5, the variance is…",o:["6","8","40","2.83"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Variance σ² = Σ(x − x̄)² ÷ n = 40 ÷ 5 = 8</span><span class='h'>✅</span>8."},
+{s:"…and the standard deviation of that data (to 2 decimal places) is about…",o:["8.00","4.00","2.83","64.00"],c:2,e:"<span class='h'>✏️ Working</span>The standard deviation is the square root of the variance.<span class='calc'>σ = √8 = 2.83</span><span class='h'>✅</span>2.83."},
+{s:"Find the mean deviation of 2, 4, 6, 8, 10 (mean = 6).",o:["2.4","6","2","12"],c:0,e:"<span class='h'>✏️ Working</span>Distances from the mean |x − 6| are 4, 2, 0, 2, 4.<span class='calc'>Σ|x − x̄| = 4 + 2 + 0 + 2 + 4 = 12</span><span class='calc'>Mean deviation = 12 ÷ 5 = 2.4</span><span class='h'>✅</span>2.4."},
+{s:"In a pie chart, the angle of a sector is calculated by…",o:["frequency ÷ total × 100","total ÷ frequency × 360°","frequency × 360°","frequency ÷ total × 360°"],c:3,e:"<span class='h'>💡 Idea</span>Each sector takes its share of the whole 360° circle: angle = (frequency ÷ total frequency) × 360°.<span class='h'>✅</span>frequency ÷ total × 360°."},
+{s:"In a survey of 60 students, 20 chose apple. What is the pie-chart angle for apple?",o:["90°","120°","60°","20°"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Angle = (20 ÷ 60) × 360° = 120°</span><span class='h'>✅</span>120°."},
+{s:"If 12 out of 48 people chose football, the sector angle on a pie chart is…",o:["45°","60°","90°","120°"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Angle = (12 ÷ 48) × 360° = 0.25 × 360° = 90°</span><span class='h'>✅</span>90°."},
+{s:"A chart used to display grouped continuous data, drawn with bars that TOUCH (no gaps between them), is a…",o:["Histogram","Bar chart","Pie chart","Line graph"],c:0,e:"<span class='h'>💡 Idea</span>A histogram is for continuous data so the bars touch. A bar chart (for categories) has gaps between its bars.<span class='h'>✅</span>Histogram."},
+{s:"Which graph is used to read off the median and the quartiles of a distribution?",o:["Bar chart","Pie chart","Frequency polygon","Cumulative frequency curve (ogive)"],c:3,e:"<span class='h'>💡 Idea</span>On the ogive you read across at n⁄2 for the median, n⁄4 for Q₁ and 3n⁄4 for Q₃, then down to the value axis.<span class='h'>✅</span>Cumulative frequency curve (ogive)."}
+);
+
+["ungrouped","grouped","spread","presentation","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

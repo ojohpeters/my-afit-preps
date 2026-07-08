@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflection &amp; Refraction of Light — Mirrors, Lenses &amp; Geometrical Optics (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔦 Reflection &amp; Refraction of Light</h1>
+  <p>Mirrors · Refraction · Total Internal Reflection · Lenses — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Real-is-positive convention</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="reflection">🪞 Reflection &amp; Mirrors</div>
+    <div class="tab" data-cat="refraction">🌊 Refraction</div>
+    <div class="tab" data-cat="tir">🔦 Total Internal Reflection</div>
+    <div class="tab" data-cat="lenses">🔍 Lenses</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: REFLECTION & MIRRORS ============ -->
+  <section class="cat reflection show" id="cat-reflection">
+    <h2 class="cathead">🪞 PART 1 — Reflection &amp; Mirrors</h2>
+
+    <div class="lesson">
+      <h3>1. What is reflection? The two laws</h3>
+      <p><b>Reflection</b> is the <b>bouncing back of light when it hits a surface</b>. A smooth, shiny surface (a mirror) bounces the rays back in an orderly way; this is <b>regular reflection</b> and it forms clear images. A rough surface scatters the rays in all directions — that is <b>diffuse reflection</b>, which is why you can see this page but not your face in it.</p>
+      <span class="key">The two laws of reflection</span>
+      <ul>
+        <li><b>1st law:</b> the <b>angle of incidence (i) equals the angle of reflection (r)</b>. Both angles are measured from the <b>normal</b> (the line drawn at 90° to the surface), NOT from the surface itself.</li>
+        <li><b>2nd law:</b> the incident ray, the reflected ray and the normal at the point of incidence all lie <b>in the same plane</b>.</li>
+      </ul>
+      <div class="formula">Law of reflection:&nbsp; angle of incidence i = angle of reflection r</div>
+      <div class="analogy">🌟 Memory: light "bounces like a ball off a wall" — it leaves at the same angle it arrived, both measured from the normal.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Images in a plane (flat) mirror</h3>
+      <p>Stand in front of a flat mirror and study your image. It has four fixed properties you must know:</p>
+      <ul>
+        <li><b>Virtual</b> — it appears to be behind the mirror and cannot be caught on a screen (no rays actually meet there; they only seem to come from there).</li>
+        <li><b>Upright (erect)</b> — the same way up as you.</li>
+        <li><b>Same size</b> as the object (magnification = 1).</li>
+        <li><b>Laterally inverted</b> — left and right are swapped (raise your right hand, the image raises its "left"). This is why <b>AMBULANCE</b> is written back-to-front on the front of the vehicle.</li>
+      </ul>
+      <p>The image is also formed <b>as far behind the mirror as the object is in front</b>, on a line perpendicular to the mirror.</p>
+      <div class="analogy">🌟 Four words for a plane-mirror image: <b>Virtual, Upright, Same-size, Laterally-inverted</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Curved mirrors — concave and convex</h3>
+      <p>Curved (spherical) mirrors are cut from a sphere. There are two kinds:</p>
+      <ul>
+        <li><b>Concave (converging) mirror</b> — curves <b>inward</b>, like the <b>inside of a spoon</b>. It gathers parallel rays to a real focus, so it <b>converges</b> light.</li>
+        <li><b>Convex (diverging) mirror</b> — curves <b>outward</b>, like the <b>back of a spoon</b>. It spreads parallel rays out so they seem to come from a focus behind it, so it <b>diverges</b> light.</li>
+      </ul>
+      <span class="key">Key words on a curved mirror</span>
+      <table class="r">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Pole (P)</td><td>The centre of the mirror surface</td></tr>
+        <tr><td>Centre of curvature (C)</td><td>The centre of the sphere the mirror came from</td></tr>
+        <tr><td>Radius of curvature (R)</td><td>Distance from the pole to C</td></tr>
+        <tr><td>Principal focus (F)</td><td>Where rays parallel to the axis meet (concave) or seem to come from (convex)</td></tr>
+        <tr><td>Focal length (f)</td><td>Distance from the pole to F</td></tr>
+      </table>
+      <div class="formula">Focal length is half the radius:&nbsp; f = R / 2</div>
+      <div class="ex"><b class="t">Quick example:</b> a concave mirror of radius of curvature 40 cm has focal length
+        <div class="calc">f = R / 2 = 40 / 2 = 20 cm</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The mirror formula &amp; the sign convention</h3>
+      <p>To find where an image forms and how big it is, use the <b>mirror formula</b> together with magnification:</p>
+      <div class="formula">1/f = 1/u + 1/v</div>
+      <div class="formula">magnification&nbsp; m = v / u = image height / object height</div>
+      <ul>
+        <li><b>u</b> = object distance from the mirror &nbsp; <b>v</b> = image distance &nbsp; <b>f</b> = focal length</li>
+      </ul>
+      <span class="key">Real-is-positive convention (use this throughout)</span>
+      <ul>
+        <li>Distances to <b>real objects and real images</b> (in front of the mirror) are <b>POSITIVE (+)</b>.</li>
+        <li>Distances to <b>virtual images</b> (behind the mirror) are <b>NEGATIVE (−)</b>.</li>
+        <li>A <b>concave mirror is converging → f is POSITIVE (+)</b>.</li>
+        <li>A <b>convex mirror is diverging → f is NEGATIVE (−)</b>.</li>
+      </ul>
+      <p>Read the sign of the answer: a <b>positive v</b> means a <b>real</b> image (in front); a <b>negative v</b> means a <b>virtual</b> image (behind).</p>
+      <div class="analogy">🌟 Remember it as "<b>real is positive</b>": anything real and in front counts as +, anything virtual and behind counts as −.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked mirror calculations</h3>
+      <div class="ex"><b class="t">Example 1 — concave, real image.</b> An object is 30 cm from a concave mirror of focal length 10 cm. Find the image distance and magnification.
+        <div class="calc">1/v = 1/f − 1/u = 1/10 − 1/30 = 3/30 − 1/30 = 2/30 = 1/15</div>
+        <div class="calc">v = 15 cm (positive → REAL image, in front)</div>
+        <div class="calc">m = v / u = 15 / 30 = 0.5</div>
+        The image is <b>real, inverted and diminished</b> (half size), 15 cm from the mirror.</div>
+
+      <div class="ex"><b class="t">Example 2 — concave used as a shaving/make-up mirror.</b> Object 8 cm from a concave mirror, f = 12 cm (object inside the focus).
+        <div class="calc">1/v = 1/f − 1/u = 1/12 − 1/8 = 2/24 − 3/24 = −1/24</div>
+        <div class="calc">v = −24 cm (negative → VIRTUAL image, behind)</div>
+        <div class="calc">m = |v| / u = 24 / 8 = 3</div>
+        The image is <b>virtual, upright and magnified</b> (3× bigger) — exactly why a concave mirror magnifies your face when held close.</div>
+
+      <div class="ex"><b class="t">Example 3 — convex mirror.</b> Object 10 cm from a convex mirror of focal length 10 cm. For a convex mirror f is NEGATIVE, so f = −10 cm.
+        <div class="calc">1/v = 1/f − 1/u = −1/10 − 1/10 = −2/10 = −1/5</div>
+        <div class="calc">v = −5 cm (negative → VIRTUAL, behind the mirror)</div>
+        <div class="calc">m = |v| / u = 5 / 10 = 0.5</div>
+        The image is <b>virtual, upright and diminished</b>. A convex mirror ALWAYS does this — that wide, small view is why it is used as a car wing-mirror and a shop security mirror.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Nature of image in a concave mirror (summary)</h3>
+      <table class="r">
+        <tr><th>Object position</th><th>Image formed</th></tr>
+        <tr><td>Beyond C (far away)</td><td>Real, inverted, diminished — between F and C</td></tr>
+        <tr><td>At C</td><td>Real, inverted, same size — at C</td></tr>
+        <tr><td>Between C and F</td><td>Real, inverted, magnified — beyond C</td></tr>
+        <tr><td>At F</td><td>No image (rays come out parallel)</td></tr>
+        <tr><td>Between F and pole (inside focus)</td><td>Virtual, upright, magnified — behind the mirror</td></tr>
+      </table>
+      <div class="analogy">🌟 A concave mirror can give BOTH real and virtual images depending on where the object sits. A convex mirror can only ever give a virtual, upright, diminished image.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: REFRACTION ============ -->
+  <section class="cat refraction" id="cat-refraction">
+    <h2 class="cathead">🌊 PART 2 — Refraction of Light</h2>
+
+    <div class="lesson">
+      <h3>1. What is refraction, and why does it happen?</h3>
+      <p><b>Refraction</b> is the <b>change in direction (bending) of light as it passes from one transparent medium into another.</b></p>
+      <p>The cause is a <b>change in the speed of light</b>. Light travels fastest in a vacuum/air and slower in denser media like water or glass. When it slows down on entering a denser medium it bends; when it speeds up on leaving it bends back.</p>
+      <span class="key">Which way does it bend?</span>
+      <ul>
+        <li>Going from a <b>less dense to a denser</b> medium (air → glass): light slows down and bends <b>TOWARDS the normal</b> (i &gt; r).</li>
+        <li>Going from a <b>denser to a less dense</b> medium (glass → air): light speeds up and bends <b>AWAY from the normal</b> (r &gt; i).</li>
+        <li>A ray hitting the surface along the normal (i = 0°) goes <b>straight through, un-bent</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Picture a car driving off tarmac onto sand at an angle: the wheel that hits the sand first slows, so the car swings towards the sand. Light "swings towards the normal" when it enters a slower (denser) medium.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The laws of refraction &amp; refractive index</h3>
+      <ul>
+        <li><b>1st law:</b> the incident ray, the refracted ray and the normal all lie in the <b>same plane</b>.</li>
+        <li><b>2nd law (Snell's law):</b> the ratio <b>sin i / sin r is a constant</b> for a given pair of media. That constant is the <b>refractive index (n)</b>.</li>
+      </ul>
+      <div class="formula">n = sin i / sin r&nbsp;&nbsp;(i in the first medium, r in the second)</div>
+      <p>Refractive index has <b>no unit</b> (it is a ratio). It tells you how strongly a medium bends light: air ≈ 1.00, water ≈ 1.33, glass ≈ 1.50, diamond ≈ 2.42. The bigger the n, the more the light slows and bends.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Three ways to write the refractive index</h3>
+      <p>The same number n can be found three ways — pick whichever matches the data in the question:</p>
+      <div class="formula">n = sin i / sin r</div>
+      <div class="formula">n = real depth / apparent depth</div>
+      <div class="formula">n = speed of light in vacuum (c) / speed of light in medium (v)</div>
+      <ul>
+        <li><b>Real vs apparent depth:</b> refraction makes water look <b>shallower</b> than it really is, so real depth is always bigger than apparent depth (n &gt; 1).</li>
+        <li><b>Speed form:</b> because n = c / v, a large n means the light travels much slower in that medium.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked refractive-index calculations</h3>
+      <div class="ex"><b class="t">Example 1 — from angles.</b> A ray enters glass at an angle of incidence of 45° and refracts at 30°. (sin 45° = 0.71, sin 30° = 0.50.)
+        <div class="calc">n = sin i / sin r = sin 45° / sin 30° = 0.71 / 0.50 = 1.41</div>
+        The refractive index of the glass is about <b>1.41</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — from depth.</b> A coin at the bottom of a beaker of water is really 12 cm deep but appears to be 9 cm deep. Find n.
+        <div class="calc">n = real depth / apparent depth = 12 / 9 = 1.33</div>
+        The refractive index of the water is <b>1.33</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — from speed.</b> Light travels at 3 × 10⁸ m/s in a vacuum and at 2 × 10⁸ m/s in glass. Find n.
+        <div class="calc">n = c / v = (3 × 10⁸) / (2 × 10⁸) = 1.5</div>
+        The refractive index of the glass is <b>1.5</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — find a missing angle.</b> Light hits glass (n = 1.5) at an angle of incidence of 30°. Find the angle of refraction. (sin 30° = 0.50.)
+        <div class="calc">sin r = sin i / n = 0.50 / 1.5 = 0.333</div>
+        <div class="calc">r = sin⁻¹(0.333) ≈ 19.5°</div>
+        The ray bends towards the normal (r &lt; i, as expected going into a denser medium).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Everyday refraction effects</h3>
+      <ul>
+        <li>A <b>straight stick</b> dipped in water looks <b>bent</b> at the surface.</li>
+        <li>A <b>swimming pool looks shallower</b> than it truly is (real depth &gt; apparent depth).</li>
+        <li>A <b>coin in a bowl</b> seems to rise when water is poured in.</li>
+        <li><b>Twinkling stars</b> — starlight refracts through moving layers of air of different density.</li>
+      </ul>
+      <div class="analogy">🌟 All four are the SAME idea: light changes speed and bends as it crosses the water/air (or air/air) boundary, so objects appear shifted from where they really are.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: TOTAL INTERNAL REFLECTION ============ -->
+  <section class="cat tir" id="cat-tir">
+    <h2 class="cathead">🔦 PART 3 — Total Internal Reflection</h2>
+
+    <div class="lesson">
+      <h3>1. Setting the scene</h3>
+      <p>Send light from a <b>denser medium (glass or water) towards a less dense one (air)</b>. The ray bends <b>away from the normal</b>, so the angle of refraction is bigger than the angle of incidence. As you increase the angle of incidence, the refracted ray bends more and more until it lies flat <b>along the surface (r = 90°)</b>.</p>
+      <p>The angle of incidence that makes r = 90° is called the <b>critical angle (C)</b>. Push the angle of incidence past C and the light can no longer escape — it is <b>all reflected back inside</b> the denser medium. This is <b>total internal reflection (TIR)</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Critical angle &amp; the condition for TIR</h3>
+      <span class="key">Definition</span>
+      <p>The <b>critical angle</b> is the angle of incidence (in the denser medium) for which the angle of refraction in the less dense medium is exactly <b>90°</b>.</p>
+      <span class="key">Two conditions — BOTH must be true</span>
+      <ul>
+        <li>Light must be going from a <b>denser medium to a less dense medium</b> (e.g. glass → air).</li>
+        <li>The <b>angle of incidence must be greater than the critical angle</b> (i &gt; C).</li>
+      </ul>
+      <div class="analogy">🌟 If either rule is broken, TIR cannot happen: light going into a denser medium always refracts, and below the critical angle it just escapes with partial reflection.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Linking n and the critical angle</h3>
+      <p>At the critical angle, i = C in the denser medium and r = 90° in air. Snell's law gives the neat result:</p>
+      <div class="formula">n = 1 / sin C&nbsp;&nbsp;&nbsp;(so sin C = 1 / n)</div>
+      <p>A bigger refractive index means a <b>smaller</b> critical angle — light is trapped more easily. Diamond (n = 2.42) has a tiny critical angle of about 24°, which is why diamonds sparkle: light bounces around inside before it can leave.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked critical-angle calculations</h3>
+      <div class="ex"><b class="t">Example 1 — glass.</b> Find the critical angle for glass of refractive index 1.5.
+        <div class="calc">sin C = 1 / n = 1 / 1.5 = 0.667</div>
+        <div class="calc">C = sin⁻¹(0.667) ≈ 41.8° ≈ 42°</div>
+        The critical angle of the glass is about <b>42°</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — water.</b> Water has refractive index 1.33. Find its critical angle.
+        <div class="calc">sin C = 1 / 1.33 = 0.75</div>
+        <div class="calc">C = sin⁻¹(0.75) ≈ 48.6° ≈ 49°</div>
+        The critical angle of water is about <b>49°</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — find n from C.</b> A liquid has a critical angle of 40°. Find its refractive index. (sin 40° = 0.643.)
+        <div class="calc">n = 1 / sin C = 1 / 0.643 = 1.56</div>
+        The refractive index of the liquid is about <b>1.56</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Applications of total internal reflection</h3>
+      <ul>
+        <li><b>Optical fibres:</b> light signals bounce along a thin glass fibre by TIR at the walls, carrying phone/internet data and endoscope images over long distances with little loss.</li>
+        <li><b>Prisms in periscopes &amp; binoculars:</b> right-angled (45°) glass prisms turn light through 90° or 180° by TIR — sharper and brighter than ordinary silvered mirrors.</li>
+        <li><b>Mirage:</b> on a hot day the air near the road is less dense than the air above; light from the sky bends and undergoes TIR in these air layers, making the road look wet.</li>
+        <li><b>Sparkle of diamonds and cut glass:</b> the small critical angle traps light inside so it flashes out the top.</li>
+      </ul>
+      <div class="analogy">🌟 One idea, many uses: whenever light is "trapped and bounced" inside glass, water or air layers, think total internal reflection.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: LENSES ============ -->
+  <section class="cat lenses" id="cat-lenses">
+    <h2 class="cathead">🔍 PART 4 — Lenses</h2>
+
+    <div class="lesson">
+      <h3>1. The two types of lens</h3>
+      <p>A <b>lens</b> is a shaped piece of glass or plastic that bends light by refraction to form images.</p>
+      <ul>
+        <li><b>Converging (convex) lens</b> — <b>thicker at the centre</b> than at the edges. It bends parallel rays <b>together</b> to a real principal focus. Focal length f is <b>POSITIVE</b>.</li>
+        <li><b>Diverging (concave) lens</b> — <b>thinner at the centre</b> than at the edges. It spreads parallel rays <b>apart</b> so they seem to come from a virtual focus. Focal length f is <b>NEGATIVE</b>.</li>
+      </ul>
+      <p>The <b>principal focus (F)</b> is where rays parallel to the principal axis meet (convex) or appear to diverge from (concave). The <b>focal length (f)</b> is the distance from the lens to F.</p>
+      <div class="analogy">🌟 Con<b>V</b>ex con<b>V</b>erges (comes together); a diverging lens spreads light apart.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The lens formula &amp; magnification</h3>
+      <p>Lenses use the <b>same formula</b> as mirrors and the <b>same real-is-positive convention</b>:</p>
+      <div class="formula">1/f = 1/u + 1/v</div>
+      <div class="formula">magnification&nbsp; m = v / u = image height / object height</div>
+      <span class="key">Sign convention (real-is-positive)</span>
+      <ul>
+        <li>Real object and <b>real image</b> distances are <b>POSITIVE (+)</b>; a <b>virtual image</b> gives a <b>NEGATIVE (−) v</b>.</li>
+        <li><b>Converging (convex) lens → f is POSITIVE (+)</b>.</li>
+        <li><b>Diverging (concave) lens → f is NEGATIVE (−)</b>.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Power of a lens</h3>
+      <p>The <b>power (P)</b> of a lens measures how strongly it bends light. It is the reciprocal of the focal length in <b>metres</b>:</p>
+      <div class="formula">P = 1 / f&nbsp;&nbsp;(f in metres, P in dioptres, D)</div>
+      <ul>
+        <li>A <b>short</b> focal length means a <b>strong</b> lens (large power).</li>
+        <li>A converging lens has <b>positive</b> power; a diverging lens has <b>negative</b> power.</li>
+      </ul>
+      <div class="ex"><b class="t">Quick example:</b> a converging lens of focal length 50 cm (0.50 m) has power
+        <div class="calc">P = 1 / f = 1 / 0.50 = +2.0 D</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked lens calculations</h3>
+      <div class="ex"><b class="t">Example 1 — converging lens, real image.</b> An object is 15 cm from a converging lens of focal length 10 cm. Find the image distance and magnification.
+        <div class="calc">1/v = 1/f − 1/u = 1/10 − 1/15 = 3/30 − 2/30 = 1/30</div>
+        <div class="calc">v = 30 cm (positive → REAL image)</div>
+        <div class="calc">m = v / u = 30 / 15 = 2</div>
+        The image is <b>real, inverted and magnified</b> (2× bigger) — the kind of image a projector throws on a screen.</div>
+
+      <div class="ex"><b class="t">Example 2 — converging lens as a magnifying glass.</b> Object 6 cm from a converging lens of focal length 10 cm (object inside the focus).
+        <div class="calc">1/v = 1/f − 1/u = 1/10 − 1/6 = 3/30 − 5/30 = −2/30 = −1/15</div>
+        <div class="calc">v = −15 cm (negative → VIRTUAL image)</div>
+        <div class="calc">m = |v| / u = 15 / 6 = 2.5</div>
+        The image is <b>virtual, upright and magnified</b> — exactly how a hand lens magnifies small print.</div>
+
+      <div class="ex"><b class="t">Example 3 — power.</b> A converging lens has a focal length of 20 cm (0.20 m). Find its power.
+        <div class="calc">P = 1 / f = 1 / 0.20 = +5.0 D</div>
+        The lens has a power of <b>+5.0 dioptres</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — diverging lens power.</b> A diverging lens has a focal length of 25 cm. For a diverging lens f is NEGATIVE, so f = −0.25 m.
+        <div class="calc">P = 1 / f = 1 / (−0.25) = −4.0 D</div>
+        The lens has a power of <b>−4.0 dioptres</b> (the minus sign shows it is diverging).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Images in a converging lens &amp; uses</h3>
+      <table class="r">
+        <tr><th>Object position</th><th>Image formed</th><th>Use</th></tr>
+        <tr><td>Beyond 2F (far object)</td><td>Real, inverted, diminished</td><td>Camera, eye</td></tr>
+        <tr><td>At 2F</td><td>Real, inverted, same size</td><td>Photocopier (1:1)</td></tr>
+        <tr><td>Between F and 2F</td><td>Real, inverted, magnified</td><td>Projector, film</td></tr>
+        <tr><td>At F</td><td>No image (rays emerge parallel)</td><td>Searchlight/spotlight</td></tr>
+        <tr><td>Inside F (nearer than F)</td><td>Virtual, upright, magnified</td><td>Magnifying glass</td></tr>
+      </table>
+      <p><b>Other uses of lenses:</b> spectacles correct sight (convex lenses for long-sight/hypermetropia, concave lenses for short-sight/myopia), and compound lenses make microscopes and telescopes.</p>
+      <div class="analogy">🌟 A converging lens gives a real image whenever the object is beyond F, but a virtual, magnified image once the object comes inside F — that inside-F position is the magnifying-glass mode.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Measure from the normal, keep real positive — the rays follow the rules. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"According to the first law of reflection, the angle of incidence is always…",o:["Equal to the angle of reflection","Twice the angle of reflection","Equal to the angle of refraction","Greater than the angle of reflection"],c:0,e:"<span class='h'>💡 Idea</span>The first law of reflection states i = r, both angles being measured from the normal (not the surface).<span class='h'>✅</span>Equal to the angle of reflection."},
+{s:"The incident ray, the reflected ray and the normal at the point of incidence all lie…",o:["In different planes","In the same plane","Behind the mirror","Parallel to the mirror surface"],c:1,e:"<span class='h'>💡 Idea</span>The second law of reflection says all three lie in the same plane.<span class='h'>✅</span>In the same plane."},
+{s:"In a plane mirror your right hand appears as the image's left hand. This swapping of left and right is called…",o:["Refraction","Dispersion","Lateral inversion","Total internal reflection"],c:2,e:"<span class='h'>💡 Idea</span>A plane-mirror image is laterally inverted — left and right are interchanged. That is why AMBULANCE is printed back-to-front on the vehicle.<span class='h'>✅</span>Lateral inversion."},
+{s:"An object is placed 8 cm in front of a plane mirror. Its image is formed…",o:["On the mirror surface","4 cm behind the mirror","16 cm behind the mirror","8 cm behind the mirror"],c:3,e:"<span class='h'>💡 Idea</span>A plane mirror forms the image as far behind the mirror as the object is in front, so 8 cm in front gives 8 cm behind.<span class='h'>✅</span>8 cm behind the mirror."},
+{s:"A mirror whose reflecting surface curves inward (like the inside of a spoon) and converges light to a focus is a…",o:["Concave mirror","Convex mirror","Plane mirror","Diverging mirror"],c:0,e:"<span class='h'>💡 Idea</span>A concave (converging) mirror curves inward and brings parallel rays together at a real focus.<span class='h'>✅</span>Concave mirror."},
+{s:"A concave mirror has a radius of curvature of 40 cm. Its focal length is…",o:["80 cm","20 cm","40 cm","10 cm"],c:1,e:"<span class='h'>✏️ Working</span>Focal length is half the radius of curvature.<span class='calc'>f = R / 2 = 40 / 2 = 20 cm</span><span class='h'>✅</span>20 cm."},
+{s:"An object is 30 cm from a concave mirror of focal length 10 cm. Using 1/f = 1/u + 1/v, the image distance v is…",o:["60 cm","7.5 cm","15 cm","30 cm"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>1/v = 1/f − 1/u = 1/10 − 1/30 = 2/30 = 1/15</span><span class='calc'>v = 15 cm (positive, so a real image)</span><span class='h'>✅</span>15 cm."},
+{s:"For that mirror (object u = 30 cm, image v = 15 cm), the magnification m = v/u is…",o:["2.0","1.5","1.0","0.5"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>m = v / u = 15 / 30 = 0.5</span>The image is half the size of the object — diminished.<span class='h'>✅</span>0.5."},
+{s:"Which statement correctly describes the image formed by a plane mirror?",o:["Virtual, upright and the same size as the object","Real, inverted and diminished","Real, upright and magnified","Virtual, inverted and larger"],c:0,e:"<span class='h'>💡 Idea</span>A plane-mirror image is virtual, upright, the same size, and laterally inverted.<span class='h'>✅</span>Virtual, upright and the same size as the object."},
+{s:"A convex (diverging) mirror always forms an image that is…",o:["Real, inverted and magnified","Virtual, upright and diminished","Real and the same size","Virtual, inverted and magnified"],c:1,e:"<span class='h'>💡 Idea</span>A convex mirror can only give a virtual, upright, diminished image — the wide small view that makes it useful as a car wing-mirror.<span class='h'>✅</span>Virtual, upright and diminished."},
+{s:"Refraction of light is the bending of light as it passes from one medium to another, caused by a change in its…",o:["Speed","Colour","Frequency","Amount"],c:0,e:"<span class='h'>💡 Idea</span>Light changes speed on entering a new medium (slower in denser media), and this speed change bends the ray.<span class='h'>✅</span>Speed."},
+{s:"By Snell's law, the refractive index of a medium is given by…",o:["sin r ÷ sin i","sin i ÷ sin r","sin i × sin r","sin i + sin r"],c:1,e:"<span class='h'>💡 Idea</span>Snell's law: n = sin i / sin r, where i is the angle in the first medium and r the angle in the second.<span class='h'>✅</span>sin i ÷ sin r."},
+{s:"When light passes from air into glass (an optically denser medium) it bends…",o:["Away from the normal","Along the surface","Towards the normal","Straight back on itself"],c:2,e:"<span class='h'>💡 Idea</span>Going into a denser medium the light slows down and bends towards the normal, so r is smaller than i.<span class='h'>✅</span>Towards the normal."},
+{s:"A ray enters glass with an angle of incidence of 45° and an angle of refraction of 30°. Taking sin 45° = 0.71 and sin 30° = 0.50, the refractive index is about…",o:["0.70","1.00","2.00","1.42"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>n = sin i / sin r = 0.71 / 0.50 = 1.42</span><span class='h'>✅</span>1.42."},
+{s:"A pool of water is actually 2.0 m deep but appears to be only 1.5 m deep. The refractive index of the water is…",o:["1.33","0.75","2.00","3.00"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>n = real depth / apparent depth = 2.0 / 1.5 = 1.33</span>Refraction makes water look shallower than it really is.<span class='h'>✅</span>1.33."},
+{s:"Light travels at 3 × 10⁸ m/s in a vacuum and 2 × 10⁸ m/s in a glass block. The refractive index of the glass is…",o:["0.67","1.50","2.00","6.00"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>n = c / v = (3 × 10⁸) / (2 × 10⁸) = 1.5</span><span class='h'>✅</span>1.50."},
+{s:"A straight stick dipped into water appears bent at the water surface. This everyday effect is caused by…",o:["Reflection","Diffraction","Refraction","Total internal reflection"],c:2,e:"<span class='h'>💡 Idea</span>Light from the submerged part refracts as it leaves the water, so the stick appears bent where it meets the surface.<span class='h'>✅</span>Refraction."},
+{s:"The critical angle is the angle of incidence, in the denser medium, for which the angle of refraction in the less dense medium is exactly…",o:["0°","45°","180°","90°"],c:3,e:"<span class='h'>💡 Idea</span>At the critical angle the refracted ray just grazes the surface, so the angle of refraction is 90°.<span class='h'>✅</span>90°."},
+{s:"Total internal reflection can only occur when light travels from a…",o:["Denser medium to a less dense medium at an angle greater than the critical angle","Less dense medium to a denser medium","Denser to a less dense medium at any angle at all","Vacuum into a glass block"],c:0,e:"<span class='h'>💡 Idea</span>TIR needs BOTH conditions: light going denser → less dense, AND the angle of incidence greater than the critical angle.<span class='h'>✅</span>Denser medium to a less dense medium at an angle greater than the critical angle."},
+{s:"The refractive index n of a medium is related to its critical angle C by…",o:["n = sin C","n = 1 ÷ sin C","n = cos C","n = tan C"],c:1,e:"<span class='h'>💡 Idea</span>At the critical angle Snell's law gives n = 1 / sin C, so sin C = 1 / n.<span class='h'>✅</span>n = 1 ÷ sin C."},
+{s:"A glass block has a refractive index of 1.5. Taking sin C = 1 ÷ 1.5 = 0.67, the critical angle C is about…",o:["30°","90°","42°","60°"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>sin C = 1 / n = 1 / 1.5 = 0.67</span><span class='calc'>C = sin⁻¹(0.67) ≈ 42°</span><span class='h'>✅</span>42°."},
+{s:"Light signals are carried along an optical fibre mainly by repeated…",o:["Refraction","Dispersion","Diffraction","Total internal reflection"],c:3,e:"<span class='h'>💡 Idea</span>Light bounces down the fibre by total internal reflection at the walls, so almost none escapes.<span class='h'>✅</span>Total internal reflection."},
+{s:"A right-angled (45°) glass prism can turn a beam of light through 90° in a periscope because it produces…",o:["Total internal reflection","Dispersion of the light","Refraction only","Absorption of the light"],c:0,e:"<span class='h'>💡 Idea</span>At 45° the angle of incidence inside the glass exceeds the critical angle, so the light is totally internally reflected and turned through 90°.<span class='h'>✅</span>Total internal reflection."},
+{s:"The shimmering 'water' seen on a hot tarred road (a mirage) is produced by…",o:["Reflection at a plane mirror","Total internal reflection in layers of air of different densities","Dispersion of white light into colours","Magnification by a curved lens"],c:1,e:"<span class='h'>💡 Idea</span>Hot air near the road is less dense than the air above; light from the sky is totally internally reflected in these air layers, so the road looks wet.<span class='h'>✅</span>Total internal reflection in layers of air of different densities."},
+{s:"A converging (convex) lens is…",o:["Thinner at the centre than at the edges","The same thickness all over","Thicker at the centre than at the edges","Always flat on both sides"],c:2,e:"<span class='h'>💡 Idea</span>A convex lens is thicker in the middle; it converges parallel rays to a real focus.<span class='h'>✅</span>Thicker at the centre than at the edges."},
+{s:"A diverging (concave) lens always forms an image that is…",o:["Real, inverted and magnified","Real and the same size","Virtual, inverted and magnified","Virtual, upright and diminished"],c:3,e:"<span class='h'>💡 Idea</span>Whatever the object position, a concave lens gives a virtual, upright, diminished image.<span class='h'>✅</span>Virtual, upright and diminished."},
+{s:"An object is 15 cm from a converging lens of focal length 10 cm. Using 1/f = 1/u + 1/v, the image distance v is…",o:["30 cm","6 cm","25 cm","5 cm"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>1/v = 1/f − 1/u = 1/10 − 1/15 = 1/30</span><span class='calc'>v = 30 cm (positive, so a real image)</span><span class='h'>✅</span>30 cm."},
+{s:"For that lens (object u = 15 cm, image v = 30 cm), the magnification of the image is…",o:["0.5","2.0","1.5","3.0"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>m = v / u = 30 / 15 = 2</span>The image is twice the object size — magnified and inverted.<span class='h'>✅</span>2.0."},
+{s:"A converging lens has a focal length of 20 cm (0.20 m). Its power is…",o:["+0.2 D","+20 D","+5.0 D","+2.0 D"],c:2,e:"<span class='h'>✏️ Working</span>Power is the reciprocal of the focal length in metres.<span class='calc'>P = 1 / f = 1 / 0.20 = +5.0 D</span><span class='h'>✅</span>+5.0 D."},
+{s:"A converging lens acts as a magnifying glass, giving an enlarged upright virtual image, when the object is placed…",o:["Beyond twice the focal length","Exactly at twice the focal length","Exactly at the focal point","Between the lens and its focal point"],c:3,e:"<span class='h'>💡 Idea</span>When the object is inside the focus (between the lens and F), a converging lens forms a virtual, upright, magnified image — magnifying-glass mode.<span class='h'>✅</span>Between the lens and its focal point."}
+);
+
+["reflection","refraction","tir","lenses","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

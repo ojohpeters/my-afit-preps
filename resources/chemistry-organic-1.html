@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organic Chemistry I — Hydrocarbons, Functional Groups & Petroleum (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧪 Organic Chemistry I</h1>
+  <p>Hydrocarbons · Functional Groups · Petroleum — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula shown</span><span class="pill">Naming tables</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="fundamentals">🧬 Fundamentals</div>
+    <div class="tab" data-cat="alkanes">⛽ Alkanes</div>
+    <div class="tab" data-cat="alkenes">🔗 Alkenes &amp; Alkynes</div>
+    <div class="tab" data-cat="alkanols">🍷 Alkanols, Acids &amp; Petroleum</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: FUNDAMENTALS ============ -->
+  <section class="cat fundamentals show" id="cat-fundamentals">
+    <h2 class="cathead">🧬 PART 1 — The Foundations of Organic Chemistry</h2>
+
+    <div class="lesson">
+      <h3>1. What is organic chemistry?</h3>
+      <p><b>Organic chemistry</b> is the <b>chemistry of carbon compounds</b> — the study of the structure, properties and reactions of compounds that contain carbon (almost always joined to hydrogen).</p>
+      <p>A few simple carbon compounds — carbon dioxide (CO₂), carbon monoxide (CO), the carbonates (CO₃²⁻) and hydrogencarbonates — are counted as <b>inorganic</b> by tradition. Everything else built on carbon chains and rings (fuels, plastics, alcohols, fats, sugars, proteins) is <b>organic</b>.</p>
+      <span class="key">Why is carbon so special?</span>
+      <ul>
+        <li>There are <b>millions</b> of known organic compounds but only a few hundred thousand inorganic ones — carbon dominates chemistry.</li>
+        <li>It is the element of life: your food, fuel, medicine and body are all carbon compounds.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: <b>Organic = carbon</b>. If a compound has carbon chains with hydrogen, think organic.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The unique properties of carbon</h3>
+      <p>Two special properties make carbon able to form millions of compounds:</p>
+      <span class="key">(a) Tetravalency</span>
+      <p>Carbon has <b>4 electrons in its outermost shell</b>, so it needs <b>4 more</b> to fill the shell. It does this by <b>sharing — forming 4 covalent bonds</b>. We say carbon is <b>tetravalent</b> (valency = 4). This lets one carbon bond to up to four other atoms at once.</p>
+      <div class="formula">Carbon always forms 4 covalent bonds</div>
+      <span class="key">(b) Catenation</span>
+      <p><b>Catenation</b> is the <b>ability of carbon atoms to join to one another to form long chains, branched chains and rings.</b> Carbon–carbon bonds are strong and stable, so these chains can be very long.</p>
+      <div class="analogy">🌟 Picture it: carbon atoms are like LEGO bricks with 4 studs each — they clip to each other endlessly (catenation) and to hydrogen (tetravalency), building millions of shapes.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Hydrocarbons — the simplest organic compounds</h3>
+      <p>A <b>hydrocarbon</b> is a compound made of <b>only carbon and hydrogen</b>. They are grouped into families:</p>
+      <ul>
+        <li><b>Alkanes</b> — only single bonds (saturated), general formula CₙH₂ₙ₊₂.</li>
+        <li><b>Alkenes</b> — contain a C=C double bond (unsaturated), general formula CₙH₂ₙ.</li>
+        <li><b>Alkynes</b> — contain a C≡C triple bond (unsaturated), general formula CₙH₂ₙ₋₂.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Saturated vs unsaturated</h3>
+      <table class="r">
+        <tr><th></th><th>Saturated</th><th>Unsaturated</th></tr>
+        <tr><td>Bonds present</td><td>Only C–C <b>single</b> bonds</td><td>At least one C=C double or C≡C triple bond</td></tr>
+        <tr><td>Example family</td><td>Alkanes</td><td>Alkenes, alkynes</td></tr>
+        <tr><td>Reactivity</td><td>Fairly <b>unreactive</b> (substitution)</td><td><b>Reactive</b> (addition reactions)</td></tr>
+        <tr><td>Bromine water test</td><td><b>No change</b> (stays orange/brown)</td><td><b>Decolourises</b> bromine water</td></tr>
+      </table>
+      <div class="analogy">🌟 Saturated = &ldquo;full up&rdquo; on hydrogen (all single bonds). Unsaturated = has room for more (double/triple bonds that can open up and add atoms).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The homologous series</h3>
+      <p>A <b>homologous series</b> is a <b>family of organic compounds with the same general formula and the same functional group, in which successive members differ by −CH₂−.</b></p>
+      <span class="key">Features of a homologous series</span>
+      <ul>
+        <li>All members can be represented by <b>one general formula</b> (e.g. alkanes = CₙH₂ₙ₊₂).</li>
+        <li>Successive members differ by a <b>−CH₂− group</b> (a mass difference of <b>14</b>).</li>
+        <li>They have <b>similar chemical properties</b> (same functional group).</li>
+        <li>Physical properties (boiling point, density) change <b>gradually</b> down the series as chain length grows.</li>
+        <li>They can be <b>made by similar methods</b> (general preparations).</li>
+      </ul>
+      <div class="analogy">🌟 Think of a homologous series as one family: each brother looks a bit taller than the last (adds a −CH₂−) but they all behave alike.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Functional groups &amp; the main families</h3>
+      <p>A <b>functional group</b> is the <b>atom or group of atoms responsible for the characteristic reactions of a compound.</b> It is what decides the family a compound belongs to.</p>
+      <table class="r">
+        <tr><th>Family (class)</th><th>Functional group</th><th>General formula</th><th>Example</th></tr>
+        <tr><td>Alkane</td><td>C–C, C–H single bonds</td><td>CₙH₂ₙ₊₂</td><td>Methane CH₄</td></tr>
+        <tr><td>Alkene</td><td>C=C (double bond)</td><td>CₙH₂ₙ</td><td>Ethene C₂H₄</td></tr>
+        <tr><td>Alkyne</td><td>C≡C (triple bond)</td><td>CₙH₂ₙ₋₂</td><td>Ethyne C₂H₂</td></tr>
+        <tr><td>Alkanol (alcohol)</td><td>−OH (hydroxyl)</td><td>CₙH₂ₙ₊₁OH</td><td>Ethanol C₂H₅OH</td></tr>
+        <tr><td>Alkanal (aldehyde)</td><td>−CHO</td><td>CₙH₂ₙ₊₁CHO</td><td>Ethanal CH₃CHO</td></tr>
+        <tr><td>Alkanone (ketone)</td><td>&gt;C=O (carbonyl)</td><td>CₙH₂ₙ₊₁COCₘH₂ₘ₊₁</td><td>Propanone CH₃COCH₃</td></tr>
+        <tr><td>Alkanoic acid</td><td>−COOH (carboxyl)</td><td>CₙH₂ₙ₊₁COOH</td><td>Ethanoic acid CH₃COOH</td></tr>
+        <tr><td>Alkanoate (ester)</td><td>−COO− (−COOR)</td><td>RCOOR′</td><td>Ethyl ethanoate CH₃COOC₂H₅</td></tr>
+        <tr><td>Amine</td><td>−NH₂ (amino)</td><td>CₙH₂ₙ₊₁NH₂</td><td>Methylamine CH₃NH₂</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Structural isomerism</h3>
+      <p><b>Structural isomers</b> are <b>compounds that have the same molecular formula but different structural arrangements of their atoms.</b> Same atoms, different way of joining them — so they can have different properties.</p>
+      <div class="ex"><b class="t">Classic example — C₄H₁₀:</b> the formula C₄H₁₀ can be arranged two ways:
+        <div class="calc">n-butane:  CH₃–CH₂–CH₂–CH₃  (a straight chain)</div>
+        <div class="calc">2-methylpropane: a branched chain (same C₄H₁₀)</div>
+        Both are C₄H₁₀, yet they are different compounds with different boiling points.</div>
+      <div class="analogy">🌟 Same LEGO bricks, different build — same molecular formula, different structure = isomers.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. IUPAC naming basics</h3>
+      <p>IUPAC names are built from three parts: <b>prefix + stem + suffix</b>.</p>
+      <ul>
+        <li><b>Stem</b> = number of carbon atoms in the longest chain:</li>
+      </ul>
+      <table class="r">
+        <tr><th>Carbons</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+        <tr><td>Stem</td><td>meth</td><td>eth</td><td>prop</td><td>but</td><td>pent</td><td>hex</td></tr>
+      </table>
+      <ul>
+        <li><b>Suffix</b> = the family (functional group): <b>-ane</b> (alkane), <b>-ene</b> (alkene), <b>-yne</b> (alkyne), <b>-anol</b> (alcohol), <b>-anoic acid</b> (carboxylic acid).</li>
+        <li><b>Prefix / numbers</b> tell you where branches or double bonds are (e.g. but-<b>1</b>-ene, <b>2</b>-methylbutane).</li>
+      </ul>
+      <div class="ex"><b class="t">Reading a name:</b> &ldquo;prop-ene&rdquo; = <b>prop</b> (3 carbons) + <b>ene</b> (has a C=C) → propene, C₃H₆.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: ALKANES ============ -->
+  <section class="cat alkanes" id="cat-alkanes">
+    <h2 class="cathead">⛽ PART 2 — The Alkanes (Saturated Hydrocarbons)</h2>
+
+    <div class="lesson">
+      <h3>1. What are alkanes?</h3>
+      <p>The <b>alkanes</b> are the <b>saturated hydrocarbons</b> — they contain <b>only carbon–carbon single bonds</b>. Each carbon is bonded to the maximum number of hydrogen atoms, so they are &ldquo;full up&rdquo;.</p>
+      <div class="formula">General formula of alkanes:&nbsp; CₙH₂ₙ₊₂</div>
+      <p>Put in a value of n to get any member: for n = 1, C₁H₄ = CH₄ (methane); for n = 3, C₃H₈ = propane.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The first members — name table</h3>
+      <table class="r">
+        <tr><th>n (carbons)</th><th>Name</th><th>Molecular formula</th></tr>
+        <tr><td>1</td><td>Methane</td><td>CH₄</td></tr>
+        <tr><td>2</td><td>Ethane</td><td>C₂H₆</td></tr>
+        <tr><td>3</td><td>Propane</td><td>C₃H₈</td></tr>
+        <tr><td>4</td><td>Butane</td><td>C₄H₁₀</td></tr>
+        <tr><td>5</td><td>Pentane</td><td>C₅H₁₂</td></tr>
+        <tr><td>6</td><td>Hexane</td><td>C₆H₁₄</td></tr>
+      </table>
+      <div class="analogy">🌟 Learn the stems in order: <b>Meth, Eth, Prop, But, Pent, Hex</b> — &ldquo;Monkeys Eat Peanut Butter Pretty Happily&rdquo;. These same stems are reused for every family.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Sources of alkanes</h3>
+      <p>The alkanes are obtained mainly from <b>petroleum (crude oil) and natural gas</b>.</p>
+      <ul>
+        <li><b>Natural gas</b> is mostly <b>methane</b> (CH₄).</li>
+        <li><b>Petroleum</b> is a mixture of many alkanes separated by <b>fractional distillation</b> (see Part 4).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Physical properties</h3>
+      <ul>
+        <li>The first four (methane → butane) are <b>gases</b>; the middle members are <b>liquids</b>; long-chain alkanes are <b>solids</b> (waxes).</li>
+        <li>They are <b>non-polar</b>, so they are <b>insoluble in water</b> but dissolve in organic solvents.</li>
+        <li><b>Boiling point rises</b> as the chain gets longer (bigger molecules, stronger forces).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Chemical reactions of alkanes</h3>
+      <p>Alkanes are saturated and therefore <b>fairly unreactive</b>. Their two important reactions are combustion and substitution.</p>
+      <span class="key">(a) Combustion (burning)</span>
+      <p>Alkanes burn in air — this is why they are used as fuels.</p>
+      <div class="formula">Complete combustion:&nbsp; alkane + O₂ → CO₂ + H₂O + heat</div>
+      <div class="ex"><b class="t">Worked example — methane burning:</b>
+        <div class="calc">CH₄ + 2O₂ → CO₂ + 2H₂O</div>
+        In <b>plenty of air</b> you get carbon dioxide and water. In <b>limited air (incomplete combustion)</b> you get poisonous <b>carbon monoxide (CO)</b> or soot (C) instead.</div>
+      <span class="key">(b) Substitution (halogenation)</span>
+      <p>In the presence of <b>sunlight / UV light</b>, a halogen (e.g. chlorine) replaces hydrogen atoms one at a time. This is a <b>substitution</b> reaction (a hydrogen is swapped for a chlorine).</p>
+      <div class="ex"><b class="t">Worked example — methane + chlorine:</b>
+        <div class="calc">CH₄ + Cl₂ → CH₃Cl + HCl</div>
+        The organic product is <b>chloromethane (CH₃Cl)</b>; the reaction only happens in UV light.</div>
+      <div class="analogy">🌟 Substitution = <b>swap</b> (one atom takes another's place). Addition (alkenes) = <b>join on</b>. Alkanes do substitution because they have no double bond to open.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: ALKENES & ALKYNES ============ -->
+  <section class="cat alkenes" id="cat-alkenes">
+    <h2 class="cathead">🔗 PART 3 — Alkenes &amp; Alkynes (Unsaturated Hydrocarbons)</h2>
+
+    <div class="lesson">
+      <h3>1. The alkenes</h3>
+      <p>The <b>alkenes</b> are unsaturated hydrocarbons containing at least one <b>carbon–carbon double bond (C=C)</b>.</p>
+      <div class="formula">General formula of alkenes:&nbsp; CₙH₂ₙ</div>
+      <table class="r">
+        <tr><th>n (carbons)</th><th>Name</th><th>Molecular formula</th></tr>
+        <tr><td>2</td><td>Ethene</td><td>C₂H₄</td></tr>
+        <tr><td>3</td><td>Propene</td><td>C₃H₆</td></tr>
+        <tr><td>4</td><td>Butene</td><td>C₄H₈</td></tr>
+      </table>
+      <p>The simplest alkene is <b>ethene, C₂H₄</b> — written CH₂=CH₂. (There is no such thing as &ldquo;methene&rdquo; because you need at least 2 carbons for a C=C bond.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Addition reactions of alkenes</h3>
+      <p>Because the C=C double bond can <b>open up</b>, alkenes are reactive and undergo <b>addition reactions</b> — a small molecule adds across the double bond, turning it into a single bond.</p>
+      <span class="key">(a) Hydrogenation (add H₂)</span>
+      <div class="formula">ethene + hydrogen → ethane&nbsp;&nbsp;(C₂H₄ + H₂ → C₂H₆)</div>
+      <p>With a nickel catalyst, hydrogen adds on and the alkene becomes an <b>alkane</b>. (This is how liquid oils are hardened into margarine.)</p>
+      <span class="key">(b) Halogenation (add a halogen)</span>
+      <div class="formula">ethene + bromine → 1,2-dibromoethane&nbsp;&nbsp;(C₂H₄ + Br₂ → C₂H₄Br₂)</div>
+      <span class="key">(c) Hydration (add H₂O / steam)</span>
+      <div class="formula">ethene + steam → ethanol&nbsp;&nbsp;(C₂H₄ + H₂O → C₂H₅OH)</div>
+      <p>With steam and a catalyst (phosphoric acid), water adds across the C=C to make <b>ethanol</b> — the industrial route to alcohol.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Test for unsaturation — bromine water</h3>
+      <p>This is a very common exam point. <b>Bromine water is reddish-brown/orange.</b></p>
+      <div class="formula">Unsaturated compound + bromine water → decolourised (turns colourless)</div>
+      <ul>
+        <li>An <b>alkene (or alkyne)</b> reacts by addition and <b>decolourises bromine water quickly</b> — the orange colour disappears.</li>
+        <li>An <b>alkane</b> has no double bond, so it does <b>NOT</b> decolourise bromine water (stays orange).</li>
+      </ul>
+      <div class="analogy">🌟 Rule: <b>&ldquo;Decolourises bromine water = unsaturated&rdquo;</b>. It is the standard test to tell an alkene from an alkane.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Polymerisation</h3>
+      <p><b>Polymerisation</b> is the joining together of <b>many small molecules (monomers)</b> to form one <b>very large molecule (polymer)</b>.</p>
+      <div class="formula">n(CH₂=CH₂) → −(CH₂−CH₂)ₙ−&nbsp;&nbsp;(many ethene → poly(ethene))</div>
+      <p>Many <b>ethene</b> molecules add together to form <b>poly(ethene)</b>, commonly called <b>polythene</b> — the plastic used for bags and bottles. This is <b>addition polymerisation</b>.</p>
+      <div class="analogy">🌟 Monomer = one bead; polymer = the whole necklace of thousands of beads joined up.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The alkynes</h3>
+      <p>The <b>alkynes</b> are unsaturated hydrocarbons containing a <b>carbon–carbon triple bond (C≡C)</b>.</p>
+      <div class="formula">General formula of alkynes:&nbsp; CₙH₂ₙ₋₂</div>
+      <table class="r">
+        <tr><th>n (carbons)</th><th>Name</th><th>Molecular formula</th></tr>
+        <tr><td>2</td><td>Ethyne</td><td>C₂H₂</td></tr>
+        <tr><td>3</td><td>Propyne</td><td>C₃H₄</td></tr>
+        <tr><td>4</td><td>Butyne</td><td>C₄H₆</td></tr>
+      </table>
+      <p>The most important alkyne is <b>ethyne, C₂H₂</b> (old name <b>acetylene</b>), written H–C≡C–H. It burns with a very hot flame and is used in <b>oxy-acetylene welding</b>. Like alkenes, alkynes are unsaturated and also decolourise bromine water.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: ALKANOLS, ACIDS & PETROLEUM ============ -->
+  <section class="cat alkanols" id="cat-alkanols">
+    <h2 class="cathead">🍷 PART 4 — Alkanols, Alkanoic Acids &amp; Petroleum</h2>
+
+    <div class="lesson">
+      <h3>1. The alkanols (alcohols)</h3>
+      <p>The <b>alkanols</b> are the family with the <b>−OH (hydroxyl) functional group</b>.</p>
+      <div class="formula">General formula of alkanols:&nbsp; CₙH₂ₙ₊₁OH</div>
+      <table class="r">
+        <tr><th>Name</th><th>Formula</th></tr>
+        <tr><td>Methanol</td><td>CH₃OH</td></tr>
+        <tr><td>Ethanol</td><td>C₂H₅OH</td></tr>
+        <tr><td>Propanol</td><td>C₃H₇OH</td></tr>
+      </table>
+      <p>The best-known is <b>ethanol, C₂H₅OH</b> — the alcohol in drinks, used as a fuel, a solvent and an antiseptic.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Making ethanol by fermentation</h3>
+      <p><b>Fermentation</b> is the breakdown of <b>sugar (glucose) into ethanol and carbon dioxide by the enzyme zymase in yeast</b>, in the absence of air.</p>
+      <div class="formula">C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂&nbsp;&nbsp;(glucose → ethanol + carbon dioxide)</div>
+      <ul>
+        <li>Catalyst: the enzyme <b>zymase</b> (from yeast).</li>
+        <li>Best at about <b>37 °C</b>, without air (anaerobic).</li>
+      </ul>
+      <p>Industrially, ethanol is also made by the <b>hydration of ethene</b> (C₂H₄ + H₂O → C₂H₅OH), as seen in Part 3.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Oxidation of alkanols</h3>
+      <p>When ethanol is <b>oxidised</b> (by air/bacteria, or by an oxidising agent like acidified KMnO₄ or K₂Cr₂O₇) it is converted step by step:</p>
+      <div class="formula">ethanol → ethanal → ethanoic acid</div>
+      <div class="ex"><b class="t">Everyday example:</b> when wine or palm-wine is left open, bacteria oxidise the <b>ethanol</b> in it to <b>ethanoic acid</b> — that is why it turns sour and tastes like vinegar.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The alkanoic acids (carboxylic acids)</h3>
+      <p>The <b>alkanoic acids</b> have the <b>−COOH (carboxyl) functional group</b>. They are weak acids that turn blue litmus red and react with bases and carbonates.</p>
+      <div class="formula">General formula:&nbsp; CₙH₂ₙ₊₁COOH</div>
+      <table class="r">
+        <tr><th>Name</th><th>Formula</th></tr>
+        <tr><td>Methanoic acid</td><td>HCOOH</td></tr>
+        <tr><td>Ethanoic acid</td><td>CH₃COOH</td></tr>
+        <tr><td>Propanoic acid</td><td>C₂H₅COOH</td></tr>
+      </table>
+      <p>The common one is <b>ethanoic acid, CH₃COOH</b> — the acid in <b>vinegar</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Esterification</h3>
+      <p><b>Esterification</b> is the reaction of an <b>alkanoic acid with an alkanol</b> (with concentrated H₂SO₄ as catalyst) to form an <b>ester and water</b>. It is a reversible reaction.</p>
+      <div class="formula">alkanoic acid + alkanol ⇌ ester + water</div>
+      <div class="ex"><b class="t">Worked example:</b>
+        <div class="calc">CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O</div>
+        ethanoic acid + ethanol → <b>ethyl ethanoate</b> (an ester) + water. Esters have <b>sweet, fruity smells</b> and are used in perfumes and flavourings.</div>
+      <div class="analogy">🌟 Remember: <b>acid + alcohol → ester + water</b> (the −OH of the acid and the −H of the alcohol come off together as H₂O).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Petroleum — fractional distillation</h3>
+      <p><b>Petroleum (crude oil)</b> is a mixture of many hydrocarbons (mostly alkanes). It is separated into useful <b>fractions</b> by <b>fractional distillation</b> in a tall fractionating column.</p>
+      <ul>
+        <li>Crude oil is heated; the vapours rise up the column, which is <b>hot at the bottom, cooler at the top</b>.</li>
+        <li>Fractions with <b>low boiling points (small molecules)</b> rise high before condensing; fractions with <b>high boiling points (large molecules)</b> condense low down.</li>
+      </ul>
+      <table class="r">
+        <tr><th>Fraction (top → bottom)</th><th>Use</th></tr>
+        <tr><td>Refinery gases</td><td>Bottled gas (LPG) / cooking</td></tr>
+        <tr><td>Petrol (gasoline)</td><td>Fuel for cars</td></tr>
+        <tr><td>Kerosene</td><td>Jet fuel, lamps, stoves</td></tr>
+        <tr><td>Diesel oil</td><td>Fuel for lorries and buses</td></tr>
+        <tr><td>Lubricating oil / bitumen</td><td>Lubricants, waxes, road tar</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Cracking</h3>
+      <p><b>Cracking</b> is the <b>breaking down of large, less useful alkane molecules into smaller, more useful ones</b> (including alkenes) using <b>heat and a catalyst</b>.</p>
+      <div class="formula">large alkane → smaller alkane + alkene</div>
+      <div class="ex"><b class="t">Example:</b>
+        <div class="calc">C₁₀H₂₂ → C₈H₁₈ + C₂H₄</div>
+        A big decane molecule cracks into octane (petrol) + ethene. Cracking is important because it: (1) makes more <b>petrol</b> from surplus heavy oil, and (2) produces <b>alkenes like ethene</b> for making plastics.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Name the chain, spot the functional group — organic chemistry falls into place. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Organic chemistry is best defined as the study of…",o:["Compounds of carbon and their reactions","The compounds of all metals","Only inorganic salts","Acids and bases only"],c:0,e:"<span class='h'>💡 Idea</span>Organic chemistry is the chemistry of carbon compounds (carbon chains joined mainly to hydrogen), from fuels to plastics to living tissue.<span class='h'>✅</span>Compounds of carbon and their reactions."},
+{s:"The ability of carbon atoms to join to one another to form long chains and rings is called…",o:["Hydration","Catenation","Vulcanisation","Neutralisation"],c:1,e:"<span class='h'>💡 Idea</span>Catenation is the self-linking of carbon atoms into chains, branches and rings. Together with tetravalency it lets carbon form millions of compounds.<span class='h'>✅</span>Catenation."},
+{s:"Carbon is said to be tetravalent because a carbon atom…",o:["Has two electron shells","Loses four electrons easily","Forms four covalent bonds","Has four neutrons"],c:2,e:"<span class='h'>💡 Idea</span>Carbon has 4 outer electrons and completes its shell by sharing, forming 4 covalent bonds. Valency 4 = tetravalent.<span class='h'>✅</span>Forms four covalent bonds."},
+{s:"The general molecular formula of the alkanes is…",o:["CₙH₂ₙ","CₙH₂ₙ₋₂","CₙH₂ₙ₊₁","CₙH₂ₙ₊₂"],c:3,e:"<span class='h'>💡 Idea</span>Saturated alkanes follow CₙH₂ₙ₊₂. Check: n=1 gives CH₄, n=2 gives C₂H₆.<span class='h'>✅</span>CₙH₂ₙ₊₂."},
+{s:"Which statement is a correct feature of a homologous series?",o:["Successive members differ by a −CH₂− group","All members have different general formulae","Members have completely different chemical properties","Members cannot be represented by one general formula"],c:0,e:"<span class='h'>💡 Idea</span>In a homologous series each member differs from the next by −CH₂− (mass 14), all share ONE general formula and similar chemical properties.<span class='h'>✅</span>Successive members differ by a −CH₂− group."},
+{s:"The general molecular formula CₙH₂ₙ belongs to the…",o:["Alkanes","Alkenes","Alkynes","Alkanols"],c:1,e:"<span class='h'>💡 Idea</span>CₙH₂ₙ is the alkene family (one C=C double bond). Alkanes are CₙH₂ₙ₊₂ and alkynes CₙH₂ₙ₋₂.<span class='h'>✅</span>Alkenes."},
+{s:"The functional group of the alkanols (alcohols) is…",o:["−COOH","−CHO","−OH","−NH₂"],c:2,e:"<span class='h'>💡 Idea</span>Alkanols contain the hydroxyl group −OH, as in ethanol C₂H₅OH. −COOH is acids, −CHO is aldehydes, −NH₂ is amines.<span class='h'>✅</span>−OH."},
+{s:"A compound containing the −COOH group belongs to the…",o:["Alkanals","Alkanones","Esters","Alkanoic acids"],c:3,e:"<span class='h'>💡 Idea</span>The carboxyl group −COOH is the functional group of the alkanoic (carboxylic) acids, e.g. ethanoic acid CH₃COOH.<span class='h'>✅</span>Alkanoic acids."},
+{s:"Which of the following is a SATURATED hydrocarbon?",o:["Ethane","Ethene","Ethyne","Propene"],c:0,e:"<span class='h'>💡 Idea</span>Saturated means only single bonds. Ethane (C₂H₆) is an alkane. Ethene, ethyne and propene all contain double or triple bonds (unsaturated).<span class='h'>✅</span>Ethane."},
+{s:"Compounds having the same molecular formula but different structural arrangements are called…",o:["Isotopes","Structural isomers","Allotropes","Polymers"],c:1,e:"<span class='h'>💡 Idea</span>Structural isomers share a molecular formula but join their atoms differently, e.g. n-butane and 2-methylpropane are both C₄H₁₀.<span class='h'>✅</span>Structural isomers."},
+{s:"In IUPAC naming, the hydrocarbon CH₄ is called…",o:["Ethane","Propane","Methane","Butane"],c:2,e:"<span class='h'>💡 Idea</span>One carbon uses the stem meth-; an alkane takes the suffix -ane, so CH₄ is methane.<span class='h'>✅</span>Methane."},
+{s:"The general molecular formula of the alkynes is…",o:["CₙH₂ₙ","CₙH₂ₙ₊₂","CₙH₂ₙ₊₁","CₙH₂ₙ₋₂"],c:3,e:"<span class='h'>💡 Idea</span>Alkynes have a C≡C triple bond and follow CₙH₂ₙ₋₂. Check: n=2 gives C₂H₂, ethyne.<span class='h'>✅</span>CₙH₂ₙ₋₂."},
+{s:"The major natural source of the alkanes is…",o:["Petroleum and natural gas","Limestone","Sea water","Green plants"],c:0,e:"<span class='h'>💡 Idea</span>Alkanes are obtained mainly from petroleum (crude oil) and natural gas; natural gas is chiefly methane.<span class='h'>✅</span>Petroleum and natural gas."},
+{s:"When methane reacts with chlorine in the presence of sunlight (UV light), the reaction is called…",o:["Addition","Substitution","Polymerisation","Neutralisation"],c:1,e:"<span class='h'>💡 Idea</span>Alkanes are saturated, so a chlorine atom SWAPS with a hydrogen atom. Swapping = substitution (it needs UV light).<span class='h'>✅</span>Substitution."},
+{s:"The complete combustion of an alkane in plenty of air produces…",o:["Carbon monoxide and hydrogen","Carbon and water","Carbon dioxide and water","Hydrogen only"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>CH₄ + 2O₂ → CO₂ + 2H₂O</span>Complete combustion gives carbon dioxide and water. Limited air would give poisonous CO instead.<span class='h'>✅</span>Carbon dioxide and water."},
+{s:"The first member of the alkane homologous series is…",o:["Ethane","Propane","Butane","Methane"],c:3,e:"<span class='h'>💡 Idea</span>The first alkane (n=1) is methane, CH₄. Order: methane, ethane, propane, butane…<span class='h'>✅</span>Methane."},
+{s:"The molecular formula of ethane is…",o:["C₂H₆","C₂H₄","C₂H₂","CH₄"],c:0,e:"<span class='h'>✏️ Working</span>Ethane is the 2-carbon alkane, so use CₙH₂ₙ₊₂ with n=2:<span class='calc'>C₂H(2×2+2) = C₂H₆</span><span class='h'>✅</span>C₂H₆."},
+{s:"In the reaction CH₄ + Cl₂ → X + HCl (in UV light), the organic product X is…",o:["Ethane","Chloromethane (CH₃Cl)","Ethene","Methanol"],c:1,e:"<span class='h'>✏️ Working</span>A chlorine replaces one hydrogen of methane:<span class='calc'>CH₄ + Cl₂ → CH₃Cl + HCl</span>The organic product is chloromethane.<span class='h'>✅</span>Chloromethane (CH₃Cl)."},
+{s:"The molecular formula of ethene is…",o:["C₂H₆","CH₄","C₂H₄","C₂H₂"],c:2,e:"<span class='h'>✏️ Working</span>Ethene is the 2-carbon alkene, general formula CₙH₂ₙ with n=2:<span class='calc'>C₂H(2×2) = C₂H₄</span>Structure CH₂=CH₂.<span class='h'>✅</span>C₂H₄."},
+{s:"Alkenes are described as unsaturated because each molecule contains at least one…",o:["Carbon–carbon single bond","Triple bond between carbon and hydrogen","Ionic bond","Carbon–carbon double bond"],c:3,e:"<span class='h'>💡 Idea</span>Alkenes contain a C=C double bond, which is why they are unsaturated and undergo addition reactions.<span class='h'>✅</span>Carbon–carbon double bond."},
+{s:"A hydrocarbon that decolourises bromine water is…",o:["Unsaturated, such as an alkene","Always an alkane","A fully saturated compound","A metal"],c:0,e:"<span class='h'>💡 Idea</span>The C=C (or C≡C) opens up and adds bromine, so the orange colour disappears. Decolourising bromine water means the compound is unsaturated.<span class='h'>✅</span>Unsaturated, such as an alkene."},
+{s:"The addition of hydrogen to ethene (hydrogenation) produces…",o:["Ethyne","Ethane","Ethanol","Ethanoic acid"],c:1,e:"<span class='h'>✏️ Working</span>Hydrogen adds across the C=C (nickel catalyst):<span class='calc'>C₂H₄ + H₂ → C₂H₆</span>The alkene becomes the alkane ethane.<span class='h'>✅</span>Ethane."},
+{s:"Many ethene molecules join together during polymerisation to form…",o:["Ethanol","Ethanoic acid","Poly(ethene) / polythene","Ethyne"],c:2,e:"<span class='h'>💡 Idea</span>In addition polymerisation many ethene monomers join into one long chain, poly(ethene), commonly called polythene.<span class='h'>✅</span>Poly(ethene) / polythene."},
+{s:"Adding steam (water) to ethene in the presence of a catalyst gives…",o:["Methane","Ethane","Ethanoic acid","Ethanol"],c:3,e:"<span class='h'>✏️ Working</span>Water adds across the C=C (hydration):<span class='calc'>C₂H₄ + H₂O → C₂H₅OH</span>This is the industrial way of making ethanol.<span class='h'>✅</span>Ethanol."},
+{s:"Ethyne (C₂H₂) contains a carbon-to-carbon…",o:["Triple bond","Single bond","Double bond","Ionic bond"],c:0,e:"<span class='h'>💡 Idea</span>Ethyne (acetylene) is written H−C≡C−H; it has a C≡C triple bond, so it is an alkyne (CₙH₂ₙ₋₂).<span class='h'>✅</span>Triple bond."},
+{s:"The test that distinguishes an alkene from an alkane is that the alkene…",o:["Burns in air","Decolourises bromine water","Is always a gas","Contains carbon"],c:1,e:"<span class='h'>💡 Idea</span>Both burn and both contain carbon, but only the unsaturated alkene decolourises bromine water (turns it from orange to colourless).<span class='h'>✅</span>Decolourises bromine water."},
+{s:"Ethanol is produced from glucose (sugar) by the process of…",o:["Cracking","Fractional distillation","Fermentation","Neutralisation"],c:2,e:"<span class='h'>✏️ Working</span>Yeast enzyme zymase breaks sugar down without air:<span class='calc'>C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂</span>This is fermentation.<span class='h'>✅</span>Fermentation."},
+{s:"The oxidation of ethanol (an alkanol) finally produces…",o:["Methane","Ethene","Ethane","Ethanoic acid"],c:3,e:"<span class='h'>💡 Idea</span>Oxidation of ethanol goes ethanol → ethanal → ethanoic acid. It is why left-open wine turns sour (vinegar).<span class='h'>✅</span>Ethanoic acid."},
+{s:"The reaction of an alkanoic acid with an alkanol produces an ester and…",o:["Water","Hydrogen","Carbon dioxide","Ammonia"],c:0,e:"<span class='h'>✏️ Working</span>Esterification: acid + alcohol → ester + water.<span class='calc'>CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O</span><span class='h'>✅</span>Water."},
+{s:"Petroleum (crude oil) is separated into its useful fractions by…",o:["Filtration","Fractional distillation","Fermentation","Electrolysis"],c:1,e:"<span class='h'>💡 Idea</span>Crude oil is a mixture of hydrocarbons with different boiling points, so it is separated by fractional distillation in a fractionating column.<span class='h'>✅</span>Fractional distillation."}
+);
+
+["fundamentals","alkanes","alkenes","alkanols","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

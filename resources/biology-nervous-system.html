@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nervous Coordination A–Z — The Neuron, Brain, Reflexes & Hormones (Biology)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧠 Nervous Coordination A–Z</h1>
+  <p>The Neuron · Brain &amp; Spinal Cord · Reflexes · Nerves vs Hormones — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with clear diagrams-in-words and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every term defined</span><span class="pill">Comparison tables</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="neuron">🔗 The Neuron</div>
+    <div class="tab" data-cat="cns">🧠 Central Nervous System</div>
+    <div class="tab" data-cat="reflex">⚡ Reflex Action</div>
+    <div class="tab" data-cat="pns">🔄 PNS &amp; Coordination</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: THE NEURON ============ -->
+  <section class="cat neuron show" id="cat-neuron">
+    <h2 class="cathead">🔗 PART 1 — The Neuron &amp; The Nerve Impulse</h2>
+
+    <div class="lesson">
+      <h3>1. Why living things need coordination</h3>
+      <p><b>Coordination</b> is the way an organism links up what its receptors detect (a stimulus) with the correct response from its effectors, so that all the parts of the body work together smoothly.</p>
+      <p>Your body is made of millions of cells. Without a control system they could not act as one. If your hand touches a hot pan, your eyes, brain, spinal cord and arm muscles must all cooperate <b>instantly</b>. Two systems do this coordination:</p>
+      <ul>
+        <li><b>The nervous system</b> — uses fast electrical impulses carried along nerve cells. Fast, short-lived, precise.</li>
+        <li><b>The endocrine (hormonal) system</b> — uses chemical hormones carried in the blood. Slower, but longer-lasting.</li>
+      </ul>
+      <span class="key">The basic pathway of any response</span>
+      <div class="formula">Stimulus → Receptor → Coordinator (CNS) → Effector → Response</div>
+      <div class="analogy">🌟 Memory: a <b>receptor</b> RECEIVES the message (a sense organ), an <b>effector</b> has an EFFECT / does the action (a muscle or gland).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The neuron — the unit of the nervous system</h3>
+      <p>The nervous system is built from special cells called <b>neurons</b> (nerve cells). A neuron is the basic <b>structural and functional unit</b> of the nervous system, adapted to carry electrical messages very quickly over long distances.</p>
+      <span class="key">Parts of a neuron (learn each one)</span>
+      <ul>
+        <li><b>Dendrites</b> — short, branched fibres that <b>receive</b> impulses and carry them <b>towards</b> the cell body.</li>
+        <li><b>Cell body (cyton)</b> — contains the nucleus and cytoplasm; it keeps the cell alive and controls its activities.</li>
+        <li><b>Axon</b> — one long fibre that carries the impulse <b>away</b> from the cell body towards the next cell.</li>
+        <li><b>Myelin sheath</b> — a fatty layer wrapped around many axons. It <b>insulates</b> the axon and makes the impulse travel much faster.</li>
+        <li><b>Nodes of Ranvier</b> — small gaps in the myelin sheath. The impulse jumps from node to node, which speeds it up further.</li>
+        <li><b>Synaptic knobs (axon terminals)</b> — swellings at the end of the axon that pass the impulse on to the next neuron by releasing chemicals.</li>
+      </ul>
+      <div class="analogy">🌟 Picture a neuron as a wire: dendrites are the frayed input end, the axon is the long insulated cable (myelin = the plastic coating), and the synaptic knobs are the plug at the far end.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The three types of neuron</h3>
+      <p>Neurons are classified by the direction in which they carry impulses. Learn the alternative names — examiners use both.</p>
+      <table class="r">
+        <tr><th>Type</th><th>Other name</th><th>What it does</th><th>Where found</th></tr>
+        <tr><td><b>Sensory neuron</b></td><td>Afferent neuron</td><td>Carries impulses <b>from receptors (sense organs) TO the CNS</b></td><td>From skin, eye, ear etc. into the CNS</td></tr>
+        <tr><td><b>Relay neuron</b></td><td>Intermediate / interneuron / connector</td><td>Links sensory to motor neurons <b>inside the CNS</b></td><td>Brain and spinal cord</td></tr>
+        <tr><td><b>Motor neuron</b></td><td>Efferent neuron</td><td>Carries impulses <b>from the CNS TO effectors</b> (muscles/glands)</td><td>From the CNS out to muscles and glands</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>a</b>fferent <b>a</b>rrives at the brain (sensory in); <b>e</b>fferent <b>e</b>xits the brain (motor out). SAME order as the alphabet: <b>A</b>fferent before <b>E</b>fferent.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The nerve impulse and the synapse</h3>
+      <p>A <b>nerve impulse</b> is an <b>electrochemical signal</b> — a wave of electrical change that sweeps along the axon. It is NOT a flow of blood and NOT a hormone; it is an electrical message travelling along a nerve fibre.</p>
+      <h4>The synapse</h4>
+      <p>Neurons do not actually touch. The tiny junction between the synaptic knob of one neuron and the next neuron is called a <b>synapse</b>. There is a microscopic gap here.</p>
+      <p>When the impulse reaches the synaptic knob, it cannot jump the gap as electricity. Instead the knob releases chemicals called <b>neurotransmitters</b> (for example acetylcholine). These diffuse across the gap and start a new impulse in the next neuron.</p>
+      <span class="key">Two key jobs of the synapse</span>
+      <ul>
+        <li><b>It passes the message on</b> using neurotransmitters.</li>
+        <li><b>It acts as a one-way valve</b> — chemicals are only released on one side, so impulses can only travel in one direction.</li>
+      </ul>
+      <div class="analogy">🌟 A synapse is like a ferry crossing a river: the electrical impulse (a car) cannot swim across, so it becomes a chemical (boards a ferry = neurotransmitter) to reach the other bank, then drives on again as electricity.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: CENTRAL NERVOUS SYSTEM ============ -->
+  <section class="cat cns" id="cat-cns">
+    <h2 class="cathead">🧠 PART 2 — The Central Nervous System</h2>
+
+    <div class="lesson">
+      <h3>1. How the whole system is divided</h3>
+      <p>In mammals the nervous system has two main divisions:</p>
+      <ul>
+        <li><b>Central nervous system (CNS)</b> = the <b>brain + spinal cord</b>. This is the control and coordinating centre.</li>
+        <li><b>Peripheral nervous system (PNS)</b> = all the nerves that connect the CNS to the rest of the body (covered in Part 4).</li>
+      </ul>
+      <p>The CNS is where information is received, sorted and acted upon. It is protected by bone (the skull guards the brain; the vertebral column / backbone guards the spinal cord) and by membranes called the meninges.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The brain and its main parts</h3>
+      <p>The brain is the master organ of coordination. Learn the four regions and the ONE job you must remember for each — this is the most common exam question.</p>
+      <table class="r">
+        <tr><th>Part of the brain</th><th>Main function (remember this!)</th></tr>
+        <tr><td><b>Cerebrum</b> (largest part, in two hemispheres)</td><td>Thought, memory, intelligence, reasoning, and the seat of <b>voluntary actions</b>; also interprets the senses</td></tr>
+        <tr><td><b>Cerebellum</b> (under the back of the cerebrum)</td><td><b>Balance</b>, posture and the coordination of muscular movement</td></tr>
+        <tr><td><b>Medulla oblongata</b> (joins the spinal cord)</td><td>Controls <b>involuntary actions</b> — heartbeat, breathing, swallowing, coughing, blood pressure</td></tr>
+        <tr><td><b>Hypothalamus</b> (below the cerebrum)</td><td>Regulates body temperature, water balance, thirst, hunger and sleep; links the nervous and endocrine systems</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>Cerebrum</b> = your CONSCIOUS mind (thinking). <b>Cerebellum</b> = the little one that keeps you <b>BALANCED</b>. <b>Medulla</b> = the auto-pilot that keeps you alive (heart &amp; lungs).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The spinal cord</h3>
+      <p>The <b>spinal cord</b> is a thick cord of nerve tissue running down the back inside the vertebral column. It has two jobs:</p>
+      <ul>
+        <li><b>A relay highway</b> — it carries impulses <b>to and from the brain</b>, connecting the brain with the rest of the body.</li>
+        <li><b>A reflex centre</b> — it is the coordinating centre for most <b>reflex actions</b> (like the knee-jerk), so a fast response can happen without waiting for the brain. Its relay neurons sit here.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The meninges — protective covering</h3>
+      <p>The brain and spinal cord are wrapped in three protective membranes called the <b>meninges</b>. Between the membranes is a watery <b>cerebrospinal fluid</b> that cushions the delicate tissue against shock and supplies it with food and oxygen.</p>
+      <div class="analogy">🌟 Don't confuse the coverings: <b>meninges</b> cover the brain/spinal cord, the <b>pleura</b> covers the lungs, and the <b>pericardium</b> covers the heart.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: REFLEX ACTION ============ -->
+  <section class="cat reflex" id="cat-reflex">
+    <h2 class="cathead">⚡ PART 3 — Reflex Action &amp; The Reflex Arc</h2>
+
+    <div class="lesson">
+      <h3>1. Voluntary vs involuntary actions</h3>
+      <p>Actions of the body fall into two groups depending on whether the conscious brain (cerebrum) is in charge.</p>
+      <table class="r">
+        <tr><th></th><th>Voluntary action</th><th>Involuntary action</th></tr>
+        <tr><td>Under conscious control?</td><td><b>Yes</b> — you decide to do it</td><td><b>No</b> — happens automatically</td></tr>
+        <tr><td>Controlled by</td><td>The cerebrum</td><td>Spinal cord, medulla, autonomic nerves</td></tr>
+        <tr><td>Examples</td><td>Writing, talking, walking, throwing a ball</td><td>Heartbeat, breathing, digestion, blinking, knee-jerk</td></tr>
+      </table>
+      <p>A <b>reflex action</b> is a special kind of involuntary action: it is a <b>fast, automatic response to a stimulus</b> that does not need conscious thought. Its job is usually protection — pulling away from danger before you even feel the pain.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The reflex arc — the pathway of a reflex</h3>
+      <p>The route an impulse follows during a reflex is called the <b>reflex arc</b>. In a spinal reflex the impulse does NOT go up to the brain first; it is dealt with in the spinal cord, which is why it is so fast.</p>
+      <span class="key">The five steps — memorise this order</span>
+      <div class="formula">Receptor → Sensory neuron → Relay neuron (in spinal cord) → Motor neuron → Effector</div>
+      <ul>
+        <li><b>Receptor</b> — detects the stimulus (e.g. pain/heat receptors in the skin).</li>
+        <li><b>Sensory (afferent) neuron</b> — carries the impulse to the spinal cord.</li>
+        <li><b>Relay neuron</b> — sits <b>inside the spinal cord</b> and passes the impulse across to the motor neuron.</li>
+        <li><b>Motor (efferent) neuron</b> — carries the impulse out to the effector.</li>
+        <li><b>Effector</b> — a muscle or gland that carries out the response (e.g. the arm muscle contracts).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked examples of reflexes</h3>
+      <div class="ex"><b class="t">Withdrawing your hand from a hot object:</b> Heat <b>receptors</b> in the skin → <b>sensory neuron</b> to the spinal cord → <b>relay neuron</b> in the cord → <b>motor neuron</b> to the arm → <b>effector</b> (biceps muscle) contracts and jerks the hand away — all before you consciously feel the pain.</div>
+      <div class="ex"><b class="t">The knee-jerk (patellar) reflex:</b> A tap below the kneecap stretches the muscle (stimulus) → sensory neuron → spinal cord → motor neuron → thigh muscle contracts → the lower leg kicks out. Doctors use it to check the nervous system is working.</div>
+      <div class="analogy">🌟 Note: the effector in these examples is a <b>muscle</b>. In other reflexes (like salivating) the effector is a <b>gland</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Simple reflex vs conditioned reflex</h3>
+      <p>Not all reflexes are inborn. Some are learned by experience.</p>
+      <table class="r">
+        <tr><th></th><th>Simple (natural) reflex</th><th>Conditioned (learned) reflex</th></tr>
+        <tr><td>Present from birth?</td><td><b>Yes</b> — inborn, inherited</td><td><b>No</b> — learned through experience/training</td></tr>
+        <tr><td>Needs the brain?</td><td>Usually just the spinal cord/medulla</td><td>Involves the cerebrum (learning)</td></tr>
+        <tr><td>Can it be lost?</td><td>Permanent</td><td>Can be forgotten if not reinforced</td></tr>
+        <tr><td>Example</td><td>Blinking, knee-jerk, withdrawing from heat</td><td>Pavlov's dog salivating at a bell; your mouth watering at the smell of food</td></tr>
+      </table>
+      <div class="analogy">🌟 Pavlov's famous experiment: a bell was rung each time dogs were fed. Soon the bell alone (a new stimulus) made them salivate — a conditioned reflex built by repeated association.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: PNS & COORDINATION ============ -->
+  <section class="cat pns" id="cat-pns">
+    <h2 class="cathead">🔄 PART 4 — Peripheral Nerves, Senses &amp; Hormones</h2>
+
+    <div class="lesson">
+      <h3>1. The peripheral nervous system (PNS)</h3>
+      <p>The <b>PNS</b> is all the nerves that branch out from the CNS to reach every part of the body. It has two divisions based on what it controls:</p>
+      <ul>
+        <li><b>Somatic nervous system</b> — carries impulses to and from the <b>skeletal (voluntary) muscles</b>; it controls the actions you do consciously, like moving a limb.</li>
+        <li><b>Autonomic nervous system</b> — controls the <b>involuntary</b> activities of internal organs (heart, gut, glands) that you cannot consciously control.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The autonomic nervous system — two opposites</h3>
+      <p>The autonomic system has two parts that work against each other to keep the body balanced.</p>
+      <table class="r">
+        <tr><th></th><th>Sympathetic</th><th>Parasympathetic</th></tr>
+        <tr><td>Overall role</td><td>Prepares the body for action — <b>'fight or flight'</b></td><td>Calms the body down — <b>'rest and digest'</b></td></tr>
+        <tr><td>Effect on heartbeat</td><td>Speeds it up</td><td>Slows it down</td></tr>
+        <tr><td>Effect on pupils</td><td>Widens (dilates) them</td><td>Narrows (constricts) them</td></tr>
+        <tr><td>Effect on digestion</td><td>Slows it down</td><td>Speeds it up</td></tr>
+      </table>
+      <div class="analogy">🌟 <b>Sympathetic</b> = the emergency accelerator (danger, stress). <b>Parasympathetic</b> = the brake that relaxes you afterwards.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Nervous vs hormonal (endocrine) coordination</h3>
+      <p>Both systems coordinate the body, but they work very differently. This comparison is a favourite exam question.</p>
+      <table class="r">
+        <tr><th>Feature</th><th>Nervous coordination</th><th>Hormonal (endocrine) coordination</th></tr>
+        <tr><td>Transmitted by</td><td>Electrical impulses along neurons</td><td>Chemical hormones carried in the blood</td></tr>
+        <tr><td>Speed</td><td><b>Very fast</b></td><td><b>Slower</b></td></tr>
+        <tr><td>Duration of effect</td><td>Short-lived</td><td><b>Long-lasting</b></td></tr>
+        <tr><td>Area affected</td><td>Precise — a specific muscle/gland</td><td>Can be widespread across the body</td></tr>
+        <tr><td>Pathway</td><td>Along nerve fibres to a target</td><td>Dissolved in blood to target organs</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: nerves are like a <b>phone call</b> (instant, brief, one person); hormones are like a <b>letter posted to many</b> (slower to arrive, but the message lasts).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Sense organs — the receptors</h3>
+      <p>Receptors are grouped into <b>sense organs</b> that detect particular stimuli and turn them into nerve impulses.</p>
+      <ul>
+        <li><b>Eye</b> — receptor for <b>light</b> (sight). Light-sensitive cells in the retina send impulses along the optic nerve.</li>
+        <li><b>Ear</b> — receptor for <b>sound</b> (hearing) and also for <b>balance</b> (the semicircular canals).</li>
+        <li><b>Skin</b> — receptors for touch, pressure, pain, heat and cold.</li>
+        <li><b>Nose</b> — receptor for smell (chemicals in air); <b>Tongue</b> — receptor for taste (chemicals in food).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The endocrine glands and their hormones</h3>
+      <p>Endocrine glands are <b>ductless</b> — they pour their hormones straight into the blood. Learn one gland-and-hormone pair at a time.</p>
+      <table class="r">
+        <tr><th>Gland</th><th>A hormone it makes</th><th>One main job</th></tr>
+        <tr><td><b>Pituitary</b> (the master gland)</td><td>Growth hormone</td><td>Controls growth and other glands</td></tr>
+        <tr><td><b>Thyroid</b></td><td>Thyroxine</td><td>Controls the rate of metabolism</td></tr>
+        <tr><td><b>Pancreas</b> (islets)</td><td>Insulin</td><td>Lowers blood sugar level</td></tr>
+        <tr><td><b>Adrenal glands</b></td><td>Adrenaline</td><td>The 'fight or flight' emergency hormone</td></tr>
+        <tr><td><b>Ovaries</b> (female)</td><td>Oestrogen</td><td>Female secondary sexual characteristics</td></tr>
+        <tr><td><b>Testes</b> (male)</td><td>Testosterone</td><td>Male secondary sexual characteristics</td></tr>
+      </table>
+      <div class="analogy">🌟 The <b>pituitary</b> is called the master gland because its hormones switch other glands on and off.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Receptor to effector — follow the impulse and the answer follows. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"The linking of a stimulus detected by receptors with the correct response by effectors is called…",o:["Digestion","Excretion","Coordination","Reproduction"],c:2,e:"<span class='h'>💡 Idea</span>Coordination makes all parts of the body work together, carried out by the nervous and endocrine systems.<span class='h'>✅</span>Coordination."},
+{s:"The basic structural and functional unit of the nervous system is the…",o:["Neuron","Nephron","Alveolus","Villus"],c:0,e:"<span class='h'>💡 Idea</span>The nervous system is built from nerve cells called neurons. (The nephron belongs to the kidney.)<span class='h'>✅</span>Neuron."},
+{s:"The short branched fibres that receive impulses and carry them TOWARD the cell body are the…",o:["Axons","Synapses","Nodes of Ranvier","Dendrites"],c:3,e:"<span class='h'>💡 Idea</span>Dendrites are the input end of a neuron, carrying impulses inwards to the cell body.<span class='h'>✅</span>Dendrites."},
+{s:"The single long fibre that carries the impulse AWAY from the cell body is the…",o:["Dendrite","Axon","Myelin sheath","Cell body"],c:1,e:"<span class='h'>💡 Idea</span>The axon is the long output fibre, carrying the impulse away toward the next cell.<span class='h'>✅</span>Axon."},
+{s:"The fatty layer around many axons that insulates them and speeds up the impulse is the…",o:["Myelin sheath","Synapse","Dendrite","Nucleus"],c:0,e:"<span class='h'>💡 Idea</span>The myelin sheath insulates the axon so the impulse travels faster along it.<span class='h'>✅</span>Myelin sheath."},
+{s:"The small gaps in the myelin sheath along an axon are called the…",o:["Synaptic knobs","Dendrites","Nodes of Ranvier","Cell bodies"],c:2,e:"<span class='h'>💡 Idea</span>The impulse jumps from node to node of Ranvier, which makes it even faster.<span class='h'>✅</span>Nodes of Ranvier."},
+{s:"A neuron that carries impulses from receptors (sense organs) TO the central nervous system is a…",o:["Motor neuron","Relay neuron","Effector","Sensory (afferent) neuron"],c:3,e:"<span class='h'>💡 Idea</span>Sensory neurons bring information IN from the senses. Afferent = arrives at the CNS.<span class='h'>✅</span>Sensory (afferent) neuron."},
+{s:"A neuron that carries impulses from the CNS to muscles or glands is a…",o:["Sensory neuron","Motor (efferent) neuron","Relay neuron","Receptor"],c:1,e:"<span class='h'>💡 Idea</span>Motor neurons carry commands OUT to effectors. Efferent = exits the CNS.<span class='h'>✅</span>Motor (efferent) neuron."},
+{s:"The neuron that links sensory and motor neurons inside the CNS is the…",o:["Relay (intermediate) neuron","Sensory neuron","Motor neuron","Receptor"],c:0,e:"<span class='h'>💡 Idea</span>The relay (interneuron) sits inside the brain or spinal cord and connects the other two.<span class='h'>✅</span>Relay (intermediate) neuron."},
+{s:"Another name for a sensory neuron is a(n)…",o:["Efferent neuron","Interneuron","Afferent neuron","Effector"],c:2,e:"<span class='h'>💡 Idea</span>Sensory = afferent (arrives at the CNS). Motor = efferent (exits the CNS).<span class='h'>✅</span>Afferent neuron."},
+{s:"The junction with a tiny gap between two neurons is called a…",o:["Node of Ranvier","Synapse","Dendrite","Axon"],c:1,e:"<span class='h'>💡 Idea</span>Neurons do not touch; the small gap where they meet is the synapse.<span class='h'>✅</span>Synapse."},
+{s:"Impulses cross a synapse by means of chemicals called…",o:["Hormones","Enzymes","Antibodies","Neurotransmitters"],c:3,e:"<span class='h'>💡 Idea</span>The impulse cannot leap the gap as electricity, so neurotransmitters (e.g. acetylcholine) diffuse across it.<span class='h'>✅</span>Neurotransmitters."},
+{s:"A nerve impulse travelling along an axon is best described as a(n)…",o:["Electrochemical signal","Flow of blood","Hormone in the blood","Sound wave"],c:0,e:"<span class='h'>💡 Idea</span>A nerve impulse is an electrochemical wave along the nerve fibre, not blood or a hormone.<span class='h'>✅</span>Electrochemical signal."},
+{s:"The part of the brain responsible for thought, memory, intelligence and voluntary action is the…",o:["Cerebellum","Medulla oblongata","Cerebrum","Hypothalamus"],c:2,e:"<span class='h'>💡 Idea</span>The cerebrum is the large thinking part — memory, reasoning and control of voluntary movement.<span class='h'>✅</span>Cerebrum."},
+{s:"The part of the brain that controls balance and coordination of muscular movement is the…",o:["Cerebrum","Cerebellum","Medulla oblongata","Hypothalamus"],c:1,e:"<span class='h'>💡 Idea</span>The cerebellum keeps you balanced and coordinates smooth muscular movements.<span class='h'>✅</span>Cerebellum."},
+{s:"Involuntary actions such as heartbeat and breathing are controlled by the…",o:["Cerebrum","Cerebellum","Hypothalamus","Medulla oblongata"],c:3,e:"<span class='h'>💡 Idea</span>The medulla oblongata is the auto-pilot controlling involuntary actions like heartbeat, breathing and swallowing.<span class='h'>✅</span>Medulla oblongata."},
+{s:"The part of the brain that regulates body temperature, thirst and water balance is the…",o:["Cerebrum","Cerebellum","Hypothalamus","Medulla oblongata"],c:2,e:"<span class='h'>💡 Idea</span>The hypothalamus controls temperature, hunger, thirst and water balance, and links the nervous and hormonal systems.<span class='h'>✅</span>Hypothalamus."},
+{s:"The protective membranes that cover the brain and spinal cord are the…",o:["Meninges","Pleura","Pericardium","Peritoneum"],c:0,e:"<span class='h'>💡 Idea</span>The meninges wrap the brain and spinal cord. (Pleura covers lungs; pericardium covers the heart.)<span class='h'>✅</span>Meninges."},
+{s:"Which action is a VOLUNTARY action?",o:["Knee-jerk","Heartbeat","Blinking when dust enters the eye","Writing a letter"],c:3,e:"<span class='h'>💡 Idea</span>Writing is consciously controlled by the cerebrum. The others are reflex/involuntary actions.<span class='h'>✅</span>Writing a letter."},
+{s:"The knee-jerk and the quick withdrawal of the hand from a hot object are examples of…",o:["Voluntary actions","Reflex actions","Hormonal responses","Learned skills"],c:1,e:"<span class='h'>💡 Idea</span>These are fast, automatic, protective responses with no conscious thought — reflex actions.<span class='h'>✅</span>Reflex actions."},
+{s:"The correct pathway of a reflex arc is…",o:["Receptor → sensory neuron → relay neuron → motor neuron → effector","Effector → motor neuron → relay neuron → sensory neuron → receptor","Receptor → motor neuron → relay neuron → sensory neuron → effector","Receptor → relay neuron → sensory neuron → motor neuron → effector"],c:0,e:"<span class='h'>💡 Idea</span>The impulse flows receptor → sensory in → relay (spinal cord) → motor out → effector.<span class='h'>✅</span>Receptor → sensory neuron → relay neuron → motor neuron → effector."},
+{s:"In a spinal reflex, the relay (intermediate) neuron is found in the…",o:["Brain","Muscle","Spinal cord","Skin"],c:2,e:"<span class='h'>💡 Idea</span>A spinal reflex is dealt with in the spinal cord, where the relay neuron links sensory to motor — that is why it is so fast.<span class='h'>✅</span>Spinal cord."},
+{s:"A structure that responds to a stimulus, such as a muscle or a gland, is called a(n)…",o:["Receptor","Stimulus","Neuron","Effector"],c:3,e:"<span class='h'>💡 Idea</span>An effector carries out the response — muscles contract, glands secrete. A receptor only detects.<span class='h'>✅</span>Effector."},
+{s:"The endocrine gland often called the 'master gland' because it controls other glands is the…",o:["Thyroid gland","Pituitary gland","Pancreas","Adrenal gland"],c:1,e:"<span class='h'>💡 Idea</span>The pituitary is the master gland; its hormones switch the other endocrine glands on and off.<span class='h'>✅</span>Pituitary gland."},
+{s:"A reflex that is LEARNED through experience, such as a dog salivating at the sound of a bell, is a…",o:["Conditioned reflex","Simple reflex","Voluntary action","Tropism"],c:0,e:"<span class='h'>💡 Idea</span>A conditioned reflex is built by training/association (Pavlov's dogs); a simple reflex is inborn.<span class='h'>✅</span>Conditioned reflex."},
+{s:"The division of the peripheral nervous system that controls voluntary movement of skeletal muscle is the…",o:["Autonomic nervous system","Sympathetic system","Somatic nervous system","Central nervous system"],c:2,e:"<span class='h'>💡 Idea</span>The somatic nervous system serves the voluntary skeletal muscles; the autonomic serves involuntary organs.<span class='h'>✅</span>Somatic nervous system."},
+{s:"The part of the autonomic nervous system that prepares the body for 'fight or flight' is the…",o:["Parasympathetic system","Somatic system","Central system","Sympathetic system"],c:3,e:"<span class='h'>💡 Idea</span>The sympathetic system speeds the heart and readies the body for action; the parasympathetic calms it.<span class='h'>✅</span>Sympathetic system."},
+{s:"Compared with nervous coordination, hormonal (endocrine) coordination is generally…",o:["Faster and shorter-lasting","Slower but longer-lasting","Faster and longer-lasting","Slower and shorter-lasting"],c:1,e:"<span class='h'>💡 Idea</span>Hormones travel in the blood, so they act more slowly but their effects last much longer than a nerve impulse.<span class='h'>✅</span>Slower but longer-lasting."},
+{s:"Messages in the nervous system and the endocrine system are carried respectively by…",o:["Nerve impulses along neurons; hormones carried in the blood","Hormones; enzymes","Blood; light","Sound; heat"],c:0,e:"<span class='h'>💡 Idea</span>Nerves use electrical impulses along neurons; the endocrine system uses chemical hormones dissolved in blood.<span class='h'>✅</span>Nerve impulses along neurons; hormones carried in the blood."},
+{s:"The hormone insulin, which lowers blood sugar, is secreted by the…",o:["Thyroid gland","Adrenal gland","Pancreas","Pituitary gland"],c:2,e:"<span class='h'>💡 Idea</span>Insulin comes from the islets of the pancreas and lowers blood glucose. (Thyroid makes thyroxine; adrenal makes adrenaline.)<span class='h'>✅</span>Pancreas."}
+);
+
+["neuron","cns","reflex","pns","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

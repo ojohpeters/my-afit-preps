@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Structure &amp; The Periodic Table A–Z — Atoms, Electron Configuration &amp; Trends (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>⚛️ Atomic Structure &amp; The Periodic Table A–Z</h1>
+  <p>Atoms · Electron Configuration · Groups, Periods &amp; Trends — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every count worked out</span><span class="pill">Worked configurations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="atom">⚛️ Atomic Structure</div>
+    <div class="tab" data-cat="config">🔋 Configuration &amp; Models</div>
+    <div class="tab" data-cat="ptable">🧪 The Periodic Table</div>
+    <div class="tab" data-cat="trends">📈 Periodic Trends</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: ATOMIC STRUCTURE ============ -->
+  <section class="cat atom show" id="cat-atom">
+    <h2 class="cathead">⚛️ PART 1 — Inside the Atom</h2>
+
+    <div class="lesson">
+      <h3>1. What is an atom?</h3>
+      <p>An <b>atom</b> is the <b>smallest particle of an element that can take part in a chemical reaction.</b> Everything around you — water, air, your body — is built from atoms.</p>
+      <p>An atom is not solid all the way through. It has two regions:</p>
+      <ul>
+        <li><b>A tiny central nucleus</b> that holds the <b>protons</b> and <b>neutrons</b>. It is very small but carries almost all the mass.</li>
+        <li><b>A cloud of electrons</b> that move around the nucleus in <b>shells (energy levels)</b>. This region is mostly empty space.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: an atom is like a stadium — the nucleus is a marble at the centre, and the electrons buzz around the far seats. Almost all of it is empty space.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three subatomic particles</h3>
+      <p>Every atom is built from just three particles. Learn their <b>charge, relative mass and location</b> — almost every exam question comes from this table.</p>
+      <table class="r">
+        <tr><th>Particle</th><th>Charge</th><th>Relative mass</th><th>Location</th></tr>
+        <tr><td><b>Proton</b> (p)</td><td><b>+1</b> (positive)</td><td>1</td><td>In the nucleus</td></tr>
+        <tr><td><b>Neutron</b> (n)</td><td><b>0</b> (neutral)</td><td>1</td><td>In the nucleus</td></tr>
+        <tr><td><b>Electron</b> (e)</td><td><b>−1</b> (negative)</td><td>≈ 1/1840 (almost nothing)</td><td>In shells around the nucleus</td></tr>
+      </table>
+      <ul>
+        <li><b>Protons and neutrons</b> sit in the nucleus and together are called <b>nucleons</b>. Each has a mass of 1 unit.</li>
+        <li><b>Electrons</b> are almost massless (about 1/1840 of a proton), so the mass of the atom is basically the mass of the nucleus.</li>
+        <li><b>Proton (+1)</b> and <b>electron (−1)</b> carry equal and opposite charges; the <b>neutron is neutral</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: <b>P</b>roton = <b>P</b>ositive. Neu<b>t</b>ron = <b>n</b>eutral (no charge). Electron is the light, negative one on the outside.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Atomic number (Z) — the identity of the element</h3>
+      <p>The <b>atomic number (Z)</b> is the <b>number of protons in the nucleus.</b> It is also called the <b>proton number.</b></p>
+      <div class="formula">Atomic number Z = number of protons</div>
+      <p>Z decides <b>which element it is</b>. Every carbon atom has Z = 6; every oxygen atom has Z = 8. Change the number of protons and you change the element itself.</p>
+      <p>In a <b>neutral atom</b>, the number of electrons equals the number of protons, so Z also tells you the number of electrons.</p>
+      <div class="formula">In a neutral atom:&nbsp; number of electrons = number of protons = Z</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Mass number (A) — counting the nucleus</h3>
+      <p>The <b>mass number (A)</b>, also called the <b>nucleon number</b>, is the <b>total number of protons + neutrons.</b></p>
+      <div class="formula">Mass number A = protons + neutrons</div>
+      <p>Rearrange this to find the neutrons — a very common exam step:</p>
+      <div class="formula">Number of neutrons = A − Z&nbsp;&nbsp;(mass number − atomic number)</div>
+      <p>We write an atom as <sub>Z</sub><sup>A</sup>X, for example ²³₁₁Na: the top number 23 is A, the bottom number 11 is Z.</p>
+      <div class="ex"><b class="t">Worked example — count everything in sodium ²³₁₁Na:</b>
+        <div class="calc">Protons = Z = 11</div>
+        <div class="calc">Electrons = Z = 11 (neutral atom)</div>
+        <div class="calc">Neutrons = A − Z = 23 − 11 = 12</div>
+        So sodium-23 has 11 protons, 11 electrons and 12 neutrons.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Isotopes — same element, different mass</h3>
+      <p><b>Isotopes</b> are <b>atoms of the same element (same number of protons) that have different numbers of neutrons</b> (and so different mass numbers).</p>
+      <p>Because they have the same Z, isotopes have the <b>same chemical properties</b> (chemistry depends on electrons). They differ only in mass.</p>
+      <span class="key">Worked neutron counts for common isotopes</span>
+      <div class="ex"><b class="t">Chlorine has two isotopes, Cl-35 and Cl-37 (Z = 17):</b>
+        <div class="calc">Cl-35: neutrons = 35 − 17 = 18</div>
+        <div class="calc">Cl-37: neutrons = 37 − 17 = 20</div>
+        Both are chlorine (17 protons) — they simply carry 18 or 20 neutrons.</div>
+      <div class="ex"><b class="t">Carbon has isotopes C-12 and C-14 (Z = 6):</b>
+        <div class="calc">C-12: neutrons = 12 − 6 = 6</div>
+        <div class="calc">C-14: neutrons = 14 − 6 = 8</div>
+      </div>
+      <div class="analogy">🌟 Memory: isotopes are like the same car model with different-weight passengers — same engine (protons), different load (neutrons).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Relative atomic mass (Aᵣ)</h3>
+      <p>Because an element can be a mixture of isotopes, we use an <b>average</b> mass called the <b>relative atomic mass (Aᵣ)</b> — the average mass of its atoms, weighting each isotope by how common it is (its abundance).</p>
+      <div class="formula">Aᵣ = (mass × %) added up for all isotopes, ÷ 100</div>
+      <div class="ex"><b class="t">Worked example — chlorine:</b> Cl is 75% Cl-35 and 25% Cl-37.
+        <div class="calc">Aᵣ = [(35 × 75) + (37 × 25)] ÷ 100</div>
+        <div class="calc">Aᵣ = (2625 + 925) ÷ 100 = 3550 ÷ 100 = 35.5</div>
+        This is why chlorine has Aᵣ = 35.5 — a non-whole number, because it is an average of two isotopes.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Ions — atoms that gained or lost electrons</h3>
+      <p>An <b>ion</b> is a <b>charged atom</b> — an atom that has <b>lost or gained electrons</b> so that the number of electrons no longer equals the number of protons. (The nucleus never changes; only electrons move.)</p>
+      <ul>
+        <li><b>Lose electrons → positive ion (cation).</b> Metals lose electrons, e.g. Na → Na⁺ (11 protons, 10 electrons, so charge +1).</li>
+        <li><b>Gain electrons → negative ion (anion).</b> Non-metals gain electrons, e.g. Cl → Cl⁻ (17 protons, 18 electrons, so charge −1).</li>
+      </ul>
+      <div class="formula">Charge on an ion = number of protons − number of electrons</div>
+      <div class="ex"><b class="t">Worked example — the magnesium ion Mg²⁺ (Z = 12):</b>
+        <div class="calc">Protons = 12 (unchanged)</div>
+        <div class="calc">Electrons = 12 − 2 = 10 (lost 2)</div>
+        <div class="calc">Charge = 12 − 10 = +2</div>
+        The nucleus is untouched; magnesium simply lost 2 electrons to become Mg²⁺.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: ELECTRON CONFIGURATION & MODELS ============ -->
+  <section class="cat config" id="cat-config">
+    <h2 class="cathead">🔋 PART 2 — Electron Configuration &amp; Atomic Models</h2>
+
+    <div class="lesson">
+      <h3>1. Electron shells (energy levels)</h3>
+      <p>Electrons do not sit anywhere they like — they occupy <b>shells</b> (also called energy levels) at fixed distances from the nucleus. The shells are named <b>K, L, M, N …</b> starting from the one nearest the nucleus.</p>
+      <span class="key">Maximum electrons each shell can hold</span>
+      <table class="r">
+        <tr><th>Shell</th><th>Name</th><th>Maximum electrons</th></tr>
+        <tr><td>1st</td><td>K</td><td><b>2</b></td></tr>
+        <tr><td>2nd</td><td>L</td><td><b>8</b></td></tr>
+        <tr><td>3rd</td><td>M</td><td><b>8</b> (in simple filling; up to 18 in full)</td></tr>
+        <tr><td>4th</td><td>N</td><td>up to 18</td></tr>
+      </table>
+      <div class="formula">Simple filling rule (first 20 elements): 2, 8, 8, then 2</div>
+      <p>For the first 20 elements you fill the shells in the pattern <b>2, then 8, then 8</b>, and only then start the 4th shell. (The M shell can eventually hold up to 18, but it first takes 8 before the next shell begins.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Writing electronic configurations</h3>
+      <p>To write a configuration, take the number of electrons (= Z for a neutral atom) and fill the shells in order: 2 first, then 8, then 8.</p>
+      <div class="ex"><b class="t">Worked examples:</b>
+        <div class="calc">Hydrogen (Z=1): 1</div>
+        <div class="calc">Carbon (Z=6): 2, 4</div>
+        <div class="calc">Oxygen (Z=8): 2, 6</div>
+        <div class="calc">Sodium (Z=11): 2, 8, 1</div>
+        <div class="calc">Chlorine (Z=17): 2, 8, 7</div>
+        <div class="calc">Calcium (Z=20): 2, 8, 8, 2</div>
+      </div>
+      <p>Check by adding the numbers back up: sodium 2 + 8 + 1 = 11 ✓. If they add to Z, you filled it correctly.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Valence electrons — the outer shell</h3>
+      <p>The <b>valence electrons</b> are the electrons in the <b>outermost shell.</b> They are the ones that take part in bonding, so they control an element's <b>chemistry.</b></p>
+      <ul>
+        <li>Sodium (2, 8, 1) has <b>1</b> valence electron.</li>
+        <li>Oxygen (2, 6) has <b>6</b> valence electrons.</li>
+        <li>Chlorine (2, 8, 7) has <b>7</b> valence electrons.</li>
+        <li>Neon (2, 8) has <b>8</b> valence electrons — a full outer shell, which is why noble gases are so stable and unreactive.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: atoms want a <b>full outer shell</b> (usually 8, the octet). They lose, gain or share valence electrons to reach it — that is the whole reason chemical bonds form.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The story of the atomic models</h3>
+      <p>Our picture of the atom was built up by several scientists, each improving on the one before. This is a favourite exam topic — learn who did what.</p>
+      <table class="r">
+        <tr><th>Scientist</th><th>Model / discovery</th><th>Key idea</th></tr>
+        <tr><td><b>John Dalton</b> (1803)</td><td>Solid sphere (billiard ball)</td><td>All matter is made of tiny, indivisible atoms; atoms of one element are identical.</td></tr>
+        <tr><td><b>J. J. Thomson</b> (1897)</td><td>‘Plum pudding’ model</td><td>Discovered the electron. The atom is a ball of positive charge with negative electrons dotted through it, like plums in a pudding.</td></tr>
+        <tr><td><b>Ernest Rutherford</b> (1911)</td><td>Nuclear model</td><td>His gold-foil (alpha scattering) experiment showed the atom has a tiny, dense, positive <b>nucleus</b> with electrons around it and mostly empty space.</td></tr>
+        <tr><td><b>Niels Bohr</b> (1913)</td><td>Shell (planetary) model</td><td>Electrons orbit the nucleus in fixed <b>shells / energy levels</b>, explaining why atoms are stable and give line spectra.</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory order: <b>D</b>alton → <b>T</b>homson → <b>R</b>utherford → <b>B</b>ohr. Each one added a piece: solid ball → electrons in a pudding → a nucleus → electrons in shells.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Rutherford's gold-foil experiment</h3>
+      <p>Rutherford fired positive alpha particles at a very thin sheet of gold foil. He expected them all to pass straight through the ‘pudding’. Instead:</p>
+      <ul>
+        <li><b>Most passed straight through</b> → the atom is mostly <b>empty space.</b></li>
+        <li><b>A few were deflected at large angles</b>, and a very few bounced straight back → there is a tiny, <b>dense, positively charged nucleus</b> that repels them.</li>
+      </ul>
+      <p>This overturned the plum-pudding model and gave us the nuclear atom we still use today.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: THE PERIODIC TABLE ============ -->
+  <section class="cat ptable" id="cat-ptable">
+    <h2 class="cathead">🧪 PART 3 — The Periodic Table</h2>
+
+    <div class="lesson">
+      <h3>1. How the table is arranged</h3>
+      <p>The modern periodic table arranges all the elements in order of <b>increasing atomic number (Z)</b> — that is, by the number of protons, one after another (H=1, He=2, Li=3 …).</p>
+      <p>(An older version, by Mendeleev, used atomic mass; the modern rule of increasing atomic number fixed the odd cases and is what you use today.)</p>
+      <p>Laying them out this way makes elements with <b>similar properties fall into the same vertical columns</b> — that repeating pattern is why it is called ‘periodic’.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Groups and periods</h3>
+      <table class="r">
+        <tr><th></th><th>Group</th><th>Period</th></tr>
+        <tr><td>Direction</td><td><b>Vertical</b> column (up/down)</td><td><b>Horizontal</b> row (left/right)</td></tr>
+        <tr><td>What is shared</td><td>Same number of <b>valence (outer) electrons</b></td><td>Same number of <b>occupied electron shells</b></td></tr>
+        <tr><td>Consequence</td><td><b>Similar chemical properties</b> (react the same way)</td><td>Properties <b>change gradually</b> from metal to non-metal across the row</td></tr>
+        <tr><td>Numbering</td><td>Groups 1–8 (or 1–18)</td><td>Periods 1–7</td></tr>
+      </table>
+      <div class="formula">Group number = number of valence electrons&nbsp;·&nbsp;Period number = number of shells</div>
+      <div class="ex"><b class="t">Worked example — locate sodium (2, 8, 1):</b>
+        <div class="calc">Valence electrons = 1 → Group 1</div>
+        <div class="calc">Number of shells = 3 → Period 3</div>
+        So sodium sits in Group 1, Period 3.</div>
+      <div class="analogy">🌟 Memory: <b>G</b>roup = <b>G</b>oing down (columns share valence electrons). Periods go across (rows share shells).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The s, p and d blocks (briefly)</h3>
+      <p>The table is split into blocks by which type of sub-shell the outer electrons are filling:</p>
+      <ul>
+        <li><b>s-block:</b> Groups 1 and 2 (the reactive metals on the left).</li>
+        <li><b>p-block:</b> Groups 3 to 8/0 on the right (includes most non-metals and the noble gases).</li>
+        <li><b>d-block:</b> the <b>transition metals</b> in the centre (iron, copper, zinc …).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The key groups you must know</h3>
+      <table class="r">
+        <tr><th>Group</th><th>Name</th><th>Valence e⁻</th><th>Key facts</th></tr>
+        <tr><td><b>Group 1</b></td><td>Alkali metals</td><td>1</td><td>Li, Na, K — soft, very reactive metals; react with water to give alkalis + hydrogen. Reactivity increases down the group.</td></tr>
+        <tr><td><b>Group 2</b></td><td>Alkaline earth metals</td><td>2</td><td>Be, Mg, Ca — reactive metals, but less so than Group 1.</td></tr>
+        <tr><td><b>Group 7</b></td><td>Halogens</td><td>7</td><td>F, Cl, Br, I — reactive non-metals; exist as diatomic molecules (Cl₂). Reactivity decreases down the group.</td></tr>
+        <tr><td><b>Group 8/0</b></td><td>Noble gases</td><td>8 (He has 2)</td><td>He, Ne, Ar — full outer shell, so almost totally <b>unreactive (inert)</b>.</td></tr>
+        <tr><td><b>Centre block</b></td><td>Transition metals</td><td>varies</td><td>Fe, Cu, Zn — hard, dense metals; form coloured compounds; act as catalysts; show more than one valency.</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>alkali</b> metals (Group 1) are the wild reactive ones; <b>noble</b> gases (Group 8/0) are the calm, full-shelled loners that refuse to react.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Metals, non-metals and the staircase</h3>
+      <ul>
+        <li><b>Metals</b> are on the <b>left and centre</b> — they lose electrons, conduct electricity and heat, are shiny and malleable.</li>
+        <li><b>Non-metals</b> are on the <b>top right</b> — they gain or share electrons, are poor conductors and often gases or brittle solids.</li>
+        <li>A zig-zag ‘staircase’ separates the two; elements along it (e.g. silicon) are <b>metalloids</b> with in-between properties.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: PERIODIC TRENDS ============ -->
+  <section class="cat trends" id="cat-trends">
+    <h2 class="cathead">📈 PART 4 — Periodic Trends (and Why)</h2>
+
+    <div class="lesson">
+      <h3>1. Why trends exist — two competing pulls</h3>
+      <p>Almost every trend comes from a tug-of-war between two things:</p>
+      <ul>
+        <li><b>Nuclear charge (number of protons):</b> more protons pull the electrons in more strongly.</li>
+        <li><b>Number of shells / shielding:</b> more inner shells push the outer electrons further out and shield them from the nucleus.</li>
+      </ul>
+      <p>Ask which one wins as you move across a period or down a group, and every trend below follows.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Atomic radius (size of the atom)</h3>
+      <div class="formula">Across a period → DECREASES&nbsp;·&nbsp;Down a group → INCREASES</div>
+      <ul>
+        <li><b>Across a period (left → right):</b> the number of protons rises but electrons are added to the <b>same shell.</b> The stronger nuclear pull draws the shell inwards, so the atom gets <b>smaller.</b></li>
+        <li><b>Down a group (top → bottom):</b> a whole <b>new shell</b> is added each time, so the outer electrons are further out. The atom gets <b>bigger.</b></li>
+      </ul>
+      <div class="analogy">🌟 Memory: across a row the atom shrinks (same shell, tighter grip); down a column it grows (extra shells stacked on).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Ionisation energy</h3>
+      <p><b>Ionisation energy</b> is the energy needed to <b>remove an electron</b> from an atom. A tightly held electron needs more energy to pull off.</p>
+      <div class="formula">Across a period → INCREASES&nbsp;·&nbsp;Down a group → DECREASES</div>
+      <ul>
+        <li><b>Across a period:</b> higher nuclear charge + smaller atom means electrons are held <b>more tightly</b>, so more energy is needed → ionisation energy <b>increases.</b></li>
+        <li><b>Down a group:</b> the outer electron is further from the nucleus and shielded by inner shells, so it is held <b>loosely</b> and comes off easily → ionisation energy <b>decreases.</b></li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Electronegativity</h3>
+      <p><b>Electronegativity</b> is the power of an atom to <b>attract a bonding pair of electrons</b> towards itself.</p>
+      <div class="formula">Across a period → INCREASES&nbsp;·&nbsp;Down a group → DECREASES</div>
+      <ul>
+        <li><b>Across a period:</b> smaller atoms with higher nuclear charge pull shared electrons harder → electronegativity <b>increases</b> (fluorine, top-right, is the most electronegative).</li>
+        <li><b>Down a group:</b> bigger atoms with more shielding pull less strongly → electronegativity <b>decreases.</b></li>
+      </ul>
+      <div class="analogy">🌟 Memory: ionisation energy and electronegativity move together — both go <b>up</b> across a period and <b>down</b> a group, because both depend on how tightly the nucleus grips electrons.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Metallic and non-metallic character</h3>
+      <div class="formula">Metallic character: across a period → DECREASES · down a group → INCREASES</div>
+      <ul>
+        <li><b>Across a period:</b> atoms hold their electrons more tightly, so they stop losing electrons easily → <b>less metallic, more non-metallic.</b> (Left side metals → right side non-metals.)</li>
+        <li><b>Down a group:</b> outer electrons are held loosely and lost easily → <b>more metallic.</b></li>
+      </ul>
+      <p>Non-metallic character does the opposite: it <b>increases</b> across a period and <b>decreases</b> down a group.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Valency across a period</h3>
+      <p><b>Valency</b> is the combining power of an element (how many bonds it forms). Across Period 3 it rises then falls:</p>
+      <table class="r">
+        <tr><th>Element</th><th>Na</th><th>Mg</th><th>Al</th><th>Si</th><th>P</th><th>S</th><th>Cl</th><th>Ar</th></tr>
+        <tr><td>Valency</td><td>1</td><td>2</td><td>3</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr>
+      </table>
+      <p>It goes <b>1, 2, 3, 4, 3, 2, 1, 0</b> — rising to 4 in the middle (carbon/silicon family) then falling back to 0 at the noble gas, whose full shell needs no bonds.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Quick summary table of the trends</h3>
+      <table class="r">
+        <tr><th>Property</th><th>Across a period (→)</th><th>Down a group (↓)</th></tr>
+        <tr><td>Atomic radius</td><td>Decreases</td><td>Increases</td></tr>
+        <tr><td>Ionisation energy</td><td>Increases</td><td>Decreases</td></tr>
+        <tr><td>Electronegativity</td><td>Increases</td><td>Decreases</td></tr>
+        <tr><td>Metallic character</td><td>Decreases</td><td>Increases</td></tr>
+        <tr><td>Non-metallic character</td><td>Increases</td><td>Decreases</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Count the protons, fill the shells — the periodic table does the rest. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Which three particles make up an atom?",o:["Protons, neutrons and electrons","Protons, ions and electrons","Neutrons, photons and electrons","Alpha, beta and gamma particles"],c:0,e:"<span class='h'>💡 Idea</span>An atom is built from protons and neutrons in the nucleus, plus electrons in the surrounding shells.<span class='h'>✅</span>Protons, neutrons and electrons."},
+{s:"The particle with a positive charge found in the nucleus is the…",o:["Electron","Proton","Neutron","Photon"],c:1,e:"<span class='h'>💡 Idea</span>The proton carries a +1 charge and sits in the nucleus. The electron is negative and the neutron is neutral.<span class='h'>✅</span>Proton."},
+{s:"Which subatomic particle carries NO charge (is neutral)?",o:["Proton","Electron","Neutron","Ion"],c:2,e:"<span class='h'>💡 Idea</span>The neutron has zero charge. Remember: neu-<b>t</b>ron is neu-<b>t</b>ral.<span class='h'>✅</span>Neutron."},
+{s:"Compared with a proton, the mass of an electron is…",o:["About the same","Twice as large","Slightly larger","Almost negligible (about 1/1840)"],c:3,e:"<span class='h'>💡 Idea</span>An electron is roughly 1/1840 the mass of a proton, so the mass of an atom is basically the mass of its nucleus.<span class='h'>✅</span>Almost negligible (about 1/1840)."},
+{s:"The atomic number (Z) of an element is equal to the number of…",o:["Protons in the nucleus","Neutrons in the nucleus","Protons plus neutrons","Electron shells"],c:0,e:"<span class='h'>💡 Idea</span>Atomic number Z = number of protons. It decides which element the atom is.<span class='h'>✅</span>Protons in the nucleus."},
+{s:"The mass number (A) of an atom is the total number of…",o:["Protons only","Protons and neutrons","Neutrons only","Electrons and protons"],c:1,e:"<span class='h'>💡 Idea</span>Mass (nucleon) number A = protons + neutrons, because those are the heavy particles in the nucleus.<span class='h'>✅</span>Protons and neutrons."},
+{s:"An atom has atomic number 11 and mass number 23. How many neutrons does it have?",o:["11","23","12","34"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Neutrons = A − Z</span><span class='calc'>= 23 − 11 = 12</span>This is sodium-23.<span class='h'>✅</span>12."},
+{s:"Isotopes of an element have the same number of … but a different number of …",o:["neutrons; protons","electrons; shells","protons; neutrons","protons; electrons"],c:2,e:"<span class='h'>💡 Idea</span>Isotopes are atoms of the same element (same protons, same Z) that differ only in their number of neutrons.<span class='h'>✅</span>protons; neutrons."},
+{s:"Chlorine-37 has atomic number 17. How many neutrons are in one chlorine-37 atom?",o:["17","18","19","20"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Neutrons = A − Z</span><span class='calc'>= 37 − 17 = 20</span><span class='h'>✅</span>20."},
+{s:"The relative atomic mass of chlorine is 35.5 (not a whole number) because…",o:["It is the average mass of its isotopes weighted by abundance","Chlorine atoms are damaged","Its electrons add extra mass","Its neutrons weigh half a unit each"],c:0,e:"<span class='h'>💡 Idea</span>Chlorine is a mix of Cl-35 and Cl-37, so its relative atomic mass is the weighted average — giving a fraction, 35.5.<span class='h'>✅</span>It is the average mass of its isotopes weighted by abundance."},
+{s:"A neutral atom always has equal numbers of…",o:["Neutrons and electrons","Protons and electrons","Protons and neutrons","Shells and electrons"],c:1,e:"<span class='h'>💡 Idea</span>Overall charge is zero only when the +1 protons balance the −1 electrons, so protons = electrons.<span class='h'>✅</span>Protons and electrons."},
+{s:"A sodium atom (11 protons) loses one electron to form Na⁺. The ion now has…",o:["More electrons than protons","Equal electrons and protons","More protons than electrons","No protons at all"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Protons = 11, electrons = 11 − 1 = 10</span>With 11 protons and only 10 electrons, protons outnumber electrons, giving a +1 charge.<span class='h'>✅</span>More protons than electrons."},
+{s:"The maximum number of electrons that the first shell (K shell) can hold is…",o:["8","2","18","32"],c:1,e:"<span class='h'>💡 Idea</span>The first shell (K) holds a maximum of 2 electrons; the second (L) holds 8.<span class='h'>✅</span>2."},
+{s:"The electronic configuration of sodium (atomic number 11) is…",o:["2, 9","8, 3","2, 8, 1","2, 8, 8, 1"],c:2,e:"<span class='h'>✏️ Working</span>Fill 2, then 8, then the rest:<span class='calc'>11 = 2 + 8 + 1</span>So the configuration is 2, 8, 1.<span class='h'>✅</span>2, 8, 1."},
+{s:"Valence electrons are the electrons found in the…",o:["Nucleus","Innermost shell","First shell only","Outermost shell"],c:3,e:"<span class='h'>💡 Idea</span>Valence electrons are in the outermost shell — they are the ones that take part in bonding and control chemistry.<span class='h'>✅</span>Outermost shell."},
+{s:"How many valence electrons does oxygen (configuration 2, 6) have?",o:["6","2","8","4"],c:0,e:"<span class='h'>💡 Idea</span>The outer shell of oxygen holds 6 electrons, so oxygen has 6 valence electrons.<span class='h'>✅</span>6."},
+{s:"The idea that all matter is made of tiny, indivisible atoms was first proposed by…",o:["Bohr","Dalton","Rutherford","Thomson"],c:1,e:"<span class='h'>💡 Idea</span>John Dalton proposed the first atomic theory: matter is made of tiny indivisible atoms, and atoms of one element are identical.<span class='h'>✅</span>Dalton."},
+{s:"The 'plum pudding' model of the atom was proposed by…",o:["Rutherford","Dalton","Thomson","Bohr"],c:2,e:"<span class='h'>💡 Idea</span>J. J. Thomson, who discovered the electron, pictured the atom as positive 'pudding' with negative electrons dotted through it like plums.<span class='h'>✅</span>Thomson."},
+{s:"Rutherford's gold-foil (alpha scattering) experiment showed that the atom has…",o:["A uniform pudding of charge","No nucleus at all","Electrons stuck on its surface","A small, dense, positively charged nucleus"],c:3,e:"<span class='h'>💡 Idea</span>Most alpha particles passed through (empty space) but a few bounced back, revealing a tiny, dense, positive nucleus.<span class='h'>✅</span>A small, dense, positively charged nucleus."},
+{s:"The model in which electrons move around the nucleus in fixed shells (energy levels) is credited to…",o:["Bohr","Thomson","Dalton","Chadwick"],c:0,e:"<span class='h'>💡 Idea</span>Niels Bohr proposed that electrons orbit the nucleus in fixed shells or energy levels.<span class='h'>✅</span>Bohr."},
+{s:"The modern periodic table arranges the elements in order of increasing…",o:["Atomic mass","Atomic number","Number of neutrons","Density"],c:1,e:"<span class='h'>💡 Idea</span>The modern table lists elements by increasing atomic number (proton number), which makes similar elements line up in columns.<span class='h'>✅</span>Atomic number."},
+{s:"Elements in the same GROUP (vertical column) have the same number of…",o:["Neutrons","Occupied shells","Valence (outer) electrons","Protons"],c:2,e:"<span class='h'>💡 Idea</span>A group is a column; all its members share the same number of outer (valence) electrons, so they react in similar ways.<span class='h'>✅</span>Valence (outer) electrons."},
+{s:"Elements in the same PERIOD (horizontal row) have the same number of…",o:["Valence electrons","Neutrons","Protons","Occupied electron shells"],c:3,e:"<span class='h'>💡 Idea</span>A period is a row; all its members have the same number of occupied electron shells.<span class='h'>✅</span>Occupied electron shells."},
+{s:"The very reactive metals of Group 1 (lithium, sodium, potassium) are called the…",o:["Alkali metals","Halogens","Noble gases","Transition metals"],c:0,e:"<span class='h'>💡 Idea</span>Group 1 elements are the alkali metals — soft, very reactive metals that form alkalis with water.<span class='h'>✅</span>Alkali metals."},
+{s:"Group 7 elements such as chlorine and bromine are known as the…",o:["Halogens","Noble gases","Alkali metals","Transition metals"],c:0,e:"<span class='h'>💡 Idea</span>Group 7 elements are the halogens — reactive non-metals with 7 valence electrons that exist as diatomic molecules.<span class='h'>✅</span>Halogens."},
+{s:"The central block of hard, dense metals such as iron, copper and zinc are the…",o:["Alkali metals","Halogens","Noble gases","Transition metals"],c:3,e:"<span class='h'>💡 Idea</span>The d-block metals in the centre are the transition metals — they form coloured compounds and act as catalysts.<span class='h'>✅</span>Transition metals."},
+{s:"Across a period from left to right, the atomic radius generally…",o:["Increases","Decreases","Stays the same","Doubles"],c:1,e:"<span class='h'>💡 Idea</span>Across a period, protons increase but electrons enter the same shell, so the stronger nuclear pull draws it in and the atom gets smaller.<span class='h'>✅</span>Decreases."},
+{s:"Down a group, the atomic radius generally…",o:["Increases","Decreases","Stays constant","Becomes zero"],c:0,e:"<span class='h'>💡 Idea</span>Each element down a group adds a whole new shell, so the outer electrons are further out and the atom gets bigger.<span class='h'>✅</span>Increases."},
+{s:"Across a period from left to right, the ionisation energy generally…",o:["Decreases","Stays the same","Increases","Falls to zero"],c:2,e:"<span class='h'>💡 Idea</span>Across a period the nuclear charge rises and the atom shrinks, so electrons are held more tightly and more energy is needed to remove one.<span class='h'>✅</span>Increases."},
+{s:"Down a group, the metallic character of the elements generally…",o:["Decreases","Stays the same","Disappears completely","Increases"],c:3,e:"<span class='h'>💡 Idea</span>Down a group the outer electrons are further out and loosely held, so they are lost more easily — the elements become more metallic.<span class='h'>✅</span>Increases."}
+);
+
+["atom","config","ptable","trends","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

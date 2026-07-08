@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrolysis &amp; Electrochemistry A–Z — Electrolytes, Discharge &amp; Faraday's Laws (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔋 Electrolysis &amp; Electrochemistry A–Z</h1>
+  <p>Electrolytes · Selective Discharge · Faraday's Laws — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every half-equation balanced</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="electrolytes">⚡ Electrolytes &amp; Ionic Theory</div>
+    <div class="tab" data-cat="substances">🧪 Electrolysis of Substances</div>
+    <div class="tab" data-cat="discharge">🎯 Selective Discharge</div>
+    <div class="tab" data-cat="faraday">🔢 Faraday's Laws &amp; Uses</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: ELECTROLYTES & IONIC THEORY ============ -->
+  <section class="cat electrolytes show" id="cat-electrolytes">
+    <h2 class="cathead">⚡ PART 1 — Electrolytes &amp; the Ionic Theory</h2>
+
+    <div class="lesson">
+      <h3>1. What is an electrolyte?</h3>
+      <p>An <b>electrolyte</b> is a substance that <b>conducts electricity when molten or dissolved in water, and is chemically decomposed (broken down) by the current.</b></p>
+      <p>Electrolytes are made of <b>ions</b> (charged particles). When they are molten or in solution, these ions are free to move and carry the current — and the current tears the compound apart.</p>
+      <span class="key">Electrolytes vs non-electrolytes</span>
+      <ul>
+        <li><b>Electrolytes</b> (contain ions): acids (HCl, H₂SO₄), alkalis (NaOH, KOH), and salts (NaCl, CuSO₄) — either <b>molten</b> or in <b>aqueous solution</b>.</li>
+        <li><b>Non-electrolytes</b> (no free ions): sugar (sucrose) solution, ethanol, petrol, pure water, and most molecular/covalent compounds. They dissolve as whole molecules, so nothing carries the current.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: a metal wire conducts using <b>electrons</b>, but it is <b>NOT</b> an electrolyte because it is not decomposed. An electrolyte conducts using <b>moving ions</b> AND gets broken down.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Strong and weak electrolytes</h3>
+      <p>How well an electrolyte conducts depends on how many ions it produces in solution.</p>
+      <table class="r">
+        <tr><th>Type</th><th>Ionisation</th><th>Conducts</th><th>Examples</th></tr>
+        <tr><td><b>Strong electrolyte</b></td><td>Completely (or almost completely) ionised</td><td>Very well (many ions)</td><td>HCl, H₂SO₄, HNO₃, NaOH, KOH, NaCl, CuSO₄</td></tr>
+        <tr><td><b>Weak electrolyte</b></td><td>Only partly ionised (most stays as molecules)</td><td>Poorly (few ions)</td><td>Ethanoic (acetic) acid CH₃COOH, carbonic acid H₂CO₃, ammonia solution NH₃(aq)</td></tr>
+      </table>
+      <div class="analogy">🌟 Idea: a strong electrolyte is like a class where <b>everyone</b> puts up their hand (all ionised); a weak one is a class where only a <b>few</b> hands go up (partly ionised).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The ionic theory — how conduction happens</h3>
+      <p>Ions are charged particles: <b>cations</b> are positive (e.g. Na⁺, Cu²⁺, H⁺) and <b>anions</b> are negative (e.g. Cl⁻, OH⁻, SO₄²⁻).</p>
+      <ul>
+        <li><b>As a solid</b> the ions are locked in a fixed lattice — they cannot move — so a solid ionic compound does <b>NOT</b> conduct.</li>
+        <li><b>When molten or dissolved</b> the ions break free and can move, so the substance <b>conducts</b>.</li>
+        <li>Inside the electrolyte the current is carried by the <b>movement of ions</b>, not electrons.</li>
+      </ul>
+      <div class="formula">Cations (+) drift to the CATHODE&nbsp;·&nbsp;Anions (−) drift to the ANODE</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Electrolysis and the electrolytic cell</h3>
+      <p><b>Electrolysis</b> is the <b>chemical decomposition of an electrolyte by the passage of an electric current.</b></p>
+      <span class="key">Parts of an electrolytic cell</span>
+      <ul>
+        <li>A <b>d.c. source</b> (battery) that pushes the current.</li>
+        <li>Two <b>electrodes</b> dipped into the electrolyte — the <b>anode</b> and the <b>cathode</b>. They may be <b>inert</b> (platinum, carbon/graphite) or <b>active</b> (e.g. copper).</li>
+        <li>The <b>electrolyte</b> itself (molten or aqueous).</li>
+      </ul>
+      <span class="key">Anode vs cathode (learn this cold)</span>
+      <table class="r">
+        <tr><th>Electrode</th><th>Sign (electrolytic cell)</th><th>Reaction</th><th>Ions attracted</th></tr>
+        <tr><td><b>Anode</b></td><td><b>Positive (+)</b></td><td><b>Oxidation</b> (loss of e⁻)</td><td>Anions (−)</td></tr>
+        <tr><td><b>Cathode</b></td><td><b>Negative (−)</b></td><td><b>Reduction</b> (gain of e⁻)</td><td>Cations (+)</td></tr>
+      </table>
+      <p>Mnemonics: <b>OIL RIG</b> — Oxidation Is Loss, Reduction Is Gain. <b>AN OX</b> (ANode = OXidation) and <b>RED CAT</b> (REDuction = CAThode). <b>PANIC</b> — Positive is Anode, Negative Is Cathode.</p>
+      <div class="analogy">🌟 Warning: this "anode = +, cathode = −" is for an <b>electrolytic</b> cell (using a battery). In a <b>galvanic/voltaic</b> cell (which makes electricity, like the Daniell cell) the signs flip — anode is <b>−</b>, cathode is <b>+</b>. But in BOTH cells oxidation is always at the anode and reduction always at the cathode.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: ELECTROLYSIS OF SUBSTANCES ============ -->
+  <section class="cat substances" id="cat-substances">
+    <h2 class="cathead">🧪 PART 2 — Electrolysis of Common Substances</h2>
+
+    <div class="lesson">
+      <h3>1. Molten sodium chloride (no water)</h3>
+      <p>When NaCl is <b>molten</b>, only Na⁺ and Cl⁻ are present (no water) — so there is no competition.</p>
+      <div class="formula">Cathode (−):&nbsp; Na⁺ + e⁻ → Na&nbsp;&nbsp;&nbsp;(molten sodium metal)</div>
+      <div class="formula">Anode (+):&nbsp; 2Cl⁻ → Cl₂ + 2e⁻&nbsp;&nbsp;&nbsp;(chlorine gas)</div>
+      <p>This is how <b>sodium metal and chlorine</b> are made industrially (the Downs cell).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Dilute / acidified water</h3>
+      <p>Pure water barely conducts, so a little <b>dilute H₂SO₄</b> is added to help — this is <b>acidified water</b>. Ions present: H⁺, OH⁻ and SO₄²⁻.</p>
+      <div class="formula">Cathode (−):&nbsp; 2H⁺ + 2e⁻ → H₂&nbsp;&nbsp;&nbsp;(hydrogen)</div>
+      <div class="formula">Anode (+):&nbsp; 4OH⁻ → 2H₂O + O₂ + 4e⁻&nbsp;&nbsp;&nbsp;(oxygen)</div>
+      <div class="ex"><b class="t">Overall, water is split:</b>
+        <div class="calc">2H₂O → 2H₂ + O₂</div>
+        The SO₄²⁻ is <b>not</b> discharged, so effectively only water is used up and the acid gets more concentrated.</div>
+      <div class="formula">Volume ratio&nbsp; H₂ : O₂ = 2 : 1&nbsp;&nbsp;(twice as much hydrogen as oxygen)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Brine — concentrated sodium chloride solution</h3>
+      <p>Brine contains Na⁺, H⁺, Cl⁻ and OH⁻. Now there IS competition, and selective discharge decides the winners.</p>
+      <div class="formula">Cathode (−):&nbsp; 2H⁺ + 2e⁻ → H₂&nbsp;&nbsp;(H⁺ discharged — Na is too reactive)</div>
+      <div class="formula">Anode (+):&nbsp; 2Cl⁻ → Cl₂ + 2e⁻&nbsp;&nbsp;(Cl⁻ discharged — it is very concentrated)</div>
+      <p>Na⁺ and OH⁻ are left behind, so the solution becomes <b>sodium hydroxide (NaOH)</b>.</p>
+      <div class="analogy">🌟 Three useful products from brine: hydrogen (H₂), chlorine (Cl₂) and caustic soda (NaOH) — the basis of the chlor-alkali industry.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Copper(II) sulphate solution — inert vs copper electrodes</h3>
+      <p>The <b>electrodes</b> you choose completely change the result. CuSO₄(aq) contains Cu²⁺, H⁺, SO₄²⁻ and OH⁻.</p>
+      <h4>(a) Inert electrodes (platinum or carbon)</h4>
+      <div class="formula">Cathode (−):&nbsp; Cu²⁺ + 2e⁻ → Cu&nbsp;&nbsp;(reddish-brown copper deposited)</div>
+      <div class="formula">Anode (+):&nbsp; 4OH⁻ → 2H₂O + O₂ + 4e⁻&nbsp;&nbsp;(oxygen; SO₄²⁻ not discharged)</div>
+      <p>The <b>blue colour fades</b> as Cu²⁺ is removed, and the solution turns acidic (H₂SO₄ is left).</p>
+      <h4>(b) Copper electrodes (active)</h4>
+      <div class="formula">Cathode (−):&nbsp; Cu²⁺ + 2e⁻ → Cu&nbsp;&nbsp;(copper deposited)</div>
+      <div class="formula">Anode (+):&nbsp; Cu → Cu²⁺ + 2e⁻&nbsp;&nbsp;(the copper anode dissolves)</div>
+      <p>Here the anode <b>loses mass</b>, the cathode <b>gains mass</b>, and the blue colour stays the <b>same</b> (Cu²⁺ is replaced as fast as it is used). This is the basis of <b>electroplating</b> and the <b>purification of copper</b>.</p>
+      <table class="r">
+        <tr><th>CuSO₄(aq)</th><th>Inert electrodes</th><th>Copper electrodes</th></tr>
+        <tr><td>Cathode product</td><td>Copper deposited</td><td>Copper deposited</td></tr>
+        <tr><td>Anode product</td><td>Oxygen gas</td><td>Anode dissolves (Cu → Cu²⁺)</td></tr>
+        <tr><td>Blue colour</td><td>Fades</td><td>Stays the same</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: SELECTIVE / PREFERENTIAL DISCHARGE ============ -->
+  <section class="cat discharge" id="cat-discharge">
+    <h2 class="cathead">🎯 PART 3 — Preferential (Selective) Discharge</h2>
+
+    <div class="lesson">
+      <h3>1. Why do we need selective discharge?</h3>
+      <p>Many solutions contain <b>more than one</b> kind of cation and anion. But usually only <b>one</b> ion is discharged at each electrode — the one that is <b>easiest to discharge</b>. Choosing the winner is called <b>preferential (selective) discharge.</b></p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three factors that decide the winner</h3>
+      <ul>
+        <li><b>Position in the electrochemical / discharge series</b> — the ion higher in <i>ease of discharge</i> is chosen. For cations, the <b>less reactive</b> metal ion (lower in the reactivity series) is discharged first.</li>
+        <li><b>Concentration</b> — a very concentrated ion can be discharged in preference, even if the series does not favour it (e.g. concentrated Cl⁻ is discharged before OH⁻).</li>
+        <li><b>Nature of the electrode</b> — an <b>active</b> electrode changes the product (e.g. a copper anode dissolves instead of giving oxygen; a mercury cathode lets Na⁺ discharge).</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The discharge series (ease of discharge)</h3>
+      <span class="key">Cations at the cathode (easiest at the bottom)</span>
+      <div class="formula">K⁺ &lt; Ca²⁺ &lt; Na⁺ &lt; Mg²⁺ &lt; Al³⁺ &lt; Zn²⁺ &lt; Fe²⁺ &lt; H⁺ &lt; Cu²⁺ &lt; Ag⁺ &lt; Au³⁺</div>
+      <p>So Ag⁺ and Cu²⁺ are discharged <b>before</b> H⁺. But K⁺, Na⁺, Ca²⁺ are so hard to discharge that in a <b>water</b> solution H⁺ is discharged instead of them.</p>
+      <span class="key">Anions at the anode (easiest at the bottom)</span>
+      <div class="formula">SO₄²⁻ &lt; NO₃⁻ &lt; Cl⁻ &lt; Br⁻ &lt; I⁻ &lt; OH⁻</div>
+      <p>So OH⁻ (giving oxygen) is discharged <b>before</b> SO₄²⁻ or NO₃⁻; and I⁻ is discharged more readily than Cl⁻.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked predictions</h3>
+      <div class="ex"><b class="t">(a) Dilute CuSO₄, inert electrodes:</b> Cu²⁺ vs H⁺ at cathode → <b>Cu</b> (copper is below H⁺, easier). OH⁻ vs SO₄²⁻ at anode → <b>O₂</b> (OH⁻ easier). Products: <b>copper + oxygen</b>.</div>
+      <div class="ex"><b class="t">(b) Dilute NaCl, inert electrodes:</b> Na⁺ vs H⁺ → <b>H₂</b> (Na too reactive). Cl⁻ vs OH⁻, dilute → <b>O₂</b> (OH⁻ preferred when dilute). Products: <b>hydrogen + oxygen</b>.</div>
+      <div class="ex"><b class="t">(c) Concentrated NaCl (brine):</b> cathode <b>H₂</b>; anode <b>Cl₂</b> — the high concentration of Cl⁻ overrides the series. Products: <b>hydrogen + chlorine</b> (with NaOH left).</div>
+      <div class="ex"><b class="t">(d) Dilute H₂SO₄ (acidified water):</b> cathode <b>H₂</b>; anode <b>O₂</b> (SO₄²⁻ not discharged). Products: <b>hydrogen + oxygen</b>, ratio 2 : 1.</div>
+      <div class="ex"><b class="t">(e) Molten NaCl:</b> no water, so no competition — cathode <b>Na</b>; anode <b>Cl₂</b>.</div>
+      <div class="analogy">🌟 Rule of thumb: at the cathode the <b>least reactive</b> metal ion wins; at the anode the <b>easiest</b> anion wins — unless a rival anion is so <b>concentrated</b> that it takes over.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: FARADAY'S LAWS & APPLICATIONS ============ -->
+  <section class="cat faraday" id="cat-faraday">
+    <h2 class="cathead">🔢 PART 4 — Faraday's Laws, Calculations &amp; Uses</h2>
+
+    <div class="lesson">
+      <h3>1. Charge, current and time</h3>
+      <p>The amount of electricity (charge) that flows is given by:</p>
+      <div class="formula">Q = I × t&nbsp;&nbsp;&nbsp;(Q in coulombs C · I in amperes A · t in seconds s)</div>
+      <div class="ex"><b class="t">Quick example:</b> a current of 2 A flowing for 5 minutes.
+        <div class="calc">t = 5 × 60 = 300 s</div>
+        <div class="calc">Q = I × t = 2 × 300 = 600 C</div></div>
+      <div class="analogy">🌟 Always change minutes/hours to <b>seconds</b> before using Q = It.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Faraday's FIRST law</h3>
+      <p>The <b>mass</b> of a substance deposited (or liberated) at an electrode is <b>directly proportional to the quantity of electricity</b> passed.</p>
+      <div class="formula">m ∝ Q&nbsp;&nbsp;(double the charge → double the mass)</div>
+      <span class="key">The magic number</span>
+      <div class="formula">1 faraday (F) = 96500 C = the charge on 1 mole of electrons</div>
+      <p><b>How to find the mass deposited:</b></p>
+      <ul>
+        <li><b>Step 1:</b> Find the charge Q = It (in coulombs).</li>
+        <li><b>Step 2:</b> Moles of electrons = Q ÷ 96500.</li>
+        <li><b>Step 3:</b> Use the electrode half-equation to convert moles of electrons → moles of the metal.</li>
+        <li><b>Step 4:</b> Mass = moles × molar mass.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Faraday's SECOND law</h3>
+      <p>When the <b>same</b> quantity of electricity is passed through different electrolytes, the masses deposited are proportional to their <b>chemical equivalents</b> (equivalent mass = molar mass ÷ charge on the ion).</p>
+      <div class="ex"><b class="t">Why 1 faraday gives different masses:</b>
+        <div class="calc">Ag⁺ + e⁻ → Ag needs 1 e⁻ → 1 F deposits 1 mol Ag = 108 g</div>
+        <div class="calc">Cu²⁺ + 2e⁻ → Cu needs 2 e⁻ → 1 F deposits only ½ mol Cu = 32 g</div>
+        Copper needs twice the electrons, so the same charge deposits half as many moles.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked calculations</h3>
+      <div class="ex"><b class="t">Example 1 — find the charge.</b> A current of 2 A flows for 30 minutes. How much charge passes?
+        <div class="calc">t = 30 × 60 = 1800 s</div>
+        <div class="calc">Q = I × t = 2 × 1800 = 3600 C</div>
+        Answer = <b>3600 C</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — mass deposited.</b> How much copper is deposited when 9650 C is passed through CuSO₄? (Cu = 64, Cu²⁺ + 2e⁻ → Cu)
+        <div class="calc">Moles of e⁻ = 9650 ÷ 96500 = 0.1 mol</div>
+        <div class="calc">Cu needs 2 e⁻ → moles Cu = 0.1 ÷ 2 = 0.05 mol</div>
+        <div class="calc">Mass = 0.05 × 64 = 3.2 g</div>
+        Answer = <b>3.2 g</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — find the time.</b> How long will a current of 0.5 A take to deposit 1.08 g of silver? (Ag = 108, Ag⁺ + e⁻ → Ag)
+        <div class="calc">Moles Ag = 1.08 ÷ 108 = 0.01 mol</div>
+        <div class="calc">Ag needs 1 e⁻ → charge = 0.01 × 96500 = 965 C</div>
+        <div class="calc">t = Q ÷ I = 965 ÷ 0.5 = 1930 s</div>
+        Answer = <b>1930 s</b> (about 32 minutes).</div>
+
+      <div class="ex"><b class="t">Example 4 — charge for 1 mole.</b> How much charge is needed to deposit 1 mole of aluminium? (Al³⁺ + 3e⁻ → Al)
+        <div class="calc">1 mol Al needs 3 mol e⁻ = 3 faradays</div>
+        <div class="calc">Q = 3 × 96500 = 289500 C</div>
+        Answer = <b>289500 C</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Applications of electrolysis</h3>
+      <ul>
+        <li><b>Electroplating:</b> coating a cheap metal with a thin layer of a more attractive/expensive metal (e.g. silver-plating a spoon). The <b>object is the cathode</b>, the <b>plating metal is the anode</b>, and the electrolyte is a <b>salt of the plating metal</b>.</li>
+        <li><b>Purification of copper:</b> the <b>impure copper is the anode</b> (it dissolves), a thin sheet of <b>pure copper is the cathode</b> (pure Cu deposits), in a CuSO₄ electrolyte. Impurities drop off as <b>anode mud</b>.</li>
+        <li><b>Extraction of reactive metals:</b> very reactive metals cannot be reduced by carbon, so electrolysis of their <b>molten</b> compounds is used — e.g. <b>sodium</b> from molten NaCl, and <b>aluminium</b> from molten aluminium oxide (bauxite) dissolved in cryolite.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Electrochemical (galvanic) cells — the Daniell cell</h3>
+      <p>A <b>galvanic/voltaic</b> cell does the <b>opposite</b> of electrolysis: it turns <b>chemical energy into electrical energy</b> (it produces a current).</p>
+      <p>The classic example is the <b>Daniell cell</b>: a zinc rod in ZnSO₄ solution joined by a <b>salt bridge</b> to a copper rod in CuSO₄ solution.</p>
+      <div class="formula">Anode (Zn, negative):&nbsp; Zn → Zn²⁺ + 2e⁻&nbsp;&nbsp;(oxidation)</div>
+      <div class="formula">Cathode (Cu, positive):&nbsp; Cu²⁺ + 2e⁻ → Cu&nbsp;&nbsp;(reduction)</div>
+      <p>Electrons flow from Zn to Cu through the external wire.</p>
+      <span class="key">e.m.f. of the cell</span>
+      <p>The <b>e.m.f.</b> is the driving voltage of the cell: e.m.f. = E°(cathode) − E°(anode).</p>
+      <div class="ex"><b class="t">Daniell cell e.m.f.:</b>
+        <div class="calc">e.m.f. = E°(Cu²⁺/Cu) − E°(Zn²⁺/Zn) = (+0.34) − (−0.76) = 1.10 V</div></div>
+      <div class="analogy">🌟 Trap: in a <b>galvanic</b> cell the anode is <b>NEGATIVE</b> and the cathode <b>POSITIVE</b> — the reverse of an electrolytic cell. But oxidation is still at the anode and reduction at the cathode.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Follow the electrons: Q = It, 1 faraday = 96500 C. Balance every half-equation — you've got this! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"An electrolyte is best described as a substance that…",o:["Conducts electricity when molten or in aqueous solution and is decomposed by it","Conducts electricity as a solid and is not changed","Never conducts electricity in any state","Conducts electricity but undergoes no chemical change"],c:0,e:"<span class='h'>💡 Idea</span>An electrolyte carries current through its free-moving ions and is chemically broken down by that current — this happens only when it is molten or dissolved.<span class='h'>✅</span>Conducts electricity when molten or in aqueous solution and is decomposed by it."},
+{s:"Which of the following is a NON-electrolyte?",o:["Sodium chloride solution","Sugar (sucrose) solution","Dilute hydrochloric acid","Copper(II) sulphate solution"],c:1,e:"<span class='h'>💡 Idea</span>Sugar dissolves as whole molecules and produces no ions, so it cannot conduct — it is a non-electrolyte. The others all give ions.<span class='h'>✅</span>Sugar (sucrose) solution."},
+{s:"A strong electrolyte is one that is…",o:["Only slightly ionised in water","Not ionised at all","Completely (or almost completely) ionised in solution","Made only of neutral molecules"],c:2,e:"<span class='h'>💡 Idea</span>A strong electrolyte ionises almost completely, giving many ions and conducting well (e.g. HCl, NaOH, NaCl).<span class='h'>✅</span>Completely (or almost completely) ionised in solution."},
+{s:"Which of the following is a WEAK electrolyte?",o:["Sodium hydroxide","Hydrochloric acid","Sodium chloride","Ethanoic (acetic) acid"],c:3,e:"<span class='h'>💡 Idea</span>Ethanoic acid is only partly ionised in water, so it gives few ions and conducts poorly — a weak electrolyte. The others are strong.<span class='h'>✅</span>Ethanoic (acetic) acid."},
+{s:"Inside an electrolyte, the electric current is carried by…",o:["Free electrons","Moving ions","Protons","Neutrons"],c:1,e:"<span class='h'>💡 Idea</span>In a metal, electrons carry the current; but in an electrolyte it is the movement of positive and negative ions.<span class='h'>✅</span>Moving ions."},
+{s:"Electrolysis is best defined as the…",o:["Rusting of iron in moist air","Neutralisation of an acid by an alkali","Chemical decomposition of an electrolyte by an electric current","Melting of an ionic solid by heating"],c:2,e:"<span class='h'>💡 Idea</span>Electrolysis means using an electric current to chemically break down (decompose) an electrolyte.<span class='h'>✅</span>Chemical decomposition of an electrolyte by an electric current."},
+{s:"In an electrolytic cell, the cathode is…",o:["The positive electrode where oxidation occurs","The positive electrode where reduction occurs","The negative electrode where oxidation occurs","The negative electrode where reduction occurs"],c:3,e:"<span class='h'>💡 Idea</span>In an electrolytic cell the cathode is negative, and it is where reduction (gain of electrons) happens — remember RED CAT.<span class='h'>✅</span>The negative electrode where reduction occurs."},
+{s:"During electrolysis, positively charged ions (cations) move towards the…",o:["Cathode (negative electrode)","Anode (positive electrode)","Both electrodes equally","Neither electrode"],c:0,e:"<span class='h'>💡 Idea</span>Opposite charges attract, so cations (+) go to the cathode (−) and anions (−) go to the anode (+).<span class='h'>✅</span>Cathode (negative electrode)."},
+{s:"When molten sodium chloride is electrolysed, the product at the cathode is…",o:["Chlorine gas","Hydrogen gas","Sodium metal","Oxygen gas"],c:2,e:"<span class='h'>✏️ Working</span>Molten NaCl has no water, so only Na⁺ and Cl⁻ are present.<span class='calc'>Cathode: Na⁺ + e⁻ → Na</span>Sodium metal is formed at the cathode.<span class='h'>✅</span>Sodium metal."},
+{s:"When molten sodium chloride is electrolysed, the product at the anode is…",o:["Sodium metal","Hydrogen gas","Oxygen gas","Chlorine gas"],c:3,e:"<span class='h'>✏️ Working</span>With no water present, the only anion is Cl⁻.<span class='calc'>Anode: 2Cl⁻ → Cl₂ + 2e⁻</span>Chlorine gas is released at the anode.<span class='h'>✅</span>Chlorine gas."},
+{s:"When acidified water is electrolysed using platinum electrodes, the products are…",o:["Hydrogen at the cathode and oxygen at the anode","Oxygen at the cathode and hydrogen at the anode","Chlorine at both electrodes","No gases at all"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Cathode: 2H⁺ + 2e⁻ → H₂</span><span class='calc'>Anode: 4OH⁻ → 2H₂O + O₂ + 4e⁻</span>Overall 2H₂O → 2H₂ + O₂.<span class='h'>✅</span>Hydrogen at the cathode and oxygen at the anode."},
+{s:"In the electrolysis of acidified water, the ratio of the volume of hydrogen to oxygen collected is…",o:["1 : 2","2 : 1","1 : 1","4 : 1"],c:1,e:"<span class='h'>✏️ Working</span>From 2H₂O → 2H₂ + O₂ we get 2 volumes of H₂ for every 1 volume of O₂.<span class='calc'>H₂ : O₂ = 2 : 1</span><span class='h'>✅</span>2 : 1."},
+{s:"During the electrolysis of concentrated sodium chloride solution (brine), the main product at the anode is…",o:["Oxygen","Hydrogen","Sodium","Chlorine"],c:3,e:"<span class='h'>💡 Idea</span>Cl⁻ is very concentrated in brine, so it is discharged in preference to OH⁻ — chlorine is released at the anode.<span class='h'>✅</span>Chlorine."},
+{s:"During the electrolysis of brine, the substance left behind in the solution is…",o:["Sodium hydroxide","Sodium chloride only","Hydrochloric acid","Sodium metal"],c:0,e:"<span class='h'>✏️ Working</span>H₂ leaves at the cathode and Cl₂ at the anode, so Na⁺ and OH⁻ remain.<span class='calc'>Na⁺ + OH⁻ → NaOH</span><span class='h'>✅</span>Sodium hydroxide."},
+{s:"When CuSO₄ solution is electrolysed using inert (platinum) electrodes, the gas released at the anode is…",o:["Hydrogen","Oxygen","Chlorine","Sulphur dioxide"],c:1,e:"<span class='h'>✏️ Working</span>SO₄²⁻ is not discharged, so OH⁻ is discharged instead.<span class='calc'>Anode: 4OH⁻ → 2H₂O + O₂ + 4e⁻</span>Meanwhile copper deposits at the cathode and the blue colour fades.<span class='h'>✅</span>Oxygen."},
+{s:"Which of the following does NOT affect the preferential discharge of ions?",o:["Position of the ion in the electrochemical (discharge) series","Concentration of the ion in solution","The colour of the solution","The nature of the electrode"],c:2,e:"<span class='h'>💡 Idea</span>The three real factors are position in the discharge series, concentration, and the nature of the electrode. The colour of the solution has no effect.<span class='h'>✅</span>The colour of the solution."},
+{s:"Between H⁺ and Cu²⁺ at the cathode, the ion discharged in preference is…",o:["Cu²⁺, because copper is below hydrogen in the electrochemical series","H⁺, because it is smaller","Both are discharged equally","Neither is discharged"],c:0,e:"<span class='h'>💡 Idea</span>The less reactive metal ion is discharged more readily. Copper is below hydrogen, so Cu²⁺ is discharged in preference to H⁺.<span class='h'>✅</span>Cu²⁺, because copper is below hydrogen in the electrochemical series."},
+{s:"In a DILUTE solution containing Cl⁻ and OH⁻ with inert electrodes, the ion normally discharged at the anode is…",o:["Cl⁻, giving chlorine","OH⁻, giving oxygen","SO₄²⁻, giving sulphur dioxide","H⁺, giving hydrogen"],c:1,e:"<span class='h'>💡 Idea</span>OH⁻ is higher than Cl⁻ in ease of discharge, so in a dilute solution OH⁻ is discharged and oxygen is evolved.<span class='h'>✅</span>OH⁻, giving oxygen."},
+{s:"Concentrated chloride solutions give off chlorine at the anode (instead of oxygen) mainly because of…",o:["The temperature of the cell","The position of Cl⁻ in the series","The high concentration of chloride ions","The colour of the electrode"],c:2,e:"<span class='h'>💡 Idea</span>Concentration can override the series. A very high concentration of Cl⁻ makes it discharge in preference to OH⁻, so chlorine is produced.<span class='h'>✅</span>The high concentration of chloride ions."},
+{s:"During the electrolysis of CuSO₄ solution using COPPER electrodes, the copper anode…",o:["Gives off oxygen gas","Remains completely unchanged","Gains mass steadily","Dissolves, going into solution as Cu²⁺"],c:3,e:"<span class='h'>✏️ Working</span>An active copper anode reacts instead of releasing oxygen.<span class='calc'>Anode: Cu → Cu²⁺ + 2e⁻</span>So the anode dissolves (loses mass) while the cathode gains copper — the basis of copper purification and plating.<span class='h'>✅</span>Dissolves, going into solution as Cu²⁺."},
+{s:"In the discharge series, which cation is the MOST difficult to discharge at the cathode?",o:["Cu²⁺","K⁺","Ag⁺","H⁺"],c:1,e:"<span class='h'>💡 Idea</span>The most reactive metals (K, Na, Ca) are hardest to discharge. K⁺ sits at the top of the cathode series, so it is the most difficult.<span class='h'>✅</span>K⁺."},
+{s:"Which of the following anions is discharged MOST readily at the anode?",o:["SO₄²⁻","NO₃⁻","I⁻","Cl⁻"],c:2,e:"<span class='h'>💡 Idea</span>Ease of discharge order: SO₄²⁻ &lt; NO₃⁻ &lt; Cl⁻ &lt; Br⁻ &lt; I⁻. Of those listed, iodide (I⁻) is discharged most readily.<span class='h'>✅</span>I⁻."},
+{s:"The quantity of electric charge that flows is given by the equation…",o:["Q = I ÷ t","Q = V ÷ I","Q = I² × t","Q = I × t"],c:3,e:"<span class='h'>💡 Idea</span>Charge equals current multiplied by time.<span class='calc'>Q = I × t</span>with Q in coulombs, I in amperes, and t in seconds.<span class='h'>✅</span>Q = I × t."},
+{s:"One faraday of electricity is equal to…",o:["96500 C, the charge on one mole of electrons","9650 C, the charge on one electron","6.0 × 10²³ C","1 coulomb"],c:0,e:"<span class='h'>💡 Idea</span>One faraday is 96500 C, which is the charge carried by one mole of electrons.<span class='h'>✅</span>96500 C, the charge on one mole of electrons."},
+{s:"A current of 2 A flows for 30 minutes. The quantity of charge that passes is…",o:["60 C","360 C","3600 C","7200 C"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>t = 30 × 60 = 1800 s</span><span class='calc'>Q = I × t = 2 × 1800 = 3600 C</span><span class='h'>✅</span>3600 C."},
+{s:"How much copper is deposited when 9650 C is passed through CuSO₄ solution? (Cu = 64, Cu²⁺ + 2e⁻ → Cu)",o:["0.32 g","6.4 g","64 g","3.2 g"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Moles of e⁻ = 9650 ÷ 96500 = 0.1 mol</span><span class='calc'>Cu needs 2 e⁻ → moles Cu = 0.1 ÷ 2 = 0.05 mol</span><span class='calc'>Mass = 0.05 × 64 = 3.2 g</span><span class='h'>✅</span>3.2 g."},
+{s:"The quantity of charge needed to deposit 1 mole of silver (Ag⁺ + e⁻ → Ag) is…",o:["96500 C (one faraday)","193000 C","48250 C","965 C"],c:0,e:"<span class='h'>✏️ Working</span>1 mole of Ag needs 1 mole of electrons.<span class='calc'>Q = 1 × 96500 = 96500 C = 1 faraday</span><span class='h'>✅</span>96500 C (one faraday)."},
+{s:"How long will a current of 0.5 A take to deposit 1.08 g of silver? (Ag = 108, Ag⁺ + e⁻ → Ag)",o:["965 s","1930 s","3860 s","483 s"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Moles Ag = 1.08 ÷ 108 = 0.01 mol</span><span class='calc'>Charge = 0.01 × 96500 = 965 C</span><span class='calc'>t = Q ÷ I = 965 ÷ 0.5 = 1930 s</span><span class='h'>✅</span>1930 s."},
+{s:"Coating a cheaper metal with a thin layer of a more expensive metal by electrolysis is called…",o:["Electroplating","Sublimation","Neutralisation","Distillation"],c:0,e:"<span class='h'>💡 Idea</span>In electroplating the object is the cathode, the plating metal is the anode, and a salt of the plating metal is the electrolyte.<span class='h'>✅</span>Electroplating."},
+{s:"In the Daniell cell, which statement is correct?",o:["Copper is oxidised at the negative electrode","Zinc is the positive electrode (cathode)","Zinc is oxidised at the negative electrode while copper is deposited at the positive electrode","The e.m.f. of the cell is exactly zero"],c:2,e:"<span class='h'>✏️ Working</span>The Daniell cell is a galvanic cell.<span class='calc'>Anode (Zn, negative): Zn → Zn²⁺ + 2e⁻</span><span class='calc'>Cathode (Cu, positive): Cu²⁺ + 2e⁻ → Cu</span>Its e.m.f. is about 1.10 V.<span class='h'>✅</span>Zinc is oxidised at the negative electrode while copper is deposited at the positive electrode."}
+);
+
+["electrolytes","substances","discharge","faraday","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

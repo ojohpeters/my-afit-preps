@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecology A–Z — Ecosystems, Food Chains, Nutrient Cycles & Interactions (Biology)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🌍 Ecology A–Z</h1>
+  <p>Ecosystems · Food Chains · Nutrient Cycles · Interactions — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with clear examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Key terms defined</span><span class="pill">Cycles made simple</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="basics">🌍 Basic Concepts</div>
+    <div class="tab" data-cat="feeding">🍃 Feeding Relationships</div>
+    <div class="tab" data-cat="cycles">♻️ Nutrient Cycles</div>
+    <div class="tab" data-cat="interactions">🤝 Interactions &amp; Factors</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: BASIC CONCEPTS ============ -->
+  <section class="cat basics show" id="cat-basics">
+    <h2 class="cathead">🌍 PART 1 — Basic Concepts &amp; Key Terms</h2>
+
+    <div class="lesson">
+      <h3>1. What is ecology?</h3>
+      <p><b>Ecology</b> is the <b>study of the relationships between living organisms and their environment</b> — how living things affect, and are affected by, each other and by their non-living surroundings.</p>
+      <p>To talk about ecology clearly, you must know a small set of key terms. Learn these first — most exam questions test them directly.</p>
+      <span class="key">The key ecological terms (learn this table)</span>
+      <table class="r">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><b>Ecology</b></td><td>The study of the relationships between living organisms and their environment.</td></tr>
+        <tr><td><b>Environment</b></td><td>All the surrounding conditions — living and non-living — that affect an organism.</td></tr>
+        <tr><td><b>Ecosystem</b></td><td>A community of living things together with their non-living environment, interacting as one unit (e.g. a pond, a forest).</td></tr>
+        <tr><td><b>Habitat</b></td><td>The specific place where an organism lives — its natural home or address (e.g. a stream for a fish).</td></tr>
+        <tr><td><b>Population</b></td><td>All the organisms of the <b>same species</b> living in the same area at the same time.</td></tr>
+        <tr><td><b>Community</b></td><td>All the <b>different populations</b> (species) living and interacting together in an area.</td></tr>
+        <tr><td><b>Biosphere</b></td><td>The part of the Earth — land, water and air — where living things exist.</td></tr>
+        <tr><td><b>Ecological niche</b></td><td>The <b>role or function</b> of an organism in its ecosystem — how and what it feeds on, where it lives, its job in the community.</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: the <b>habitat</b> is the organism's <b>address</b> (where it lives); the <b>niche</b> is its <b>profession</b> (what it does for a living). Do not confuse them.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Biotic and abiotic factors</h3>
+      <p>An environment is made of two kinds of factors:</p>
+      <ul>
+        <li><b>Biotic factors</b> — the <b>living</b> parts of the environment (plants, animals, bacteria, fungi).</li>
+        <li><b>Abiotic factors</b> — the <b>non-living</b> parts (temperature, light, water, soil, air, pH).</li>
+      </ul>
+      <span class="key">Examples side by side</span>
+      <table class="r">
+        <tr><th>Biotic (living) factors</th><th>Abiotic (non-living) factors</th></tr>
+        <tr><td>Green plants (producers)</td><td>Temperature</td></tr>
+        <tr><td>Animals (consumers)</td><td>Light / sunlight</td></tr>
+        <tr><td>Bacteria and fungi (decomposers)</td><td>Water and humidity</td></tr>
+        <tr><td>Predators, prey and parasites</td><td>Soil, its minerals and pH</td></tr>
+        <tr><td>Competitors of the same or other species</td><td>Air and gases (oxygen, carbon dioxide), wind</td></tr>
+      </table>
+      <div class="analogy">🌟 Quick test: if it was ever <b>alive</b>, it is <b>biotic</b>. If it was <b>never alive</b> (heat, water, rock, gas), it is <b>abiotic</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Levels of ecological organisation</h3>
+      <p>Ecology is organised from the smallest unit up to the largest, each level built from the one before it:</p>
+      <div class="formula">Organism → Population → Community → Ecosystem → Biosphere</div>
+      <ul>
+        <li><b>Organism</b> — a single living thing (one grasshopper).</li>
+        <li><b>Population</b> — many organisms of the <b>same species</b> in one area (all the grasshoppers in a field).</li>
+        <li><b>Community</b> — all the <b>different populations</b> living together (grasshoppers + grass + birds + soil bacteria).</li>
+        <li><b>Ecosystem</b> — the community <b>plus its non-living environment</b> (the field community + soil, air, water, sunlight).</li>
+        <li><b>Biosphere</b> — <b>all ecosystems on Earth</b>; the whole living zone of the planet.</li>
+      </ul>
+      <div class="analogy">🌟 Think of it like an address book: one person → a family → a town → the town with its land and weather → the whole planet.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: FEEDING RELATIONSHIPS ============ -->
+  <section class="cat feeding" id="cat-feeding">
+    <h2 class="cathead">🍃 PART 2 — Feeding Relationships &amp; Energy Flow</h2>
+
+    <div class="lesson">
+      <h3>1. Producers, consumers and decomposers</h3>
+      <p>Every organism has a feeding role. There are three main groups:</p>
+      <ul>
+        <li><b>Producers (autotrophs)</b> — <b>green plants</b>. They make their own food from sunlight by <b>photosynthesis</b>. They are the base of every food chain.</li>
+        <li><b>Consumers (heterotrophs)</b> — animals that cannot make their own food, so they eat other organisms:
+          <ul>
+            <li><b>Primary consumers</b> — <b>herbivores</b> that eat plants (e.g. a grasshopper, a cow).</li>
+            <li><b>Secondary consumers</b> — <b>carnivores</b> that eat the herbivores (e.g. a lizard eating the grasshopper).</li>
+            <li><b>Tertiary consumers</b> — carnivores that eat the secondary consumers (e.g. a hawk eating the lizard).</li>
+          </ul>
+        </li>
+        <li><b>Decomposers</b> — <b>bacteria and fungi</b> that break down dead organisms and waste, returning nutrients to the soil.</li>
+      </ul>
+      <div class="analogy">🌟 Producers <b>make</b> food, consumers <b>take</b> food, decomposers <b>break</b> food (down again). Nothing is wasted.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Food chains and food webs</h3>
+      <p>A <b>food chain</b> shows the flow of food (energy) from one organism to the next. It <b>always begins with a producer</b> (green plant) because only plants can capture the Sun's energy.</p>
+      <div class="ex"><b class="t">A simple food chain:</b>
+        <p>Grass → Grasshopper → Lizard → Hawk</p>
+        (producer → primary consumer → secondary consumer → tertiary consumer). The arrows point in the direction the energy flows — from the food to the feeder.</div>
+      <p>In real life, most animals eat more than one kind of food, and most foods are eaten by more than one kind of animal. When many food chains link together we get a <b>food web</b> — a more realistic, branching picture of feeding in an ecosystem.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Trophic levels and the flow of energy</h3>
+      <p>Each feeding stage in a food chain is a <b>trophic level</b>:</p>
+      <ul>
+        <li><b>1st trophic level</b> — producers (green plants)</li>
+        <li><b>2nd trophic level</b> — primary consumers (herbivores)</li>
+        <li><b>3rd trophic level</b> — secondary consumers (carnivores)</li>
+        <li><b>4th trophic level</b> — tertiary consumers</li>
+      </ul>
+      <p>Energy enters the chain as sunlight, is trapped by plants, and passes up the levels as one organism eats another. But energy is <b>lost at every step</b> (as heat, in movement, respiration and undigested waste).</p>
+      <span class="key">The 10% rule</span>
+      <div class="formula">Only about 10% of energy passes to the next trophic level (≈ 90% is lost)</div>
+      <p>Because roughly 90% of the energy is lost at each step, there is little energy left after a few links. This is why <b>food chains are short</b> — usually only 3 to 5 trophic levels.</p>
+      <div class="analogy">🌟 If plants trap 10 000 units, the herbivores get ≈ 1 000, the carnivores ≈ 100, and the top carnivores ≈ 10 — the energy shrinks tenfold each step.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Ecological pyramids</h3>
+      <p>An <b>ecological pyramid</b> is a diagram that shows how a measured quantity changes from producers up to top consumers. There are three kinds:</p>
+      <table class="r">
+        <tr><th>Pyramid</th><th>What it measures</th><th>Note</th></tr>
+        <tr><td><b>Pyramid of numbers</b></td><td>The number of organisms at each level</td><td>Can sometimes be inverted (e.g. one big tree feeding many insects).</td></tr>
+        <tr><td><b>Pyramid of biomass</b></td><td>The total mass of living matter at each level</td><td>Usually upright; can occasionally be inverted.</td></tr>
+        <tr><td><b>Pyramid of energy</b></td><td>The energy stored at each level</td><td><b>Always upright</b> — energy always decreases upward and can never increase.</td></tr>
+      </table>
+      <div class="analogy">🌟 The <b>pyramid of energy</b> is the most reliable: because of the 10% rule, energy only goes DOWN as you climb, so it is <b>never</b> upside down.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: NUTRIENT CYCLES ============ -->
+  <section class="cat cycles" id="cat-cycles">
+    <h2 class="cathead">♻️ PART 3 — Nutrient Cycles</h2>
+
+    <div class="lesson">
+      <h3>1. The carbon cycle</h3>
+      <p>Carbon moves round and round between the air, living things and the soil. Some processes <b>remove</b> carbon dioxide from the air; others <b>return</b> it.</p>
+      <span class="key">Removing CO₂ from the air</span>
+      <ul>
+        <li><b>Photosynthesis</b> — green plants take in carbon dioxide and use it (with sunlight and water) to make food. This is the main way carbon dioxide is removed from the atmosphere.</li>
+      </ul>
+      <span class="key">Returning CO₂ to the air</span>
+      <ul>
+        <li><b>Respiration</b> — plants and animals release carbon dioxide as they breathe out / respire.</li>
+        <li><b>Combustion</b> — burning wood and fossil fuels (coal, oil, gas) releases carbon dioxide.</li>
+        <li><b>Decomposition</b> — bacteria and fungi break down dead matter, giving off carbon dioxide.</li>
+      </ul>
+      <div class="analogy">🌟 One process takes CO₂ IN (photosynthesis); three put it BACK (respiration, combustion, decomposition). Feeding also passes carbon from plants to animals.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The nitrogen cycle</h3>
+      <p>Plants need nitrogen to make proteins, but they <b>cannot use nitrogen gas (N₂)</b> from the air directly — it must first be turned into <b>nitrates</b>. The nitrogen cycle is the set of steps that do this and later return nitrogen to the air.</p>
+      <span class="key">Nitrogen fixation</span>
+      <p>The <b>conversion of atmospheric nitrogen gas into nitrogen compounds</b> plants can use. It is done by:</p>
+      <ul>
+        <li><b>Nitrogen-fixing bacteria</b> — especially <b>Rhizobium</b>, which lives in the <b>root nodules of leguminous plants</b> (beans, groundnut, cowpea).</li>
+        <li><b>Lightning</b> — its energy combines nitrogen and oxygen, which rain washes into the soil.</li>
+      </ul>
+      <span class="key">Nitrification</span>
+      <p>The conversion of <b>ammonia → nitrites → nitrates</b> by nitrifying bacteria in the soil (<b>Nitrosomonas</b> makes nitrites; <b>Nitrobacter</b> makes nitrates). Nitrates are the form plants absorb through their roots.</p>
+      <span class="key">Denitrification</span>
+      <p>The conversion of <b>nitrates back into nitrogen gas</b> by denitrifying bacteria. This <b>removes usable nitrogen from the soil</b> and returns it to the air — the opposite of fixation.</p>
+      <div class="ex"><b class="t">Follow the loop:</b> N₂ in air → (fixation) → ammonia → (nitrification) → nitrates → taken up by plants → passed to animals → death and decay return ammonia → (denitrification) → back to N₂ gas. Decomposers recycle nitrogen from dead bodies and waste.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The water cycle</h3>
+      <p>Water is used again and again as it moves between the sea, the air, the land and living things:</p>
+      <ul>
+        <li><b>Evaporation</b> — the Sun heats seas, rivers and lakes, turning liquid water into water vapour (gas).</li>
+        <li><b>Transpiration</b> — plants also lose water vapour from their leaves, adding to the vapour in the air.</li>
+        <li><b>Condensation</b> — the rising vapour cools and turns back into tiny water droplets, forming <b>clouds</b>.</li>
+        <li><b>Precipitation</b> — the droplets join and fall as <b>rain</b> (or snow), returning water to the land and sea.</li>
+        <li><b>Run-off</b> — water flows over land into rivers and back to the sea, and the cycle repeats.</li>
+      </ul>
+      <div class="analogy">🌟 Two words do the heavy lifting: <b>evaporation</b> sends water UP (liquid → vapour); <b>condensation</b> brings it DOWN (vapour → liquid → rain).</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: INTERACTIONS & ECOLOGICAL FACTORS ============ -->
+  <section class="cat interactions" id="cat-interactions">
+    <h2 class="cathead">🤝 PART 4 — Interactions &amp; Ecological Factors</h2>
+
+    <div class="lesson">
+      <h3>1. Symbiosis and other relationships</h3>
+      <p><b>Symbiosis</b> is a <b>close living-together association between two organisms of different species</b>. Depending on who gains and who loses, we recognise several types, plus two other important relationships (competition and predation):</p>
+      <table class="r">
+        <tr><th>Relationship</th><th>Who benefits?</th><th>Example</th></tr>
+        <tr><td><b>Mutualism</b></td><td><b>Both</b> organisms benefit</td><td>Rhizobium bacteria and a legume; the bacteria get food and shelter, the plant gets nitrogen.</td></tr>
+        <tr><td><b>Commensalism</b></td><td>One benefits; the other is <b>unaffected</b></td><td>An epiphyte (small plant) growing on a big tree for support and light; the tree is unharmed.</td></tr>
+        <tr><td><b>Parasitism</b></td><td>The parasite benefits; the <b>host is harmed</b></td><td>A tapeworm in the gut, or Plasmodium (malaria) in a human.</td></tr>
+        <tr><td><b>Competition</b></td><td>Both may be <b>harmed</b> (they struggle for a shared resource)</td><td>Two plants competing for light, water or minerals; lions competing for prey.</td></tr>
+        <tr><td><b>Predation</b></td><td>Predator benefits; <b>prey is killed</b></td><td>A lion (predator) hunting and eating an antelope (prey).</td></tr>
+      </table>
+      <div class="analogy">🌟 Score it: mutualism = <b>win–win</b>; commensalism = <b>win–neutral</b>; parasitism = <b>win–lose</b>; competition = <b>struggle for the same thing</b>; predation = <b>hunter and hunted</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Adaptation</h3>
+      <p>An <b>adaptation</b> is a feature that helps an organism <b>survive and reproduce in its environment</b>. Adaptations can be:</p>
+      <ul>
+        <li><b>Structural</b> — body features (thick fur for cold, webbed feet for swimming, deep roots for finding water).</li>
+        <li><b>Behavioural</b> — actions (birds migrating in a dry season, animals feeding at night to avoid heat).</li>
+        <li><b>Physiological</b> — internal workings (a camel storing fat and losing little water in the desert).</li>
+      </ul>
+      <p>Well-adapted organisms are more likely to survive in their habitat and pass on their features to their offspring.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Population factors</h3>
+      <p>The size of a population is not fixed — it rises and falls depending on factors that <b>add</b> or <b>remove</b> individuals:</p>
+      <ul>
+        <li><b>Factors that increase a population:</b> births (natality) and immigration (individuals moving in).</li>
+        <li><b>Factors that decrease a population:</b> deaths (mortality) and emigration (individuals moving out).</li>
+        <li><b>Limiting factors</b> hold a population in check: shortage of food, water or space; disease; predators; competition; and climate.</li>
+      </ul>
+      <div class="analogy">🌟 Population change = (births + immigration) − (deaths + emigration). More in than out means the population grows.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Pollution and conservation</h3>
+      <p><b>Pollution</b> is the release of <b>harmful substances into the environment</b>, damaging living things. It comes in three main forms:</p>
+      <table class="r">
+        <tr><th>Type</th><th>Common causes</th><th>Effects</th></tr>
+        <tr><td><b>Air pollution</b></td><td>Smoke, exhaust fumes, factory gases (carbon dioxide, sulphur dioxide)</td><td>Breathing diseases, acid rain, global warming.</td></tr>
+        <tr><td><b>Water pollution</b></td><td>Sewage, oil spills, farm chemicals, industrial waste</td><td>Kills fish and aquatic life; spreads water-borne disease.</td></tr>
+        <tr><td><b>Land pollution</b></td><td>Refuse dumps, plastics, pesticides, chemical waste</td><td>Damages the soil, harms crops and wildlife, spreads disease.</td></tr>
+      </table>
+      <p><b>Conservation</b> is the <b>wise use and protection of natural resources</b> so they are not destroyed and are available for the future. It includes:</p>
+      <ul>
+        <li>Creating national parks and game reserves to protect wildlife.</li>
+        <li>Reforestation (planting trees) and controlled harvesting to avoid over-cutting.</li>
+        <li>Recycling and proper waste disposal to reduce pollution.</li>
+        <li>Laws against poaching, over-fishing and bush burning.</li>
+      </ul>
+      <div class="analogy">🌟 Pollution <b>spoils</b> the environment; conservation <b>saves</b> it. The two are opposites.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Trace the energy, follow the cycle — nature always balances. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Ecology is best defined as the study of…",o:["The relationships between living organisms and their environment","Rocks and minerals","The human skeleton","Stars and planets"],c:0,e:"<span class='h'>💡 Idea</span>Ecology looks at how living things interact with one another and with their non-living surroundings.<span class='h'>✅</span>The relationships between living organisms and their environment."},
+{s:"An ecosystem is best described as…",o:["A group of organisms of the same species","Only the green plants in an area","A single food chain","A community of living organisms together with their non-living environment, interacting as one unit"],c:3,e:"<span class='h'>💡 Idea</span>An ecosystem = the living community PLUS the abiotic environment working together, for example a pond or a forest.<span class='h'>✅</span>A community of living organisms together with their non-living environment, interacting as one unit."},
+{s:"The specific place where an organism lives is called its…",o:["Role","Habitat","Population","Biosphere"],c:1,e:"<span class='h'>💡 Idea</span>The habitat is the natural home or address of an organism, such as a stream for a fish.<span class='h'>✅</span>Habitat."},
+{s:"All the organisms of the same species living in the same area at the same time make up a…",o:["Community","Biosphere","Population","Food web"],c:2,e:"<span class='h'>💡 Idea</span>A population is ONE species in a given area; a community is all the different species together.<span class='h'>✅</span>Population."},
+{s:"The part of the Earth — land, water and air — where living things are found is the…",o:["Single ecosystem","One population","Habitat","Biosphere"],c:3,e:"<span class='h'>💡 Idea</span>The biosphere is the whole zone of the planet occupied by life.<span class='h'>✅</span>Biosphere."},
+{s:"The ecological niche of an organism refers to its…",o:["Role or function in the ecosystem","Physical home only","Number in the population","Soil type"],c:0,e:"<span class='h'>💡 Idea</span>The niche is the job or way of life of an organism — what it eats and how it fits into the community. The habitat is its address; the niche is its profession.<span class='h'>✅</span>Role or function in the ecosystem."},
+{s:"Which of the following is an ABIOTIC (non-living) factor?",o:["Bacteria","Green plants","Temperature","Earthworms"],c:2,e:"<span class='h'>💡 Idea</span>Abiotic means non-living — temperature, light, water, soil and pH. Living things are biotic factors.<span class='h'>✅</span>Temperature."},
+{s:"Which shows the levels of ecological organisation from smallest to largest?",o:["Organism → population → community → ecosystem → biosphere","Population → organism → community → biosphere → ecosystem","Biosphere → ecosystem → community → population → organism","Community → ecosystem → population → organism → biosphere"],c:0,e:"<span class='h'>💡 Idea</span>Build up: one organism → many of one kind (population) → all kinds together (community) → plus the environment (ecosystem) → the whole living Earth (biosphere).<span class='h'>✅</span>Organism → population → community → ecosystem → biosphere."},
+{s:"In an ecosystem, the producers are the…",o:["Herbivores","Green plants","Carnivores","Fungi and bacteria"],c:1,e:"<span class='h'>💡 Idea</span>Producers (autotrophs) are green plants; they make their own food by photosynthesis and form the base of every food chain.<span class='h'>✅</span>Green plants."},
+{s:"A primary consumer is…",o:["A green plant","A decomposer","An animal that feeds directly on plants (a herbivore)","A top carnivore"],c:2,e:"<span class='h'>💡 Idea</span>Primary consumers are herbivores — they eat producers. Example: a grasshopper eating grass.<span class='h'>✅</span>An animal that feeds directly on plants (a herbivore)."},
+{s:"A carnivore that feeds on a herbivore is called a…",o:["Secondary consumer","Producer","Primary consumer","Decomposer"],c:0,e:"<span class='h'>💡 Idea</span>The herbivore is the primary consumer; the animal that eats it is the secondary consumer.<span class='h'>✅</span>Secondary consumer."},
+{s:"Bacteria and fungi that break down dead organisms and waste are called…",o:["Producers","Herbivores","Predators","Decomposers"],c:3,e:"<span class='h'>💡 Idea</span>Decomposers feed on dead matter and recycle nutrients back into the soil.<span class='h'>✅</span>Decomposers."},
+{s:"Every food chain must begin with a…",o:["Carnivore","Decomposer","Producer (green plant)","Herbivore"],c:2,e:"<span class='h'>💡 Idea</span>The producer captures the energy of the Sun, so a food chain always starts with a green plant.<span class='h'>✅</span>Producer (green plant)."},
+{s:"A food web is…",o:["A single straight food chain","Several interconnected food chains in an ecosystem","A pyramid of soil layers","A group of decomposers"],c:1,e:"<span class='h'>💡 Idea</span>A food web is many food chains linked together, showing the real branching feeding relationships in an ecosystem.<span class='h'>✅</span>Several interconnected food chains in an ecosystem."},
+{s:"On average, the amount of energy passed from one trophic level to the next is about…",o:["100%","90%","50%","10%"],c:3,e:"<span class='h'>💡 Idea</span>Only about 10% of the energy is passed up the chain; roughly 90% is lost as heat, in movement and in life processes. This is the 10% rule.<span class='h'>✅</span>10%."},
+{s:"Which ecological pyramid is always upright and never inverted?",o:["Pyramid of numbers","Pyramid of energy","Pyramid of parasites","Pyramid of rainfall"],c:1,e:"<span class='h'>💡 Idea</span>The pyramid of energy is always upright because energy always decreases from producers upward — it can never increase.<span class='h'>✅</span>Pyramid of energy."},
+{s:"In the carbon cycle, carbon dioxide is REMOVED from the air mainly by…",o:["Respiration","Combustion","Photosynthesis by green plants","Decomposition"],c:2,e:"<span class='h'>💡 Idea</span>Green plants take in carbon dioxide during photosynthesis. Respiration, burning and decay put it back.<span class='h'>✅</span>Photosynthesis by green plants."},
+{s:"Which processes RETURN carbon dioxide to the atmosphere?",o:["Respiration, combustion and decomposition","Photosynthesis only","Nitrogen fixation","Condensation"],c:0,e:"<span class='h'>💡 Idea</span>Respiration by living things, burning (combustion) of fuels, and decay by decomposers all release carbon dioxide back into the air.<span class='h'>✅</span>Respiration, combustion and decomposition."},
+{s:"The conversion of atmospheric nitrogen gas into nitrogen compounds that plants can use is called…",o:["Denitrification","Nitrogen fixation","Transpiration","Nitrification"],c:1,e:"<span class='h'>💡 Idea</span>Nitrogen fixation changes unusable nitrogen gas into nitrogen compounds. It is carried out by nitrogen-fixing bacteria and by lightning.<span class='h'>✅</span>Nitrogen fixation."},
+{s:"Nitrogen-fixing bacteria such as Rhizobium are found mainly in the…",o:["Leaves of grasses","Stomachs of cattle","Ocean floor only","Root nodules of leguminous plants"],c:3,e:"<span class='h'>💡 Idea</span>Rhizobium lives in the root nodules of legumes (beans, groundnut, cowpea) and fixes nitrogen for the plant.<span class='h'>✅</span>Root nodules of leguminous plants."},
+{s:"The conversion of ammonia into nitrites and then nitrates by soil bacteria is called…",o:["Nitrification","Denitrification","Transpiration","Combustion"],c:0,e:"<span class='h'>💡 Idea</span>Nitrification is done by nitrifying bacteria: Nitrosomonas makes nitrites, then Nitrobacter makes nitrates.<span class='h'>✅</span>Nitrification."},
+{s:"Denitrifying bacteria affect the soil by…",o:["Adding nitrates to the soil","Fixing nitrogen from the air","Converting nitrates back into nitrogen gas, removing usable nitrogen from the soil","Making plants grow faster"],c:2,e:"<span class='h'>💡 Idea</span>Denitrification breaks nitrates down to nitrogen gas, which escapes to the air — so it REMOVES usable nitrogen from the soil.<span class='h'>✅</span>Converting nitrates back into nitrogen gas, removing usable nitrogen from the soil."},
+{s:"In the water cycle, the correct order of events is…",o:["Water freezes and then melts","Water evaporates, condenses into clouds, and falls as precipitation","Nitrogen is fixed and then lost","Carbon is fixed and then respired"],c:1,e:"<span class='h'>💡 Idea</span>The Sun drives evaporation (liquid to vapour); cooling causes condensation (vapour to liquid) forming clouds, which then fall as rain (precipitation).<span class='h'>✅</span>Water evaporates, condenses into clouds, and falls as precipitation."},
+{s:"Symbiosis is best described as…",o:["Two organisms of the same species fighting","An organism living completely alone","A predator killing its prey","A close living-together association between two different species"],c:3,e:"<span class='h'>💡 Idea</span>Symbiosis means different species living closely together. It includes mutualism, commensalism and parasitism.<span class='h'>✅</span>A close living-together association between two different species."},
+{s:"In mutualism, the two organisms involved…",o:["Both benefit","Only one benefits while the other is harmed","One benefits while the other is unaffected","Are both harmed"],c:0,e:"<span class='h'>💡 Idea</span>In mutualism BOTH partners gain, for example the association between a legume and its Rhizobium bacteria.<span class='h'>✅</span>Both benefit."},
+{s:"A relationship in which one organism benefits while the other is neither helped nor harmed is…",o:["Parasitism","Mutualism","Commensalism","Predation"],c:2,e:"<span class='h'>💡 Idea</span>In commensalism one gains and the other is unaffected, for example an epiphyte growing on a big tree for support.<span class='h'>✅</span>Commensalism."},
+{s:"In parasitism…",o:["Both organisms benefit","Neither organism is affected","The two share food equally","The parasite benefits while the host is harmed"],c:3,e:"<span class='h'>💡 Idea</span>A parasite such as a tapeworm lives on or in a host, gaining food while harming the host.<span class='h'>✅</span>The parasite benefits while the host is harmed."},
+{s:"The relationship in which one animal kills and feeds on another is called…",o:["Competition","Predation","Nitrogen fixation","Photosynthesis"],c:1,e:"<span class='h'>💡 Idea</span>In predation the predator, such as a lion, hunts, kills and eats the prey, such as an antelope.<span class='h'>✅</span>Predation."},
+{s:"An adaptation is…",o:["A feature that helps an organism survive in its environment","A form of pollution","A stage of the water cycle","A feeding level"],c:0,e:"<span class='h'>💡 Idea</span>An adaptation is a structural, behavioural or physiological feature that suits an organism to its habitat, such as thick fur in cold regions.<span class='h'>✅</span>A feature that helps an organism survive in its environment."},
+{s:"Pollution can be best described as the…",o:["Planting of more trees","Protection of wildlife","Release of harmful substances that damage air, water or land","Natural recycling of nutrients"],c:2,e:"<span class='h'>💡 Idea</span>Pollution is the addition of harmful substances to the environment — air pollution (smoke, gases), water pollution (sewage, oil) and land pollution (refuse, chemicals) all damage living things. Conservation is the wise use and protection of resources.<span class='h'>✅</span>Release of harmful substances that damage air, water or land."}
+);
+
+["basics","feeding","cycles","interactions","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

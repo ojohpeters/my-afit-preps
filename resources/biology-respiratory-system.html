@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respiratory System &amp; Respiration A–Z — Breathing, Gas Exchange &amp; Cellular Respiration (Biology)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🫁 Respiratory System &amp; Respiration A–Z</h1>
+  <p>Breathing · Gas Exchange · Cellular Respiration — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME biology · with clear notes and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Clear comparison tables</span><span class="pill">Human breathing explained</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="breathing">🫁 Breathing vs Respiration</div>
+    <div class="tab" data-cat="organs">🐟 Respiratory Organs</div>
+    <div class="tab" data-cat="human">👤 Human System</div>
+    <div class="tab" data-cat="mechanism">💨 Mechanism &amp; Gas Exchange</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: BREATHING vs RESPIRATION ============ -->
+  <section class="cat breathing show" id="cat-breathing">
+    <h2 class="cathead">🫁 PART 1 — Breathing vs Respiration</h2>
+
+    <div class="lesson">
+      <h3>1. The two words people confuse</h3>
+      <p>In everyday English we say we &ldquo;breathe&rdquo; and we &ldquo;respire&rdquo; as if they mean the same thing. In biology they are <b>two different processes</b>, and exam questions love to test this difference.</p>
+      <span class="key">The one-line difference</span>
+      <ul>
+        <li><b>Breathing (external / physical process)</b> = the <b>physical movement of gases</b> in and out of the body — taking in oxygen and giving out carbon dioxide. It is a <b>mechanical</b> action (muscles, ribs, lungs). No energy is released here.</li>
+        <li><b>Respiration (cellular / chemical process)</b> = the <b>release of energy from food (glucose) inside living cells</b>. It is a <b>chemical</b> reaction that happens in the mitochondria of every cell.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: <b>Breathing brings in the fuel and air; Respiration burns the fuel to release energy.</b> Breathing is a pump; respiration is the engine.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. What is respiration really doing?</h3>
+      <p><b>Respiration</b> is the breakdown of food substances (mainly glucose) in cells to <b>release energy</b> for life processes such as growth, movement, active transport, keeping warm and making new substances.</p>
+      <p>The energy released is not used directly — it is first stored in a molecule called <b>ATP (adenosine triphosphate)</b>, the cell&rsquo;s energy currency, which then powers the cell&rsquo;s work.</p>
+      <span class="key">Where it happens</span>
+      <p>Most respiration happens in tiny structures inside the cell called <b>mitochondria</b> (often called the &ldquo;powerhouse of the cell&rdquo;). This is why very active cells, such as muscle and liver cells, contain many mitochondria.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Aerobic respiration — the full, energy-rich kind</h3>
+      <p><b>Aerobic respiration</b> is respiration that takes place <b>in the presence of oxygen</b>. It completely breaks down glucose and releases a <b>large amount of energy</b> (about 38 ATP per glucose molecule).</p>
+      <span class="key">The word equation (learn this!)</span>
+      <div class="formula">Glucose + Oxygen &rarr; Carbon dioxide + Water + Energy</div>
+      <p>In words: glucose reacts with oxygen to give out carbon dioxide, water and a lot of energy. This is the process happening in your cells right now.</p>
+      <div class="analogy">🌟 Notice the products: <b>carbon dioxide and water</b> — the same waste gases and vapour you breathe out. That is the link between respiration (in cells) and breathing (in lungs).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Anaerobic respiration — the emergency, low-energy kind</h3>
+      <p><b>Anaerobic respiration</b> is respiration that takes place <b>without oxygen</b>. Glucose is only partly broken down, so it releases <b>much less energy</b> (only about 2 ATP per glucose) and leaves behind an incompletely broken-down product.</p>
+      <span class="key">In animal muscle (hard exercise)</span>
+      <div class="formula">Glucose &rarr; Lactic acid + Energy (a little)</div>
+      <p>During vigorous exercise oxygen cannot reach the muscles fast enough, so they respire anaerobically and build up <b>lactic acid</b>. This causes muscle fatigue and cramp, and creates an <b>oxygen debt</b> that is repaid by panting after exercise.</p>
+      <span class="key">In yeast and some microbes (fermentation)</span>
+      <div class="formula">Glucose &rarr; Ethanol (alcohol) + Carbon dioxide + Energy (a little)</div>
+      <p>This is <b>alcoholic fermentation</b> — the basis of brewing and baking (the carbon dioxide makes bread rise).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Aerobic vs Anaerobic — side by side</h3>
+      <table class="r">
+        <tr><th>Feature</th><th>Aerobic respiration</th><th>Anaerobic respiration</th></tr>
+        <tr><td>Oxygen needed?</td><td><b>Yes</b> — needs oxygen</td><td><b>No</b> — occurs without oxygen</td></tr>
+        <tr><td>Breakdown of glucose</td><td>Complete</td><td>Incomplete (partial)</td></tr>
+        <tr><td>Energy (ATP) released</td><td><b>Large</b> (about 38 ATP)</td><td><b>Small</b> (about 2 ATP)</td></tr>
+        <tr><td>Products (animals)</td><td>Carbon dioxide + water</td><td>Lactic acid</td></tr>
+        <tr><td>Products (yeast)</td><td>Carbon dioxide + water</td><td>Ethanol + carbon dioxide</td></tr>
+        <tr><td>Where</td><td>Mainly in the mitochondria</td><td>Mainly in the cytoplasm</td></tr>
+      </table>
+      <div class="analogy">🌟 Rule of thumb: <b>oxygen present &rarr; more energy, clean products; oxygen absent &rarr; little energy, messy leftover</b> (lactic acid or alcohol).</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: RESPIRATORY ORGANS ============ -->
+  <section class="cat organs" id="cat-organs">
+    <h2 class="cathead">🐟 PART 2 — Respiratory Organs Across Organisms</h2>
+
+    <div class="lesson">
+      <h3>1. Different organisms, different organs</h3>
+      <p>All living things must exchange gases, but they do it through different structures depending on their size, body plan and habitat. The structure used is called the <b>respiratory (gaseous exchange) surface</b>.</p>
+      <span class="key">Organism &rarr; respiratory organ (master table)</span>
+      <table class="r">
+        <tr><th>Respiratory organ / surface</th><th>Organisms that use it</th><th>Note</th></tr>
+        <tr><td><b>Body (general) surface</b></td><td>Amoeba, Hydra, earthworm, flatworm</td><td>Gases diffuse straight across the <b>moist skin/membrane</b>; works only for small or thin bodies</td></tr>
+        <tr><td><b>Gills</b></td><td>Fish, tadpoles, crustaceans (crab, prawn)</td><td>Feathery organs rich in blood; extract dissolved oxygen from water</td></tr>
+        <tr><td><b>Tracheae &amp; spiracles</b></td><td>Insects (grasshopper, cockroach, housefly)</td><td>Air enters tiny holes called <b>spiracles</b> and travels through branching air tubes (<b>tracheae</b>) directly to the tissues</td></tr>
+        <tr><td><b>Lungs</b></td><td>Mammals, birds, reptiles, adult amphibians (frog, toad)</td><td>Internal, moist, folded air sacs; the organ of land vertebrates</td></tr>
+        <tr><td><b>Stomata &amp; lenticels</b></td><td>Green plants</td><td><b>Stomata</b> (tiny pores on leaves) and <b>lenticels</b> (openings on woody stems) let gases diffuse in and out</td></tr>
+      </table>
+      <div class="analogy">🌟 Exam trap: a <b>frog</b> uses gills as a tadpole but <b>lungs (and moist skin)</b> as an adult. Read the stage of life the question is asking about.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Breathing through the body surface</h3>
+      <p>Very small or thin-bodied animals (amoeba, earthworm) have no special organs. Oxygen simply <b>diffuses across the moist body surface</b> into the cells, and carbon dioxide diffuses out. The earthworm keeps its skin moist with mucus so gases can dissolve and cross.</p>
+      <p>This works only because these animals are small, so no cell is far from the surface, and their surface-area-to-volume ratio is high.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Gills, tracheae and lungs</h3>
+      <ul>
+        <li><b>Gills (fish):</b> water flows over thin, blood-filled gill filaments. Dissolved oxygen diffuses from the water into the blood, and carbon dioxide passes out into the water.</li>
+        <li><b>Tracheae (insects):</b> air enters through <b>spiracles</b> along the body and is piped straight to the cells through fine tubes called tracheae — the blood does <b>not</b> carry the oxygen.</li>
+        <li><b>Lungs (land vertebrates):</b> air is drawn into internal, moist, folded sacs where oxygen enters the blood. Keeping the surface inside the body stops it from drying out on land.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Features of a good respiratory surface</h3>
+      <p>Whatever the organ, an efficient gaseous exchange surface shares the <b>same four features</b>:</p>
+      <ul>
+        <li><b>Large surface area</b> — more room for gases to cross at once (alveoli, gill filaments and folded surfaces achieve this).</li>
+        <li><b>Thin (one or few cells thick)</b> — so gases have only a very short distance to diffuse across.</li>
+        <li><b>Moist</b> — gases must <b>dissolve</b> first before they can diffuse across the membrane.</li>
+        <li><b>Well supplied with blood (in blood-based systems)</b> — a rich network of capillaries carries gases away quickly, keeping a steep diffusion gradient.</li>
+      </ul>
+      <div class="analogy">🌟 Memory word &mdash; the surface must be <b>L-T-M-B</b>: <b>L</b>arge, <b>T</b>hin, <b>M</b>oist, well supplied with <b>B</b>lood.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: HUMAN RESPIRATORY SYSTEM ============ -->
+  <section class="cat human" id="cat-human">
+    <h2 class="cathead">👤 PART 3 — The Human Respiratory System</h2>
+
+    <div class="lesson">
+      <h3>1. The pathway of air — from nose to alveoli</h3>
+      <p>When you breathe in, air follows one fixed route down into the lungs. Learn this order exactly:</p>
+      <div class="formula">Nostrils &rarr; Nasal cavity &rarr; Pharynx &rarr; Larynx &rarr; Trachea &rarr; Bronchi &rarr; Bronchioles &rarr; Alveoli</div>
+      <ul>
+        <li><b>Nostrils &amp; nasal cavity:</b> air is <b>warmed, moistened and filtered</b>. Hairs and mucus trap dust; a good reason to breathe through the nose, not the mouth.</li>
+        <li><b>Pharynx (throat):</b> a shared passage for air and food.</li>
+        <li><b>Larynx (voice box):</b> contains the vocal cords; the <b>epiglottis</b> is a flap that covers it during swallowing so food goes down the gullet, not the windpipe.</li>
+        <li><b>Trachea (windpipe):</b> held open by C-shaped rings of cartilage; lined with cilia and mucus that sweep dust back up.</li>
+        <li><b>Bronchi:</b> the trachea divides into two bronchi, one entering each lung.</li>
+        <li><b>Bronchioles:</b> the bronchi branch into finer and finer tubes.</li>
+        <li><b>Alveoli:</b> tiny air sacs at the very end where <b>gaseous exchange</b> actually takes place.</li>
+      </ul>
+      <div class="analogy">🌟 Picture an upside-down tree: the trachea is the trunk, the bronchi are big branches, bronchioles are twigs, and the alveoli are the leaves.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The breathing muscles — diaphragm &amp; intercostals</h3>
+      <p>The lungs cannot move by themselves; they are worked by two sets of muscles that change the size of the chest (thoracic cavity):</p>
+      <ul>
+        <li><b>Diaphragm:</b> a large dome-shaped sheet of muscle that separates the <b>thorax (chest)</b> from the <b>abdomen</b>. When it <b>contracts it flattens and moves down</b>, enlarging the chest.</li>
+        <li><b>Intercostal muscles:</b> muscles between the ribs. When the <b>external intercostals contract</b>, the <b>ribs move up and out</b>, enlarging the chest.</li>
+      </ul>
+      <p>The lungs themselves are protected by the <b>ribs (rib cage)</b> and are covered by thin <b>pleural membranes</b> filled with fluid that let them slide smoothly as they inflate and deflate.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The alveoli — the site of gaseous exchange</h3>
+      <p>The <b>alveoli</b> are millions of tiny, thin-walled air sacs. This is the <b>only place</b> where oxygen actually enters the blood and carbon dioxide leaves it. Their design is a perfect example of the four features of a good respiratory surface:</p>
+      <span class="key">How the alveoli are adapted</span>
+      <table class="r">
+        <tr><th>Adaptation</th><th>Why it helps</th></tr>
+        <tr><td><b>Very many, giving a huge surface area</b></td><td>Millions of alveoli give a large area for gases to cross quickly</td></tr>
+        <tr><td><b>Extremely thin walls (one cell thick)</b></td><td>Gases diffuse across a very short distance</td></tr>
+        <tr><td><b>Moist inner lining</b></td><td>Oxygen dissolves in the film of moisture before diffusing in</td></tr>
+        <tr><td><b>Surrounded by a dense network of capillaries</b></td><td>Blood carries gases away fast, keeping a steep concentration gradient</td></tr>
+      </table>
+      <div class="analogy">🌟 Remember: <b>the alveolus is where gas exchange happens</b> — not the trachea, not the bronchi. Those are just delivery pipes.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: MECHANISM & GAS EXCHANGE ============ -->
+  <section class="cat mechanism" id="cat-mechanism">
+    <h2 class="cathead">💨 PART 4 — Breathing Mechanism &amp; Gas Exchange</h2>
+
+    <div class="lesson">
+      <h3>1. Inhalation vs Exhalation — the muscle movements</h3>
+      <p>Breathing works on a simple pressure rule: <b>gas moves from high pressure to low pressure</b>. When the chest gets bigger the pressure inside drops and air rushes IN; when the chest gets smaller the pressure rises and air is pushed OUT.</p>
+      <table class="r">
+        <tr><th>Step</th><th>Inhalation (breathing IN)</th><th>Exhalation (breathing OUT)</th></tr>
+        <tr><td>Diaphragm</td><td><b>Contracts &mdash; flattens and moves down</b></td><td><b>Relaxes &mdash; domes and moves up</b></td></tr>
+        <tr><td>External intercostal muscles</td><td>Contract</td><td>Relax</td></tr>
+        <tr><td>Ribs</td><td>Move <b>up and out</b></td><td>Move <b>down and in</b></td></tr>
+        <tr><td>Volume of thorax (chest)</td><td><b>Increases</b></td><td><b>Decreases</b></td></tr>
+        <tr><td>Pressure in thorax</td><td><b>Decreases</b> (below outside air)</td><td><b>Increases</b> (above outside air)</td></tr>
+        <tr><td>Air movement</td><td>Air rushes <b>IN</b> to the lungs</td><td>Air is forced <b>OUT</b> of the lungs</td></tr>
+      </table>
+      <div class="analogy">🌟 Key fact examiners love: during inhalation the diaphragm <b>contracts and flattens</b> (it does NOT relax or dome up). Bigger box &rarr; lower pressure &rarr; air in.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Gaseous exchange in the alveoli</h3>
+      <p>At the alveoli, the two gases swap places by <b>diffusion</b> (each gas moves from where it is more concentrated to where it is less concentrated):</p>
+      <ul>
+        <li><b>Oxygen (O₂)</b> is high in the fresh air of the alveolus and low in the blood, so it <b>diffuses IN</b> — from alveolus into the blood, where it binds to <b>haemoglobin</b> in red blood cells.</li>
+        <li><b>Carbon dioxide (CO₂)</b> is high in the blood returning from the body and low in the alveolus, so it <b>diffuses OUT</b> — from blood into the alveolus to be breathed away.</li>
+      </ul>
+      <div class="formula">O₂: alveolus &rarr; blood &nbsp;&nbsp;|&nbsp;&nbsp; CO₂: blood &rarr; alveolus</div>
+      <p>No energy is used for this exchange — it is pure diffusion, which is why the thin, moist, well-supplied alveolar wall matters so much.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Composition of inhaled vs exhaled air</h3>
+      <p>Comparing the air you breathe in with the air you breathe out shows what your body has taken and added:</p>
+      <table class="r">
+        <tr><th>Gas</th><th>Inhaled (in) air</th><th>Exhaled (out) air</th></tr>
+        <tr><td>Oxygen</td><td>About 21%</td><td>About 16% (<b>less</b> — some was absorbed)</td></tr>
+        <tr><td>Carbon dioxide</td><td>About 0.04%</td><td>About 4% (<b>much more</b> — added by respiration)</td></tr>
+        <tr><td>Nitrogen</td><td>About 78%</td><td>About 78% (unchanged)</td></tr>
+        <tr><td>Water vapour</td><td>Variable / low</td><td>Higher (air is saturated with moisture)</td></tr>
+        <tr><td>Temperature</td><td>Cooler</td><td>Warmer (body heat added)</td></tr>
+      </table>
+      <div class="analogy">🌟 Summary: exhaled air has <b>less oxygen, more carbon dioxide, more water vapour and is warmer</b>. Nitrogen does not change.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Respiratory diseases (brief)</h3>
+      <ul>
+        <li><b>Asthma:</b> the bronchioles narrow and become inflamed, making breathing difficult with wheezing and shortness of breath. Often triggered by dust, pollen, cold air or exercise; relieved with an inhaler.</li>
+        <li><b>Tuberculosis (TB):</b> a <b>bacterial</b> disease (caused by <i>Mycobacterium tuberculosis</i>) that mainly damages the lungs, giving a persistent cough, chest pain and weight loss. It spreads through droplets in the air.</li>
+        <li><b>Effects of smoking:</b> tobacco smoke damages the lungs and airways. <b>Tar</b> paralyses and destroys the cilia (so mucus and dirt build up), causing smoker&rsquo;s cough, <b>bronchitis</b> and <b>emphysema</b> (destroyed alveoli &rarr; less surface area). Smoke also contains <b>carbon monoxide</b> (reduces oxygen carried by blood) and cancer-causing chemicals that lead to <b>lung cancer</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Link back to the alveoli: emphysema destroys alveolar walls, cutting the surface area for gas exchange — the smoker slowly loses the very feature that makes lungs work.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Breathe in the fuel, respire to release the energy — the biology follows. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Breathing is best described as the…",o:["Release of energy from digested food inside cells","Physical taking in of oxygen and giving out of carbon dioxide","Building of glucose from carbon dioxide and water","Transport of oxygen around the body by red blood cells"],c:1,e:"<span class='h'>💡 Idea</span>Breathing (external respiration) is the physical, mechanical exchange of gases — inhaling oxygen and exhaling carbon dioxide. It releases no energy.<span class='h'>✅</span>Physical taking in of oxygen and giving out of carbon dioxide."},
+{s:"Respiration, in the biological sense, is the…",o:["Release of energy from food inside living cells","Movement of the ribs and diaphragm","Loss of water vapour from the leaves of plants","Exchange of gases at the nostrils"],c:0,e:"<span class='h'>💡 Idea</span>Respiration is the chemical breakdown of food (mainly glucose) to release energy inside the cells. Breathing is the physical part; respiration is the chemical part.<span class='h'>✅</span>Release of energy from food inside living cells."},
+{s:"The main purpose of respiration in cells is to…",o:["Take in oxygen from the air","Remove carbon dioxide from blood","Release energy for the body's life processes","Cool the body down"],c:2,e:"<span class='h'>💡 Idea</span>Respiration exists to release energy (stored as ATP) that powers growth, movement, active transport and other life processes.<span class='h'>✅</span>Release energy for the body's life processes."},
+{s:"Which word equation represents aerobic respiration?",o:["Glucose → lactic acid + energy","Carbon dioxide + water → glucose + oxygen","Glucose → ethanol + carbon dioxide + energy","Glucose + oxygen → carbon dioxide + water + energy"],c:3,e:"<span class='h'>💡 Idea</span>Aerobic respiration uses oxygen to fully break down glucose: glucose + oxygen → carbon dioxide + water + energy. (The second option is photosynthesis; the others are anaerobic.)<span class='h'>✅</span>Glucose + oxygen → carbon dioxide + water + energy."},
+{s:"Aerobic respiration is respiration that takes place…",o:["In the presence of oxygen","In the complete absence of oxygen","Only in green plants","Only inside the lungs"],c:0,e:"<span class='h'>💡 Idea</span>Aerobic means with air/oxygen. It fully breaks down glucose and releases a large amount of energy (about 38 ATP).<span class='h'>✅</span>In the presence of oxygen."},
+{s:"Compared with aerobic respiration, anaerobic respiration releases…",o:["More energy per glucose molecule","Much less energy per glucose molecule","Exactly the same amount of energy","No energy at all"],c:1,e:"<span class='h'>💡 Idea</span>Without oxygen glucose is only partly broken down, so anaerobic respiration yields far less energy (about 2 ATP) than aerobic (about 38 ATP).<span class='h'>✅</span>Much less energy per glucose molecule."},
+{s:"Anaerobic respiration in human muscles during hard exercise produces…",o:["Ethanol and carbon dioxide","Carbon dioxide and water","Lactic acid","Glucose and oxygen"],c:2,e:"<span class='h'>💡 Idea</span>When muscles lack oxygen they respire anaerobically and build up lactic acid, causing fatigue and an oxygen debt.<span class='h'>✅</span>Lactic acid."},
+{s:"Anaerobic respiration in yeast (fermentation) produces ethanol and…",o:["Lactic acid","Water","Oxygen","Carbon dioxide"],c:3,e:"<span class='h'>💡 Idea</span>In yeast, glucose → ethanol + carbon dioxide + energy. The carbon dioxide makes bread rise and forms bubbles in brewing.<span class='h'>✅</span>Carbon dioxide."},
+{s:"The energy released during respiration is stored temporarily in molecules of…",o:["ATP","DNA","Haemoglobin","Chlorophyll"],c:0,e:"<span class='h'>💡 Idea</span>ATP (adenosine triphosphate) is the cell's energy currency; respiration releases energy that is captured as ATP.<span class='h'>✅</span>ATP."},
+{s:"Which organelle is the main site of aerobic respiration in the cell?",o:["Ribosome","Nucleus","Mitochondrion","Chloroplast"],c:2,e:"<span class='h'>💡 Idea</span>Aerobic respiration mainly occurs in the mitochondria, often called the powerhouse of the cell.<span class='h'>✅</span>Mitochondrion."},
+{s:"Which organism carries out gas exchange mainly through its moist body surface?",o:["Fish","Earthworm","Grasshopper","Lizard"],c:1,e:"<span class='h'>💡 Idea</span>Small, thin-bodied animals like the earthworm and amoeba exchange gases by diffusion across a moist body surface, with no special organ.<span class='h'>✅</span>Earthworm."},
+{s:"The respiratory organs of a fish are the…",o:["Lungs","Tracheae","Spiracles","Gills"],c:3,e:"<span class='h'>💡 Idea</span>Fish use blood-rich gills to take dissolved oxygen from water and release carbon dioxide into it.<span class='h'>✅</span>Gills."},
+{s:"Insects such as the grasshopper take in air through tiny openings called…",o:["Spiracles","Stomata","Gills","Nostrils"],c:0,e:"<span class='h'>💡 Idea</span>Air enters an insect through spiracles along the body, then travels through tracheae straight to the tissues.<span class='h'>✅</span>Spiracles."},
+{s:"In insects, air is carried directly to the tissues through a network of tubes called…",o:["Bronchi","Alveoli","Tracheae","Veins"],c:2,e:"<span class='h'>💡 Idea</span>Insect tracheae pipe air right to the cells; unlike in mammals, the blood is not used to carry the oxygen.<span class='h'>✅</span>Tracheae."},
+{s:"Which group of animals uses lungs for gas exchange?",o:["Fish and tadpoles","Mammals, birds and reptiles","Insects only","Amoeba and earthworm"],c:1,e:"<span class='h'>💡 Idea</span>Lungs are the respiratory organs of land vertebrates: mammals, birds, reptiles and adult amphibians.<span class='h'>✅</span>Mammals, birds and reptiles."},
+{s:"In green plants, gaseous exchange takes place mainly through the stomata and the…",o:["Gills","Alveoli","Spiracles","Lenticels"],c:3,e:"<span class='h'>💡 Idea</span>Plants exchange gases through stomata (pores on leaves) and lenticels (openings on woody stems).<span class='h'>✅</span>Lenticels."},
+{s:"Which of these is NOT a feature of an efficient respiratory surface?",o:["Thick and dry","Large surface area","Thin (permeable)","Well supplied with blood"],c:0,e:"<span class='h'>💡 Idea</span>A good respiratory surface is large, thin, moist and well supplied with blood. A thick, dry surface would be a poor one.<span class='h'>✅</span>Thick and dry."},
+{s:"Respiratory surfaces must be kept moist because gases first have to…",o:["Freeze before crossing","Turn into solids","Dissolve before they can diffuse across","Gain an electric charge"],c:2,e:"<span class='h'>💡 Idea</span>Oxygen and carbon dioxide dissolve in the film of moisture on the surface before they diffuse across the membrane.<span class='h'>✅</span>Dissolve before they can diffuse across."},
+{s:"A tadpole (young amphibian) breathes mainly by means of…",o:["Lungs","Gills","Spiracles","Lenticels"],c:1,e:"<span class='h'>💡 Idea</span>A tadpole lives in water and uses gills; the adult frog switches to lungs and moist skin on land.<span class='h'>✅</span>Gills."},
+{s:"Which shows the correct order of the human air pathway?",o:["Trachea → larynx → pharynx → bronchi","Bronchi → trachea → larynx → alveoli","Nasal cavity → bronchioles → trachea → alveoli","Nasal cavity → pharynx → larynx → trachea → bronchi → alveoli"],c:3,e:"<span class='h'>💡 Idea</span>Air travels: nostrils → nasal cavity → pharynx → larynx → trachea → bronchi → bronchioles → alveoli.<span class='h'>✅</span>Nasal cavity → pharynx → larynx → trachea → bronchi → alveoli."},
+{s:"The windpipe of a human is also known as the…",o:["Trachea","Bronchus","Larynx","Pharynx"],c:0,e:"<span class='h'>💡 Idea</span>The trachea is the windpipe. It is held open by C-shaped rings of cartilage and lined with mucus and cilia.<span class='h'>✅</span>Trachea."},
+{s:"The voice box, found at the top of the trachea, is the…",o:["Pharynx","Epiglottis","Larynx","Bronchus"],c:2,e:"<span class='h'>💡 Idea</span>The larynx (voice box) holds the vocal cords; the epiglottis is only the flap that covers it during swallowing.<span class='h'>✅</span>Larynx."},
+{s:"The trachea divides into two tubes, called the …, which enter the lungs.",o:["Bronchioles","Bronchi","Alveoli","Vocal cords"],c:1,e:"<span class='h'>💡 Idea</span>The trachea splits into two bronchi, one for each lung; the bronchi then branch into finer bronchioles.<span class='h'>✅</span>Bronchi."},
+{s:"The actual site of gaseous exchange in the human lung is the…",o:["Trachea","Bronchi","Bronchioles","Alveoli"],c:3,e:"<span class='h'>💡 Idea</span>Gas exchange happens only at the alveoli — the tiny air sacs. The trachea, bronchi and bronchioles are just delivery pipes.<span class='h'>✅</span>Alveoli."},
+{s:"Which dome-shaped sheet of muscle separates the chest (thorax) from the abdomen and helps in breathing?",o:["Diaphragm","Pleura","Pericardium","Epiglottis"],c:0,e:"<span class='h'>💡 Idea</span>The diaphragm divides the thorax from the abdomen; its movement helps change the chest volume during breathing.<span class='h'>✅</span>Diaphragm."},
+{s:"Which is an adaptation of the alveoli for efficient gas exchange?",o:["Thick, dry walls","A poor blood supply","A very large surface area with thin, moist walls","Being placed far from any capillaries"],c:2,e:"<span class='h'>💡 Idea</span>Alveoli have a huge surface area, walls one cell thick, a moist lining and a dense capillary network — all ideal for fast diffusion.<span class='h'>✅</span>A very large surface area with thin, moist walls."},
+{s:"During inhalation (breathing in), the diaphragm…",o:["Relaxes and moves up into a dome","Contracts and flattens, moving downwards","Stays completely still","Turns into cartilage"],c:1,e:"<span class='h'>💡 Idea</span>On breathing in, the diaphragm contracts and flattens (moves down), enlarging the chest so pressure falls and air rushes in.<span class='h'>✅</span>Contracts and flattens, moving downwards."},
+{s:"During inhalation the volume of the chest increases, so the pressure inside the thorax…",o:["Rises above the outside air pressure","Stays exactly the same","Falls below the outside air pressure, so air rushes in","Becomes zero"],c:2,e:"<span class='h'>💡 Idea</span>A bigger chest means lower pressure inside than outside, so air flows in from high to low pressure.<span class='h'>✅</span>Falls below the outside air pressure, so air rushes in."},
+{s:"Compared with inhaled air, the air we breathe out (exhaled air) contains…",o:["More carbon dioxide and less oxygen","More oxygen and less carbon dioxide","No carbon dioxide at all","Only nitrogen and nothing else"],c:0,e:"<span class='h'>💡 Idea</span>Exhaled air has less oxygen (used by respiration) and much more carbon dioxide (produced by respiration); it is also warmer and moister.<span class='h'>✅</span>More carbon dioxide and less oxygen."},
+{s:"Which disease is caused by a bacterium and mainly attacks the lungs?",o:["Asthma","The common cold","Diabetes","Tuberculosis"],c:3,e:"<span class='h'>💡 Idea</span>Tuberculosis is caused by a bacterium (Mycobacterium tuberculosis) and damages the lungs. Asthma is an inflammatory airway condition, not a bacterial infection.<span class='h'>✅</span>Tuberculosis."}
+);
+
+["breathing","organs","human","mechanism","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

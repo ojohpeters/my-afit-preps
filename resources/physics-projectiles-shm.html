@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projectile Motion &amp; Simple Harmonic Motion — Physics A–Z (WAEC · JAMB · Post-UTME)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🎯 Projectile Motion &amp; Simple Harmonic Motion</h1>
+  <p>Projectiles · Horizontal Projection · SHM · Pendulum, Spring &amp; Energy — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes · g = 10 m/s²</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every formula explained</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="proj">🎯 Projectile Basics</div>
+    <div class="tab" data-cat="horiz">📐 Horizontal Projection</div>
+    <div class="tab" data-cat="shm">🌀 SHM Fundamentals</div>
+    <div class="tab" data-cat="shmsys">🔩 SHM Systems &amp; Energy</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: PROJECTILE BASICS ============ -->
+  <section class="cat proj show" id="cat-proj">
+    <h2 class="cathead">🎯 PART 1 — Projectile Basics &amp; The Three Master Formulas</h2>
+
+    <div class="lesson">
+      <h3>1. What is a projectile?</h3>
+      <p>A <b>projectile</b> is any object that is thrown, kicked or fired into the air and then moves <b>under the force of gravity alone</b> (we ignore air resistance). Examples: a kicked football, a thrown stone, a bullet leaving a gun, water from a hose.</p>
+      <span class="key">The one big idea — the two motions are independent</span>
+      <p>Projectile motion is really <b>two separate motions happening at the same time</b>:</p>
+      <ul>
+        <li><b>Horizontal motion:</b> there is <b>no horizontal force</b>, so the horizontal velocity is <b>constant</b> and the horizontal acceleration is <b>zero</b>.</li>
+        <li><b>Vertical motion:</b> gravity pulls down, so there is a constant downward acceleration <b>g</b> (= 10 m/s²). The vertical motion is exactly like <b>free fall / a ball thrown straight up</b>.</li>
+      </ul>
+      <p>Because one direction speeds up and the other stays steady, the path traced out is a <b>parabola</b> (a curved arch).</p>
+      <div class="analogy">🌟 Memory: sideways = cruise control (constant speed); up-and-down = gravity doing its normal free-fall thing. They never interfere with each other.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Splitting the launch velocity into components</h3>
+      <p>An object launched at speed <b>u</b> at an angle <b>θ</b> to the ground has its velocity split into two parts:</p>
+      <div class="formula">Horizontal:&nbsp; uₓ = u cosθ&nbsp;&nbsp;(stays constant)</div>
+      <div class="formula">Vertical:&nbsp; u_y = u sinθ&nbsp;&nbsp;(changes because of g)</div>
+      <ul>
+        <li>Going up, the vertical velocity <b>decreases</b> (gravity opposes it) until it reaches <b>zero at the very top</b>.</li>
+        <li>At the highest point the object still moves <b>horizontally</b> with speed u cosθ — it is <b>not</b> at rest.</li>
+        <li>Coming down, the vertical velocity grows again until it lands.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The three master formulas</h3>
+      <p>For a projectile launched at speed <b>u</b> and angle <b>θ</b> over level ground, learn these three by heart:</p>
+      <span class="key">(a) Time of flight — how long it stays in the air</span>
+      <div class="formula">T = 2u sinθ / g</div>
+      <p>Time to reach the top is <span class="calc">u sinθ / g</span>; the whole flight (up + down) is twice that.</p>
+      <span class="key">(b) Maximum height — how high it climbs</span>
+      <div class="formula">H = u²sin²θ / 2g</div>
+      <p>Found from v² = u² − 2gH using vertical launch speed u sinθ and v = 0 at the top.</p>
+      <span class="key">(c) Range — how far it lands horizontally</span>
+      <div class="formula">R = u²sin2θ / g</div>
+      <p>Range = horizontal speed × time of flight = (u cosθ)(2u sinθ / g). Because 2 sinθ cosθ = sin2θ, this tidies up to u²sin2θ / g.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Maximum range &amp; complementary angles</h3>
+      <span class="key">Maximum range is at 45°</span>
+      <p>In R = u²sin2θ / g, the only thing that changes with angle is sin2θ. This is largest (= 1) when <b>2θ = 90°</b>, i.e. <b>θ = 45°</b>. So for a given speed, a 45° launch goes the farthest:</p>
+      <div class="formula">R(max) = u² / g&nbsp;&nbsp;(at θ = 45°)</div>
+      <span class="key">Complementary angles give equal range</span>
+      <p>Two angles that add up to <b>90°</b> (for example 30° and 60°, or 20° and 70°) are called <b>complementary</b>. They produce the <b>same range</b>, because sin2θ has the same value for both.</p>
+      <div class="ex"><b class="t">Why 30° and 60° give equal range:</b>
+        <div class="calc">30°: sin(2 × 30°) = sin60° = 0.866</div>
+        <div class="calc">60°: sin(2 × 60°) = sin120° = 0.866</div>
+        Same sin2θ → same range (but the 60° shot goes higher and stays up longer).</div>
+      <div class="analogy">🌟 Memory: a low, flat shot and a high, lobbed shot can land in exactly the same spot if their angles add up to 90°.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — the full set (u = 20 m/s, θ = 30°, g = 10):</b>
+        <div class="calc">Time of flight: T = 2u sinθ / g = 2 × 20 × 0.5 / 10 = 20 / 10 = 2 s</div>
+        <div class="calc">Max height: H = u²sin²θ / 2g = 400 × (0.5)² / 20 = 400 × 0.25 / 20 = 5 m</div>
+        <div class="calc">Range: R = u²sin2θ / g = 400 × sin60° / 10 = 400 × 0.866 / 10 ≈ 34.6 m</div>
+        So T = <b>2 s</b>, H = <b>5 m</b>, R ≈ <b>34.6 m</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — a 45° shot (u = 30 m/s, g = 10):</b>
+        <div class="calc">R = u²sin2θ / g = 30² × sin90° / 10 = 900 × 1 / 10 = 90 m</div>
+        Since 45° is the best angle, this is also the maximum range for a 30 m/s launch (R(max) = u²/g = 900/10 = 90 m).</div>
+
+      <div class="ex"><b class="t">Example 3 — vertical velocity at the top:</b> A stone is thrown at 25 m/s at 40°. What is its speed at the highest point?
+        <div class="calc">At the top the vertical velocity is 0, only the horizontal part remains.</div>
+        <div class="calc">Speed at top = u cosθ = 25 × cos40° = 25 × 0.766 ≈ 19.2 m/s</div>
+        Answer ≈ <b>19.2 m/s</b> (purely horizontal).</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: HORIZONTAL PROJECTION ============ -->
+  <section class="cat horiz" id="cat-horiz">
+    <h2 class="cathead">📐 PART 2 — Horizontal Projection &amp; Tower Problems</h2>
+
+    <div class="lesson">
+      <h3>1. What is horizontal projection?</h3>
+      <p>This is the special case where an object is thrown <b>horizontally</b> (straight sideways) from a <b>height h</b> — like a ball rolling off a table, a stone thrown off a cliff, or a bomb dropped from a plane.</p>
+      <span class="key">The key starting point</span>
+      <p>Because it is launched sideways, the object starts with <b>zero vertical velocity</b> (it is not thrown up or down). Gravity then takes over the vertical motion.</p>
+      <ul>
+        <li><b>Vertically:</b> it is exactly like <b>dropping</b> the object from rest — free fall.</li>
+        <li><b>Horizontally:</b> it keeps its steady launch speed u the whole time.</li>
+      </ul>
+      <p>The path is <b>half a parabola</b> — it curves downward as it moves forward.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The two working formulas</h3>
+      <span class="key">(a) Time to reach the ground (from the height only)</span>
+      <div class="formula">h = ½gt²&nbsp;&nbsp;→&nbsp;&nbsp;t = √(2h / g)</div>
+      <p>Notice: the fall time depends <b>only on the height h and g</b> — <b>not</b> on how fast it was thrown sideways.</p>
+      <span class="key">(b) Horizontal range (how far from the base it lands)</span>
+      <div class="formula">Range, x = u × t</div>
+      <p>where u is the horizontal launch speed and t is the fall time from formula (a).</p>
+      <div class="analogy">🌟 Two-step recipe: <b>Step 1</b> find the fall time from the height. <b>Step 2</b> multiply that time by the horizontal speed to get the range.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Two objects, same height, land together</h3>
+      <p>Drop one ball straight down and, at the same instant, throw an identical ball horizontally from the <b>same height</b>. They hit the ground at <b>exactly the same time</b>.</p>
+      <p>Why? The <b>vertical</b> motion is identical for both (both start with zero vertical velocity and fall under the same g). The thrown ball simply travels sideways as well — but sideways motion does not change how fast it falls.</p>
+      <div class="analogy">🌟 Big idea: horizontal speed does NOT affect fall time. Sideways and downwards are independent.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — cliff problem:</b> A stone is projected horizontally at 15 m/s from a cliff 20 m high (g = 10). Find (a) the time to land and (b) how far from the base it lands.
+        <div class="calc">(a) h = ½gt² → 20 = ½ × 10 × t² = 5t² → t² = 4 → t = 2 s</div>
+        <div class="calc">(b) Range x = u × t = 15 × 2 = 30 m</div>
+        Answers: <b>t = 2 s</b>, <b>range = 30 m</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — table top:</b> A ball rolls off a table 5 m high (g = 10). How long is it in the air?
+        <div class="calc">t = √(2h / g) = √(2 × 5 / 10) = √1 = 1 s</div>
+        Answer = <b>1 s</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — speed on landing (tower type):</b> An object is thrown horizontally at 20 m/s from a 45 m tower (g = 10). Find its speed just before it hits the ground.
+        <div class="calc">Fall time: t = √(2 × 45 / 10) = √9 = 3 s</div>
+        <div class="calc">Vertical velocity gained: v_y = g × t = 10 × 3 = 30 m/s</div>
+        <div class="calc">Horizontal velocity (unchanged): vₓ = 20 m/s</div>
+        <div class="calc">Resultant speed = √(vₓ² + v_y²) = √(20² + 30²) = √(400 + 900) = √1300 ≈ 36 m/s</div>
+        Answer ≈ <b>36 m/s</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. The monkey-and-hunter problem</h3>
+      <p>A classic exam favourite. A hunter aims a gun <b>straight at</b> a monkey hanging from a branch. At the exact instant the gun fires, the monkey <b>lets go and falls</b>. Where should the hunter aim?</p>
+      <p><b>Surprising answer:</b> aim directly at the monkey — the bullet will <b>still hit it</b>. During the flight, gravity pulls the bullet down by ½gt², and it pulls the falling monkey down by exactly the <b>same</b> ½gt² in the same time. Both drop by the same amount, so they meet.</p>
+      <div class="analogy">🌟 Lesson: because horizontal and vertical motions are independent, the bullet and the monkey fall together — aiming straight at a falling target still scores a hit.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: SHM FUNDAMENTALS ============ -->
+  <section class="cat shm" id="cat-shm">
+    <h2 class="cathead">🌀 PART 3 — Simple Harmonic Motion: The Fundamentals</h2>
+
+    <div class="lesson">
+      <h3>1. What is simple harmonic motion (SHM)?</h3>
+      <p><b>Simple harmonic motion</b> is a to-and-fro (back-and-forth) motion about a fixed central point, in which:</p>
+      <div class="formula">The acceleration is proportional to the displacement from a fixed point, and is always directed towards that point.</div>
+      <p>In symbols this defining condition is written:</p>
+      <div class="formula">a = −ω²x</div>
+      <ul>
+        <li><b>x</b> = displacement from the centre (equilibrium) position.</li>
+        <li><b>a</b> = acceleration.</li>
+        <li><b>ω</b> (omega) = angular frequency, a constant for the system.</li>
+        <li>The <b>minus sign</b> is the heart of SHM — it means the acceleration always points <b>back towards the centre</b> (a restoring effect), opposite to the displacement.</li>
+      </ul>
+      <p>Everyday examples: a swinging pendulum, a mass bouncing on a spring, a vibrating guitar string, a loaded test-tube bobbing in water.</p>
+      <div class="analogy">🌟 Memory: the further you pull it out, the harder it is pulled back — and always back towards the middle. That is SHM.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The key quantities</h3>
+      <table class="r">
+        <tr><th>Quantity</th><th>Meaning</th><th>Symbol / unit</th></tr>
+        <tr><td>Amplitude</td><td>The maximum displacement from the centre</td><td>A (metre, m)</td></tr>
+        <tr><td>Period</td><td>Time for one complete oscillation (one full cycle)</td><td>T (second, s)</td></tr>
+        <tr><td>Frequency</td><td>Number of complete cycles per second</td><td>f (hertz, Hz)</td></tr>
+        <tr><td>Angular frequency</td><td>How fast the phase advances (2π per cycle)</td><td>ω (rad/s)</td></tr>
+      </table>
+      <span class="key">The connecting formulas</span>
+      <div class="formula">f = 1 / T&nbsp;&nbsp;·&nbsp;&nbsp;T = 2π / ω&nbsp;&nbsp;·&nbsp;&nbsp;ω = 2πf</div>
+      <p>So period, frequency and angular frequency are just three ways of describing the same rate. Learn to switch between them.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Velocity and acceleration in SHM</h3>
+      <span class="key">Velocity — fastest at the centre</span>
+      <div class="formula">v = ω√(A² − x²)</div>
+      <ul>
+        <li>At the <b>centre</b> (x = 0): v is a <b>maximum</b> → <b>v(max) = ωA</b>. The body is moving fastest as it whips through the middle.</li>
+        <li>At the <b>extremes</b> (x = ±A): v = 0. The body is momentarily at rest before turning back.</li>
+      </ul>
+      <span class="key">Acceleration — greatest at the extremes</span>
+      <div class="formula">a = −ω²x&nbsp;&nbsp;→&nbsp;&nbsp;a(max) = ω²A&nbsp;(at x = ±A)</div>
+      <ul>
+        <li>At the <b>extremes</b> (x = ±A): acceleration is a <b>maximum</b> (biggest restoring pull).</li>
+        <li>At the <b>centre</b> (x = 0): acceleration is <b>zero</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Opposite ends of the story: speed is greatest where acceleration is zero (the centre), and speed is zero where acceleration is greatest (the extremes).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — period from angular frequency:</b> A body moves with ω = 4 rad/s. Find its period and frequency.
+        <div class="calc">T = 2π / ω = 2π / 4 = 1.57 s</div>
+        <div class="calc">f = 1 / T = 1 / 1.57 ≈ 0.64 Hz</div>
+        Answers: T ≈ <b>1.57 s</b>, f ≈ <b>0.64 Hz</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — maximum speed and acceleration:</b> A particle in SHM has ω = 2 rad/s and amplitude A = 0.5 m. Find its maximum speed and maximum acceleration.
+        <div class="calc">v(max) = ωA = 2 × 0.5 = 1.0 m/s (at the centre)</div>
+        <div class="calc">a(max) = ω²A = 2² × 0.5 = 4 × 0.5 = 2 m/s² (at the extremes)</div>
+        Answers: v(max) = <b>1.0 m/s</b>, a(max) = <b>2 m/s²</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — velocity at a given point:</b> For the same particle (ω = 2, A = 0.5 m), find its speed when x = 0.3 m.
+        <div class="calc">v = ω√(A² − x²) = 2 × √(0.5² − 0.3²) = 2 × √(0.25 − 0.09)</div>
+        <div class="calc">= 2 × √0.16 = 2 × 0.4 = 0.8 m/s</div>
+        Answer = <b>0.8 m/s</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: SHM SYSTEMS & ENERGY ============ -->
+  <section class="cat shmsys" id="cat-shmsys">
+    <h2 class="cathead">🔩 PART 4 — SHM Systems: Pendulum, Spring &amp; Energy</h2>
+
+    <div class="lesson">
+      <h3>1. The simple pendulum</h3>
+      <p>A simple pendulum is a small heavy bob on a light string that swings back and forth. For <b>small swings</b> its motion is SHM, with period:</p>
+      <div class="formula">T = 2π√(L / g)</div>
+      <ul>
+        <li><b>L</b> = length of the string (metre)</li>
+        <li><b>g</b> = acceleration due to gravity</li>
+      </ul>
+      <span class="key">What the period depends on — and what it does NOT</span>
+      <p>The period depends <b>only on L and g</b>. It does <b>NOT</b> depend on:</p>
+      <ul>
+        <li>the <b>mass</b> of the bob (a heavy and a light bob of the same length swing at the same rate),</li>
+        <li>the <b>amplitude</b> (for small swings), or the material of the string.</li>
+      </ul>
+      <p>Because T is proportional to √L: to <b>double</b> the period you must make the string <b>4 times</b> longer (2² = 4); to <b>halve</b> the period you use a string ¼ as long.</p>
+      <div class="analogy">🌟 Longer string = slower swing. Mass makes no difference — that is why a big church bell and a small pendulum of the same length keep the same beat.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The mass–spring system</h3>
+      <p>A mass hanging on (or attached to) a spring and set bouncing also performs SHM. Its period is:</p>
+      <div class="formula">T = 2π√(m / k)</div>
+      <ul>
+        <li><b>m</b> = the mass (kilogram)</li>
+        <li><b>k</b> = the spring (force) constant — the stiffness, in newtons per metre (N/m)</li>
+      </ul>
+      <p>So a <b>heavier mass</b> gives a <b>longer</b> period (slower bounce), while a <b>stiffer spring</b> (larger k) gives a <b>shorter</b> period (faster bounce). Note that, unlike the pendulum, the spring period <b>does depend on the mass</b>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Energy in SHM</h3>
+      <p>As the body oscillates, energy is constantly swapped between <b>kinetic energy (KE)</b> and <b>potential energy (PE)</b>, but the <b>total mechanical energy stays constant</b> (no friction).</p>
+      <div class="formula">Total energy E = KE + PE = constant = ½kA²</div>
+      <table class="r">
+        <tr><th>Position</th><th>Speed</th><th>Kinetic energy</th><th>Potential energy</th></tr>
+        <tr><td>Centre (x = 0)</td><td>Maximum (ωA)</td><td><b>Maximum</b></td><td>Minimum (zero)</td></tr>
+        <tr><td>Extreme (x = ±A)</td><td>Zero</td><td>Zero</td><td><b>Maximum</b></td></tr>
+      </table>
+      <ul>
+        <li><b>KE is greatest at the centre</b>, where the body moves fastest.</li>
+        <li><b>PE is greatest at the extremes</b>, where the body is momentarily at rest.</li>
+        <li>At every point KE + PE adds up to the <b>same total</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Picture a swing: fastest (all KE) at the bottom, momentarily still and highest (all PE) at the ends — energy just keeps trading places.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — pendulum period:</b> Find the period of a simple pendulum of length 0.9 m (g = 10, π ≈ 3.14).
+        <div class="calc">T = 2π√(L / g) = 2π√(0.9 / 10) = 2π√0.09</div>
+        <div class="calc">= 2π × 0.3 = 0.6π ≈ 1.9 s</div>
+        Answer ≈ <b>1.9 s</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — changing the length:</b> A pendulum has a period of 2 s. What length is needed to make the period 4 s?
+        <div class="calc">T ∝ √L, and the period is doubled (2 s → 4 s)</div>
+        <div class="calc">So L must be multiplied by 2² = 4 → the string must be 4 times as long.</div>
+        Answer: <b>make it 4 times longer</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — spring period:</b> A 0.2 kg mass oscillates on a spring of force constant k = 20 N/m (π ≈ 3.14). Find the period.
+        <div class="calc">T = 2π√(m / k) = 2π√(0.2 / 20) = 2π√0.01</div>
+        <div class="calc">= 2π × 0.1 = 0.2π ≈ 0.63 s</div>
+        Answer ≈ <b>0.63 s</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — finding the spring constant:</b> A 0.5 kg mass on a spring has a period of 0.628 s. Find k (π ≈ 3.14).
+        <div class="calc">T = 2π√(m / k) → 0.628 = 2 × 3.14 × √(0.5 / k)</div>
+        <div class="calc">0.628 / 6.28 = √(0.5 / k) → 0.1 = √(0.5 / k)</div>
+        <div class="calc">0.01 = 0.5 / k → k = 0.5 / 0.01 = 50 N/m</div>
+        Answer: <b>k = 50 N/m</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Resolve into components, use the master formulas — the numbers follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"For a projectile moving under gravity alone, the horizontal component of its velocity…",o:["Remains constant throughout the flight","Increases uniformly with time","Falls to zero at the highest point","Is always equal to the vertical component"],c:0,e:"<span class='h'>💡 Idea</span>There is no horizontal force (ignoring air resistance), so the horizontal velocity u cosθ never changes.<span class='h'>✅</span>Remains constant throughout the flight."},
+{s:"The vertical motion of a projectile has a constant acceleration equal to…",o:["g, directed vertically downward","Zero","g, directed vertically upward","A constant horizontal value"],c:0,e:"<span class='h'>💡 Idea</span>Only gravity acts, so the vertical acceleration is g pointing straight down — the vertical motion is just free fall.<span class='h'>✅</span>g, directed vertically downward."},
+{s:"At the highest point of its path, the velocity of a projectile launched at angle θ is…",o:["Zero","Horizontal only (u cosθ)","Vertical only","Equal to the launch speed u"],c:1,e:"<span class='h'>💡 Idea</span>At the top the vertical velocity has fallen to zero, but the horizontal part u cosθ is still there.<span class='h'>✅</span>Horizontal only (u cosθ)."},
+{s:"The time of flight of a projectile launched at speed u and angle θ (over level ground) is…",o:["T = u sinθ / g","T = 2u cosθ / g","T = 2u sinθ / g","T = u²sin2θ / g"],c:2,e:"<span class='h'>💡 Idea</span>Time up = u sinθ / g; the whole flight is twice that.<span class='calc'>T = 2u sinθ / g</span><span class='h'>✅</span>T = 2u sinθ / g."},
+{s:"The maximum height reached by a projectile is…",o:["H = u²sin2θ / g","H = 2u sinθ / g","H = u sin²θ / 2g","H = u²sin²θ / 2g"],c:3,e:"<span class='h'>💡 Idea</span>Using v² = u² − 2gH with vertical launch speed u sinθ and v = 0 at the top.<span class='calc'>H = u²sin²θ / 2g</span><span class='h'>✅</span>H = u²sin²θ / 2g."},
+{s:"The horizontal range of a projectile on level ground is…",o:["R = u²sin2θ / g","R = u²sin²θ / 2g","R = 2u sinθ / g","R = u²cos2θ / g"],c:0,e:"<span class='h'>💡 Idea</span>Range = horizontal speed × time of flight = (u cosθ)(2u sinθ / g) = u²sin2θ / g (since 2 sinθ cosθ = sin2θ).<span class='h'>✅</span>R = u²sin2θ / g."},
+{s:"For a fixed launch speed, the horizontal range is a maximum when the angle of projection is…",o:["30°","45°","60°","90°"],c:1,e:"<span class='h'>💡 Idea</span>R = u²sin2θ / g is largest when sin2θ = 1, i.e. 2θ = 90°, so θ = 45°.<span class='h'>✅</span>45°."},
+{s:"Two balls are thrown with the same speed, one at 30° and one at 60°. They will have…",o:["Equal maximum heights","Equal times of flight","Equal horizontal ranges","Identical paths in every way"],c:2,e:"<span class='h'>💡 Idea</span>30° and 60° are complementary (they add to 90°), and sin(2×30°) = sin(2×60°) = sin60°, so their ranges are equal. Their heights and times of flight, however, differ.<span class='h'>✅</span>Equal horizontal ranges."},
+{s:"A ball is projected at 20 m/s at 30° to the horizontal (g = 10 m/s²). Its time of flight is…",o:["1 s","4 s","0.5 s","2 s"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>T = 2u sinθ / g = 2 × 20 × sin30° / 10</span><span class='calc'>= 2 × 20 × 0.5 / 10 = 20 / 10 = 2 s</span><span class='h'>✅</span>2 s."},
+{s:"For that same ball (20 m/s at 30°, g = 10), the maximum height reached is…",o:["5 m","10 m","2.5 m","20 m"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>H = u²sin²θ / 2g = 20² × (0.5)² / (2 × 10)</span><span class='calc'>= 400 × 0.25 / 20 = 100 / 20 = 5 m</span><span class='h'>✅</span>5 m."},
+{s:"For the same ball (20 m/s at 30°, g = 10), the horizontal range is about…",o:["≈ 20 m","≈ 34.6 m","≈ 40 m","≈ 69 m"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>R = u²sin2θ / g = 400 × sin60° / 10</span><span class='calc'>= 400 × 0.866 / 10 = 346.4 / 10 ≈ 34.6 m</span><span class='h'>✅</span>≈ 34.6 m."},
+{s:"When an object is projected horizontally from a height, its initial vertical velocity is…",o:["Equal to the horizontal speed u","Equal to g","Zero","A maximum at the moment of launch"],c:2,e:"<span class='h'>💡 Idea</span>It is launched sideways, so it starts with no downward speed — its vertical velocity begins at zero and then grows as gravity acts.<span class='h'>✅</span>Zero."},
+{s:"For an object projected horizontally, the time it takes to reach the ground depends on…",o:["Only its horizontal speed","Its mass","Both the height and the horizontal speed equally","Only the height it falls (t = √(2h/g))"],c:3,e:"<span class='h'>💡 Idea</span>Vertically it is free fall: h = ½gt², so t = √(2h/g). The horizontal speed has no effect on the fall time.<span class='h'>✅</span>Only the height it falls (t = √(2h/g))."},
+{s:"A stone is projected horizontally from a cliff 20 m high (g = 10 m/s²). The time to reach the ground is…",o:["2 s","4 s","1 s","20 s"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>h = ½gt² → 20 = ½ × 10 × t² = 5t²</span><span class='calc'>t² = 4 → t = 2 s</span><span class='h'>✅</span>2 s."},
+{s:"If that stone left the 20 m cliff at 15 m/s horizontally, how far from the base does it land?",o:["15 m","30 m","45 m","7.5 m"],c:1,e:"<span class='h'>✏️ Working</span>Time in air = 2 s (from the fall).<span class='calc'>Range = u × t = 15 × 2 = 30 m</span><span class='h'>✅</span>30 m."},
+{s:"A hunter aims a gun straight at a monkey on a branch. The instant the gun fires, the monkey lets go and falls. The monkey will…",o:["Escape, because the bullet flies in a straight line","Be missed as the bullet passes above it","Still be hit, because bullet and monkey fall the same distance under g","Only be hit if the gun is aimed below the monkey"],c:2,e:"<span class='h'>💡 Idea</span>Both the bullet and the monkey fall the same amount (½gt²) in the same time, so the bullet drops just enough to still meet the falling monkey.<span class='h'>✅</span>Still be hit, because bullet and monkey fall the same distance under g."},
+{s:"Simple harmonic motion is a motion in which the acceleration is…",o:["Constant in magnitude and direction","Proportional to the displacement but directed away from the centre","Independent of the displacement","Proportional to the displacement from a fixed point and directed towards that point"],c:3,e:"<span class='h'>💡 Idea</span>This is the definition of SHM: a = −ω²x. The minus sign means the acceleration always points back towards the fixed centre.<span class='h'>✅</span>Proportional to the displacement from a fixed point and directed towards that point."},
+{s:"The defining equation of simple harmonic motion is…",o:["a = −ω²x","a = +ω²x","a = −ωx","v = −ω²x"],c:0,e:"<span class='h'>💡 Idea</span>Acceleration is proportional to displacement x and opposite in direction (towards the centre), so a = −ω²x.<span class='h'>✅</span>a = −ω²x."},
+{s:"The period T of a body in SHM is related to its angular frequency ω by…",o:["T = ω / 2π","T = 2π / ω","T = 2πω","T = ω²"],c:1,e:"<span class='h'>💡 Idea</span>One full cycle covers 2π radians, so T = 2π / ω.<span class='h'>✅</span>T = 2π / ω."},
+{s:"Angular frequency ω is related to the frequency f by…",o:["ω = f / 2π","ω = πf","ω = 2πf","ω = f²"],c:2,e:"<span class='h'>💡 Idea</span>Each cycle is 2π radians and there are f cycles per second, so ω = 2πf.<span class='h'>✅</span>ω = 2πf."},
+{s:"In SHM, the speed of the vibrating body is a maximum…",o:["At the extreme positions","Halfway between the centre and an extreme","At the moment of maximum displacement","At the centre (equilibrium) position"],c:3,e:"<span class='h'>💡 Idea</span>v = ω√(A²−x²) is largest when x = 0 (the centre), giving v(max) = ωA; at the extremes (x = ±A) the speed is zero.<span class='h'>✅</span>At the centre (equilibrium) position."},
+{s:"In SHM, the acceleration of the body is greatest…",o:["At the extreme positions","At the centre","Everywhere the same","At the point where the speed is greatest"],c:0,e:"<span class='h'>💡 Idea</span>Since a = −ω²x, the acceleration is largest where x is largest — at the extremes (a(max) = ω²A) — and it is zero at the centre.<span class='h'>✅</span>At the extreme positions."},
+{s:"A body in SHM has angular frequency ω = 2 rad/s and amplitude A = 0.5 m. Using v = ω√(A²−x²), its maximum speed is…",o:["0.5 m/s","1.0 m/s","2.0 m/s","4.0 m/s"],c:1,e:"<span class='h'>✏️ Working</span>Maximum speed is at the centre (x = 0):<span class='calc'>v(max) = ωA = 2 × 0.5 = 1.0 m/s</span><span class='h'>✅</span>1.0 m/s."},
+{s:"For the same body (ω = 2 rad/s, A = 0.5 m), the maximum acceleration is…",o:["0.5 m/s²","1 m/s²","2 m/s²","4 m/s²"],c:2,e:"<span class='h'>✏️ Working</span>Maximum acceleration is at the extreme (x = A):<span class='calc'>a(max) = ω²A = 2² × 0.5 = 4 × 0.5 = 2 m/s²</span><span class='h'>✅</span>2 m/s²."},
+{s:"The period of a simple pendulum is given by…",o:["T = 2π√(g/L)","T = 2π√(m/k)","T = 2πL/g","T = 2π√(L/g)"],c:3,e:"<span class='h'>💡 Idea</span>For a simple pendulum T = 2π√(L/g), where L is the length and g is gravity.<span class='h'>✅</span>T = 2π√(L/g)."},
+{s:"The period of a simple pendulum depends on…",o:["Its length and g only","The mass of the bob","The size of a small swing","The material of the bob"],c:0,e:"<span class='h'>💡 Idea</span>T = 2π√(L/g) contains only L and g — the period does not depend on the mass of the bob or (for small swings) on the amplitude.<span class='h'>✅</span>Its length and g only."},
+{s:"To double the period of a simple pendulum, its length must be…",o:["Doubled","Made four times as long","Halved","Made eight times as long"],c:1,e:"<span class='h'>✏️ Working</span>T is proportional to √L, so to double T the length must be multiplied by 2² = 4.<span class='calc'>√(4L) = 2√L → the period doubles</span><span class='h'>✅</span>Made four times as long."},
+{s:"The period of a mass–spring system is…",o:["T = 2π√(k/m)","T = 2π√(L/g)","T = 2π√(m/k)","T = 2π√(mk)"],c:2,e:"<span class='h'>💡 Idea</span>For a mass m on a spring of force constant k, T = 2π√(m/k) — a heavier mass or a softer spring gives a longer period.<span class='h'>✅</span>T = 2π√(m/k)."},
+{s:"A 0.2 kg mass oscillates on a spring of force constant k = 20 N/m. Its period is (take π ≈ 3.14)…",o:["≈ 6.3 s","≈ 0.1 s","≈ 1.26 s","≈ 0.63 s"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>T = 2π√(m/k) = 2π√(0.2/20) = 2π√0.01</span><span class='calc'>= 2π × 0.1 = 0.2π ≈ 0.63 s</span><span class='h'>✅</span>≈ 0.63 s."},
+{s:"In SHM, as the body oscillates back and forth, the total mechanical energy…",o:["Is greatest at the extreme positions","Is zero at the centre","Stays constant, with KE greatest at the centre and PE greatest at the extremes","Increases as the body speeds up"],c:2,e:"<span class='h'>💡 Idea</span>Energy is only swapped between KE and PE. The total stays constant: KE is a maximum at the centre (fastest) and PE is a maximum at the extremes (momentarily at rest).<span class='h'>✅</span>Stays constant, with KE greatest at the centre and PE greatest at the extremes."}
+);
+
+["proj","horiz","shm","shmsys","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
