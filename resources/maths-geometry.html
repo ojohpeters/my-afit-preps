@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry A–Z — Angles, Triangles, Polygons & Circle Theorems (Maths)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>📐 Geometry A–Z</h1>
+  <p>Angles &amp; Lines · Triangles &amp; Polygons · Circle Theorems — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every angle worked out</span><span class="pill">All the rules & theorems</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="angles">📐 Angles &amp; Lines</div>
+    <div class="tab" data-cat="triangles">🔺 Triangles &amp; Polygons</div>
+    <div class="tab" data-cat="circles">⭕ Circle Theorems</div>
+    <div class="tab" data-cat="mixed">🧩 Mixed Geometry Problems</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: ANGLES & LINES ============ -->
+  <section class="cat angles show" id="cat-angles">
+    <h2 class="cathead">📐 PART 1 — Angles &amp; Lines</h2>
+
+    <div class="lesson">
+      <h3>1. What is an angle?</h3>
+      <p>An <b>angle</b> is the amount of <b>turn</b> between two straight lines (called arms) that meet at a point (called the <b>vertex</b>). We measure the size of the turn in <b>degrees (°)</b>. A full turn all the way round is <b>360°</b>.</p>
+      <span class="key">The five basic types of angle</span>
+      <table class="r">
+        <tr><th>Name</th><th>Size</th><th>Picture in words</th></tr>
+        <tr><td><b>Acute angle</b></td><td>Less than 90°</td><td>A small sharp corner</td></tr>
+        <tr><td><b>Right angle</b></td><td>Exactly 90°</td><td>A perfect square corner (⌐)</td></tr>
+        <tr><td><b>Obtuse angle</b></td><td>Between 90° and 180°</td><td>An open, blunt corner</td></tr>
+        <tr><td><b>Straight angle</b></td><td>Exactly 180°</td><td>A straight line — half a full turn</td></tr>
+        <tr><td><b>Reflex angle</b></td><td>Between 180° and 360°</td><td>More than a straight line, less than full turn</td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>A</b>cute is a <b>A</b> tiny/sharp angle (small). Obtuse is the fat, open one. If it is bigger than a straight line, it is reflex.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Complementary and supplementary angles</h3>
+      <p>These two words are asked constantly, and students mix them up. Learn them cold:</p>
+      <div class="formula">Complementary angles ADD UP TO 90°</div>
+      <div class="formula">Supplementary angles ADD UP TO 180°</div>
+      <div class="analogy">🌟 Memory trick: <b>C</b>omplementary → <b>C</b> comes before <b>S</b> in the alphabet, and 90 comes before 180. So Complementary = 90°, Supplementary = 180°.</div>
+      <div class="ex"><b class="t">Worked example:</b> Angle A and angle B are complementary. If A = 35°, find B.
+        <div class="calc">B = 90° − 35° = 55°</div>
+        Answer = <b>55°</b>.</div>
+      <div class="ex"><b class="t">Worked example:</b> Two angles are supplementary. One is 118°. Find the other.
+        <div class="calc">Other = 180° − 118° = 62°</div>
+        Answer = <b>62°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Angles on a line, at a point, and vertically opposite</h3>
+      <span class="key">Three rules you must know by heart</span>
+      <ul>
+        <li><b>Angles on a straight line add up to 180°.</b> If several angles sit side by side on one straight line, they total 180°.</li>
+        <li><b>Angles at a point add up to 360°.</b> If several angles meet all the way round a single point, they total 360° (a full turn).</li>
+        <li><b>Vertically opposite angles are equal.</b> When two straight lines cross, they make an X shape — the two angles that face each other across the crossing are equal.</li>
+      </ul>
+      <div class="ex"><b class="t">Worked example (on a line):</b> Three angles on a straight line are 40°, x, and 90°. Find x.
+        <div class="calc">40° + x + 90° = 180°</div>
+        <div class="calc">x = 180° − 130° = 50°</div>
+        Answer = <b>50°</b>.</div>
+      <div class="ex"><b class="t">Worked example (at a point):</b> Four angles round a point are 100°, 80°, 90° and x. Find x.
+        <div class="calc">100° + 80° + 90° + x = 360°</div>
+        <div class="calc">x = 360° − 270° = 90°</div>
+        Answer = <b>90°</b>.</div>
+      <div class="ex"><b class="t">Worked example (vertically opposite):</b> Two lines cross. One angle is 65°. Find the angle vertically opposite it, and the angle next to it on the line.
+        <div class="calc">Vertically opposite = 65° (equal)</div>
+        <div class="calc">Angle next to it on the line = 180° − 65° = 115°</div>
+        Answers: <b>65°</b> and <b>115°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Parallel lines cut by a transversal</h3>
+      <p><b>Parallel lines</b> are two straight lines that never meet (shown with little arrows). A <b>transversal</b> is a line that cuts across them. Where it crosses, it makes three special pairs of angles:</p>
+      <table class="r">
+        <tr><th>Pair</th><th>Shape clue</th><th>Rule</th></tr>
+        <tr><td><b>Corresponding angles</b></td><td>Make an <b>F</b> shape</td><td><b>Equal</b></td></tr>
+        <tr><td><b>Alternate angles</b></td><td>Make a <b>Z</b> shape</td><td><b>Equal</b></td></tr>
+        <tr><td><b>Co-interior (allied) angles</b></td><td>Make a <b>C</b> or <b>U</b> shape</td><td><b>Add up to 180°</b></td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>F</b> and <b>Z</b> angles are <b>equal</b>; the <b>C</b>/<b>U</b> (co-interior) angles are the odd ones out — they are supplementary (sum 180°).</div>
+      <div class="ex"><b class="t">Worked example (corresponding):</b> A transversal crosses two parallel lines. A corresponding angle is 72°. Find its partner.
+        <div class="calc">Corresponding angles are equal → partner = 72°</div>
+        Answer = <b>72°</b>.</div>
+      <div class="ex"><b class="t">Worked example (alternate / Z):</b> One alternate angle is 55°. Find the other alternate angle.
+        <div class="calc">Alternate angles are equal → other = 55°</div>
+        Answer = <b>55°</b>.</div>
+      <div class="ex"><b class="t">Worked example (co-interior):</b> Two co-interior angles are x and 110°. Find x.
+        <div class="calc">Co-interior angles add up to 180°</div>
+        <div class="calc">x = 180° − 110° = 70°</div>
+        Answer = <b>70°</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: TRIANGLES & POLYGONS ============ -->
+  <section class="cat triangles" id="cat-triangles">
+    <h2 class="cathead">🔺 PART 2 — Triangles &amp; Polygons</h2>
+
+    <div class="lesson">
+      <h3>1. Angle sum of a triangle = 180°</h3>
+      <p>The single most useful fact in all of geometry: <b>the three interior angles of any triangle add up to 180°.</b> It is true for every triangle, big or small.</p>
+      <div class="formula">Angle A + Angle B + Angle C = 180°</div>
+      <div class="ex"><b class="t">Worked example:</b> A triangle has angles 50°, 60° and x. Find x.
+        <div class="calc">50° + 60° + x = 180°</div>
+        <div class="calc">x = 180° − 110° = 70°</div>
+        Answer = <b>70°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Exterior angle of a triangle</h3>
+      <p>If you extend one side of a triangle, the angle formed outside is the <b>exterior angle</b>. There is a neat shortcut:</p>
+      <div class="formula">Exterior angle = sum of the two opposite (interior) angles</div>
+      <p>The two opposite interior angles are the two angles that are NOT next to the exterior angle.</p>
+      <div class="ex"><b class="t">Worked example:</b> A triangle has interior angles 55° and 65° at two corners. Find the exterior angle at the third corner.
+        <div class="calc">Exterior angle = 55° + 65° = 120°</div>
+        Answer = <b>120°</b>. (Check: the interior angle there is 180° − 120° = 60°, and 55° + 65° + 60° = 180° ✓)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Types of triangle</h3>
+      <table class="r">
+        <tr><th>Type</th><th>Sides</th><th>Angles</th></tr>
+        <tr><td><b>Equilateral</b></td><td>All 3 sides equal</td><td>All 3 angles = <b>60°</b></td></tr>
+        <tr><td><b>Isosceles</b></td><td>2 sides equal</td><td>The 2 base angles (opposite the equal sides) are <b>equal</b></td></tr>
+        <tr><td><b>Scalene</b></td><td>All 3 sides different</td><td>All 3 angles different</td></tr>
+        <tr><td><b>Right-angled</b></td><td>—</td><td>One angle is exactly <b>90°</b></td></tr>
+      </table>
+      <div class="ex"><b class="t">Worked example (isosceles):</b> An isosceles triangle has an apex (top) angle of 40°. Find each base angle.
+        <div class="calc">Base angles are equal, and all three add to 180°</div>
+        <div class="calc">Each base angle = (180° − 40°) ÷ 2 = 140° ÷ 2 = 70°</div>
+        Answer = <b>70°</b> each.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Congruent vs similar triangles</h3>
+      <ul>
+        <li><b>Congruent triangles</b> are <b>exactly the same shape AND size</b> — one is a perfect copy of the other (equal angles and equal sides). Same size.</li>
+        <li><b>Similar triangles</b> are the <b>same shape but different size</b> — like a photo and its enlargement. Their <b>angles are equal</b> and their <b>sides are in the same ratio (proportional)</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Memory: <b>Con</b>gruent = <b>Con</b>py (copy), same size. <b>Similar</b> = same shape, scaled up or down.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Polygons — the three key formulas</h3>
+      <p>A <b>polygon</b> is any closed shape made of straight sides. <b>n</b> stands for the number of sides. A <b>regular</b> polygon has all sides and all angles equal.</p>
+      <div class="formula">Sum of INTERIOR angles = (n − 2) × 180°</div>
+      <div class="formula">Sum of EXTERIOR angles = 360°&nbsp; (always, for any polygon)</div>
+      <div class="formula">Each EXTERIOR angle of a REGULAR polygon = 360° ÷ n</div>
+      <span class="key">Handy interior-angle-sum table</span>
+      <table class="r">
+        <tr><th>Polygon</th><th>Sides (n)</th><th>(n − 2) × 180°</th></tr>
+        <tr><td>Triangle</td><td>3</td><td>180°</td></tr>
+        <tr><td>Quadrilateral</td><td>4</td><td>360°</td></tr>
+        <tr><td>Pentagon</td><td>5</td><td>540°</td></tr>
+        <tr><td>Hexagon</td><td>6</td><td>720°</td></tr>
+        <tr><td>Octagon</td><td>8</td><td>1080°</td></tr>
+      </table>
+      <div class="ex"><b class="t">Worked example (find an angle):</b> Find each interior angle of a regular octagon (8 sides).
+        <div class="calc">Sum of interior angles = (8 − 2) × 180° = 6 × 180° = 1080°</div>
+        <div class="calc">Each interior angle = 1080° ÷ 8 = 135°</div>
+        Answer = <b>135°</b>. (Shortcut: each exterior angle = 360° ÷ 8 = 45°, so interior = 180° − 45° = 135° ✓)</div>
+      <div class="ex"><b class="t">Worked example (find the number of sides):</b> Each exterior angle of a regular polygon is 40°. How many sides has it?
+        <div class="calc">Each exterior angle = 360° ÷ n → n = 360° ÷ 40°</div>
+        <div class="calc">n = 9</div>
+        Answer = <b>9 sides</b> (a nonagon).</div>
+      <div class="ex"><b class="t">Worked example (find sides from interior angle):</b> Each interior angle of a regular polygon is 150°. Find the number of sides.
+        <div class="calc">Each exterior angle = 180° − 150° = 30°</div>
+        <div class="calc">n = 360° ÷ 30° = 12</div>
+        Answer = <b>12 sides</b> (a dodecagon).</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: CIRCLE THEOREMS ============ -->
+  <section class="cat circles" id="cat-circles">
+    <h2 class="cathead">⭕ PART 3 — Circle Theorems</h2>
+
+    <div class="lesson">
+      <h3>1. The words you need first</h3>
+      <ul>
+        <li><b>Centre</b> — the middle point of the circle.</li>
+        <li><b>Radius</b> — a straight line from the centre to the edge.</li>
+        <li><b>Chord</b> — a straight line joining two points on the edge.</li>
+        <li><b>Diameter</b> — a chord that passes through the centre (the longest chord).</li>
+        <li><b>Arc</b> — a part of the curved edge.</li>
+        <li><b>Segment</b> — the region between a chord and an arc.</li>
+        <li><b>Tangent</b> — a straight line that just touches the circle at one point.</li>
+        <li><b>Subtended</b> — an angle is subtended by an arc/chord when the two lines from the ends of the arc meet to form that angle.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The six circle theorems (learn this table)</h3>
+      <table class="r">
+        <tr><th>#</th><th>Theorem</th><th>In words</th></tr>
+        <tr><td>1</td><td><b>Angle at centre = 2 × angle at circumference</b></td><td>Standing on the same arc, the angle at the centre is twice the angle at the edge.</td></tr>
+        <tr><td>2</td><td><b>Angle in a semicircle = 90°</b></td><td>Any angle drawn on the diameter (in a semicircle) is a right angle.</td></tr>
+        <tr><td>3</td><td><b>Angles in the same segment are equal</b></td><td>Angles standing on the same arc, from the same side, are equal.</td></tr>
+        <tr><td>4</td><td><b>Opposite angles of a cyclic quadrilateral = 180°</b></td><td>A 4-sided shape with all corners on the circle: opposite angles are supplementary.</td></tr>
+        <tr><td>5</td><td><b>Tangent ⟂ radius</b></td><td>A tangent is perpendicular (90°) to the radius drawn to the point of contact.</td></tr>
+        <tr><td>6</td><td><b>Alternate segment theorem</b></td><td>The angle between a tangent and a chord = the angle in the alternate (other) segment.</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Theorem 1 — angle at centre = twice angle at circumference</h3>
+      <div class="formula">Angle at centre = 2 × angle at circumference (same arc)</div>
+      <div class="ex"><b class="t">Worked example:</b> An angle at the circumference standing on an arc is 40°. Find the angle at the centre on the same arc.
+        <div class="calc">Angle at centre = 2 × 40° = 80°</div>
+        Answer = <b>80°</b>.</div>
+      <div class="ex"><b class="t">Worked example (reverse):</b> The angle at the centre is 140°. Find the angle at the circumference on the same arc.
+        <div class="calc">Angle at circumference = 140° ÷ 2 = 70°</div>
+        Answer = <b>70°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Theorem 2 — angle in a semicircle = 90°</h3>
+      <p>If a triangle is drawn inside a circle so that one side is a diameter, the angle opposite the diameter is always a right angle (90°).</p>
+      <div class="ex"><b class="t">Worked example:</b> A triangle is drawn in a semicircle. One of the other two angles is 35°. Find the third angle.
+        <div class="calc">The angle in the semicircle = 90°</div>
+        <div class="calc">Third angle = 180° − 90° − 35° = 55°</div>
+        Answer = <b>55°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Theorem 4 — cyclic quadrilateral</h3>
+      <div class="formula">Opposite angles of a cyclic quadrilateral add up to 180°</div>
+      <div class="ex"><b class="t">Worked example:</b> In a cyclic quadrilateral, one angle is 85°. Find the angle opposite it.
+        <div class="calc">Opposite angle = 180° − 85° = 95°</div>
+        Answer = <b>95°</b>.</div>
+      <div class="ex"><b class="t">Worked example:</b> A cyclic quadrilateral has angles 70°, x, 100° and y, where 70° and 100° are one pair of opposite angles. Find x and y.
+        <div class="calc">70° and 100° are NOT opposite here — 70° pairs with y, and x pairs with 100°</div>
+        <div class="calc">x = 180° − 100° = 80°</div>
+        <div class="calc">y = 180° − 70° = 110°</div>
+        Answers: <b>x = 80°</b>, <b>y = 110°</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Theorems 5 &amp; 6 — tangents</h3>
+      <p><b>Theorem 5 (tangent ⟂ radius):</b> where a tangent touches the circle, the radius drawn to that point meets it at exactly 90°.</p>
+      <p><b>Theorem 6 (alternate segment):</b> the angle between the tangent and a chord equals the angle in the alternate segment (the angle at the circumference on the far side of that chord).</p>
+      <div class="ex"><b class="t">Worked example:</b> A tangent touches a circle at point T. The radius OT and the tangent meet at T. What is the angle between them?
+        <div class="calc">Tangent ⟂ radius → angle = 90°</div>
+        Answer = <b>90°</b>.</div>
+      <div class="ex"><b class="t">Worked example (alternate segment):</b> The angle between a tangent and a chord is 62°. Find the angle in the alternate segment.
+        <div class="calc">Alternate segment theorem → angle in alternate segment = angle between tangent and chord</div>
+        <div class="calc">Angle in alternate segment = 62°</div>
+        Answer = <b>62°</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: MIXED GEOMETRY PROBLEMS ============ -->
+  <section class="cat mixed" id="cat-mixed">
+    <h2 class="cathead">🧩 PART 4 — Mixed Geometry Problems</h2>
+
+    <div class="lesson">
+      <h3>1. Quick facts to combine</h3>
+      <ul>
+        <li>Angles on a straight line = <b>180°</b>; angles at a point = <b>360°</b>.</li>
+        <li>Vertically opposite angles are <b>equal</b>.</li>
+        <li>Parallel lines: F angles (corresponding) equal · Z angles (alternate) equal · C/U angles (co-interior) sum to <b>180°</b>.</li>
+        <li>Triangle angles sum to <b>180°</b>; exterior angle = sum of the two opposite interior angles.</li>
+        <li>Isosceles triangle: the two <b>base angles are equal</b>.</li>
+        <li>Polygon interior angle sum = <b>(n − 2) × 180°</b>; each exterior angle of a regular polygon = <b>360° ÷ n</b>.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Properties of special quadrilaterals</h3>
+      <table class="r">
+        <tr><th>Shape</th><th>Key properties</th></tr>
+        <tr><td><b>Parallelogram</b></td><td>Opposite sides parallel and equal · opposite angles equal · co-interior angles sum to 180° · diagonals bisect each other</td></tr>
+        <tr><td><b>Rectangle</b></td><td>A parallelogram with all angles = 90° · opposite sides equal · diagonals equal and bisect each other</td></tr>
+        <tr><td><b>Rhombus</b></td><td>A parallelogram with all sides equal · opposite angles equal · diagonals bisect each other at 90° and bisect the angles</td></tr>
+        <tr><td><b>Square</b></td><td>All sides equal AND all angles 90° (a rhombus and rectangle in one) · diagonals equal, bisect at 90°</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked exam-style problems</h3>
+
+      <div class="ex"><b class="t">Example 1 — triangle + straight line:</b> In a triangle, two angles are 48° and 62°. One side is extended to form an exterior angle. Find (a) the third interior angle and (b) the exterior angle at that vertex.
+        <div class="calc">(a) Third interior angle = 180° − 48° − 62° = 70°</div>
+        <div class="calc">(b) Exterior angle = 180° − 70° = 110° (or use 48° + 62° = 110°) ✓</div>
+        Answers: <b>(a) 70°</b>, <b>(b) 110°</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — parallel lines + triangle:</b> Two parallel lines are cut by a transversal. An alternate angle is 50°. This 50° angle is one angle of a triangle whose second angle is 60°. Find the third angle of the triangle.
+        <div class="calc">Alternate angles equal → the angle inside the triangle = 50°</div>
+        <div class="calc">Third angle = 180° − 50° − 60° = 70°</div>
+        Answer = <b>70°</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — isosceles + circle (semicircle):</b> A triangle is drawn in a semicircle, so one angle is 90°. The triangle is isosceles with the two shorter sides equal. Find the other two angles.
+        <div class="calc">Angle in semicircle = 90°, leaving 180° − 90° = 90° for the other two</div>
+        <div class="calc">They are equal (isosceles), so each = 90° ÷ 2 = 45°</div>
+        Answers: <b>45°</b> and <b>45°</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — regular polygon + cyclic quadrilateral:</b> (a) Find each interior angle of a regular pentagon. (b) In a cyclic quadrilateral, three angles are 95°, 100° and 85°. Find the fourth angle.
+        <div class="calc">(a) Interior sum = (5 − 2) × 180° = 540°; each angle = 540° ÷ 5 = 108°</div>
+        <div class="calc">(b) The fourth angle is opposite one of the given ones. 85° pairs with 95° (they sum to 180°) ✓, so 100° pairs with the missing angle</div>
+        <div class="calc">Fourth angle = 180° − 100° = 80°</div>
+        Answers: <b>(a) 108°</b>, <b>(b) 80°</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Learn the rule, draw the diagram, chase the angle — the answer follows. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Two angles that add up to 90° are said to be…",o:["Complementary","Supplementary","Vertically opposite","Reflex"],c:0,e:"<span class='h'>💡 Idea</span>Complementary angles add up to 90°. (Remember: C before S, 90 before 180.)<span class='h'>✅</span>Complementary."},
+{s:"Two angles that add up to 180° are said to be…",o:["Complementary","Supplementary","Adjacent","Reflex"],c:1,e:"<span class='h'>💡 Idea</span>Supplementary angles add up to 180°.<span class='h'>✅</span>Supplementary."},
+{s:"The angles on one side of a straight line add up to…",o:["90°","360°","180°","270°"],c:2,e:"<span class='h'>💡 Idea</span>Angles on a straight line always total 180° (half a full turn).<span class='h'>✅</span>180°."},
+{s:"The angles around a single point add up to…",o:["90°","180°","270°","360°"],c:3,e:"<span class='h'>💡 Idea</span>Angles meeting all the way round a point make one full turn = 360°.<span class='h'>✅</span>360°."},
+{s:"When two straight lines cross, the vertically opposite angles are…",o:["Equal","Supplementary","Complementary","Always right angles"],c:0,e:"<span class='h'>💡 Idea</span>The angles facing each other across the crossing (the X) are always equal.<span class='h'>✅</span>Equal."},
+{s:"A reflex angle is one whose size is…",o:["Exactly 90°","Between 180° and 360°","Between 90° and 180°","Exactly 180°"],c:1,e:"<span class='h'>💡 Idea</span>A reflex angle is bigger than a straight line but less than a full turn — between 180° and 360°.<span class='h'>✅</span>Between 180° and 360°."},
+{s:"Two angles sit next to each other on a straight line. If one is 125°, the other is…",o:["45°","235°","55°","65°"],c:2,e:"<span class='h'>✏️ Working</span>Angles on a line sum to 180°.<span class='calc'>Other = 180° − 125° = 55°</span><span class='h'>✅</span>55°."},
+{s:"When two parallel lines are cut by a transversal, the corresponding (F-shape) angles are…",o:["Supplementary","Complementary","Add up to 360°","Equal"],c:3,e:"<span class='h'>💡 Idea</span>Corresponding angles make an F shape and are equal.<span class='h'>✅</span>Equal."},
+{s:"When two parallel lines are cut by a transversal, the co-interior (allied, C-shape) angles…",o:["Add up to 180°","Are equal","Add up to 90°","Add up to 360°"],c:0,e:"<span class='h'>💡 Idea</span>Co-interior (C/U-shape) angles are the odd ones out — they are supplementary, adding to 180°.<span class='h'>✅</span>Add up to 180°."},
+{s:"Three angles meet at a point: 120°, 150° and x°. Find x.",o:["100°","90°","80°","70°"],c:1,e:"<span class='h'>✏️ Working</span>Angles at a point sum to 360°.<span class='calc'>x = 360° − 120° − 150° = 90°</span><span class='h'>✅</span>90°."},
+{s:"The three interior angles of any triangle add up to…",o:["90°","360°","180°","270°"],c:2,e:"<span class='h'>💡 Idea</span>The angle sum of every triangle is 180°.<span class='h'>✅</span>180°."},
+{s:"A triangle has two angles of 50° and 60°. The third angle is…",o:["80°","60°","90°","70°"],c:3,e:"<span class='h'>✏️ Working</span>Triangle angles sum to 180°.<span class='calc'>Third = 180° − 50° − 60° = 70°</span><span class='h'>✅</span>70°."},
+{s:"Each interior angle of an equilateral triangle is…",o:["60°","45°","90°","30°"],c:0,e:"<span class='h'>✏️ Working</span>All three angles are equal, and they sum to 180°.<span class='calc'>Each = 180° ÷ 3 = 60°</span><span class='h'>✅</span>60°."},
+{s:"An isosceles triangle has an apex (top) angle of 40°. Each base angle is…",o:["40°","70°","50°","80°"],c:1,e:"<span class='h'>✏️ Working</span>The two base angles are equal and share what is left after the apex.<span class='calc'>Each = (180° − 40°) ÷ 2 = 140° ÷ 2 = 70°</span><span class='h'>✅</span>70°."},
+{s:"The exterior angle of a triangle is equal to…",o:["The adjacent interior angle","180° in every case","The sum of the two opposite interior angles","The sum of all three interior angles"],c:2,e:"<span class='h'>💡 Idea</span>The exterior angle equals the two interior angles that are NOT next to it, added together.<span class='h'>✅</span>The sum of the two opposite interior angles."},
+{s:"Two interior angles of a triangle are 55° and 65°. The exterior angle at the third vertex is…",o:["110°","60°","130°","120°"],c:3,e:"<span class='h'>✏️ Working</span>Exterior angle = sum of the two opposite interior angles.<span class='calc'>Exterior = 55° + 65° = 120°</span><span class='h'>✅</span>120°."},
+{s:"The sum of the interior angles of a pentagon (5 sides) is…",o:["540°","360°","720°","450°"],c:0,e:"<span class='h'>✏️ Working</span>Use (n − 2) × 180° with n = 5.<span class='calc'>(5 − 2) × 180° = 3 × 180° = 540°</span><span class='h'>✅</span>540°."},
+{s:"Each exterior angle of a regular hexagon (6 sides) is…",o:["45°","60°","72°","120°"],c:1,e:"<span class='h'>✏️ Working</span>Each exterior angle of a regular polygon = 360° ÷ n.<span class='calc'>360° ÷ 6 = 60°</span><span class='h'>✅</span>60°."},
+{s:"Each exterior angle of a regular polygon is 40°. The number of sides is…",o:["8","10","9","12"],c:2,e:"<span class='h'>✏️ Working</span>Rearrange 360° ÷ n = 40°.<span class='calc'>n = 360° ÷ 40° = 9</span><span class='h'>✅</span>9 sides."},
+{s:"The sum of the exterior angles of ANY polygon is…",o:["360°","180°","(n − 2) × 180°","It depends on the number of sides"],c:0,e:"<span class='h'>💡 Idea</span>No matter how many sides, the exterior angles always add up to one full turn, 360°.<span class='h'>✅</span>360°."},
+{s:"Each interior angle of a regular octagon (8 sides) is…",o:["120°","144°","150°","135°"],c:3,e:"<span class='h'>✏️ Working</span>Interior sum = (8 − 2) × 180° = 1080°.<span class='calc'>Each = 1080° ÷ 8 = 135°</span><span class='h'>✅</span>135°."},
+{s:"The angle at the centre of a circle is … the angle at the circumference standing on the same arc.",o:["Twice","Half of","Equal to","Three times"],c:0,e:"<span class='h'>💡 Idea</span>Circle Theorem 1: the angle at the centre is double the angle at the circumference on the same arc.<span class='h'>✅</span>Twice."},
+{s:"The angle in a semicircle (subtended by a diameter) is always…",o:["60°","90°","45°","180°"],c:1,e:"<span class='h'>💡 Idea</span>Any angle drawn on the diameter is a right angle — the angle in a semicircle is 90°.<span class='h'>✅</span>90°."},
+{s:"Angles in the same segment of a circle are…",o:["Supplementary","Add up to 360°","Equal","Complementary"],c:2,e:"<span class='h'>💡 Idea</span>Angles standing on the same arc, from the same side, are equal.<span class='h'>✅</span>Equal."},
+{s:"The opposite angles of a cyclic quadrilateral add up to…",o:["90°","270°","360°","180°"],c:3,e:"<span class='h'>💡 Idea</span>In a cyclic quadrilateral (all corners on the circle) opposite angles are supplementary.<span class='h'>✅</span>180°."},
+{s:"A tangent to a circle meets the radius at the point of contact at…",o:["90°","45°","60°","180°"],c:0,e:"<span class='h'>💡 Idea</span>A tangent is perpendicular to the radius drawn to the point of contact.<span class='h'>✅</span>90°."},
+{s:"The angle at the circumference standing on an arc is 40°. The angle at the centre on the same arc is…",o:["20°","80°","40°","140°"],c:1,e:"<span class='h'>✏️ Working</span>Angle at centre = 2 × angle at circumference.<span class='calc'>2 × 40° = 80°</span><span class='h'>✅</span>80°."},
+{s:"The angle at the centre of a circle is 140°. The angle at the circumference on the same arc is…",o:["280°","140°","70°","35°"],c:2,e:"<span class='h'>✏️ Working</span>Angle at circumference = half the angle at the centre.<span class='calc'>140° ÷ 2 = 70°</span><span class='h'>✅</span>70°."},
+{s:"In a cyclic quadrilateral, one angle is 85°. The angle opposite it is…",o:["85°","105°","115°","95°"],c:3,e:"<span class='h'>✏️ Working</span>Opposite angles of a cyclic quadrilateral sum to 180°.<span class='calc'>180° − 85° = 95°</span><span class='h'>✅</span>95°."},
+{s:"The angle between a tangent and a chord is equal to the angle…",o:["Between the two tangents","At the centre","In the alternate segment","In a semicircle"],c:2,e:"<span class='h'>💡 Idea</span>Alternate segment theorem: the tangent–chord angle equals the angle in the alternate segment.<span class='h'>✅</span>In the alternate segment."}
+);
+
+["angles","triangles","circles","mixed","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

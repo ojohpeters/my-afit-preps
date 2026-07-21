@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oxidation &amp; Reduction (Redox) A–Z — Definitions, Oxidation Numbers &amp; Half-Equations (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔁 Oxidation &amp; Reduction (Redox) A–Z</h1>
+  <p>Definitions · Oxidation Numbers · Oxidising/Reducing Agents · Half-Equations — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME chemistry · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every oxidation number worked out</span><span class="pill">OIL RIG made easy</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="defs">🔁 Definitions of Redox</div>
+    <div class="tab" data-cat="oxnum">🔢 Oxidation Numbers</div>
+    <div class="tab" data-cat="agents">🧪 Oxidising &amp; Reducing Agents</div>
+    <div class="tab" data-cat="reactions">⚗️ Redox Reactions &amp; Uses</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: DEFINITIONS OF REDOX ============ -->
+  <section class="cat defs show" id="cat-defs">
+    <h2 class="cathead">🔁 PART 1 — The Meaning of Oxidation &amp; Reduction</h2>
+
+    <div class="lesson">
+      <h3>1. What are we talking about?</h3>
+      <p><b>Oxidation</b> and <b>reduction</b> are two opposite chemical changes. Long ago chemists only watched what oxygen did, but today we describe them in <b>four</b> ways. The most powerful one is about <b>electrons</b>.</p>
+      <p>The important truth first: <b>oxidation and reduction ALWAYS happen together.</b> If one substance loses electrons (is oxidised), another substance must gain those same electrons (is reduced). You cannot have one without the other — that is why the combined reaction is called a <b>redox</b> reaction (<b>RED</b>uction + <b>OX</b>idation).</p>
+      <div class="analogy">🌟 Think of it like a pass in football: electrons cannot vanish. If one atom passes them away, a partner atom must receive them. One loses, one gains — at the same time.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The four ways to define oxidation &amp; reduction</h3>
+      <p>Learn this table by heart — every redox question comes from one of these four rows.</p>
+      <table class="r">
+        <tr><th>Definition based on…</th><th>OXIDATION is…</th><th>REDUCTION is…</th></tr>
+        <tr><td><b>(a) Oxygen</b></td><td><b>Gain</b> of oxygen</td><td><b>Loss</b> of oxygen</td></tr>
+        <tr><td><b>(b) Hydrogen</b></td><td><b>Loss</b> of hydrogen</td><td><b>Gain</b> of hydrogen</td></tr>
+        <tr><td><b>(c) Electrons — OIL RIG</b></td><td><b>Loss</b> of electrons</td><td><b>Gain</b> of electrons</td></tr>
+        <tr><td><b>(d) Oxidation number</b></td><td><b>Increase</b> in oxidation number</td><td><b>Decrease</b> in oxidation number</td></tr>
+      </table>
+      <p>Notice each pair is a mirror image: whatever oxidation does, reduction does the opposite.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. (a) In terms of OXYGEN — the oldest idea</h3>
+      <p>This is where the word "oxidation" came from — reacting with <b>oxygen</b>.</p>
+      <ul>
+        <li><b>Oxidation = gain of oxygen.</b></li>
+        <li><b>Reduction = loss of oxygen.</b></li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> when magnesium burns, 2Mg + O₂ → 2MgO, the magnesium <b>gains oxygen</b>, so magnesium is <b>oxidised</b>.</div>
+      <div class="ex"><b class="t">Example:</b> when copper(II) oxide is heated with hydrogen, CuO + H₂ → Cu + H₂O, the CuO <b>loses its oxygen</b>, so the copper is <b>reduced</b>. (Notice the hydrogen removed the oxygen — a reducing agent.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. (b) In terms of HYDROGEN</h3>
+      <p>This is the exact opposite pattern to oxygen:</p>
+      <ul>
+        <li><b>Oxidation = loss of hydrogen.</b></li>
+        <li><b>Reduction = gain of hydrogen.</b></li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> H₂S → S + H₂ (hydrogen sulphide losing its hydrogen). The sulphur has <b>lost hydrogen</b>, so it is <b>oxidised</b>.</div>
+      <div class="analogy">🌟 Careful — oxygen and hydrogen give OPPOSITE rules. Gaining oxygen and losing hydrogen both mean the SAME thing: oxidation.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. (c) In terms of ELECTRONS — OIL RIG (the key one!)</h3>
+      <p>This is the modern, all-purpose definition. It works even when there is no oxygen and no hydrogen in the reaction. Just remember the magic words:</p>
+      <div class="formula">OIL RIG</div>
+      <div class="formula">Oxidation Is Loss (of electrons) · Reduction Is Gain (of electrons)</div>
+      <ul>
+        <li><b>Oxidation = loss of electrons</b> (the atom gives electrons away).</li>
+        <li><b>Reduction = gain of electrons</b> (the atom takes electrons in).</li>
+      </ul>
+      <div class="ex"><b class="t">Example — oxidation:</b> Zn → Zn²⁺ + 2e⁻. Zinc <b>loses</b> 2 electrons (e⁻), so zinc is <b>oxidised</b>.</div>
+      <div class="ex"><b class="t">Example — reduction:</b> Cu²⁺ + 2e⁻ → Cu. The copper ion <b>gains</b> 2 electrons, so Cu²⁺ is <b>reduced</b>.</div>
+      <div class="analogy">🌟 Two mnemonics for the same rule: <b>OIL RIG</b> (Oxidation Is Loss, Reduction Is Gain) and <b>LEO the lion says GER</b> (Loss of Electrons = Oxidation, Gain of Electrons = Reduction). Use whichever sticks.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. (d) In terms of OXIDATION NUMBER</h3>
+      <p>Every atom is given an <b>oxidation number</b> (studied fully in the next tab). Using it:</p>
+      <ul>
+        <li><b>Oxidation = increase in oxidation number</b> (it becomes more positive).</li>
+        <li><b>Reduction = decrease in oxidation number</b> (it becomes more negative).</li>
+      </ul>
+      <div class="ex"><b class="t">Example:</b> in Fe²⁺ → Fe³⁺ + e⁻, iron goes from +2 to +3. The number <b>increased</b>, so iron is <b>oxidised</b> (it also lost an electron — same conclusion by OIL RIG).</div>
+      <div class="ex"><b class="t">Example:</b> in Cl₂ + 2e⁻ → 2Cl⁻, chlorine goes from 0 to −1. The number <b>decreased</b>, so chlorine is <b>reduced</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Redox = both together</h3>
+      <p>Put it all in one reaction. Take the displacement: Zn + Cu²⁺ → Zn²⁺ + Cu.</p>
+      <div class="calc">Zn: 0 → +2  (lost electrons)  → OXIDISED</div>
+      <div class="calc">Cu²⁺: +2 → 0  (gained electrons)  → REDUCED</div>
+      <p>One is oxidised while the other is reduced — that is a <b>redox reaction</b>. The electrons Zn loses are exactly the electrons Cu²⁺ gains.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: OXIDATION NUMBERS ============ -->
+  <section class="cat oxnum" id="cat-oxnum">
+    <h2 class="cathead">🔢 PART 2 — Assigning Oxidation Numbers</h2>
+
+    <div class="lesson">
+      <h3>1. What is an oxidation number?</h3>
+      <p>An <b>oxidation number</b> (or oxidation state) is a signed number (+ or −) given to each atom that shows how many electrons it appears to have lost or gained compared with the free element. It is a bookkeeping tool — it lets us spot instantly what was oxidised and what was reduced.</p>
+      <div class="analogy">🌟 Think of it as each atom's "electron score". If the score goes UP, the atom lost electrons (oxidised). If it goes DOWN, it gained electrons (reduced).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The rules — learn them in order</h3>
+      <span class="key">Apply from the top; the fixed rules win</span>
+      <ul>
+        <li><b>Rule 1 — Free elements = 0.</b> Any atom in an uncombined element has oxidation number 0. So Zn, Cu, O₂, H₂, Cl₂, Na, S₈ are all <b>0</b>.</li>
+        <li><b>Rule 2 — Simple (monatomic) ion = its charge.</b> Na⁺ = +1, Mg²⁺ = +2, Al³⁺ = +3, Cl⁻ = −1, O²⁻ = −2.</li>
+        <li><b>Rule 3 — Group 1 metals = +1, Group 2 metals = +2</b> in all their compounds (Na, K = +1; Mg, Ca = +2).</li>
+        <li><b>Rule 4 — Oxygen = −2</b> in almost every compound. <b>Exception:</b> in <b>peroxides</b> (like H₂O₂) oxygen is <b>−1</b>.</li>
+        <li><b>Rule 5 — Hydrogen = +1</b> when joined to non-metals. <b>Exception:</b> in <b>metal hydrides</b> (like NaH, CaH₂) hydrogen is <b>−1</b>.</li>
+        <li><b>Rule 6 — The sum rule.</b> In a <b>neutral compound</b> all oxidation numbers add up to <b>0</b>. In an <b>ion</b> they add up to <b>the charge on the ion</b>.</li>
+      </ul>
+      <div class="analogy">🌟 The whole method: fix the atoms you know from the rules (O, H, group 1 &amp; 2), then let the sum rule give you the unknown one.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The 3-step method</h3>
+      <div class="ex"><b class="t">Every "find the oxidation number" question:</b>
+        <ul>
+          <li><b>Step 1:</b> Let the unknown element = x.</li>
+          <li><b>Step 2:</b> Fill in the known ones (usually O = −2, H = +1, group 1 = +1, group 2 = +2), multiplying by how many atoms of each.</li>
+          <li><b>Step 3:</b> Set the total equal to 0 (neutral compound) or to the ion's charge, then solve for x.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked example — S in H₂SO₄</h3>
+      <div class="ex"><b class="t">Find the oxidation number of sulphur in sulphuric acid, H₂SO₄.</b>
+        <div class="calc">Let S = x. H = +1 (×2), O = −2 (×4). Neutral → sum = 0.</div>
+        <div class="calc">2(+1) + x + 4(−2) = 0</div>
+        <div class="calc">2 + x − 8 = 0  →  x = +6</div>
+        So sulphur is <b>+6</b> in H₂SO₄.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked example — Mn in KMnO₄</h3>
+      <div class="ex"><b class="t">Find the oxidation number of manganese in potassium permanganate, KMnO₄.</b>
+        <div class="calc">Let Mn = x. K = +1 (group 1), O = −2 (×4). Neutral → sum = 0.</div>
+        <div class="calc">(+1) + x + 4(−2) = 0</div>
+        <div class="calc">1 + x − 8 = 0  →  x = +7</div>
+        So manganese is <b>+7</b> in KMnO₄ — its highest possible state, which is why KMnO₄ is such a strong oxidising agent.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Worked example — Cr in K₂Cr₂O₇</h3>
+      <div class="ex"><b class="t">Find the oxidation number of chromium in potassium dichromate, K₂Cr₂O₇.</b>
+        <div class="calc">Let Cr = x. K = +1 (×2), O = −2 (×7). Neutral → sum = 0.</div>
+        <div class="calc">2(+1) + 2x + 7(−2) = 0</div>
+        <div class="calc">2 + 2x − 14 = 0  →  2x = 12  →  x = +6</div>
+        So each chromium is <b>+6</b> in K₂Cr₂O₇.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Worked example — N in HNO₃</h3>
+      <div class="ex"><b class="t">Find the oxidation number of nitrogen in nitric acid, HNO₃.</b>
+        <div class="calc">Let N = x. H = +1, O = −2 (×3). Neutral → sum = 0.</div>
+        <div class="calc">(+1) + x + 3(−2) = 0</div>
+        <div class="calc">1 + x − 6 = 0  →  x = +5</div>
+        So nitrogen is <b>+5</b> in HNO₃.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>8. Worked example — Cl in NaClO (an ion inside)</h3>
+      <div class="ex"><b class="t">Find the oxidation number of chlorine in sodium chlorate(I), NaClO.</b>
+        <div class="calc">Let Cl = x. Na = +1, O = −2. Neutral → sum = 0.</div>
+        <div class="calc">(+1) + x + (−2) = 0</div>
+        <div class="calc">x − 1 = 0  →  x = +1</div>
+        So chlorine is <b>+1</b> here — note chlorine is NOT always −1; it depends on the compound.</div>
+      <div class="ex"><b class="t">Bonus — using the ion charge:</b> the sulphate ion SO₄²⁻ has an overall charge of −2.
+        <div class="calc">x + 4(−2) = −2  →  x − 8 = −2  →  x = +6</div>
+        Sulphur is +6 in SO₄²⁻ too — the same as in H₂SO₄, which makes sense.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>9. Quick-reference table of common ones</h3>
+      <table class="r">
+        <tr><th>Species</th><th>Element</th><th>Oxidation number</th></tr>
+        <tr><td>H₂SO₄</td><td>S</td><td><b>+6</b></td></tr>
+        <tr><td>KMnO₄ / MnO₄⁻</td><td>Mn</td><td><b>+7</b></td></tr>
+        <tr><td>K₂Cr₂O₇ / Cr₂O₇²⁻</td><td>Cr</td><td><b>+6</b></td></tr>
+        <tr><td>HNO₃ / NO₃⁻</td><td>N</td><td><b>+5</b></td></tr>
+        <tr><td>NaClO</td><td>Cl</td><td><b>+1</b></td></tr>
+        <tr><td>H₂S</td><td>S</td><td><b>−2</b></td></tr>
+        <tr><td>SO₂</td><td>S</td><td><b>+4</b></td></tr>
+        <tr><td>NH₃</td><td>N</td><td><b>−3</b></td></tr>
+        <tr><td>Fe₂O₃</td><td>Fe</td><td><b>+3</b></td></tr>
+        <tr><td>H₂O₂ (peroxide)</td><td>O</td><td><b>−1</b></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: OXIDISING & REDUCING AGENTS ============ -->
+  <section class="cat agents" id="cat-agents">
+    <h2 class="cathead">🧪 PART 3 — Oxidising &amp; Reducing Agents</h2>
+
+    <div class="lesson">
+      <h3>1. The tricky-but-simple definitions</h3>
+      <p>An <b>agent</b> is the substance that <b>causes</b> the change to happen to something else. Here is the twist that confuses everyone — so read slowly:</p>
+      <ul>
+        <li><b>An oxidising agent oxidises another substance.</b> To do that it must <b>take electrons</b> from that substance. So the oxidising agent <b>gains electrons</b> and is <b>itself REDUCED.</b></li>
+        <li><b>A reducing agent reduces another substance.</b> To do that it must <b>give electrons</b> to that substance. So the reducing agent <b>loses electrons</b> and is <b>itself OXIDISED.</b></li>
+      </ul>
+      <div class="formula">Oxidising agent → is itself REDUCED (gains e⁻)</div>
+      <div class="formula">Reducing agent → is itself OXIDISED (loses e⁻)</div>
+      <div class="analogy">🌟 The agent always does the OPPOSITE to its name. An oxid<b>ising</b> agent gets reduced; a reduc<b>ing</b> agent gets oxidised. (Like a fire "lighter" that gets used up itself.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Common oxidising and reducing agents</h3>
+      <table class="r">
+        <tr><th>Common OXIDISING agents (they gain e⁻)</th><th>Common REDUCING agents (they lose e⁻)</th></tr>
+        <tr><td>Acidified KMnO₄ (potassium permanganate)</td><td>Hydrogen, H₂</td></tr>
+        <tr><td>Acidified K₂Cr₂O₇ (potassium dichromate)</td><td>Carbon, C</td></tr>
+        <tr><td>Chlorine, Cl₂ (and other halogens)</td><td>Carbon monoxide, CO</td></tr>
+        <tr><td>Oxygen, O₂</td><td>Reactive metals (Na, Mg, Zn, Fe)</td></tr>
+        <tr><td>Concentrated H₂SO₄</td><td>Hydrogen sulphide, H₂S</td></tr>
+        <tr><td>Concentrated / dilute HNO₃</td><td>Sulphur dioxide, SO₂</td></tr>
+        <tr><td>Hydrogen peroxide, H₂O₂*</td><td>Potassium iodide, KI (iodide ions, I⁻)</td></tr>
+      </table>
+      <p class="tip">*H₂O₂ usually acts as an oxidising agent, but can act as a reducing agent towards very strong oxidisers — a common exam trap.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Colour-change tests (very popular in exams)</h3>
+      <p>The two purple/orange oxidising agents give famous colour changes when they get <b>reduced</b> by a reducing agent. Memorise them.</p>
+      <table class="r">
+        <tr><th>Oxidising agent</th><th>Colour change when it acts</th><th>What happens to the metal</th></tr>
+        <tr><td>Acidified KMnO₄</td><td><b>Purple → colourless</b></td><td>Mn: +7 → +2 (MnO₄⁻ becomes Mn²⁺)</td></tr>
+        <tr><td>Acidified K₂Cr₂O₇</td><td><b>Orange → green</b></td><td>Cr: +6 → +3 (Cr₂O₇²⁻ becomes Cr³⁺)</td></tr>
+      </table>
+      <div class="ex"><b class="t">How to read it:</b> if you add a reducing agent (say SO₂ or Fe²⁺) to purple KMnO₄ and it turns <b>colourless</b>, the KMnO₄ has been reduced — which proves the other substance is a reducing agent.</div>
+      <div class="ex"><b class="t">Another test:</b> chlorine water (an oxidising agent) added to colourless potassium iodide turns it <b>brown/yellow</b> as iodine is set free: Cl₂ + 2KI → 2KCl + I₂. Here Cl₂ is reduced and I⁻ is oxidised.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. How to name the agent in a reaction</h3>
+      <div class="ex"><b class="t">3-step trick:</b>
+        <ul>
+          <li><b>Step 1:</b> Find what was <b>oxidised</b> (lost electrons / went up in oxidation number). That substance is the <b>reducing agent</b>.</li>
+          <li><b>Step 2:</b> Find what was <b>reduced</b> (gained electrons / went down in oxidation number). That substance is the <b>oxidising agent</b>.</li>
+          <li><b>Step 3:</b> Remember: the agent is named the OPPOSITE of what happens to it.</li>
+        </ul>
+      </div>
+      <div class="ex"><b class="t">Example:</b> in H₂ + CuO → Cu + H₂O:
+        <div class="calc">Cu: +2 → 0 (reduced) → so CuO is the OXIDISING agent</div>
+        <div class="calc">H: 0 → +1 (oxidised) → so H₂ is the REDUCING agent</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: REDOX REACTIONS, HALF-EQUATIONS & USES ============ -->
+  <section class="cat reactions" id="cat-reactions">
+    <h2 class="cathead">⚗️ PART 4 — Half-Equations, Displacement &amp; Uses</h2>
+
+    <div class="lesson">
+      <h3>1. What is a half-equation?</h3>
+      <p>A <b>half-equation</b> shows only ONE half of the redox story — either the oxidation OR the reduction — including the electrons (e⁻). Because electrons are shown, you can see at a glance which half is which.</p>
+      <ul>
+        <li><b>Oxidation half-equation:</b> electrons appear on the <b>RIGHT</b> (they are lost).</li>
+        <li><b>Reduction half-equation:</b> electrons appear on the <b>LEFT</b> (they are gained).</li>
+      </ul>
+      <div class="ex"><b class="t">Oxidation examples (e⁻ on the right):</b>
+        <div class="calc">Zn → Zn²⁺ + 2e⁻</div>
+        <div class="calc">2Cl⁻ → Cl₂ + 2e⁻</div>
+        <div class="calc">Fe²⁺ → Fe³⁺ + e⁻</div>
+      </div>
+      <div class="ex"><b class="t">Reduction examples (e⁻ on the left):</b>
+        <div class="calc">Cu²⁺ + 2e⁻ → Cu</div>
+        <div class="calc">Cl₂ + 2e⁻ → 2Cl⁻</div>
+        <div class="calc">2H⁺ + 2e⁻ → H₂</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Writing a half-equation (method)</h3>
+      <div class="ex"><b class="t">Simple method for a metal / ion:</b>
+        <ul>
+          <li><b>Step 1:</b> Write the atom on the left, its ion on the right (or the reverse for reduction).</li>
+          <li><b>Step 2:</b> Balance the atoms.</li>
+          <li><b>Step 3:</b> Add electrons (e⁻) to whichever side is needed so the <b>charges balance</b> on both sides.</li>
+        </ul>
+      </div>
+      <div class="ex"><b class="t">Example:</b> zinc atom to zinc ion. Left charge = 0, right (Zn²⁺) = +2. Add 2e⁻ to the right to balance charge:
+        <div class="calc">Zn → Zn²⁺ + 2e⁻  (charge: 0 = +2 − 2 ✓)</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Identifying oxidised / reduced &amp; the agents — worked</h3>
+      <div class="ex"><b class="t">Worked Example 1:</b> Zn + Cu²⁺ → Zn²⁺ + Cu
+        <div class="calc">Zn: 0 → +2  (increase, lost 2e⁻)  → OXIDISED → Zn is the reducing agent</div>
+        <div class="calc">Cu²⁺: +2 → 0  (decrease, gained 2e⁻)  → REDUCED → Cu²⁺ is the oxidising agent</div>
+        Half-equations: Zn → Zn²⁺ + 2e⁻ (oxidation) and Cu²⁺ + 2e⁻ → Cu (reduction).</div>
+
+      <div class="ex"><b class="t">Worked Example 2:</b> 2Mg + O₂ → 2MgO
+        <div class="calc">Mg: 0 → +2  (oxidised)  → Mg is the reducing agent</div>
+        <div class="calc">O: 0 → −2  (reduced)  → O₂ is the oxidising agent</div>
+      </div>
+
+      <div class="ex"><b class="t">Worked Example 3:</b> H₂ + CuO → Cu + H₂O
+        <div class="calc">H: 0 → +1  (oxidised)  → H₂ is the reducing agent</div>
+        <div class="calc">Cu: +2 → 0  (reduced)  → CuO is the oxidising agent</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Displacement reactions are redox</h3>
+      <p>When a more reactive metal pushes a less reactive metal out of its salt solution, electrons move — so displacement is a redox reaction.</p>
+      <div class="ex"><b class="t">Example:</b> Fe + CuSO₄ → FeSO₄ + Cu (ionically: Fe + Cu²⁺ → Fe²⁺ + Cu)
+        <div class="calc">Fe: 0 → +2  (oxidised, reducing agent)</div>
+        <div class="calc">Cu²⁺: +2 → 0  (reduced, oxidising agent)</div>
+        The blue Cu²⁺ solution fades and reddish-brown copper is deposited on the iron. (SO₄²⁻ is just a spectator ion — it does not change.)</div>
+      <div class="analogy">🌟 In every displacement: the metal added is oxidised (reducing agent); the metal ion in solution is reduced (oxidising agent).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Everyday applications of redox</h3>
+      <ul>
+        <li><b>Corrosion / rusting of iron:</b> iron is oxidised by oxygen and water: iron loses electrons (Fe → Fe²⁺ → Fe³⁺) while oxygen is reduced. Rust is hydrated iron(III) oxide. Painting, oiling, galvanising and sacrificial protection all fight this oxidation.</li>
+        <li><b>Extraction of metals:</b> a metal in its ore is a positive ion, so extracting the metal means <b>reducing</b> it. Iron is reduced in the blast furnace by carbon monoxide: Fe₂O₃ + 3CO → 2Fe + 3CO₂. Very reactive metals (Na, Al) are reduced by <b>electrolysis</b>.</li>
+        <li><b>Electrochemical cells (batteries):</b> a cell turns a redox reaction into electricity. Oxidation happens at one electrode (the negative one in a simple cell) and reduction at the other; the electrons flow through the wire as current. In electrolysis the reverse happens — electricity drives redox.</li>
+        <li><b>Respiration &amp; combustion:</b> both are oxidation reactions that release energy (glucose or fuel is oxidised by oxygen).</li>
+      </ul>
+      <div class="analogy">🌟 Big picture: rusting = unwanted oxidation, extraction = reduction of the ore, batteries = controlled redox turned into electricity. Redox is everywhere.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">OIL RIG — Oxidation Is Loss, Reduction Is Gain. Track the electrons and you can never be wrong. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"The mnemonic OIL RIG stands for…",o:["Oxidation Is Gain, Reduction Is Loss","Oxidation Is Loss, Reduction Is Gain (of electrons)","Oxygen In Liquid, Reactant In Gas","Oxidation In Light, Reduction In Gas"],c:1,e:"<span class='h'>💡 Idea</span>OIL RIG is the electron rule: Oxidation Is Loss, Reduction Is Gain — of electrons (e⁻).<span class='h'>✅</span>Oxidation Is Loss, Reduction Is Gain (of electrons)."},
+{s:"In terms of electrons, oxidation is the…",o:["Loss of electrons","Gain of electrons","Gain of protons","Loss of neutrons"],c:0,e:"<span class='h'>💡 Idea</span>By the electron definition (the OIL in OIL RIG), oxidation is the LOSS of electrons.<span class='h'>✅</span>Loss of electrons."},
+{s:"In terms of electrons, reduction is the…",o:["Loss of electrons","Loss of oxygen","Gain of hydrogen","Gain of electrons"],c:3,e:"<span class='h'>💡 Idea</span>By the electron definition (the RIG in OIL RIG), reduction is the GAIN of electrons.<span class='h'>✅</span>Gain of electrons."},
+{s:"In terms of oxygen, oxidation is the…",o:["Loss of oxygen","Loss of electrons","Gain of oxygen","Gain of hydrogen"],c:2,e:"<span class='h'>💡 Idea</span>Using the oldest definition, oxidation is the GAIN of oxygen (e.g. 2Mg + O₂ → 2MgO).<span class='h'>✅</span>Gain of oxygen."},
+{s:"In terms of hydrogen, reduction is the…",o:["Gain of hydrogen","Loss of hydrogen","Gain of oxygen","Loss of electrons"],c:0,e:"<span class='h'>💡 Idea</span>In terms of hydrogen, reduction is the GAIN of hydrogen (oxidation would be the loss of hydrogen).<span class='h'>✅</span>Gain of hydrogen."},
+{s:"A reaction in which oxidation and reduction happen together is called a…",o:["Neutralisation reaction","Precipitation reaction","Redox reaction","Decomposition reaction"],c:2,e:"<span class='h'>💡 Idea</span>Oxidation and reduction always occur together; the combined reaction is a redox reaction (REDuction + OXidation).<span class='h'>✅</span>Redox reaction."},
+{s:"In terms of oxidation number, oxidation is…",o:["A decrease in oxidation number","An increase in oxidation number","No change in oxidation number","Always a change of exactly 2"],c:1,e:"<span class='h'>💡 Idea</span>Oxidation is an INCREASE in oxidation number (more positive); reduction is a decrease.<span class='h'>✅</span>An increase in oxidation number."},
+{s:"The oxidation number of an atom in a free element such as Zn, O₂ or Cl₂ is…",o:["+1","−1","Equal to its group number","0 (zero)"],c:3,e:"<span class='h'>💡 Idea</span>Every atom in an uncombined element has an oxidation number of 0.<span class='h'>✅</span>0 (zero)."},
+{s:"The oxidation number of a simple ion such as Mg²⁺ is…",o:["+2 (equal to its charge)","0","−2","+1"],c:0,e:"<span class='h'>💡 Idea</span>For a simple (monatomic) ion the oxidation number equals its charge, so Mg²⁺ is +2.<span class='h'>✅</span>+2 (equal to its charge)."},
+{s:"In its compounds, oxygen usually has an oxidation number of… (except in peroxides)",o:["+2","+1","−2","−1"],c:2,e:"<span class='h'>💡 Idea</span>Oxygen is −2 in almost all compounds; only in peroxides (like H₂O₂) is it −1.<span class='h'>✅</span>−2."},
+{s:"Hydrogen is usually +1, but in a metal hydride such as NaH its oxidation number is…",o:["+2","−1","0","+7"],c:1,e:"<span class='h'>💡 Idea</span>Hydrogen is +1 with non-metals, but −1 in metal hydrides like NaH and CaH₂.<span class='h'>✅</span>−1."},
+{s:"What is the oxidation number of sulphur in H₂SO₄?",o:["+2","+4","−2","+6"],c:3,e:"<span class='h'>✏️ Working</span>Let S = x. H = +1, O = −2, neutral so sum = 0:<span class='calc'>2(+1) + x + 4(−2) = 0</span><span class='calc'>2 + x − 8 = 0 → x = +6</span><span class='h'>✅</span>+6."},
+{s:"What is the oxidation number of manganese in KMnO₄?",o:["+7","+2","+4","−1"],c:0,e:"<span class='h'>✏️ Working</span>Let Mn = x. K = +1, O = −2, sum = 0:<span class='calc'>(+1) + x + 4(−2) = 0</span><span class='calc'>1 + x − 8 = 0 → x = +7</span><span class='h'>✅</span>+7."},
+{s:"What is the oxidation number of chromium in K₂Cr₂O₇?",o:["+3","+6","+7","+2"],c:1,e:"<span class='h'>✏️ Working</span>Let Cr = x. K = +1 (×2), O = −2 (×7), sum = 0:<span class='calc'>2(+1) + 2x + 7(−2) = 0</span><span class='calc'>2 + 2x − 14 = 0 → 2x = 12 → x = +6</span><span class='h'>✅</span>+6."},
+{s:"What is the oxidation number of nitrogen in HNO₃?",o:["+3","+4","+5","−3"],c:2,e:"<span class='h'>✏️ Working</span>Let N = x. H = +1, O = −2 (×3), sum = 0:<span class='calc'>(+1) + x + 3(−2) = 0</span><span class='calc'>1 + x − 6 = 0 → x = +5</span><span class='h'>✅</span>+5."},
+{s:"What is the oxidation number of chlorine in NaClO?",o:["+1","−1","+5","+7"],c:0,e:"<span class='h'>✏️ Working</span>Let Cl = x. Na = +1, O = −2, sum = 0:<span class='calc'>(+1) + x + (−2) = 0</span><span class='calc'>x = +1</span>So chlorine is not always −1; here it is +1.<span class='h'>✅</span>+1."},
+{s:"What is the oxidation number of sulphur in H₂S?",o:["+6","+4","+2","−2"],c:3,e:"<span class='h'>✏️ Working</span>Let S = x. H = +1 (×2), sum = 0:<span class='calc'>2(+1) + x = 0</span><span class='calc'>x = −2</span><span class='h'>✅</span>−2."},
+{s:"An oxidising agent is a substance that…",o:["Loses electrons and is oxidised","Gains electrons and is itself reduced","Neither gains nor loses electrons","Always contains hydrogen"],c:1,e:"<span class='h'>💡 Idea</span>An oxidising agent oxidises something else by taking its electrons, so the agent gains electrons and is itself reduced.<span class='h'>✅</span>Gains electrons and is itself reduced."},
+{s:"A reducing agent is a substance that…",o:["Loses electrons and is itself oxidised","Gains electrons and is reduced","Contains oxygen only","Cannot take part in redox"],c:0,e:"<span class='h'>💡 Idea</span>A reducing agent reduces something else by giving it electrons, so the agent loses electrons and is itself oxidised.<span class='h'>✅</span>Loses electrons and is itself oxidised."},
+{s:"When acidified KMnO₄ acts as an oxidising agent, its colour changes from…",o:["Green to orange","Colourless to purple","Purple to colourless","Orange to green"],c:2,e:"<span class='h'>💡 Idea</span>As KMnO₄ is reduced (Mn goes +7 → +2), the purple MnO₄⁻ fades to colourless Mn²⁺.<span class='h'>✅</span>Purple to colourless."},
+{s:"When acidified K₂Cr₂O₇ acts as an oxidising agent, its colour changes from…",o:["Purple to colourless","Green to orange","Blue to pink","Orange to green"],c:3,e:"<span class='h'>💡 Idea</span>As K₂Cr₂O₇ is reduced (Cr goes +6 → +3), the orange Cr₂O₇²⁻ turns green Cr³⁺.<span class='h'>✅</span>Orange to green."},
+{s:"Which of the following is a common reducing agent?",o:["Acidified KMnO₄","Hydrogen gas (H₂)","Chlorine (Cl₂)","Concentrated HNO₃"],c:1,e:"<span class='h'>💡 Idea</span>Hydrogen readily gives away electrons, so H₂ is a common reducing agent. KMnO₄, Cl₂ and HNO₃ are oxidising agents.<span class='h'>✅</span>Hydrogen gas (H₂)."},
+{s:"Which of the following is commonly used as an oxidising agent?",o:["Chlorine (Cl₂)","Hydrogen sulphide (H₂S)","Carbon (C)","Carbon monoxide (CO)"],c:0,e:"<span class='h'>💡 Idea</span>Chlorine readily takes electrons (Cl₂ + 2e⁻ → 2Cl⁻), so it is an oxidising agent. H₂S, C and CO are reducing agents.<span class='h'>✅</span>Chlorine (Cl₂)."},
+{s:"In the half-equation Zn → Zn²⁺ + 2e⁻, the zinc is…",o:["Reduced (gains electrons)","Unchanged","Oxidised (loses electrons)","Acting as an oxidising agent"],c:2,e:"<span class='h'>✏️ Working</span>Zn goes from 0 to +2 and releases 2 electrons (Zn → Zn²⁺ + 2e⁻). Losing electrons is oxidation (OIL).<span class='h'>✅</span>Oxidised (loses electrons)."},
+{s:"Which half-equation correctly represents a reduction?",o:["Zn → Zn²⁺ + 2e⁻","Cu²⁺ + 2e⁻ → Cu","2I⁻ → I₂ + 2e⁻","Fe²⁺ → Fe³⁺ + e⁻"],c:1,e:"<span class='h'>💡 Idea</span>Reduction is the gain of electrons. In Cu²⁺ + 2e⁻ → Cu the copper ion gains 2 electrons; the other three all lose electrons.<span class='h'>✅</span>Cu²⁺ + 2e⁻ → Cu."},
+{s:"In the reaction Zn + Cu²⁺ → Zn²⁺ + Cu, the species that is reduced is…",o:["Zn","Zn²⁺","SO₄²⁻","Cu²⁺"],c:3,e:"<span class='h'>✏️ Working</span>Cu²⁺ (+2) becomes Cu (0), gaining 2 electrons — that is reduction.<span class='calc'>Cu²⁺ + 2e⁻ → Cu</span>(Zn is oxidised: 0 → +2.)<span class='h'>✅</span>Cu²⁺."},
+{s:"In the reaction Zn + Cu²⁺ → Zn²⁺ + Cu, which species is the reducing agent?",o:["Zn","Cu²⁺","Cu","Zn²⁺"],c:0,e:"<span class='h'>✏️ Working</span>Zn loses electrons (0 → +2) and hands them to Cu²⁺, so Zn is oxidised and acts as the reducing agent.<span class='calc'>Zn → Zn²⁺ + 2e⁻</span><span class='h'>✅</span>Zn."},
+{s:"In the change Fe²⁺ → Fe³⁺ + e⁻, the iron has been…",o:["Reduced","Unchanged","Oxidised","Turned into a metal"],c:2,e:"<span class='h'>✏️ Working</span>Fe²⁺ (+2) becomes Fe³⁺ (+3), losing one electron. An increase in oxidation number / loss of electrons is oxidation.<span class='calc'>Fe²⁺ → Fe³⁺ + e⁻</span><span class='h'>✅</span>Oxidised."},
+{s:"The rusting of iron and the extraction of metals from their ores are both examples of…",o:["Neutralisation","Redox reactions","Simple physical changes","Fractional distillation"],c:1,e:"<span class='h'>💡 Idea</span>Rusting (iron oxidised, oxygen reduced) and extracting a metal (its ion reduced) both involve electron transfer, so both are redox reactions.<span class='h'>✅</span>Redox reactions."},
+{s:"In the displacement reaction Fe + CuSO₄ → FeSO₄ + Cu, the Cu²⁺ ions act as the…",o:["Reducing agent","Catalyst","Spectator ion","Oxidising agent"],c:3,e:"<span class='h'>✏️ Working</span>Cu²⁺ is reduced to Cu (0), gaining electrons, so it is the oxidising agent; Fe is oxidised (0 → +2) and is the reducing agent.<span class='calc'>Cu²⁺ + 2e⁻ → Cu</span><span class='h'>✅</span>Oxidising agent."}
+);
+
+["defs","oxnum","agents","reactions","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solubility A–Z — Solutions, Calculations & Curves (Chemistry)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>💧 Solubility A–Z</h1>
+  <p>Solutions · Solubility Calculations · Curves — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every step shown</span><span class="pill">Worked calculations</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="solutions">💧 Solutions &amp; Key Terms</div>
+    <div class="tab" data-cat="calcs">🧮 Solubility Calculations</div>
+    <div class="tab" data-cat="curves">📈 Solubility Curves &amp; Temperature</div>
+    <div class="tab" data-cat="factors">⚗️ Factors &amp; Applications</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: SOLUTIONS & KEY TERMS ============ -->
+  <section class="cat solutions show" id="cat-solutions">
+    <h2 class="cathead">💧 PART 1 — Solutions &amp; The Key Terms</h2>
+
+    <div class="lesson">
+      <h3>1. Solute, solvent and solution</h3>
+      <p>When you stir sugar into water, the sugar seems to disappear — it has <b>dissolved</b>. What you end up with is a clear, uniform liquid. Chemistry gives three names to what is happening:</p>
+      <ul>
+        <li><b>Solute</b> — the substance that is <b>dissolved</b> (usually the smaller amount). Example: the sugar, or the salt.</li>
+        <li><b>Solvent</b> — the substance that <b>does the dissolving</b> (usually the larger amount, very often water). Example: the water.</li>
+        <li><b>Solution</b> — the <b>uniform (homogeneous) mixture</b> you get when the solute has fully dissolved in the solvent.</li>
+      </ul>
+      <div class="formula">Solute&nbsp;+&nbsp;Solvent&nbsp;→&nbsp;Solution</div>
+      <p>A solution looks the same all the way through — you cannot see the solute any more, and it will not settle out on standing. When water is the solvent, we call it an <b>aqueous solution</b>.</p>
+      <div class="analogy">🌟 Memory: the s<b>OL</b>ute is the <b>l</b>ittle bit that gets <b>l</b>ost inside; the s<b>OLV</b>ent is the <b>v</b>ery big amount that swallows it (usually water).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Dilute vs concentrated</h3>
+      <p>These two words tell us <b>how much</b> solute is dissolved compared with the amount of solvent:</p>
+      <ul>
+        <li><b>Dilute solution</b> — contains only a <b>little</b> solute in a large amount of solvent (weak). Example: a pinch of salt in a full glass of water.</li>
+        <li><b>Concentrated solution</b> — contains a <b>large amount</b> of solute in the same amount of solvent (strong). Example: many spoons of salt in the same glass.</li>
+      </ul>
+      <p>Notice these are relative, everyday words — they compare amounts but do not give an exact figure. To be exact we need the term <b>solubility</b> (coming up in lesson 4).</p>
+      <div class="analogy">🌟 Think of squash/juice concentrate: add lots of water and it is dilute; use little water and it is concentrated.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Unsaturated, saturated and supersaturated</h3>
+      <p>Keep adding solute to a fixed amount of solvent (at a fixed temperature) and eventually no more will dissolve. This gives us three important states:</p>
+      <span class="key">The three states of a solution</span>
+      <table class="r">
+        <tr><th>State</th><th>What it means</th><th>Can it dissolve more?</th></tr>
+        <tr><td><b>Unsaturated</b></td><td>Holds <b>less</b> solute than its maximum at that temperature</td><td><b>Yes</b> — more will still dissolve</td></tr>
+        <tr><td><b>Saturated</b></td><td>Holds the <b>maximum</b> solute it possibly can at that temperature (extra just sits undissolved at the bottom)</td><td><b>No</b> — it is full</td></tr>
+        <tr><td><b>Supersaturated</b></td><td>Holds <b>more</b> dissolved solute than a normal saturated solution — an unstable, over-full state</td><td>No — it is over-full and easily crystallises</td></tr>
+      </table>
+      <p><b>Saturated solution</b> — a solution that <b>holds the maximum mass of solute it can dissolve at that temperature</b>, with any undissolved solute in contact with it.</p>
+      <p><b>Supersaturated solution</b> — made by dissolving a lot of solute in hot solvent then cooling it <b>very gently</b> so the extra stays dissolved. It is unstable: one tiny seed crystal or a shake makes the excess solute crash out at once.</p>
+      <div class="analogy">🌟 Picture a bus: unsaturated = seats still free; saturated = every seat taken (full); supersaturated = people squeezed in past full — one push and they tumble out.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. What is solubility?</h3>
+      <p>Solubility puts an exact number on how much solute a solvent can hold.</p>
+      <span class="key">Definition</span>
+      <p>The <b>solubility</b> of a solute is the <b>maximum mass of it (in grams) that dissolves in 100 g of solvent (usually water) at a given temperature to form a saturated solution.</b></p>
+      <div class="formula">Solubility = grams of solute per 100 g of water (at a stated temperature)</div>
+      <h4>Two things you must always state</h4>
+      <ul>
+        <li><b>The solvent</b> — nearly always 100 g of water unless told otherwise.</li>
+        <li><b>The temperature</b> — because solubility <b>changes with temperature</b>, a value is meaningless without it. Saying only that a solubility is 36 g is incomplete; you must say 36 g per 100 g of water <b>at 25°C</b>.</li>
+      </ul>
+      <span class="key">Units</span>
+      <p>Solubility is a mass compared to a fixed 100 g of solvent, so its unit is <b>g per 100 g of water</b> (grams of solute for every 100 g of solvent). It has no volume or time in it — it is an amount, not a rate.</p>
+      <div class="analogy">🌟 Solubility is the exact number behind the word saturated: it is the most a 100 g dose of water can hold at that temperature.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: SOLUBILITY CALCULATIONS ============ -->
+  <section class="cat calcs" id="cat-calcs">
+    <h2 class="cathead">🧮 PART 2 — Solubility Calculations</h2>
+
+    <div class="lesson">
+      <h3>1. The master formula</h3>
+      <p>Solubility is scaled to 100 g of water, so whatever mass of water you actually use, you convert to a per-100 g figure:</p>
+      <div class="formula">Solubility = (mass of solute ÷ mass of solvent) × 100</div>
+      <p>The answer comes out in <b>g per 100 g of water</b>. Rearranged, the same formula lets you find any one quantity if you know the others:</p>
+      <div class="formula">Mass of solute = (solubility ÷ 100) × mass of solvent</div>
+      <div class="analogy">🌟 Golden habit: always check whether the water given is 100 g. If it is not, use the formula to scale up or down to 100 g.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Worked example — find the solubility</h3>
+      <div class="ex"><b class="t">Example 1:</b> 40 g of potassium nitrate just dissolves in 80 g of water to make a saturated solution at 40°C. Find its solubility.
+        <div class="calc">Solubility = (mass of solute ÷ mass of solvent) × 100</div>
+        <div class="calc">Solubility = (40 ÷ 80) × 100 = 0.5 × 100 = 50 g per 100 g water</div>
+        So the solubility at 40°C is <b>50 g per 100 g of water</b>.</div>
+      <div class="ex"><b class="t">Example 2:</b> 18 g of a salt saturates 75 g of water. Find the solubility.
+        <div class="calc">Solubility = (18 ÷ 75) × 100 = 0.24 × 100 = 24 g per 100 g water</div>
+        Answer = <b>24 g per 100 g of water</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked example — find the mass of solute</h3>
+      <p>If you already know the solubility, you can work out how much solute a different mass of water will hold.</p>
+      <div class="ex"><b class="t">Example 3:</b> The solubility of a salt is 36 g per 100 g of water at 25°C. What mass will saturate 250 g of water at the same temperature?
+        <div class="calc">Mass of solute = (solubility ÷ 100) × mass of water</div>
+        <div class="calc">= (36 ÷ 100) × 250 = 0.36 × 250 = 90 g</div>
+        So <b>90 g</b> of the salt saturates 250 g of water.</div>
+      <div class="ex"><b class="t">Example 4:</b> Solubility is 20 g per 100 g water. What mass dissolves in 25 g of water?
+        <div class="calc">= (20 ÷ 100) × 25 = 0.20 × 25 = 5 g</div>
+        Answer = <b>5 g</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked example — crystals that separate on cooling</h3>
+      <p>Most solids dissolve more in hot water than in cold. So when a hot saturated solution is cooled, the water can no longer hold all the solute, and the excess <b>crystallises out</b>. The trick:</p>
+      <div class="formula">Crystals deposited = (mass dissolved at high temp) − (mass dissolved at low temp)</div>
+      <div class="ex"><b class="t">Example 5 (per 100 g water):</b> A saturated solution made with 100 g of water holds 110 g of salt at 60°C. The solubility falls to 30 g per 100 g water at 20°C. How much crystallises out on cooling from 60°C to 20°C?
+        <div class="calc">At 60°C, dissolved = 110 g (in 100 g water)</div>
+        <div class="calc">At 20°C, dissolved = 30 g (in 100 g water)</div>
+        <div class="calc">Crystals = 110 − 30 = 80 g</div>
+        So <b>80 g</b> of crystals separate out.</div>
+      <div class="ex"><b class="t">Example 6 (water is NOT 100 g):</b> A salt has solubility 60 g/100 g water at 80°C and 20 g/100 g water at 30°C. A saturated solution was made with only 50 g of water. Find the crystals deposited on cooling from 80°C to 30°C.
+        <div class="calc">At 80°C: mass dissolved = (60 ÷ 100) × 50 = 30 g</div>
+        <div class="calc">At 30°C: mass dissolved = (20 ÷ 100) × 50 = 10 g</div>
+        <div class="calc">Crystals = 30 − 10 = 20 g</div>
+        So <b>20 g</b> of crystals separate. (Always scale each solubility to the actual mass of water first.)</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Molar solubility (a quick look)</h3>
+      <p>Sometimes solubility is given in <b>moles per dm³</b> instead of grams per 100 g. This is called <b>molar solubility</b>. Convert grams to moles using moles = mass ÷ molar mass:</p>
+      <div class="formula">Molar solubility (mol/dm³) = solubility in g/dm³ ÷ molar mass (g/mol)</div>
+      <div class="ex"><b class="t">Example 7:</b> A salt dissolves to 20 g in 1 dm³ of water and has a molar mass of 40 g/mol. Find its molar solubility.
+        <div class="calc">Molar solubility = 20 ÷ 40 = 0.5 mol/dm³</div>
+        Answer = <b>0.5 mol/dm³</b>.</div>
+      <div class="analogy">🌟 Grams answer how HEAVY; moles answer how MANY particles. Divide grams by molar mass to switch from mass to moles.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: SOLUBILITY CURVES & TEMPERATURE ============ -->
+  <section class="cat curves" id="cat-curves">
+    <h2 class="cathead">📈 PART 3 — Solubility Curves &amp; Temperature</h2>
+
+    <div class="lesson">
+      <h3>1. What a solubility curve shows</h3>
+      <p>A <b>solubility curve</b> is a graph of <b>solubility (y-axis) against temperature (x-axis)</b> for a particular substance. Each point on the line tells you the maximum grams of solute that 100 g of water can hold at that temperature.</p>
+      <ul>
+        <li>Any point <b>on</b> the curve = a <b>saturated</b> solution at that temperature.</li>
+        <li>Any point <b>below</b> the curve = an <b>unsaturated</b> solution (it could still dissolve more).</li>
+        <li>Any point <b>above</b> the curve = a <b>supersaturated</b> (unstable) solution.</li>
+      </ul>
+      <div class="analogy">🌟 Read a curve like a map: go up from the temperature on the bottom axis until you hit the line, then across to read the solubility on the side axis.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Solids — solubility rises with temperature</h3>
+      <p>For <b>most solid solutes</b> (like KNO₃, sugar, most salts), <b>solubility increases as temperature increases</b> — hot water dissolves more. Their curves slope <b>upward</b> to the right.</p>
+      <div class="formula">Most solids: temperature ↑ ⇒ solubility ↑</div>
+      <p>A few solids barely change (e.g. common salt, NaCl, is almost flat), and a very small number decrease — but the general rule for solids is an upward slope. This rising behaviour is exactly why cooling a hot saturated solution forces crystals out.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Gases — the opposite behaviour</h3>
+      <p>Gases behave the <b>reverse</b> of solids:</p>
+      <ul>
+        <li><b>Temperature:</b> the solubility of a gas <b>decreases</b> as temperature rises — warm water holds less dissolved gas, so its curve slopes <b>downward</b>. (That is why a warm fizzy drink loses its gas fast, and why warm rivers hold less dissolved oxygen for fish.)</li>
+        <li><b>Pressure:</b> the solubility of a gas <b>increases</b> with pressure — the more you press the gas onto the liquid, the more dissolves. (Fizzy drinks are bottled under high CO₂ pressure.)</li>
+      </ul>
+      <div class="formula">Gases: temperature ↑ ⇒ solubility ↓&nbsp;·&nbsp;pressure ↑ ⇒ solubility ↑</div>
+      <div class="analogy">🌟 Remember: heat drives gas OUT of water, pressure pushes gas IN. Solids do the opposite of gases with temperature.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Reading a curve to find crystals deposited</h3>
+      <p>The most common exam use of a curve is: read the solubility at the higher temperature, read it again at the lower temperature, and subtract to get the crystals that separate on cooling.</p>
+      <div class="ex"><b class="t">Worked example:</b> From the curve, potassium nitrate has a solubility of 100 g/100 g water at 60°C and 40 g/100 g water at 20°C. A saturated solution is made with 100 g of water at 60°C, then cooled to 20°C. How many grams of crystals form?
+        <div class="calc">Solubility read at 60°C = 100 g per 100 g water</div>
+        <div class="calc">Solubility read at 20°C = 40 g per 100 g water</div>
+        <div class="calc">Crystals = 100 − 40 = 60 g</div>
+        So <b>60 g</b> of KNO₃ crystals are deposited. (If the water were not 100 g, scale each value to the actual mass of water first, as in Part 2 Example 6.)</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: FACTORS & APPLICATIONS ============ -->
+  <section class="cat factors" id="cat-factors">
+    <h2 class="cathead">⚗️ PART 4 — Factors Affecting Solubility &amp; Applications</h2>
+
+    <div class="lesson">
+      <h3>1. Temperature</h3>
+      <p>Temperature is the biggest single factor:</p>
+      <ul>
+        <li><b>Solids:</b> higher temperature usually means <b>higher</b> solubility.</li>
+        <li><b>Gases:</b> higher temperature means <b>lower</b> solubility.</li>
+      </ul>
+      <p>This is why sugar dissolves faster and in greater amount in hot tea, and why a warm soft drink goes flat quickly.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Pressure (for gases only)</h3>
+      <p>Pressure has almost no effect on the solubility of solids and liquids, but a big effect on <b>gases</b>: <b>more pressure ⇒ more gas dissolves</b>. Fizzy drinks are sealed under high CO₂ pressure so plenty of gas stays dissolved; opening the bottle drops the pressure, so the gas fizzes out.</p>
+      <div class="formula">More pressure on a gas ⇒ more gas dissolves</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Nature of solute and solvent — &lsquo;like dissolves like&rsquo;</h3>
+      <p>Whether something dissolves depends on how well the solute and solvent match in structure. The rule is <b>&lsquo;like dissolves like&rsquo;</b>:</p>
+      <ul>
+        <li><b>Polar / ionic solutes</b> (salt NaCl, sugar, copper(II) sulfate) dissolve well in <b>polar solvents</b> like <b>water</b> — the polar water molecules pull the ions apart and surround them.</li>
+        <li><b>Non-polar solutes</b> (oil, fat, wax, iodine) dissolve in <b>non-polar / organic solvents</b> (petrol, kerosene, tetrachloromethane, ethanol) but hardly at all in water.</li>
+      </ul>
+      <p>This is why oil and water do not mix, but oil dissolves easily in petrol.</p>
+      <div class="analogy">🌟 &lsquo;Like dissolves like&rsquo;: polar with polar (salt in water), non-polar with non-polar (oil in petrol). Water and oil are opposites, so they refuse to mix.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Stirring and particle size — rate, not amount</h3>
+      <p>Stirring the mixture and grinding the solute into a fine powder make it dissolve <b>faster</b>, but they do <b>NOT</b> change the maximum amount that can dissolve.</p>
+      <span class="key">Very common exam trap</span>
+      <ul>
+        <li><b>Stirring</b> and <b>smaller particle size</b> (more surface area) and gentle <b>warming</b> speed up the <b>rate</b> of dissolving.</li>
+        <li>The final <b>solubility</b> (maximum amount) is fixed by the solute, the solvent and the <b>temperature</b> only.</li>
+      </ul>
+      <div class="analogy">🌟 Stirring changes how FAST it dissolves, not how MUCH. Only temperature (and, for gases, pressure) changes the amount.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Water of crystallisation</h3>
+      <p>Some crystals contain a fixed number of water molecules chemically built into their structure — this is called <b>water of crystallisation</b>, and such crystals are <b>hydrated</b>.</p>
+      <ul>
+        <li>Hydrated copper(II) sulfate: <b>CuSO₄·5H₂O</b> (blue crystals).</li>
+        <li>Heating drives off the water to give the white <b>anhydrous</b> salt CuSO₄; adding water turns it blue again.</li>
+      </ul>
+      <p>This built-in water comes out of the saturated solution as it crystallises, which is why the crystals have a definite shape and composition.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>6. Fractional crystallisation</h3>
+      <p><b>Fractional crystallisation</b> separates two dissolved salts that have <b>different solubilities</b>. A hot solution saturated with both is cooled slowly: the salt whose solubility falls most drops out (crystallises) first and can be filtered off, leaving the more soluble salt in solution.</p>
+      <p>It is used to purify salts and, industrially, to obtain pure substances from mixtures such as sea water or crude potassium salts.</p>
+      <div class="analogy">🌟 Same idea as cooling a saturated solution to get crystals — but here two salts are present and the less soluble one leaves first.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>7. Everyday examples</h3>
+      <table class="r">
+        <tr><th>Situation</th><th>What is happening</th></tr>
+        <tr><td>Fizzy drink bottled under pressure</td><td>High CO₂ pressure keeps a lot of gas dissolved (pressure ↑ ⇒ gas solubility ↑)</td></tr>
+        <tr><td>Drink goes flat when opened and left warm</td><td>Pressure drops and temperature rises — both lower gas solubility, so CO₂ escapes</td></tr>
+        <tr><td>Sugar dissolves faster in hot tea</td><td>Higher temperature raises the solubility of the solid sugar and speeds up dissolving</td></tr>
+        <tr><td>Fish struggle in warm, still water</td><td>Warm water holds less dissolved oxygen (gas solubility falls with temperature)</td></tr>
+        <tr><td>Kettle furring / scale</td><td>Salts less soluble when hot come out of solution on the heating element</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Scale to 100 g of water, subtract on cooling — the grams follow. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"In a solution, the solute is the substance that is…",o:["the liquid doing the dissolving","a mixture that cannot be separated","dissolved in the solvent","never able to dissolve"],c:2,e:"<span class='h'>💡 Idea</span>The solute is the substance that gets dissolved — usually the smaller amount, such as the salt or sugar.<span class='h'>✅</span>Dissolved in the solvent."},
+{s:"The solvent in a solution is the substance that…",o:["does the dissolving, and is often water","is dissolved in a small amount","settles at the bottom undissolved","is always a solid"],c:0,e:"<span class='h'>💡 Idea</span>The solvent does the dissolving and is usually the larger amount — very often water.<span class='h'>✅</span>Does the dissolving, and is often water."},
+{s:"A solution is best described as a…",o:["cloudy mixture that settles on standing","homogeneous (uniform) mixture of a solute dissolved in a solvent","pure substance made of a single element","suspension of solid particles in a gas"],c:1,e:"<span class='h'>💡 Idea</span>A solution is uniform throughout, the solute cannot be seen, and it does not settle out. That is a homogeneous mixture.<span class='h'>✅</span>Homogeneous mixture of a solute dissolved in a solvent."},
+{s:"Which statement about a dilute solution is correct?",o:["it contains a large amount of solute per unit solvent","it contains no solvent at all","it is always a saturated solution","it contains only a little solute in a large amount of solvent"],c:3,e:"<span class='h'>💡 Idea</span>Dilute means weak — only a little solute compared with a lot of solvent. A concentrated solution is the opposite.<span class='h'>✅</span>It contains only a little solute in a large amount of solvent."},
+{s:"A saturated solution is one that…",o:["holds the maximum solute it can dissolve at that temperature","can still dissolve much more solute","contains no dissolved solute at all","is always very dilute"],c:0,e:"<span class='h'>💡 Idea</span>A saturated solution is full — it holds the most solute it possibly can at that temperature, and extra solute stays undissolved.<span class='h'>✅</span>Holds the maximum solute it can dissolve at that temperature."},
+{s:"An unsaturated solution is one that…",o:["already holds more than its maximum solute","can still dissolve more solute at that temperature","always has crystals lying at the bottom","cannot exist in practice"],c:1,e:"<span class='h'>💡 Idea</span>Unsaturated means not yet full — it holds less than its maximum, so more solute will still dissolve.<span class='h'>✅</span>Can still dissolve more solute at that temperature."},
+{s:"A supersaturated solution is unusual because it…",o:["contains less solute than a saturated one","contains only pure solvent","holds MORE dissolved solute than a normal saturated solution at that temperature","cannot be made in a laboratory"],c:2,e:"<span class='h'>💡 Idea</span>A supersaturated solution is over-full — it holds more dissolved solute than a normal saturated solution, and is unstable, crystallising at the slightest disturbance.<span class='h'>✅</span>Holds MORE dissolved solute than a normal saturated solution at that temperature."},
+{s:"The solubility of a solute is the maximum mass of it that dissolves in…",o:["1 g of water at any temperature","100 g of solvent to form a saturated solution at a stated temperature","1 dm³ of solvent only when boiling","10 g of solvent only when frozen"],c:1,e:"<span class='h'>💡 Idea</span>Solubility is defined per 100 g of solvent, to give a saturated solution, at a stated temperature.<span class='h'>✅</span>100 g of solvent to form a saturated solution at a stated temperature."},
+{s:"Solubility is commonly expressed in…",o:["grams of solute per 100 g of water","moles per second","joules per gram","metres per second"],c:0,e:"<span class='h'>💡 Idea</span>Solubility compares a mass of solute to a fixed 100 g of water, so the unit is grams per 100 g of water. It has no time in it — it is an amount, not a rate.<span class='h'>✅</span>Grams of solute per 100 g of water."},
+{s:"Why must a temperature always be quoted with a solubility value?",o:["because it makes the number look bigger","because solubility never changes","because water is always at exactly 25°C","because the solubility of a substance changes as the temperature changes"],c:3,e:"<span class='h'>💡 Idea</span>Solubility depends on temperature, so a value without a temperature is incomplete and meaningless.<span class='h'>✅</span>Because the solubility of a substance changes as the temperature changes."},
+{s:"The solubility (in g per 100 g of water) is calculated as…",o:["(mass of water ÷ mass of solute) × 100","(mass of solute ÷ mass of water) × 100","mass of solute × mass of water","(mass of solute − mass of water) × 100"],c:1,e:"<span class='h'>💡 Idea</span>Divide the mass of solute by the mass of solvent, then multiply by 100 to scale to 100 g of water.<span class='h'>✅</span>(mass of solute ÷ mass of water) × 100."},
+{s:"25 g of a salt just saturates 50 g of water. The solubility of the salt is…",o:["50 g per 100 g water","25 g per 100 g water","12.5 g per 100 g water","2 g per 100 g water"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Solubility = (25 ÷ 50) × 100</span><span class='calc'>= 0.5 × 100 = 50 g per 100 g water</span><span class='h'>✅</span>50 g per 100 g water."},
+{s:"15 g of a solute forms a saturated solution with 60 g of water. Its solubility is…",o:["9 g per 100 g water","15 g per 100 g water","25 g per 100 g water","40 g per 100 g water"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Solubility = (15 ÷ 60) × 100</span><span class='calc'>= 0.25 × 100 = 25 g per 100 g water</span><span class='h'>✅</span>25 g per 100 g water."},
+{s:"The solubility of a salt is 40 g per 100 g of water. What mass will dissolve in 200 g of water?",o:["20 g","40 g","80 g","400 g"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Mass = (solubility ÷ 100) × mass of water</span><span class='calc'>= (40 ÷ 100) × 200 = 0.4 × 200 = 80 g</span><span class='h'>✅</span>80 g."},
+{s:"If solubility is 20 g per 100 g of water, the mass of salt needed to saturate 25 g of water is…",o:["5 g","20 g","80 g","50 g"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Mass = (20 ÷ 100) × 25 = 0.2 × 25 = 5 g</span><span class='h'>✅</span>5 g."},
+{s:"A saturated solution made with 100 g of water holds 90 g of salt at 80°C. Cooled to 20°C, where the solubility is 30 g per 100 g water, the mass of crystals deposited is…",o:["120 g","90 g","30 g","60 g"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>At 80°C dissolved = 90 g; at 20°C dissolved = 30 g</span><span class='calc'>Crystals = 90 − 30 = 60 g</span><span class='h'>✅</span>60 g."},
+{s:"A salt dissolves to 20 g in 1 dm³ of water and has a molar mass of 40 g/mol. Its molar solubility is…",o:["0.5 mol/dm³","2 mol/dm³","20 mol/dm³","800 mol/dm³"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Molar solubility = grams per dm³ ÷ molar mass</span><span class='calc'>= 20 ÷ 40 = 0.5 mol/dm³</span><span class='h'>✅</span>0.5 mol/dm³."},
+{s:"A solubility curve is a graph showing how solubility varies with…",o:["pressure","temperature","time of stirring","the colour of the solution"],c:1,e:"<span class='h'>💡 Idea</span>A solubility curve plots solubility on the y-axis against temperature on the x-axis.<span class='h'>✅</span>Temperature."},
+{s:"For most solid solutes, raising the temperature of the water makes their solubility…",o:["fall sharply","stay exactly constant","increase","drop to zero"],c:2,e:"<span class='h'>💡 Idea</span>Most solids (KNO₃, sugar, most salts) dissolve more in hot water, so their curves slope upward.<span class='h'>✅</span>Increase."},
+{s:"As the temperature of water rises, the solubility of a gas in it generally…",o:["increases","decreases","stays the same","first rises then is constant"],c:1,e:"<span class='h'>💡 Idea</span>Gases behave opposite to most solids — warm water holds less dissolved gas, which is why warm fizzy drinks go flat.<span class='h'>✅</span>Decreases."},
+{s:"Increasing the pressure of a gas above a liquid causes the gas's solubility to…",o:["fall","stay unchanged","increase","become negative"],c:2,e:"<span class='h'>💡 Idea</span>More pressure pushes more gas into the liquid, so gas solubility increases with pressure. Fizzy drinks are bottled under high CO₂ pressure.<span class='h'>✅</span>Increase."},
+{s:"A curve shows KNO₃ solubility as 100 g/100 g water at 60°C and 40 g/100 g water at 20°C. Cooling a saturated solution made with 100 g of water from 60°C to 20°C deposits…",o:["140 g of crystals","60 g of crystals","40 g of crystals","100 g of crystals"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Read at 60°C = 100 g; read at 20°C = 40 g (per 100 g water)</span><span class='calc'>Crystals = 100 − 40 = 60 g</span><span class='h'>✅</span>60 g of crystals."},
+{s:"A salt's solubility is 80 g/100 g water at 70°C and 20 g/100 g water at 10°C. A saturated solution was made using 50 g of water. Cooling from 70°C to 10°C gives…",o:["60 g of crystals","20 g of crystals","30 g of crystals","10 g of crystals"],c:2,e:"<span class='h'>✏️ Working</span>Scale each solubility to 50 g of water first:<span class='calc'>At 70°C: (80 ÷ 100) × 50 = 40 g dissolved</span><span class='calc'>At 10°C: (20 ÷ 100) × 50 = 10 g dissolved</span><span class='calc'>Crystals = 40 − 10 = 30 g</span><span class='h'>✅</span>30 g of crystals."},
+{s:"The rule 'like dissolves like' tells us that…",o:["every solid dissolves in every liquid","water can dissolve non-polar substances easily","oil dissolves readily in water","polar and ionic solutes dissolve in polar solvents such as water, while non-polar solutes dissolve in organic solvents"],c:3,e:"<span class='h'>💡 Idea</span>Polar and ionic solutes match polar water; non-polar solutes match non-polar organic solvents. Unlike pairs (oil and water) do not mix.<span class='h'>✅</span>Polar and ionic solutes dissolve in polar solvents such as water, while non-polar solutes dissolve in organic solvents."},
+{s:"Common salt (an ionic solid) dissolves well in water because water is…",o:["a polar solvent that attracts and separates the ions","a non-polar solvent","an organic solvent like petrol","a gas at room temperature"],c:0,e:"<span class='h'>💡 Idea</span>Water molecules are polar, so they pull the ions apart and surround them — like dissolves like.<span class='h'>✅</span>A polar solvent that attracts and separates the ions."},
+{s:"Stirring the mixture and grinding the solute into a fine powder mainly…",o:["increase the final solubility","reduce how much can dissolve","turn the solute into a gas","speed up the RATE of dissolving without changing the maximum amount that dissolves"],c:3,e:"<span class='h'>💡 Idea</span>Stirring and smaller particles increase surface area, so dissolving is faster — but the maximum amount (solubility) is fixed by solute, solvent and temperature.<span class='h'>✅</span>Speed up the RATE of dissolving without changing the maximum amount that dissolves."},
+{s:"Water of crystallisation refers to…",o:["water used to wash crystals after filtering","water that boils off a hot solution","the fixed number of water molecules chemically combined in a crystal (e.g. CuSO₄·5H₂O)","water vapour floating in the air"],c:2,e:"<span class='h'>💡 Idea</span>Water of crystallisation is water built into the crystal structure in a fixed ratio, making the salt hydrated — heating drives it off to give the anhydrous salt.<span class='h'>✅</span>The fixed number of water molecules chemically combined in a crystal (e.g. CuSO₄·5H₂O)."},
+{s:"Fractional crystallisation separates two dissolved salts by using the fact that…",o:["all salts have exactly the same solubility","gases escape from the solution on heating","stirring removes one of the salts","they have different solubilities, so one crystallises out first as the solution is cooled"],c:3,e:"<span class='h'>💡 Idea</span>When two salts differ in solubility, cooling makes the less soluble one crystallise out first, so it can be filtered off — that is fractional crystallisation.<span class='h'>✅</span>They have different solubilities, so one crystallises out first as the solution is cooled."},
+{s:"A fizzy drink goes flat and bubbles escape when the bottle is opened and left to warm because…",o:["lower pressure and higher temperature both reduce the solubility of the CO₂ gas","the dissolved gas becomes far more soluble","the sugar in it evaporates away","the water in it freezes"],c:0,e:"<span class='h'>💡 Idea</span>Opening the bottle drops the pressure and warming raises the temperature; for a gas, both changes lower its solubility, so CO₂ escapes as bubbles.<span class='h'>✅</span>Lower pressure and higher temperature both reduce the solubility of the CO₂ gas."},
+{s:"Sugar dissolves faster and in greater amount in hot tea than in iced tea mainly because…",o:["hot water is less polar than cold water","cold water already contains more solute","sugar reacts with heat to form a gas","the solubility of sugar (a solid) is higher at a higher temperature"],c:3,e:"<span class='h'>💡 Idea</span>Sugar is a solid solute, and most solids are more soluble in hot water, so hot tea both dissolves it faster and holds more.<span class='h'>✅</span>The solubility of sugar (a solid) is higher at a higher temperature."}
+);
+
+["solutions","calcs","curves","factors","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

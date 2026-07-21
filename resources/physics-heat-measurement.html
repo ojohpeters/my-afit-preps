@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measuring Heat Energy — Calorimetry, Specific &amp; Latent Heat (Physics)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.9rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.9rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔥 Measuring Heat Energy</h1>
+  <p>Heat Capacity · Method of Mixtures · Electrical Heating · Latent Heat — taught from zero</p>
+  <p class="tip">WAEC · JAMB · Post-UTME level · with worked examples and quizzes</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Every calculation worked out</span><span class="pill">Calorimetry focused</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="capacity">🔥 Heat Capacity &amp; Specific Heat Capacity</div>
+    <div class="tab" data-cat="mixtures">🧪 Method of Mixtures &amp; Calorimetry</div>
+    <div class="tab" data-cat="electrical">⚡ Electrical Method</div>
+    <div class="tab" data-cat="latent">❄️ Latent Heat &amp; Change of State</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ============ PART 1: HEAT CAPACITY & SPECIFIC HEAT CAPACITY ============ -->
+  <section class="cat capacity show" id="cat-capacity">
+    <h2 class="cathead">🔥 PART 1 — Heat Capacity &amp; Specific Heat Capacity</h2>
+
+    <div class="lesson">
+      <h3>0. What this guide is about (and what it is NOT)</h3>
+      <p><b>Heat is energy</b>, and like all energy it is measured in <b>joules (J)</b>. When a body takes in heat and does <b>not</b> change state, its <b>temperature rises</b>. This guide is all about one question: <b>how much heat energy is involved?</b> — i.e. how to <b>measure and calculate heat</b>. That subject is called <b>calorimetry</b>.</p>
+      <div class="analogy">🌟 Scope note: temperature scales, thermal expansion and the three ways heat travels (conduction, convection, radiation) live in the separate <b>Heat &amp; Temperature</b> guide. Here we focus only on <b>counting the joules</b>: heat capacity, mixtures, electrical heating and latent heat.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>1. Why does temperature rise depend on more than just heat?</h3>
+      <p>Add the same amount of heat to different things and they warm up by different amounts. Three things control the temperature rise:</p>
+      <ul>
+        <li><b>How much heat you add (Q)</b> — more heat, bigger rise.</li>
+        <li><b>The mass of the body (m)</b> — a big pot of water warms more slowly than a cupful.</li>
+        <li><b>The material</b> — water is very hard to heat; a metal warms up easily. This material property is the <b>specific heat capacity</b>.</li>
+      </ul>
+      <div class="analogy">🌟 Everyday clue: a metal spoon in hot soup gets scalding fast, but the water itself takes ages to boil. Same heat source — different specific heat capacities.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Specific heat capacity (c)</h3>
+      <p><b>Specific heat capacity</b> is the <b>heat needed to raise the temperature of 1 kg of a substance by 1 K (or 1°C)</b>.</p>
+      <div class="formula">c&nbsp;=&nbsp;Q&nbsp;÷&nbsp;(m&nbsp;×&nbsp;ΔT)&nbsp;&nbsp;&nbsp;unit:&nbsp;J/(kg·K)</div>
+      <p>The word <b>specific</b> always means <b>per kilogram</b>. Because the mass is fixed at 1 kg, <b>c depends only on the material</b> — it is the same for 1 g or 1 tonne of the substance.</p>
+      <span class="key">Values worth knowing</span>
+      <table class="r">
+        <tr><th>Substance</th><th>Specific heat capacity c (J/kg·K)</th></tr>
+        <tr><td><b>Water</b></td><td><b>4200</b> (very high — used in this guide)</td></tr>
+        <tr><td>Ice</td><td>≈ 2100</td></tr>
+        <tr><td>Aluminium</td><td>900</td></tr>
+        <tr><td>Iron / steel</td><td>460</td></tr>
+        <tr><td>Copper</td><td>400</td></tr>
+        <tr><td>Lead</td><td>≈ 130</td></tr>
+      </table>
+      <div class="analogy">🌟 Water's huge c (4200) is why the sea takes so long to warm up and cool down, and why water is used in car radiators and hot-water bottles — it stores a lot of heat per degree.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Heat capacity (C) — the WHOLE body</h3>
+      <p><b>Heat capacity</b> (capital <b>C</b>) is the <b>heat needed to raise the temperature of the WHOLE body by 1 K</b>, no matter its mass.</p>
+      <div class="formula">C&nbsp;=&nbsp;Q&nbsp;÷&nbsp;ΔT&nbsp;&nbsp;&nbsp;unit:&nbsp;J/K</div>
+      <p>Since a body of mass <b>m</b> made of a material of specific heat capacity <b>c</b> needs <b>m</b> lots of <b>c</b> for every degree:</p>
+      <div class="formula">C&nbsp;=&nbsp;m&nbsp;×&nbsp;c</div>
+      <span class="key">The difference in one line</span>
+      <table class="r">
+        <tr><th></th><th>Heat capacity (C)</th><th>Specific heat capacity (c)</th></tr>
+        <tr><td>Refers to</td><td>The whole object</td><td>Exactly 1 kg of material</td></tr>
+        <tr><td>Depends on mass?</td><td><b>Yes</b> (bigger body = bigger C)</td><td><b>No</b> (property of the material only)</td></tr>
+        <tr><td>Unit</td><td><b>J/K</b> (or J/°C)</td><td><b>J/(kg·K)</b></td></tr>
+        <tr><td>Link</td><td colspan="2"><b>C = m × c</b></td></tr>
+      </table>
+      <div class="analogy">🌟 Memory: <b>specific</b> = <b>per kg</b>. Drop the word "specific" and you scale up to the whole body: C = mc.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. The master equation: Q = mcΔT</h3>
+      <p>Put it together and you get the single most useful equation in calorimetry:</p>
+      <div class="formula">Q&nbsp;=&nbsp;m&nbsp;c&nbsp;ΔT&nbsp;&nbsp;&nbsp;(heat = mass × specific heat capacity × temperature change)</div>
+      <p>It rearranges three ways — learn all of them:</p>
+      <div class="formula">c = Q ÷ (m ΔT)&nbsp;·&nbsp;m = Q ÷ (c ΔT)&nbsp;·&nbsp;ΔT = Q ÷ (m c)</div>
+      <p>Here <b>ΔT = final temperature − starting temperature</b>. Because it is a <b>change</b>, a difference of 1°C is exactly the same size as a difference of 1 K — so you may leave temperatures in °C in this equation.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — find the heat.</b> How much heat raises 2 kg of water from 20°C to 70°C? (c = 4200 J/kg·K)
+        <div class="calc">ΔT = 70 − 20 = 50 K</div>
+        <div class="calc">Q = mcΔT = 2 × 4200 × 50 = 420 000 J = 420 kJ</div>
+        Answer = <b>420 000 J</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — find the specific heat capacity.</b> 46 000 J raises 2 kg of a metal by 50 K. Find c.
+        <div class="calc">c = Q ÷ (m ΔT) = 46 000 ÷ (2 × 50)</div>
+        <div class="calc">c = 46 000 ÷ 100 = 460 J/kg·K</div>
+        c = <b>460 J/kg·K</b> — the metal is iron/steel.</div>
+
+      <div class="ex"><b class="t">Example 3 — find the mass.</b> 84 000 J warms some water by 10 K. What mass of water is it? (c = 4200)
+        <div class="calc">m = Q ÷ (c ΔT) = 84 000 ÷ (4200 × 10)</div>
+        <div class="calc">m = 84 000 ÷ 42 000 = 2 kg</div>
+        Answer = <b>2 kg</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — find the temperature rise.</b> 9000 J is given to 0.5 kg of aluminium (c = 900). By how much does it warm?
+        <div class="calc">ΔT = Q ÷ (m c) = 9000 ÷ (0.5 × 900)</div>
+        <div class="calc">ΔT = 9000 ÷ 450 = 20 K</div>
+        Answer = <b>a 20 K (20°C) rise</b>.</div>
+
+      <div class="ex"><b class="t">Example 5 — using heat capacity C directly.</b> A copper block has heat capacity 1200 J/K. How much heat raises its temperature by 25 K?
+        <div class="calc">Q = C ΔT = 1200 × 25 = 30 000 J</div>
+        (Check with C = mc: if C = 1200 and c = 400, the mass is m = C ÷ c = 3 kg.) Answer = <b>30 000 J</b>.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 2: METHOD OF MIXTURES & CALORIMETRY ============ -->
+  <section class="cat mixtures" id="cat-mixtures">
+    <h2 class="cathead">🧪 PART 2 — Method of Mixtures &amp; Calorimetry</h2>
+
+    <div class="lesson">
+      <h3>1. The big principle</h3>
+      <p>Mix a hot thing with a cold thing and heat flows from hot to cold until they reach the <b>same final temperature</b>. If none of that heat escapes to the surroundings, energy is conserved:</p>
+      <div class="formula">Heat LOST by the hot body&nbsp;=&nbsp;Heat GAINED by the cold body</div>
+      <p>This one sentence is the <b>method of mixtures</b>. Written with the master equation:</p>
+      <div class="formula">m<sub>hot</sub> c<sub>hot</sub> (T<sub>hot</sub> − T<sub>final</sub>)&nbsp;=&nbsp;m<sub>cold</sub> c<sub>cold</sub> (T<sub>final</sub> − T<sub>cold</sub>)</div>
+      <p>Notice each ΔT is written so that <b>both sides come out positive</b>: the hot body cools <i>from</i> its temperature <i>down to</i> the final one, the cold body warms <i>from</i> its temperature <i>up to</i> the final one.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The calorimeter</h3>
+      <p>A <b>calorimeter</b> is the apparatus used to make these measurements. It is a <b>thin, polished copper can</b> holding the liquid, fitted with a <b>stirrer</b> and a <b>thermometer</b>, and sitting inside an <b>insulating (lagging) jacket</b>.</p>
+      <ul>
+        <li><b>Why copper?</b> It is a <b>good conductor</b>, so the can quickly reaches the same temperature as its contents and the thermometer reads the true value.</li>
+        <li><b>Why thin and polished?</b> A small mass of metal absorbs little heat itself, and a shiny surface radiates less heat away.</li>
+        <li><b>The lagging (wool/felt/foam jacket)</b> is insulation that cuts heat leaking to the room.</li>
+      </ul>
+      <span class="key">Precautions (to get an accurate answer)</span>
+      <ul>
+        <li><b>Lag the calorimeter</b> and keep it out of draughts — reduce heat loss to the surroundings.</li>
+        <li><b>Stir</b> so the temperature is the same all through before you read it.</li>
+        <li><b>Use a lid</b> to cut evaporation, which secretly carries heat away.</li>
+        <li><b>Transfer the hot body quickly</b> so it does not cool on the way in.</li>
+        <li><b>Cooling correction:</b> start a little below room temperature and finish a little above it — heat gained from the room early roughly cancels heat lost late.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked example — mixing hot and cold water</h3>
+      <div class="ex"><b class="t">Example 1.</b> 2 kg of water at 80°C is mixed with 3 kg of water at 20°C. Find the final temperature (assume no heat lost). Both are water, so c cancels.
+        <div class="calc">Heat lost = heat gained</div>
+        <div class="calc">2 × (80 − T) = 3 × (T − 20)</div>
+        <div class="calc">160 − 2T = 3T − 60</div>
+        <div class="calc">160 + 60 = 5T → 220 = 5T → T = 44°C</div>
+        Answer = <b>44°C</b>. Check: hot loses 2×4200×36 = 302 400 J; cold gains 3×4200×24 = 302 400 J ✓.</div>
+
+      <div class="ex"><b class="t">Example 2.</b> 100 g (0.1 kg) of water at 90°C is added to 200 g (0.2 kg) of water at 30°C. Final temperature?
+        <div class="calc">0.1 × (90 − T) = 0.2 × (T − 30)</div>
+        <div class="calc">9 − 0.1T = 0.2T − 6 → 15 = 0.3T</div>
+        <div class="calc">T = 50°C</div>
+        Answer = <b>50°C</b> (nearer the cold water, because there is more of it).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked example — finding a metal's specific heat capacity</h3>
+      <p>This is the classic experiment: heat a metal in boiling water (so its start temperature is 100°C), drop it quickly into cold water in a calorimeter, stir, and read the final temperature.</p>
+      <div class="ex"><b class="t">Example 3.</b> A 0.6 kg metal block at 100°C is dropped into 0.5 kg of water at 20°C. The mixture settles at 30°C. Find the specific heat capacity of the metal. (c<sub>water</sub> = 4200 J/kg·K)
+        <div class="calc">Heat gained by water = 0.5 × 4200 × (30 − 20) = 21 000 J</div>
+        <div class="calc">Heat lost by metal = 0.6 × c × (100 − 30) = 42 c</div>
+        <div class="calc">42 c = 21 000 → c = 500 J/kg·K</div>
+        Answer = <b>c = 500 J/kg·K</b>.</div>
+      <div class="analogy">🌟 Method every time: write "heat lost = heat gained", fill in <b>mcΔT</b> on each side, and make each ΔT positive (hot: start − final; cold: final − start). Then solve for the one unknown.</div>
+    </div>
+  </section>
+
+  <!-- ============ PART 3: ELECTRICAL METHOD ============ -->
+  <section class="cat electrical" id="cat-electrical">
+    <h2 class="cathead">⚡ PART 3 — Electrical Method of Measuring Heat</h2>
+
+    <div class="lesson">
+      <h3>1. The idea — turn electricity into a known amount of heat</h3>
+      <p>An <b>electric (immersion) heater</b> gives a very clean way to supply a <b>measured</b> amount of heat. The electrical energy delivered in time <b>t</b> is:</p>
+      <div class="formula">Q = P t = V I t = I² R t</div>
+      <ul>
+        <li><b>P</b> = power (watts), <b>t</b> = time (seconds)</li>
+        <li><b>V</b> = voltage across the heater (volts), <b>I</b> = current through it (amps)</li>
+        <li><b>R</b> = resistance of the heater (ohms)</li>
+      </ul>
+      <p>All three forms give energy in <b>joules</b> when time is in seconds. (Remember: V/I is <b>resistance</b>, not power, so "(V/I)t" is <b>not</b> an energy formula.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The energy balance</h3>
+      <p>If the apparatus is well lagged so little heat escapes, all the electrical energy becomes heat in the substance:</p>
+      <div class="formula">Electrical energy in&nbsp;=&nbsp;Heat gained</div>
+      <div class="formula">V I t&nbsp;=&nbsp;m c ΔT</div>
+      <p>Rearrange to find the specific heat capacity by experiment:</p>
+      <div class="formula">c&nbsp;=&nbsp;V I t&nbsp;÷&nbsp;(m ΔT)&nbsp;&nbsp;&nbsp;(also&nbsp;=&nbsp;Pt ÷ (m ΔT))</div>
+      <div class="analogy">🌟 A voltmeter reads V, an ammeter reads I, a stopwatch reads t, a balance gives m and a thermometer gives ΔT — five simple readings hand you c.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — find c from power.</b> A 60 W heater warms 0.4 kg of a liquid; in 300 s the temperature rises by 15 K. Find c (ignore losses).
+        <div class="calc">Q = P t = 60 × 300 = 18 000 J</div>
+        <div class="calc">c = Q ÷ (m ΔT) = 18 000 ÷ (0.4 × 15) = 18 000 ÷ 6</div>
+        <div class="calc">c = 3000 J/kg·K</div>
+        Answer = <b>3000 J/kg·K</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — find c from V, I, t.</b> A heater runs at 12 V and 4 A for 600 s, warming a 2 kg block by 18 K. Find c.
+        <div class="calc">Q = V I t = 12 × 4 × 600 = 28 800 J</div>
+        <div class="calc">c = 28 800 ÷ (2 × 18) = 28 800 ÷ 36 = 800 J/kg·K</div>
+        Answer = <b>800 J/kg·K</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — find the heating time.</b> How long will a 700 W heater take to raise 1 kg of water (c = 4200) from 20°C to 100°C? (ignore losses)
+        <div class="calc">Q = mcΔT = 1 × 4200 × 80 = 336 000 J</div>
+        <div class="calc">t = Q ÷ P = 336 000 ÷ 700 = 480 s = 8 minutes</div>
+        Answer = <b>8 minutes</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — using I²Rt.</b> A heater of resistance 20 Ω carries 3 A for 240 s. How much heat is produced?
+        <div class="calc">Q = I² R t = 3² × 20 × 240</div>
+        <div class="calc">Q = 9 × 20 × 240 = 43 200 J</div>
+        Answer = <b>43 200 J</b>.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Why is the electrical value often a bit TOO HIGH?</h3>
+      <p>In real experiments a little heat always leaks to the surroundings. But we <b>count all</b> the electrical energy VIt as if it went into the substance. So VIt <b>overestimates</b> the heat that actually raised the temperature, and the calculated <b>c comes out slightly too high</b>.</p>
+      <p>That is why we <b>lag the apparatus, use a lid, and take readings quickly</b> — every precaution is aimed at making "electrical energy in = heat gained" as true as possible.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 4: LATENT HEAT & CHANGE OF STATE ============ -->
+  <section class="cat latent" id="cat-latent">
+    <h2 class="cathead">❄️ PART 4 — Latent Heat &amp; Change of State</h2>
+
+    <div class="lesson">
+      <h3>1. The strange flat part of the heating graph</h3>
+      <p>Heat a block of ice steadily and watch the thermometer. The temperature climbs — but at <b>0°C</b> it <b>stops rising</b> while the ice melts, even though heat is still pouring in. It climbs again once all the ice is water, then <b>stops again at 100°C</b> while the water boils. These flat parts are <b>changes of state</b>.</p>
+      <div class="analogy">🌟 During a change of state you are still adding heat, but the temperature refuses to change. That "hidden" heat is called <b>latent heat</b> (Latin <i>latent</i> = hidden).</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Why the temperature stays constant</h3>
+      <p>Temperature measures the <b>average kinetic energy</b> of the molecules. During melting or boiling the incoming heat is used to <b>break the bonds holding the molecules together and pull them apart</b> — that raises their <b>potential</b> energy, not their kinetic energy. Since the kinetic energy is unchanged, the <b>temperature stays constant</b> until the change of state is complete.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Specific latent heat and Q = mL</h3>
+      <p><b>Specific latent heat (L)</b> is the <b>heat needed to change the state of 1 kg of a substance without any change in temperature</b>. There are two kinds:</p>
+      <ul>
+        <li><b>Latent heat of fusion (L<sub>f</sub>)</b> — for <b>melting</b> a solid to liquid (or freezing back). For ice: <b>L<sub>f</sub> ≈ 336 000 J/kg</b> (3.36 × 10⁵).</li>
+        <li><b>Latent heat of vaporisation (L<sub>v</sub>)</b> — for <b>boiling</b> a liquid to gas (or condensing back). For water: <b>L<sub>v</sub> ≈ 2 260 000 J/kg</b> (2.26 × 10⁶).</li>
+      </ul>
+      <div class="formula">Q = m L&nbsp;&nbsp;&nbsp;(notice: NO ΔT — temperature does not change)</div>
+      <p>Unit of L is <b>J/kg</b>. Vaporisation needs far more energy than fusion because boiling must separate the molecules <b>completely</b> into a gas, while melting only <b>loosens</b> a solid into a liquid.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>4. Worked examples</h3>
+      <div class="ex"><b class="t">Example 1 — melting.</b> How much heat melts 2 kg of ice at 0°C into water at 0°C? (L<sub>f</sub> = 336 000 J/kg)
+        <div class="calc">Q = m L = 2 × 336 000 = 672 000 J</div>
+        Answer = <b>672 000 J</b>.</div>
+
+      <div class="ex"><b class="t">Example 2 — boiling.</b> How much heat turns 0.5 kg of water at 100°C into steam at 100°C? (L<sub>v</sub> = 2 260 000 J/kg)
+        <div class="calc">Q = m L = 0.5 × 2 260 000 = 1 130 000 J</div>
+        Answer = <b>1 130 000 J (1.13 MJ)</b>.</div>
+
+      <div class="ex"><b class="t">Example 3 — combined (ice → warm water).</b> Convert 1 kg of ice at 0°C into water at 20°C. (L<sub>f</sub> = 336 000; c<sub>water</sub> = 4200)
+        <div class="calc">Step 1, melt the ice: Q₁ = mL = 1 × 336 000 = 336 000 J</div>
+        <div class="calc">Step 2, warm the water 0→20: Q₂ = mcΔT = 1 × 4200 × 20 = 84 000 J</div>
+        <div class="calc">Total = 336 000 + 84 000 = 420 000 J</div>
+        Answer = <b>420 000 J</b>.</div>
+
+      <div class="ex"><b class="t">Example 4 — full journey (ice → water → steam).</b> Turn 0.1 kg of ice at 0°C into steam at 100°C. (L<sub>f</sub> = 336 000; c = 4200; L<sub>v</sub> = 2 260 000)
+        <div class="calc">1. Melt ice: 0.1 × 336 000 = 33 600 J</div>
+        <div class="calc">2. Warm water 0→100: 0.1 × 4200 × 100 = 42 000 J</div>
+        <div class="calc">3. Boil to steam: 0.1 × 2 260 000 = 226 000 J</div>
+        <div class="calc">Total = 33 600 + 42 000 + 226 000 = 301 600 J</div>
+        Answer ≈ <b>301 600 J (≈ 302 kJ)</b>. Notice step 3 dwarfs the others — boiling is the expensive step.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>5. Evaporation causes cooling</h3>
+      <p><b>Evaporation</b> happens at the surface of a liquid at any temperature. The <b>fastest, most energetic molecules escape</b> first, so the <b>average kinetic energy of the molecules left behind falls</b> — the liquid <b>cools down</b>.</p>
+      <div class="analogy">🌟 This is why sweating cools you, why you feel cold stepping out of a pool, and how a clay pot keeps water cool: evaporating liquid steals energy from what is left behind.</div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, and a full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Count the joules: Q = mcΔT for a temperature change, Q = mL for a change of state. Good luck! 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Specific heat capacity is defined as the heat needed to…",o:["Raise the temperature of a whole body by 1 K","Raise the temperature of 1 kg of a substance by 1 K","Melt 1 kg of a solid at its melting point","Change 1 kg of liquid into vapour"],c:1,e:"<span class='h'>💡 Idea</span>The word 'specific' means per kilogram. Specific heat capacity is the heat to raise 1 kg by 1 K; the whole-body version is heat capacity C.<span class='h'>✅</span>Raise the temperature of 1 kg of a substance by 1 K."},
+{s:"The SI unit of specific heat capacity is…",o:["J/K","J/kg","watt (J/s)","J/(kg·K)"],c:3,e:"<span class='h'>💡 Idea</span>c is heat per kilogram per kelvin, so its unit is joule per kilogram per kelvin.<span class='h'>✅</span>J/(kg·K)."},
+{s:"The heat capacity C of a body has the unit…",o:["J/K","J/(kg·K)","J/kg","watt"],c:0,e:"<span class='h'>💡 Idea</span>Heat capacity C = Q/ΔT is for the whole body, so the unit is joule per kelvin — no kilogram in it.<span class='h'>✅</span>J/K."},
+{s:"The correct equation for the heat needed to warm a body through a temperature change ΔT is…",o:["Q = mL","Q = VIt","Q = mcΔT","Q = m/(cΔT)"],c:2,e:"<span class='h'>💡 Idea</span>Heat for a temperature change is mass × specific heat capacity × temperature change.<span class='h'>✅</span>Q = mcΔT."},
+{s:"Heat capacity C and specific heat capacity c of a body of mass m are related by…",o:["C = mc","C = c/m","C = m/c","C = mcΔT"],c:0,e:"<span class='h'>💡 Idea</span>A body of mass m needs m lots of c for each degree, so its heat capacity is C = mc.<span class='h'>✅</span>C = mc."},
+{s:"How much heat is needed to raise the temperature of 2 kg of water by 50 K? (c = 4200 J/kg·K)",o:["4200 J","84 000 J","210 000 J","420 000 J"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = mcΔT = 2 × 4200 × 50</span><span class='calc'>Q = 420 000 J</span><span class='h'>✅</span>420 000 J."},
+{s:"46 000 J of heat raises the temperature of a 2 kg metal block by 50 K. Its specific heat capacity is…",o:["230 J/kg·K","460 J/kg·K","920 J/kg·K","4600 J/kg·K"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>c = Q ÷ (mΔT) = 46 000 ÷ (2 × 50)</span><span class='calc'>c = 46 000 ÷ 100 = 460 J/kg·K</span><span class='h'>✅</span>460 J/kg·K."},
+{s:"A body has a heat capacity of 800 J/K. How much heat is needed to raise its temperature by 25 K?",o:["32 J","825 J","20 000 J","40 000 J"],c:2,e:"<span class='h'>✏️ Working</span>For a whole body use Q = CΔT:<span class='calc'>Q = 800 × 25 = 20 000 J</span><span class='h'>✅</span>20 000 J."},
+{s:"The principle of the method of mixtures states that…",o:["Heat lost by the hot body = heat gained by the cold body","Heat lost = heat gained + work done","Temperature lost = temperature gained","The two masses must always be equal"],c:0,e:"<span class='h'>💡 Idea</span>Energy is conserved: if no heat escapes, the heat given out by the hot body equals the heat taken in by the cold body.<span class='h'>✅</span>Heat lost by the hot body = heat gained by the cold body."},
+{s:"In calorimetry the calorimeter is lagged (wrapped in insulation) mainly to…",o:["Increase its mass","Speed up the mixing","Make it a better conductor","Reduce heat loss to the surroundings"],c:3,e:"<span class='h'>💡 Idea</span>Lagging is insulation. It cuts heat leaking to the room so the measurement stays accurate.<span class='h'>✅</span>Reduce heat loss to the surroundings."},
+{s:"2 kg of water at 80°C is mixed with 3 kg of water at 20°C. The final temperature (no heat lost) is…",o:["60°C","50°C","44°C","36°C"],c:2,e:"<span class='h'>✏️ Working</span>Heat lost = heat gained, and c cancels:<span class='calc'>2(80 − T) = 3(T − 20)</span><span class='calc'>160 − 2T = 3T − 60 → 220 = 5T</span><span class='calc'>T = 44°C</span><span class='h'>✅</span>44°C."},
+{s:"A calorimeter is usually made of thin copper because copper…",o:["is very cheap","is a good conductor, so it quickly reaches the same temperature as the liquid","has a very large specific heat capacity","does not conduct heat at all"],c:1,e:"<span class='h'>💡 Idea</span>Copper conducts heat well, so the can quickly takes the temperature of its contents and the reading is reliable.<span class='h'>✅</span>is a good conductor, so it quickly reaches the same temperature as the liquid."},
+{s:"100 g of water at 90°C is added to 200 g of water at 30°C. The final temperature is…",o:["50°C","60°C","45°C","70°C"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>0.1(90 − T) = 0.2(T − 30)</span><span class='calc'>9 − 0.1T = 0.2T − 6 → 15 = 0.3T</span><span class='calc'>T = 50°C</span><span class='h'>✅</span>50°C."},
+{s:"A 0.6 kg metal block at 100°C is dropped into 0.5 kg of water at 20°C (c of water = 4200 J/kg·K). The mixture settles at 30°C. The specific heat capacity of the metal is…",o:["250 J/kg·K","420 J/kg·K","750 J/kg·K","500 J/kg·K"],c:3,e:"<span class='h'>✏️ Working</span>Heat gained by water:<span class='calc'>0.5 × 4200 × (30 − 20) = 21 000 J</span>Heat lost by metal = 0.6 × c × (100 − 30) = 42c:<span class='calc'>42c = 21 000 → c = 500 J/kg·K</span><span class='h'>✅</span>500 J/kg·K."},
+{s:"Which of the following is NOT a good precaution in a method-of-mixtures experiment?",o:["Stir the mixture gently but well","Cover the calorimeter with a lid","Leave the calorimeter unlagged in a draught","Transfer the hot body quickly"],c:2,e:"<span class='h'>💡 Idea</span>You must lag the calorimeter and shield it from draughts to stop heat loss — leaving it unlagged is exactly the wrong thing to do.<span class='h'>✅</span>Leave the calorimeter unlagged in a draught."},
+{s:"The electrical energy supplied by a heater of power P in time t is…",o:["Q = VIt (= Pt)","Q = mcΔT","Q = mL","Q = C ΔT"],c:0,e:"<span class='h'>💡 Idea</span>Electrical energy = power × time = VIt = Pt, and this energy becomes the heat gained.<span class='h'>✅</span>Q = VIt (= Pt)."},
+{s:"Which expression is NOT a correct formula for the electrical energy supplied to a heater?",o:["Q = (V/I)t","Q = Pt","Q = VIt","Q = I²Rt"],c:0,e:"<span class='h'>💡 Idea</span>Correct forms are Pt, VIt and I²Rt. V/I is resistance (not power), so (V/I)t is not an energy formula.<span class='h'>✅</span>Q = (V/I)t."},
+{s:"An electric heater rated 60 W heats 0.4 kg of a liquid; in 300 s the temperature rises by 15 K. The specific heat capacity of the liquid is (ignore losses)…",o:["1500 J/kg·K","3000 J/kg·K","300 J/kg·K","4500 J/kg·K"],c:1,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = Pt = 60 × 300 = 18 000 J</span><span class='calc'>c = Q ÷ (mΔT) = 18 000 ÷ (0.4 × 15) = 3000 J/kg·K</span><span class='h'>✅</span>3000 J/kg·K."},
+{s:"A heater working at 12 V and 4 A for 600 s warms a 2 kg block by 18 K. Its specific heat capacity is…",o:["400 J/kg·K","600 J/kg·K","800 J/kg·K","1600 J/kg·K"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = VIt = 12 × 4 × 600 = 28 800 J</span><span class='calc'>c = 28 800 ÷ (2 × 18) = 28 800 ÷ 36 = 800 J/kg·K</span><span class='h'>✅</span>800 J/kg·K."},
+{s:"How long will a 700 W heater take to raise 1 kg of water (c = 4200 J/kg·K) from 20°C to 100°C? (ignore losses)",o:["16 minutes","6 minutes","12 minutes","8 minutes"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = mcΔT = 1 × 4200 × 80 = 336 000 J</span><span class='calc'>t = Q ÷ P = 336 000 ÷ 700 = 480 s = 8 min</span><span class='h'>✅</span>8 minutes."},
+{s:"A heater of resistance 20 Ω carries a current of 3 A for 240 s. The heat it produces is…",o:["43 200 J","14 400 J","3600 J","1440 J"],c:0,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = I²Rt = 3² × 20 × 240</span><span class='calc'>Q = 9 × 20 × 240 = 43 200 J</span><span class='h'>✅</span>43 200 J."},
+{s:"In the electrical method, a value of specific heat capacity that comes out slightly TOO HIGH is usually because…",o:["the thermometer reads too low","some heat is lost to the surroundings, so the electrical energy overestimates the heat that warmed the substance","water has no specific heat capacity","the heater itself has mass"],c:1,e:"<span class='h'>💡 Idea</span>We count all of VIt as if it warmed the substance, but some leaks away — so the energy per degree looks bigger and c comes out too high. Lagging reduces this error.<span class='h'>✅</span>some heat is lost to the surroundings, so the electrical energy overestimates the heat that warmed the substance."},
+{s:"The specific latent heat of a substance is the heat needed to…",o:["raise 1 kg of it by 1 K","raise the whole body by 1 K","change the state of 1 kg of it without any change in temperature","boil any mass of it instantly"],c:2,e:"<span class='h'>💡 Idea</span>Latent (hidden) heat changes the state of 1 kg with NO temperature change — the give-away phrase is 'without a change in temperature'.<span class='h'>✅</span>change the state of 1 kg of it without any change in temperature."},
+{s:"While a pure solid is melting, its temperature…",o:["rises steadily","falls steadily","doubles","stays constant"],c:3,e:"<span class='h'>💡 Idea</span>During melting all the heat goes into breaking bonds, not raising temperature, so the temperature stays constant until melting is complete.<span class='h'>✅</span>stays constant."},
+{s:"The temperature stays constant during a change of state because the heat supplied is used to…",o:["break the bonds and separate the molecules, not to raise their kinetic energy","increase the molecules' kinetic energy quickly","create brand-new molecules","cool the substance down"],c:0,e:"<span class='h'>💡 Idea</span>The energy separates the molecules (raises their potential energy). Temperature measures average kinetic energy, which is unchanged — so temperature does not change.<span class='h'>✅</span>break the bonds and separate the molecules, not to raise their kinetic energy."},
+{s:"The heat needed to change the state of a mass m of a substance is given by…",o:["Q = mcΔT","Q = mL","Q = VIt","Q = CΔT"],c:1,e:"<span class='h'>💡 Idea</span>A change of state uses Q = mL, where L is the specific latent heat. There is no ΔT because the temperature does not change.<span class='h'>✅</span>Q = mL."},
+{s:"How much heat is needed to melt 2 kg of ice at 0°C into water at 0°C? (L of fusion = 336 000 J/kg)",o:["168 000 J","336 000 J","672 000 J","84 000 J"],c:2,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = mL = 2 × 336 000</span><span class='calc'>Q = 672 000 J</span><span class='h'>✅</span>672 000 J."},
+{s:"How much heat turns 0.5 kg of water at 100°C into steam at 100°C? (L of vaporisation = 2 260 000 J/kg)",o:["226 000 J","565 000 J","2 260 000 J","1 130 000 J"],c:3,e:"<span class='h'>✏️ Working</span><span class='calc'>Q = mL = 0.5 × 2 260 000</span><span class='calc'>Q = 1 130 000 J</span><span class='h'>✅</span>1 130 000 J."},
+{s:"The latent heat of vaporisation of water (2.26 MJ/kg) is far larger than its latent heat of fusion (0.336 MJ/kg). This shows that…",o:["melting needs more energy than boiling","separating molecules fully into a gas needs more energy than just loosening a solid into a liquid","ice is hotter than steam","the two values are actually equal"],c:1,e:"<span class='h'>💡 Idea</span>Boiling must pull molecules completely apart into a gas, which takes far more energy than merely loosening a solid into a liquid, so L of vaporisation &gt; L of fusion.<span class='h'>✅</span>separating molecules fully into a gas needs more energy than just loosening a solid into a liquid."},
+{s:"Sweating cools the body because, during evaporation,…",o:["heat is added to the skin","the body temperature rises","it has no effect on temperature","the most energetic molecules escape, lowering the average kinetic energy of those left behind"],c:3,e:"<span class='h'>💡 Idea</span>The fastest, most energetic molecules escape from the surface, so the average kinetic energy (and temperature) of the liquid left behind falls — that is cooling.<span class='h'>✅</span>the most energetic molecules escape, lowering the average kinetic energy of those left behind."}
+);
+
+["capacity","mixtures","electrical","latent","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

@@ -51,6 +51,10 @@ window.RESOURCES = [
    title:"Mensuration",
    desc:"Perimeter, area (triangles, circles, trapezium, sectors, Heron's formula), and surface area & volume of solids (cuboid, cylinder, cone, sphere).",
    meta:"30-question quiz"},
+  {file:"maths-geometry.html", subject:"Maths",
+   title:"Geometry",
+   desc:"Angles & parallel lines, triangles & polygon angles ((n−2)×180°), and the circle theorems (angle at centre, semicircle, cyclic quadrilateral, tangents).",
+   meta:"30-question quiz"},
 
   /* ---------- Physics ---------- */
   {file:"physics-electricity.html", subject:"Physics",
@@ -101,6 +105,10 @@ window.RESOURCES = [
    title:"Optics — Light, Colour, the Eye & Instruments",
    desc:"Dispersion & the spectrum, primary colours & why objects have colour, the human eye, eye defects (myopia/hypermetropia) and optical instruments.",
    meta:"30-question quiz"},
+  {file:"physics-heat-measurement.html", subject:"Physics",
+   title:"Measurement of Heat Energy",
+   desc:"Calorimetry: heat & specific heat capacity (Q = mcΔT), the method of mixtures, the electrical method (VIt), and latent heat of fusion & vaporisation.",
+   meta:"30-question quiz"},
 
   /* ---------- Chemistry ---------- */
   {file:"chemistry-mixed-practice.html", subject:"Chemistry",
@@ -138,6 +146,14 @@ window.RESOURCES = [
   {file:"chemistry-periodic-table.html", subject:"Chemistry",
    title:"Atomic Structure & Periodic Table",
    desc:"Protons/neutrons/electrons, isotopes, electron configuration, the atomic models, groups & periods, and periodic trends (radius, ionisation energy…).",
+   meta:"30-question quiz"},
+  {file:"chemistry-solubility.html", subject:"Chemistry",
+   title:"Solubility",
+   desc:"Saturated/unsaturated/supersaturated solutions, the solubility formula, crystals on cooling, solubility curves, and factors affecting solubility.",
+   meta:"30-question quiz"},
+  {file:"chemistry-redox.html", subject:"Chemistry",
+   title:"Oxidation & Reduction (Redox)",
+   desc:"The four definitions (oxygen, hydrogen, electrons/OIL RIG, oxidation number), assigning oxidation numbers, oxidising/reducing agents and half-equations.",
    meta:"30-question quiz"},
 
   /* ---------- Biology ---------- */
