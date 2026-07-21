@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammatical Names & Functions — Use of English (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.85rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🔤 Grammatical Names &amp; Functions</h1>
+  <p>Name the phrase or clause — and state its function in the sentence</p>
+  <p class="tip">Use of English · WAEC / JAMB / NECO style · with worked examples + 30-question quiz</p>
+  <div><span class="pill">Phrases</span><span class="pill">Clauses</span><span class="pill">Name + function method</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="phrases">🧩 Phrases</div>
+    <div class="tab" data-cat="clauses">🔗 Clauses</div>
+    <div class="tab" data-cat="method">🎯 How to Answer</div>
+    <div class="tab" data-cat="functions">🛠️ Functions &amp; Traps</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== PHRASES ===================== -->
+  <section class="cat phrases show" id="cat-phrases">
+    <h2 class="cathead">🧩 Phrases — Grammatical Name &amp; Function</h2>
+
+    <div class="lesson">
+      <h3>1. What this topic really asks</h3>
+      <p>In this WAEC/JAMB question, a group of words in a sentence is <b>underlined</b> and you must give <b>two things</b>:</p>
+      <ul>
+        <li><b>The grammatical NAME</b> — what kind of group it is (e.g. noun phrase, adverbial clause).</li>
+        <li><b>The FUNCTION</b> — the job it does in the sentence (e.g. subject, object, qualifies a noun, modifies a verb).</li>
+      </ul>
+      <div class="analogy">🌟 Think of it like this: the <b>name</b> is the group&rsquo;s job title, the <b>function</b> is what it actually does in that particular sentence. You must give both.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. What is a phrase?</h3>
+      <p>A <b>phrase</b> is a group of words that makes sense together but has <b>NO finite (complete) verb and no subject-verb pair</b>. It cannot stand alone as a sentence.</p>
+      <table class="r">
+        <tr><th>Grammatical name</th><th>What it does (function)</th><th>Example (phrase in bold)</th></tr>
+        <tr><td>Noun phrase</td><td>subject, object or complement</td><td><b>The tall dark man</b> smiled.</td></tr>
+        <tr><td>Adjectival phrase</td><td>qualifies / describes a noun</td><td>The girl <b>in the blue dress</b> is my sister.</td></tr>
+        <tr><td>Adverbial phrase</td><td>modifies a verb, adjective or adverb (shows time/place/manner)</td><td>She sang <b>in a sweet voice</b>.</td></tr>
+        <tr><td>Prepositional phrase</td><td>begins with a preposition; acts as an adjective or adverb</td><td>The book <b>on the table</b> is mine.</td></tr>
+        <tr><td>Verb phrase</td><td>the verb group (main verb + auxiliaries)</td><td>She <b>has been working</b> hard.</td></tr>
+      </table>
+      <p class="tip">Note: a <b>prepositional phrase</b> and an <b>adjectival/adverbial phrase</b> can be the same group of words — say prepositional if it starts with a preposition, and add whether it works as an adjective (qualifies a noun) or adverb (modifies a verb).</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked phrase examples</h3>
+      <div class="ex"><b class="t">Example 1:</b> &lsquo;The house <b>with the red roof</b> was sold.&rsquo;
+        <p>Name: <b>adjectival phrase</b> (a prepositional phrase). Function: it <b>qualifies the noun &lsquo;house&rsquo;</b>.</p></div>
+      <div class="ex"><b class="t">Example 2:</b> &lsquo;He drove <b>with great care</b>.&rsquo;
+        <p>Name: <b>adverbial phrase</b> (of manner). Function: it <b>modifies the verb &lsquo;drove&rsquo;</b>.</p></div>
+      <div class="ex"><b class="t">Example 3:</b> &lsquo;<b>A loaf of bread</b> costs a lot now.&rsquo;
+        <p>Name: <b>noun phrase</b>. Function: it is the <b>subject</b> of the verb &lsquo;costs&rsquo;.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CLAUSES ===================== -->
+  <section class="cat clauses" id="cat-clauses">
+    <h2 class="cathead">🔗 Clauses — Grammatical Name &amp; Function</h2>
+
+    <div class="lesson">
+      <h3>1. What is a clause?</h3>
+      <p>A <b>clause</b> is a group of words that DOES contain a <b>subject and a finite verb</b>. That single test — <b>is there a finite verb?</b> — is how you tell a clause from a phrase.</p>
+      <ul>
+        <li><b>Main (independent) clause:</b> makes complete sense on its own.</li>
+        <li><b>Subordinate (dependent) clause:</b> does not make complete sense alone; it does a job inside the sentence.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The three subordinate clauses</h3>
+      <table class="r">
+        <tr><th>Name</th><th>Job (function)</th><th>Common starters</th><th>Example (clause in bold)</th></tr>
+        <tr><td>Noun clause</td><td>acts as a noun → subject, object or complement</td><td>that, what, whether, why, how, who</td><td>I know <b>that he is honest</b>.</td></tr>
+        <tr><td>Adjectival (relative) clause</td><td>qualifies / describes a noun</td><td>who, whom, whose, which, that</td><td>The boy <b>who won the prize</b> is my friend.</td></tr>
+        <tr><td>Adverbial clause</td><td>modifies the verb (shows time, place, reason…)</td><td>when, where, because, if, although, so that</td><td>She cried <b>because she failed</b>.</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Types of adverbial clause (know them all)</h3>
+      <table class="r">
+        <tr><th>Adverbial clause of…</th><th>Starters</th><th>Example</th></tr>
+        <tr><td>Time</td><td>when, while, after, before, as, until</td><td>We will start <b>when he arrives</b>.</td></tr>
+        <tr><td>Place</td><td>where, wherever</td><td>He hid it <b>where no one could see</b>.</td></tr>
+        <tr><td>Reason / cause</td><td>because, since, as</td><td>She left <b>because she was tired</b>.</td></tr>
+        <tr><td>Condition</td><td>if, unless, provided</td><td><b>If you study hard</b>, you will pass.</td></tr>
+        <tr><td>Concession</td><td>although, though, even though</td><td><b>Although he is rich</b>, he is stingy.</td></tr>
+        <tr><td>Purpose</td><td>so that, in order that</td><td>He came early <b>so that he might help</b>.</td></tr>
+        <tr><td>Result</td><td>so … that, such … that</td><td>He ran so fast <b>that he fell</b>.</td></tr>
+        <tr><td>Manner</td><td>as, as if, as though</td><td>She spoke <b>as if she was angry</b>.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== METHOD ===================== -->
+  <section class="cat method" id="cat-method">
+    <h2 class="cathead">🎯 How to Answer &lsquo;Name &amp; Function&rsquo; Questions</h2>
+
+    <div class="lesson">
+      <h3>The 2-step method examiners want</h3>
+      <div class="formula">STEP 1: Give the grammatical NAME &nbsp;→&nbsp; STEP 2: State its FUNCTION</div>
+      <ul>
+        <li><b>Step 1 — Name it.</b> Is it a phrase or a clause (look for a finite verb)? Then which type — noun / adjectival / adverbial (and the adverbial sub-type)?</li>
+        <li><b>Step 2 — Function.</b> Say the exact job using phrases like: &lsquo;it is the <b>subject</b> of the sentence&rsquo;, &lsquo;it is the <b>object</b> of the verb ___&rsquo;, &lsquo;it <b>qualifies</b> the noun ___&rsquo;, &lsquo;it <b>modifies</b> the verb ___&rsquo;, &lsquo;it is the <b>complement</b> of ___&rsquo;, or &lsquo;it is in <b>apposition</b> to ___&rsquo;.</li>
+      </ul>
+      <div class="analogy">💡 Quick test: does the group answer <b>which/what kind?</b> → it is adjectival (qualifies a noun). Does it answer <b>when/where/why/how?</b> → it is adverbial (modifies a verb). Can it be replaced by &lsquo;it/something&rsquo; and act as subject/object? → it is a noun group.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>Six fully worked examples</h3>
+      <div class="ex"><b class="t">1.</b> &lsquo;The girl <b>in the red dress</b> is my cousin.&rsquo;
+        <p><b>Name:</b> adjectival phrase (prepositional phrase). <b>Function:</b> qualifies the noun &lsquo;girl&rsquo;.</p></div>
+      <div class="ex"><b class="t">2.</b> &lsquo;He spoke <b>as if he knew everything</b>.&rsquo;
+        <p><b>Name:</b> adverbial clause of manner. <b>Function:</b> modifies the verb &lsquo;spoke&rsquo;.</p></div>
+      <div class="ex"><b class="t">3.</b> &lsquo;<b>That she passed the exam</b> delighted her parents.&rsquo;
+        <p><b>Name:</b> noun clause. <b>Function:</b> subject of the verb &lsquo;delighted&rsquo;.</p></div>
+      <div class="ex"><b class="t">4.</b> &lsquo;I met the man <b>whom you described</b>.&rsquo;
+        <p><b>Name:</b> adjectival (relative) clause. <b>Function:</b> qualifies the noun &lsquo;man&rsquo;.</p></div>
+      <div class="ex"><b class="t">5.</b> &lsquo;They arrived <b>before the gate was closed</b>.&rsquo;
+        <p><b>Name:</b> adverbial clause of time. <b>Function:</b> modifies the verb &lsquo;arrived&rsquo;.</p></div>
+      <div class="ex"><b class="t">6.</b> &lsquo;My father, <b>a strict disciplinarian</b>, punished us.&rsquo;
+        <p><b>Name:</b> noun phrase. <b>Function:</b> in apposition to &lsquo;my father&rsquo;.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== FUNCTIONS ===================== -->
+  <section class="cat functions" id="cat-functions">
+    <h2 class="cathead">🛠️ Functions in the Sentence &amp; Common Traps</h2>
+
+    <div class="lesson">
+      <h3>The functions a group can perform</h3>
+      <table class="r">
+        <tr><th>Function</th><th>Meaning</th><th>Example (group in bold)</th></tr>
+        <tr><td>Subject</td><td>who/what the sentence is about (does the action)</td><td><b>The old man</b> slept.</td></tr>
+        <tr><td>Direct object</td><td>receives the action of the verb</td><td>She bought <b>a new car</b>.</td></tr>
+        <tr><td>Indirect object</td><td>to/for whom the action is done</td><td>She gave <b>the boy</b> a book.</td></tr>
+        <tr><td>Complement</td><td>completes the meaning after &lsquo;be/seem&rsquo; etc.</td><td>He is <b>a brilliant doctor</b>.</td></tr>
+        <tr><td>Qualifier of a noun</td><td>describes a noun (adjectival)</td><td>the house <b>on the hill</b></td></tr>
+        <tr><td>Adjunct / modifier of a verb</td><td>tells how/when/where an action happens (adverbial)</td><td>He ran <b>very quickly</b>.</td></tr>
+        <tr><td>Apposition</td><td>a noun group renaming another right beside it</td><td>Musa, <b>our captain</b>, scored.</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>Common traps (where students lose marks)</h3>
+      <ul>
+        <li><b>Phrase vs clause:</b> the one and only test is a <b>finite verb</b>. No verb → phrase; has subject + finite verb → clause.</li>
+        <li><b>Adjectival vs adverbial clause:</b> if it describes a <b>noun</b> (answers which/what kind) it is adjectival; if it tells you about the <b>verb</b> (when/where/why/how) it is adverbial.</li>
+        <li><b>Noun clause as object vs adverbial clause:</b> &lsquo;I know <b>that he is honest</b>&rsquo; = noun clause (object). &lsquo;He left <b>so that he could rest</b>&rsquo; = adverbial clause of purpose.</li>
+        <li><b>Give BOTH parts:</b> a name without a function (or vice-versa) only earns half the marks.</li>
+        <li><b>Be specific with the function:</b> say &lsquo;object of the verb <i>gave</i>&rsquo;, not just &lsquo;object&rsquo;; say &lsquo;qualifies the noun <i>man</i>&rsquo;, not just &lsquo;qualifies a noun&rsquo;.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Always give BOTH: the grammatical name AND the exact function. That&rsquo;s full marks. 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"A group of words that contains a subject and a finite verb is called a…",o:["Clause","Phrase","Preposition","Paragraph"],c:0,e:"<span class='h'>💡 Idea</span>The presence of a finite verb (with a subject) is what makes a group a <b>clause</b>. A phrase has no finite verb.<span class='h'>✅</span>Clause."},
+{s:"A group of words that makes sense but has NO finite verb is a…",o:["Clause","Phrase","Sentence","Paragraph"],c:1,e:"<span class='h'>💡 Idea</span>No finite verb = a <b>phrase</b>. It cannot stand alone as a sentence.<span class='h'>✅</span>Phrase."},
+{s:"In &lsquo;The boy <b>in the corner</b> is crying&rsquo;, the group &lsquo;in the corner&rsquo; is a…",o:["Noun clause","Adverbial clause","Adjectival phrase","Main clause"],c:2,e:"<span class='h'>💡 Idea</span>It has no finite verb (a phrase) and it describes the noun &lsquo;boy&rsquo;, so it is an <b>adjectival phrase</b> (a prepositional phrase).<span class='h'>✅</span>Adjectival phrase."},
+{s:"In &lsquo;The boy in the corner is crying&rsquo;, &lsquo;in the corner&rsquo; functions to…",o:["Modify the verb &lsquo;is crying&rsquo;","Act as the subject","Complete the verb","Qualify the noun &lsquo;boy&rsquo;"],c:3,e:"<span class='h'>💡 Idea</span>It tells us WHICH boy, so it <b>qualifies the noun &lsquo;boy&rsquo;</b>.<span class='h'>✅</span>Qualify the noun &lsquo;boy&rsquo;."},
+{s:"A subordinate clause that does the work of a noun (subject/object) is a…",o:["Noun clause","Adjectival clause","Adverbial clause","Main clause"],c:0,e:"<span class='h'>💡 Idea</span>A clause acting as subject, object or complement is a <b>noun clause</b>.<span class='h'>✅</span>Noun clause."},
+{s:"A clause that qualifies (describes) a noun is called an…",o:["Adverbial clause","Adjectival (relative) clause","Noun clause","Independent clause"],c:1,e:"<span class='h'>💡 Idea</span>A clause describing a noun (often starting who/which/that) is an <b>adjectival/relative clause</b>.<span class='h'>✅</span>Adjectival (relative) clause."},
+{s:"A clause that modifies a verb (shows time, place, reason, etc.) is an…",o:["Adjectival clause","Noun phrase","Adverbial clause","Prepositional phrase"],c:2,e:"<span class='h'>💡 Idea</span>A clause telling us when/where/why/how about the verb is an <b>adverbial clause</b>.<span class='h'>✅</span>Adverbial clause."},
+{s:"In &lsquo;<b>What you said</b> is true&rsquo;, the group &lsquo;What you said&rsquo; is a…",o:["Adverbial clause","Adjectival clause","Noun phrase","Noun clause"],c:3,e:"<span class='h'>💡 Idea</span>It has a subject and finite verb (a clause) and it stands as the subject, so it is a <b>noun clause</b>.<span class='h'>✅</span>Noun clause."},
+{s:"In &lsquo;What you said is true&rsquo;, the clause &lsquo;What you said&rsquo; functions as the…",o:["Subject","Object","Complement","Adjunct"],c:0,e:"<span class='h'>💡 Idea</span>It is what the sentence is about — the <b>subject</b> of the verb &lsquo;is&rsquo;.<span class='h'>✅</span>Subject."},
+{s:"In &lsquo;The man <b>who stole the money</b> was arrested&rsquo;, the group is an…",o:["Adverbial clause of reason","Adjectival (relative) clause","Noun clause","Adverbial phrase"],c:1,e:"<span class='h'>💡 Idea</span>It describes the noun &lsquo;man&rsquo; and starts with &lsquo;who&rsquo; — an <b>adjectival/relative clause</b>. Its function: qualifies &lsquo;man&rsquo;.<span class='h'>✅</span>Adjectival (relative) clause."},
+{s:"In &lsquo;She cried <b>because she failed</b>&rsquo;, the clause is an adverbial clause of…",o:["Time","Condition","Reason / cause","Manner"],c:2,e:"<span class='h'>💡 Idea</span>&lsquo;because&rsquo; gives the reason for crying → adverbial clause of <b>reason/cause</b>.<span class='h'>✅</span>Reason / cause."},
+{s:"In &lsquo;We will start <b>when he arrives</b>&rsquo;, the clause is an adverbial clause of…",o:["Place","Reason","Purpose","Time"],c:3,e:"<span class='h'>💡 Idea</span>&lsquo;when&rsquo; tells WHEN → adverbial clause of <b>time</b>.<span class='h'>✅</span>Time."},
+{s:"In &lsquo;He hid the money <b>where no one could find it</b>&rsquo;, the clause is an adverbial clause of…",o:["Place","Time","Manner","Result"],c:0,e:"<span class='h'>💡 Idea</span>&lsquo;where&rsquo; tells the location → adverbial clause of <b>place</b>.<span class='h'>✅</span>Place."},
+{s:"In &lsquo;<b>If you study hard</b>, you will pass&rsquo;, the clause is an adverbial clause of…",o:["Concession","Condition","Reason","Purpose"],c:1,e:"<span class='h'>💡 Idea</span>&lsquo;if&rsquo; sets a condition → adverbial clause of <b>condition</b>.<span class='h'>✅</span>Condition."},
+{s:"In &lsquo;He ran so fast <b>that he fell</b>&rsquo;, the clause is an adverbial clause of…",o:["Manner","Purpose","Result","Time"],c:2,e:"<span class='h'>💡 Idea</span>&lsquo;so … that&rsquo; shows the result of running fast → adverbial clause of <b>result</b>.<span class='h'>✅</span>Result."},
+{s:"In &lsquo;<b>Although he is rich</b>, he is stingy&rsquo;, the clause is an adverbial clause of…",o:["Reason","Condition","Manner","Concession"],c:3,e:"<span class='h'>💡 Idea</span>&lsquo;although&rsquo; concedes a contrast → adverbial clause of <b>concession</b>.<span class='h'>✅</span>Concession."},
+{s:"In &lsquo;She spoke <b>as if she was angry</b>&rsquo;, the clause is an adverbial clause of…",o:["Manner","Time","Purpose","Place"],c:0,e:"<span class='h'>💡 Idea</span>&lsquo;as if&rsquo; tells HOW she spoke → adverbial clause of <b>manner</b>.<span class='h'>✅</span>Manner."},
+{s:"In &lsquo;He came early <b>so that he might help</b>&rsquo;, the clause is an adverbial clause of…",o:["Result","Purpose","Reason","Condition"],c:1,e:"<span class='h'>💡 Idea</span>&lsquo;so that&rsquo; gives the aim/intention → adverbial clause of <b>purpose</b>.<span class='h'>✅</span>Purpose."},
+{s:"The single test that tells a clause apart from a phrase is whether the group has a…",o:["Preposition","Noun","Finite verb (with a subject)","Comma"],c:2,e:"<span class='h'>💡 Idea</span>A clause has a subject and a <b>finite verb</b>; a phrase does not.<span class='h'>✅</span>Finite verb (with a subject)."},
+{s:"In &lsquo;I know <b>that he is honest</b>&rsquo;, the noun clause functions as the…",o:["Subject of the sentence","Complement of &lsquo;he&rsquo;","Qualifier of a noun","Object of the verb &lsquo;know&rsquo;"],c:3,e:"<span class='h'>💡 Idea</span>&lsquo;that he is honest&rsquo; is what is known — the <b>object of the verb &lsquo;know&rsquo;</b>.<span class='h'>✅</span>Object of the verb &lsquo;know&rsquo;."},
+{s:"In &lsquo;My friend, <b>a doctor</b>, treated me&rsquo;, the group &lsquo;a doctor&rsquo; is…",o:["In apposition to &lsquo;my friend&rsquo;","The object of &lsquo;treated&rsquo;","An adverbial phrase","The subject"],c:0,e:"<span class='h'>💡 Idea</span>&lsquo;a doctor&rsquo; renames &lsquo;my friend&rsquo; right beside it → it is in <b>apposition to &lsquo;my friend&rsquo;</b>.<span class='h'>✅</span>In apposition to &lsquo;my friend&rsquo;."},
+{s:"In &lsquo;He is <b>a brilliant student</b>&rsquo;, the noun phrase functions as the…",o:["Object","Complement","Subject","Adjunct"],c:1,e:"<span class='h'>💡 Idea</span>After the linking verb &lsquo;is&rsquo;, the noun phrase completes the meaning about the subject → it is the <b>complement</b>.<span class='h'>✅</span>Complement."},
+{s:"In &lsquo;She gave <b>the boy</b> a book&rsquo;, the group &lsquo;the boy&rsquo; is the…",o:["Direct object","Subject","Indirect object","Complement"],c:2,e:"<span class='h'>💡 Idea</span>The book is the direct object; &lsquo;the boy&rsquo; is the one it was given TO → the <b>indirect object</b>.<span class='h'>✅</span>Indirect object."},
+{s:"In &lsquo;She gave the boy <b>a book</b>&rsquo;, the group &lsquo;a book&rsquo; is the…",o:["Indirect object","Complement","Adjunct","Direct object"],c:3,e:"<span class='h'>💡 Idea</span>&lsquo;a book&rsquo; directly receives the action of &lsquo;gave&rsquo; → the <b>direct object</b>.<span class='h'>✅</span>Direct object."},
+{s:"In &lsquo;The girl <b>with long hair</b> sang&rsquo;, the phrase is best described as…",o:["An adjectival phrase qualifying &lsquo;girl&rsquo;","An adverbial phrase modifying &lsquo;sang&rsquo;","A noun clause","A verb phrase"],c:0,e:"<span class='h'>💡 Idea</span>It describes WHICH girl, so it is an <b>adjectival phrase qualifying &lsquo;girl&rsquo;</b>.<span class='h'>✅</span>An adjectival phrase qualifying &lsquo;girl&rsquo;."},
+{s:"In &lsquo;She sang <b>in a sweet voice</b>&rsquo;, the phrase is an adverbial phrase of…",o:["Time","Manner","Place","Reason"],c:1,e:"<span class='h'>💡 Idea</span>It tells HOW she sang → an adverbial phrase of <b>manner</b>, modifying &lsquo;sang&rsquo;.<span class='h'>✅</span>Manner."},
+{s:"An adjectival (relative) clause usually begins with words such as…",o:["because, since, as","if, unless, provided","who, which, whose, that","so that, in order that"],c:2,e:"<span class='h'>💡 Idea</span>Relative pronouns <b>who, whom, whose, which, that</b> introduce adjectival/relative clauses.<span class='h'>✅</span>who, which, whose, that."},
+{s:"A noun clause can function as ALL of these EXCEPT…",o:["Subject","Object","Complement","Qualifier of a noun"],c:3,e:"<span class='h'>💡 Idea</span>Qualifying a noun is the job of an ADJECTIVAL clause, not a noun clause. A noun clause can be subject, object or complement.<span class='h'>✅</span>Qualifier of a noun."},
+{s:"In &lsquo;<b>Where he lives</b> is unknown&rsquo;, the group &lsquo;Where he lives&rsquo; is a…",o:["Noun clause acting as subject","Adverbial clause of place","Adjectival clause","Prepositional phrase"],c:0,e:"<span class='h'>💡 Idea</span>Here it is not telling us about a verb of place — it stands as the subject of &lsquo;is&rsquo;, so it is a <b>noun clause (subject)</b>.<span class='h'>✅</span>Noun clause acting as subject."},
+{s:"In &lsquo;The reason <b>why he left</b> is unclear&rsquo;, the group &lsquo;why he left&rsquo; is an…",o:["Adverbial clause of reason","Adjectival clause qualifying &lsquo;reason&rsquo;","Noun clause","Adverbial clause of time"],c:1,e:"<span class='h'>💡 Idea</span>It comes after and describes the noun &lsquo;reason&rsquo;, so it is an <b>adjectival clause qualifying &lsquo;reason&rsquo;</b> (not adverbial, even though it looks like &lsquo;why&rsquo;).<span class='h'>✅</span>Adjectival clause qualifying &lsquo;reason&rsquo;."}
+);
+
+["phrases","clauses","method","functions","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

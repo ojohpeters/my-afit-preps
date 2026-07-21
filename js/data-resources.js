@@ -47,6 +47,10 @@ window.RESOURCES = [
    title:"Set Theory",
    desc:"Sets & notation, subsets, union/intersection/complement, Venn diagrams and n(A∪B) = n(A)+n(B)−n(A∩B) for two- and three-set word problems.",
    meta:"30-question quiz"},
+  {file:"maths-mensuration.html", subject:"Maths",
+   title:"Mensuration",
+   desc:"Perimeter, area (triangles, circles, trapezium, sectors, Heron's formula), and surface area & volume of solids (cuboid, cylinder, cone, sphere).",
+   meta:"30-question quiz"},
 
   /* ---------- Physics ---------- */
   {file:"physics-electricity.html", subject:"Physics",
@@ -88,6 +92,14 @@ window.RESOURCES = [
   {file:"physics-projectiles-shm.html", subject:"Physics",
    title:"Projectiles & S.H.M.",
    desc:"Projectile motion (time of flight, max height, range), horizontal projection, and simple harmonic motion (pendulum & spring periods, energy).",
+   meta:"30-question quiz"},
+  {file:"physics-friction.html", subject:"Physics",
+   title:"Friction",
+   desc:"Types of friction, the coefficient of friction (F = μR), friction on inclined planes & the angle of repose, and how friction is reduced or increased.",
+   meta:"30-question quiz"},
+  {file:"physics-optics.html", subject:"Physics",
+   title:"Optics — Light, Colour, the Eye & Instruments",
+   desc:"Dispersion & the spectrum, primary colours & why objects have colour, the human eye, eye defects (myopia/hypermetropia) and optical instruments.",
    meta:"30-question quiz"},
 
   /* ---------- Chemistry ---------- */
@@ -162,6 +174,10 @@ window.RESOURCES = [
   {file:"english-parallelism.html", subject:"English",
    title:"Structural Parallelism",
    desc:"Parallel structure rules, correlative conjunctions (either/or, not only/but also), and how to spot & fix faulty parallelism.",
+   meta:"30-question quiz"},
+  {file:"english-grammatical-names-functions.html", subject:"English",
+   title:"Grammatical Names & Functions",
+   desc:"Naming phrases & clauses (noun/adjectival/adverbial) and stating their exact function — the WAEC/JAMB 'name & function' question type.",
    meta:"30-question quiz"},
 
   /* ---------- Mixed / Past paper ---------- */

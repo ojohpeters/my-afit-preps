@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friction — Physics (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.85rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🧱 Friction</h1>
+  <p>The force that opposes motion — types, coefficient, inclines &amp; control</p>
+  <p class="tip">Secondary school &amp; Post-UTME level · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">F = μR explained</span><span class="pill">Worked examples</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="whatis">🧱 What is Friction</div>
+    <div class="tab" data-cat="coeff">📐 Coefficient (F = μR)</div>
+    <div class="tab" data-cat="incline">⛰️ On an Incline</div>
+    <div class="tab" data-cat="control">⚙️ Uses &amp; Control</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== WHAT IS ===================== -->
+  <section class="cat whatis show" id="cat-whatis">
+    <h2 class="cathead">🧱 What is Friction?</h2>
+
+    <div class="lesson">
+      <h3>1. Definition</h3>
+      <p><b>Friction</b> is a force that <b>opposes the relative motion</b> (or attempted motion) between two surfaces in contact. It always acts in the direction <b>opposite</b> to the motion.</p>
+      <div class="analogy">🌟 Real life: push a heavy box and it resists sliding — that resistance is friction. It is caused by the tiny bumps and roughness of the two surfaces interlocking.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Types of friction</h3>
+      <table class="r">
+        <tr><th>Type</th><th>What it is</th></tr>
+        <tr><td>Static (limiting) friction</td><td>Acts on a body still at rest; must be overcome before it starts to move. The maximum value just before sliding is the <b>limiting friction</b>.</td></tr>
+        <tr><td>Kinetic / dynamic (sliding) friction</td><td>Acts on a body that is already sliding.</td></tr>
+        <tr><td>Rolling friction</td><td>Acts when a body rolls (a wheel or ball). It is much <b>smaller</b> than sliding friction.</td></tr>
+        <tr><td>Fluid / viscous friction (drag)</td><td>Resistance when moving through a liquid or gas (e.g. air resistance).</td></tr>
+      </table>
+      <div class="analogy">🧠 Two key facts: <b>limiting (static) friction &gt; kinetic friction</b> (it is harder to START moving something than to keep it moving), and <b>rolling friction &lt; sliding friction</b> (why wheels and ball bearings are used).</div>
+    </div>
+  </section>
+
+  <!-- ===================== COEFFICIENT ===================== -->
+  <section class="cat coeff" id="cat-coeff">
+    <h2 class="cathead">📐 The Coefficient of Friction (F = μR)</h2>
+
+    <div class="lesson">
+      <h3>1. Normal reaction and the friction formula</h3>
+      <p>The two surfaces press together with a force called the <b>normal reaction R</b> (it acts perpendicular to the surface). On a flat, horizontal surface, R equals the weight: <b>R = mg</b>.</p>
+      <div class="formula">Friction F = μ × R &nbsp;&nbsp;⇒&nbsp;&nbsp; μ = F / R</div>
+      <ul>
+        <li><b>F</b> = friction force (N)</li>
+        <li><b>R</b> = normal reaction (N)</li>
+        <li><b>μ</b> (mu) = <b>coefficient of friction</b> — it has <b>no unit</b> (a ratio of two forces).</li>
+      </ul>
+      <p>μ_s (static) is slightly larger than μ_k (kinetic) for the same surfaces.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. The laws of friction</h3>
+      <ul>
+        <li>Friction is <b>proportional to the normal reaction</b> (F ∝ R).</li>
+        <li>Friction is <b>independent of the area of contact</b>.</li>
+        <li>Friction is <b>independent of the speed</b> once the body is moving.</li>
+        <li>It depends on the <b>nature/roughness</b> of the two surfaces.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked examples</h3>
+      <div class="ex"><b class="t">Find the friction force:</b> a 10 kg block rests on a floor with μ = 0.4 (g = 10).
+        <div class="calc">R = mg = 10 × 10 = 100 N</div>
+        <div class="calc">F = μR = 0.4 × 100 = 40 N</div>
+        So a force just above 40 N is needed to make it slide.</div>
+      <div class="ex"><b class="t">Find the coefficient:</b> a friction force of 30 N acts when the normal reaction is 120 N.
+        <div class="calc">μ = F ÷ R = 30 ÷ 120 = 0.25</div></div>
+      <div class="ex"><b class="t">Minimum force to move a block:</b> a 2 kg block, μ = 0.5 (g = 10).
+        <div class="calc">R = mg = 20 N; F = μR = 0.5 × 20 = 10 N</div>
+        The block just moves when the applied force exceeds <b>10 N</b>.</div>
+    </div>
+  </section>
+
+  <!-- ===================== INCLINE ===================== -->
+  <section class="cat incline" id="cat-incline">
+    <h2 class="cathead">⛰️ Friction on an Inclined Plane</h2>
+
+    <div class="lesson">
+      <h3>1. Resolving the weight on a slope</h3>
+      <p>On a plane inclined at angle θ, split the weight W (= mg) into two parts:</p>
+      <div class="formula">Down the slope: mg·sin θ &nbsp;&nbsp;|&nbsp;&nbsp; Into the slope (normal): R = mg·cos θ</div>
+      <p>So the friction available is <b>F = μR = μ·mg·cos θ</b>.</p>
+      <div class="analogy">⚠️ Trap: the pull that makes a body slide down is mg·<b>sin</b>θ, and the normal reaction (used for friction) is mg·<b>cos</b>θ — do not swap them.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Angle of repose (angle of friction)</h3>
+      <p>The <b>angle of repose</b> is the slope angle at which a body is just about to slide. At that point the down-slope pull equals the friction:</p>
+      <div class="formula">mg·sin θ = μ·mg·cos θ &nbsp;⇒&nbsp; μ = tan θ</div>
+      <div class="ex"><b class="t">Example:</b> a block just begins to slide when the plane is tilted to 30°. Find μ.
+        <div class="calc">μ = tan 30° = 0.577</div></div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Worked incline example</h3>
+      <div class="ex"><b class="t">Friction on a slope:</b> a 4 kg block on a 30° incline, μ = 0.5 (g = 10).
+        <div class="calc">R = mg·cos θ = 4 × 10 × cos30° = 40 × 0.866 = 34.6 N</div>
+        <div class="calc">F = μR = 0.5 × 34.6 = 17.3 N</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTROL ===================== -->
+  <section class="cat control" id="cat-control">
+    <h2 class="cathead">⚙️ Advantages, Disadvantages &amp; Control</h2>
+
+    <div class="lesson">
+      <h3>1. Friction: friend and foe</h3>
+      <table class="r">
+        <tr><th>Advantages (why we need it)</th><th>Disadvantages (why it is a nuisance)</th></tr>
+        <tr><td>Lets us walk without slipping</td><td>Causes wear and tear of moving parts</td></tr>
+        <tr><td>Brakes stop cars; tyres grip the road</td><td>Produces unwanted heat</td></tr>
+        <tr><td>Writing (pen/pencil on paper)</td><td>Wastes energy → lowers machine efficiency</td></tr>
+        <tr><td>Nails and screws hold; belt drives work</td><td>Reduces the speed of machines</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Reducing and increasing friction</h3>
+      <span class="key">Ways to REDUCE friction</span>
+      <ul>
+        <li><b>Lubrication</b> — oil or grease between surfaces.</li>
+        <li><b>Ball / roller bearings</b> — turn sliding friction into smaller rolling friction.</li>
+        <li><b>Smoothing / polishing</b> the surfaces.</li>
+        <li><b>Streamlining</b> — reduces fluid friction (air/water drag).</li>
+        <li>Using an <b>air cushion</b> (e.g. hovercraft).</li>
+      </ul>
+      <span class="key">Ways to INCREASE friction (for grip)</span>
+      <ul>
+        <li><b>Treads / grooves</b> on tyres and shoe soles.</li>
+        <li>Making surfaces <b>rougher</b>.</li>
+        <li>Spreading <b>sand</b> on slippery roads.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>⭐ Exam reminders</h3>
+      <ul>
+        <li>Friction always <b>opposes</b> motion; it converts kinetic energy into <b>heat</b>.</li>
+        <li><b>F = μR</b>; on a flat floor R = mg; on a slope R = mg·cos θ.</li>
+        <li>μ has <b>no unit</b>; limiting (static) friction &gt; kinetic friction.</li>
+        <li>At the angle of repose, <b>μ = tan θ</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right. (Use g = 10 m/s².)</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">F = μR is the whole game. Master it and friction is easy marks. 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"Friction is a force that…",o:["Opposes relative motion between surfaces","Speeds up motion","Acts only in liquids","Has no direction"],c:0,e:"<span class='h'>💡 Idea</span>Friction always <b>opposes</b> the relative motion (or attempted motion) of two surfaces in contact.<span class='h'>✅</span>Opposes relative motion between surfaces."},
+{s:"Friction always acts in a direction…",o:["Same as the motion","Opposite to the motion","Perpendicular to the surface","Vertically upward"],c:1,e:"<span class='h'>💡 Idea</span>It resists movement, so it points <b>opposite</b> to the direction the body moves (or tries to move).<span class='h'>✅</span>Opposite to the motion."},
+{s:"For the same two surfaces, which is the greatest?",o:["Kinetic friction","Rolling friction","Limiting (static) friction","They are all equal"],c:2,e:"<span class='h'>💡 Idea</span>It is harder to START a body moving than to keep it moving, so <b>limiting (static) friction is the greatest</b>.<span class='h'>✅</span>Limiting (static) friction."},
+{s:"The friction force F is related to the normal reaction R by…",o:["F = R/μ","F = μ/R","F = μ + R","F = μR"],c:3,e:"<span class='h'>💡 Idea</span>The key formula is <b>F = μR</b>, where μ is the coefficient of friction.<span class='h'>✅</span>F = μR."},
+{s:"The coefficient of friction μ has the unit…",o:["No unit (dimensionless)","Newton","Newton per metre","Metre per second"],c:0,e:"<span class='h'>💡 Idea</span>μ = F/R is a ratio of two forces, so the units cancel — it has <b>no unit</b>.<span class='h'>✅</span>No unit (dimensionless)."},
+{s:"A 10 kg block rests on a horizontal floor. Its normal reaction is (g = 10)…",o:["1 N","100 N","10 N","1000 N"],c:1,e:"<span class='h'>✏️ Working</span>On a flat surface R = mg.<span class='calc'>R = 10 × 10 = 100 N</span><span class='h'>✅</span>100 N."},
+{s:"If μ = 0.4 and the normal reaction is 100 N, the friction force is…",o:["250 N","0.004 N","40 N","104 N"],c:2,e:"<span class='h'>✏️ Working</span>F = μR.<span class='calc'>F = 0.4 × 100 = 40 N</span><span class='h'>✅</span>40 N."},
+{s:"A friction force of 30 N acts when the normal reaction is 120 N. The coefficient of friction is…",o:["4.0","3600","0.5","0.25"],c:3,e:"<span class='h'>✏️ Working</span>μ = F ÷ R.<span class='calc'>μ = 30 ÷ 120 = 0.25</span><span class='h'>✅</span>0.25."},
+{s:"The minimum horizontal force to just move a 2 kg block on a floor with μ = 0.5 is (g = 10)…",o:["10 N","1 N","20 N","5 N"],c:0,e:"<span class='h'>✏️ Working</span>R = mg = 20 N; F = μR = 0.5 × 20.<span class='calc'>F = 10 N</span><span class='h'>✅</span>10 N."},
+{s:"Which type of friction is the smallest?",o:["Static friction","Rolling friction","Sliding friction","Limiting friction"],c:1,e:"<span class='h'>💡 Idea</span><b>Rolling friction</b> is much smaller than sliding friction — which is why wheels and ball bearings are used.<span class='h'>✅</span>Rolling friction."},
+{s:"Ball bearings reduce friction mainly by…",o:["Adding weight","Increasing the contact area","Turning sliding friction into rolling friction","Heating the surfaces"],c:2,e:"<span class='h'>💡 Idea</span>Bearings replace high sliding friction with much smaller <b>rolling friction</b>.<span class='h'>✅</span>Turning sliding friction into rolling friction."},
+{s:"Which of these REDUCES friction?",o:["Adding treads to a tyre","Making a surface rougher","Sprinkling sand on a road","Lubricating with oil"],c:3,e:"<span class='h'>💡 Idea</span><b>Lubrication</b> (oil/grease) reduces friction; treads, roughness and sand INCREASE it for grip.<span class='h'>✅</span>Lubricating with oil."},
+{s:"Which of these INCREASES friction (to improve grip)?",o:["Treads/grooves on tyres","Polishing the surface","Oiling the parts","Streamlining"],c:0,e:"<span class='h'>💡 Idea</span><b>Treads on tyres</b> increase grip (friction). Polishing, oiling and streamlining reduce friction.<span class='h'>✅</span>Treads/grooves on tyres."},
+{s:"Which is an ADVANTAGE of friction?",o:["It wears out machine parts","It enables us to walk without slipping","It produces unwanted heat","It reduces machine efficiency"],c:1,e:"<span class='h'>💡 Idea</span>Without friction we could not walk, brake or grip — a key <b>advantage</b>. The others are disadvantages.<span class='h'>✅</span>It enables us to walk without slipping."},
+{s:"Which is a DISADVANTAGE of friction?",o:["It helps cars to brake","It allows writing","It causes wear and tear of parts","It grips the road"],c:2,e:"<span class='h'>💡 Idea</span>Friction <b>wears out</b> moving parts (and wastes energy as heat) — a disadvantage.<span class='h'>✅</span>It causes wear and tear of parts."},
+{s:"One of the laws of friction states that friction is…",o:["Dependent on the area of contact","Proportional to the speed","Always greater than the weight","Independent of the area of contact"],c:3,e:"<span class='h'>💡 Idea</span>Friction is <b>independent of the area of contact</b>; it depends on the normal reaction and the surfaces.<span class='h'>✅</span>Independent of the area of contact."},
+{s:"Resistance experienced by a body moving through air or water is called…",o:["Fluid (viscous) friction","Rolling friction","Static friction","Limiting friction"],c:0,e:"<span class='h'>💡 Idea</span>Friction in a liquid or gas (drag) is <b>fluid/viscous friction</b>.<span class='h'>✅</span>Fluid (viscous) friction."},
+{s:"On a plane inclined at angle θ, the component of weight acting down the slope is…",o:["mg·cos θ","mg·sin θ","mg·tan θ","mg"],c:1,e:"<span class='h'>💡 Idea</span>The down-slope pull is <b>mg·sin θ</b> (the normal reaction is mg·cos θ).<span class='h'>✅</span>mg·sin θ."},
+{s:"On an inclined plane at angle θ, the normal reaction on a body of weight mg is…",o:["mg·sin θ","mg","mg·cos θ","mg·tan θ"],c:2,e:"<span class='h'>💡 Idea</span>The force pressing into the slope is <b>mg·cos θ</b>, which equals the normal reaction.<span class='h'>✅</span>mg·cos θ."},
+{s:"At the angle of repose θ, the coefficient of friction μ equals…",o:["sin θ","cos θ","1/θ","tan θ"],c:3,e:"<span class='h'>💡 Idea</span>At the point of sliding, mg·sinθ = μ·mg·cosθ, so <b>μ = tan θ</b>.<span class='h'>✅</span>tan θ."},
+{s:"A block just begins to slide when a plane is tilted to 45°. The coefficient of friction is…",o:["1.0","0.5","0.7","0"],c:0,e:"<span class='h'>✏️ Working</span>μ = tan θ.<span class='calc'>μ = tan 45° = 1.0</span><span class='h'>✅</span>1.0."},
+{s:"Friction between moving surfaces converts kinetic energy mostly into…",o:["Light","Heat","Sound only","Electricity"],c:1,e:"<span class='h'>💡 Idea</span>The work done against friction appears mainly as <b>heat</b> (surfaces warm up).<span class='h'>✅</span>Heat."},
+{s:"The friction that must be overcome before a stationary body starts to move is…",o:["Kinetic friction","Rolling friction","Limiting (static) friction","Fluid friction"],c:2,e:"<span class='h'>💡 Idea</span>Just before motion begins, friction reaches its maximum = <b>limiting (static) friction</b>.<span class='h'>✅</span>Limiting (static) friction."},
+{s:"The force required to pull a 5 kg block along a rough floor with μ = 0.2 is (g = 10)…",o:["1 N","25 N","50 N","10 N"],c:3,e:"<span class='h'>✏️ Working</span>R = mg = 50 N; F = μR = 0.2 × 50.<span class='calc'>F = 10 N</span><span class='h'>✅</span>10 N."},
+{s:"Streamlining the shape of a car mainly reduces…",o:["Fluid (air) friction","Static friction","Rolling friction","Limiting friction"],c:0,e:"<span class='h'>💡 Idea</span>A smooth, streamlined shape cuts down <b>air (fluid) resistance</b>.<span class='h'>✅</span>Fluid (air) friction."},
+{s:"The friction acting on a 4 kg block on a 30° incline with μ = 0.5 is (g = 10, cos30°≈0.866)…",o:["20 N","17.3 N","34.6 N","40 N"],c:1,e:"<span class='h'>✏️ Working</span>R = mg·cosθ = 4×10×0.866 = 34.6 N; F = μR = 0.5×34.6.<span class='calc'>F ≈ 17.3 N</span><span class='h'>✅</span>17.3 N."},
+{s:"Which statement is TRUE?",o:["Kinetic friction is greater than limiting friction","Friction depends only on speed","Limiting friction is greater than kinetic friction","Friction acts along the direction of motion"],c:2,e:"<span class='h'>💡 Idea</span><b>Limiting (static) friction &gt; kinetic friction</b> — starting is harder than continuing.<span class='h'>✅</span>Limiting friction is greater than kinetic friction."},
+{s:"Sand is spread on an icy road in order to…",o:["Reduce friction","Melt the ice only","Add weight","Increase friction for grip"],c:3,e:"<span class='h'>💡 Idea</span>The rough sand <b>increases friction</b>, giving tyres and feet more grip.<span class='h'>✅</span>Increase friction for grip."},
+{s:"According to the laws of friction, once a body is moving, the friction is…",o:["Independent of the speed","Proportional to the speed","Zero","Equal to the weight always"],c:0,e:"<span class='h'>💡 Idea</span>Kinetic friction is (approximately) <b>independent of the speed</b> of sliding.<span class='h'>✅</span>Independent of the speed."},
+{s:"A 20 N friction force acts on a block whose normal reaction is 80 N. The coefficient of friction is…",o:["4.0","0.25","1600","0.4"],c:1,e:"<span class='h'>✏️ Working</span>μ = F ÷ R.<span class='calc'>μ = 20 ÷ 80 = 0.25</span><span class='h'>✅</span>0.25."}
+);
+
+["whatis","coeff","incline","control","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>

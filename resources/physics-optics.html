@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optics — Light, Colour, the Eye & Instruments (with Quiz)</title>
+<style>
+  :root{
+    --bg:#0f1226; --card:#181b34; --card2:#1f2342; --accent:#7c5cff; --accent2:#22d3ee;
+    --good:#22c55e; --bad:#ef4444; --text:#e8e9f3; --muted:#a4a7c7; --line:#2c3056; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;background:linear-gradient(160deg,#0b0e20,#141733);color:var(--text);line-height:1.6}
+  header{padding:34px 18px 26px;text-align:center;background:radial-gradient(1200px 400px at 50% -50%,rgba(124,92,255,.35),transparent);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 6px;font-size:1.7rem}
+  header p{margin:4px 0;color:var(--muted)}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 90px}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;margin:3px;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20;background:rgba(11,14,32,.92);backdrop-filter:blur(8px);padding:12px 0;border-bottom:1px solid var(--line)}
+  .tab{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.85rem}
+  .tab.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent}
+  section.cat{display:none}
+  section.cat.show{display:block}
+  .cathead{font-size:1.35rem;color:var(--accent2);border-left:4px solid var(--accent);padding-left:12px;margin-top:26px}
+  .lesson{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:16px 0}
+  .lesson h3{margin:0 0 6px;color:var(--accent2);font-size:1.12rem}
+  .lesson h4{color:#fff;margin:16px 0 4px;font-size:1rem}
+  .lesson p{margin:8px 0}
+  .lesson ul{margin:6px 0;padding-left:22px}
+  .lesson li{margin:4px 0}
+  .key{display:block;color:var(--accent2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:14px 0 2px}
+  .formula{background:#11142b;border:1px solid var(--accent);border-radius:10px;padding:10px 14px;margin:8px 0;font-family:"Consolas",monospace;font-size:1rem;color:#ffe9a8;text-align:center}
+  .ex{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:10px 0}
+  .ex b.t{color:var(--accent2)}
+  .calc{background:#0d1024;border:1px solid var(--line);border-radius:8px;padding:5px 10px;margin:4px 0;font-family:"Consolas",monospace;font-size:.92rem;color:#ffe9a8}
+  .analogy{border-left:3px solid var(--warn);padding:4px 0 4px 12px;margin:10px 0;color:#ffe9c2;font-size:.95rem}
+  table.r{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem}
+  table.r th,table.r td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+  table.r th{background:var(--card2);color:var(--accent2)}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0}
+  .q .num{display:inline-flex;min-width:30px;height:30px;align-items:center;justify-content:center;background:var(--accent);border-radius:8px;font-weight:700;margin-right:8px}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opts{list-style:none;padding:0;margin:6px 0}
+  .opts li{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;cursor:pointer;transition:.15s;background:var(--card2)}
+  .opts li:hover{border-color:var(--accent)}
+  .opts li.correct{background:rgba(34,197,94,.18);border-color:var(--good)}
+  .opts li.wrong{background:rgba(239,68,68,.16);border-color:var(--bad)}
+  .opts li .lbl{font-weight:700;margin-right:8px;color:var(--accent2)}
+  .reveal{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;display:none}
+  .reveal.show{display:block}
+  .ans{font-weight:700;color:var(--good);margin-bottom:6px}
+  .exp{color:#dfe1f2;font-size:.96rem}
+  .exp .h{display:block;color:var(--accent2);margin-top:10px;margin-bottom:2px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .exp .calc{color:#ffe9a8}
+  .btn{cursor:pointer;border-radius:10px;padding:7px 14px;font-weight:700;background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  .btn.small{font-size:.8rem;padding:5px 10px}
+  .scorebox{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:12px 16px;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .scorebox b{color:var(--accent2)}
+  .watermark{position:fixed;inset:0;pointer-events:none;z-index:0;display:flex;align-items:center;justify-content:center}
+  .watermark span{font-size:5vw;font-weight:800;color:rgba(255,255,255,.035);transform:rotate(-25deg);white-space:nowrap;letter-spacing:3px}
+  footer{text-align:center;color:var(--muted);padding:30px 16px;border-top:1px solid var(--line)}
+  .credit{font-weight:800;background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:1.05rem}
+  .tip{font-size:.9rem;color:var(--muted)}
+  @media(max-width:600px){.watermark span{font-size:9vw}}
+</style>
+</head>
+<body>
+<a href="../index.html" class="afit-back" title="Back to AFIT Prep">← AFIT&nbsp;Prep</a>
+<style>
+.afit-back{position:fixed;left:14px;bottom:14px;z-index:80;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#7c5cff,#a855f7);color:#fff;font-family:"Segoe UI",system-ui,Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;padding:10px 15px;border-radius:12px;box-shadow:0 8px 26px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.afit-back:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,92,255,.55)}
+@media(max-width:600px){.afit-back{left:10px;bottom:10px;padding:9px 13px;font-size:13px}}
+</style>
+<div class="watermark"><span>Built by Ojochegbe • Built by Ojochegbe</span></div>
+
+<header>
+  <h1>🌈 Optics — Light, Colour, the Eye &amp; Instruments</h1>
+  <p>Dispersion · colour · the human eye · eye defects · optical instruments</p>
+  <p class="tip">Complements the Reflection &amp; Refraction guide · worked examples + 30-question quiz</p>
+  <div><span class="pill">Plain-English lessons</span><span class="pill">Colour explained</span><span class="pill">The eye & its defects</span><span class="pill">30 quiz questions</span></div>
+</header>
+
+<div class="wrap" style="position:relative;z-index:1">
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-cat="dispersion">🌈 Dispersion</div>
+    <div class="tab" data-cat="colour">🎨 Colour</div>
+    <div class="tab" data-cat="eye">👁️ The Eye</div>
+    <div class="tab" data-cat="instruments">🔭 Defects &amp; Instruments</div>
+    <div class="tab" data-cat="quiz">📝 Quiz (30)</div>
+  </div>
+
+  <!-- ===================== DISPERSION ===================== -->
+  <section class="cat dispersion show" id="cat-dispersion">
+    <h2 class="cathead">🌈 Dispersion of Light</h2>
+
+    <div class="lesson">
+      <h3>1. Splitting white light</h3>
+      <p>When white light passes through a <b>glass prism</b> it spreads out into a band of seven colours called the <b>spectrum</b>. This splitting of white light into its colours is called <b>dispersion</b>.</p>
+      <div class="formula">Order of the spectrum: Red, Orange, Yellow, Green, Blue, Indigo, Violet (ROYGBIV)</div>
+      <div class="analogy">🌟 A rainbow is dispersion in nature — raindrops act like tiny prisms, splitting sunlight into its colours.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Why does dispersion happen?</h3>
+      <p>White light is a mixture of colours, each with a different <b>wavelength</b>. When they enter glass they slow down and bend (refract) by <b>different amounts</b>:</p>
+      <ul>
+        <li><b>Red</b> has the <b>longest wavelength</b> and bends (refracts) the <b>least</b>.</li>
+        <li><b>Violet</b> has the <b>shortest wavelength</b> and bends (refracts) the <b>most</b>.</li>
+      </ul>
+      <p>Because each colour bends differently, they separate — that is dispersion.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Recombining the spectrum</h3>
+      <p>The colours can be joined back into white light using:</p>
+      <ul>
+        <li>A <b>second, inverted prism</b> that bends the colours back together, or</li>
+        <li><b>Newton's colour disc</b> (a disc painted with the 7 colours) — when spun fast it appears white.</li>
+      </ul>
+      <p>This proves white light is truly a mixture of the spectrum colours.</p>
+    </div>
+  </section>
+
+  <!-- ===================== COLOUR ===================== -->
+  <section class="cat colour" id="cat-colour">
+    <h2 class="cathead">🎨 Colour</h2>
+
+    <div class="lesson">
+      <h3>1. Primary and secondary colours of light</h3>
+      <p>The <b>three primary colours of light</b> are <b>Red, Green and Blue</b>. Mixing (adding) coloured lights gives:</p>
+      <table class="r">
+        <tr><th>Adding lights</th><th>Result</th></tr>
+        <tr><td>Red + Green + Blue</td><td>White</td></tr>
+        <tr><td>Red + Green</td><td>Yellow</td></tr>
+        <tr><td>Green + Blue</td><td>Cyan</td></tr>
+        <tr><td>Red + Blue</td><td>Magenta</td></tr>
+      </table>
+      <p>Yellow, cyan and magenta are the <b>secondary colours</b> of light. (Note: mixing PAINTS/pigments works differently — pigments subtract colours.)</p>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Why objects have colour</h3>
+      <p>An object's colour is the colour of light it <b>reflects</b> to your eye; it absorbs the rest.</p>
+      <table class="r">
+        <tr><th>Object</th><th>Under white light it…</th></tr>
+        <tr><td>Red object</td><td>reflects red, absorbs all other colours</td></tr>
+        <tr><td>White object</td><td>reflects ALL colours</td></tr>
+        <tr><td>Black object</td><td>absorbs ALL colours (reflects none)</td></tr>
+      </table>
+      <div class="analogy">💡 Trick: a red object seen under <b>pure blue light</b> looks <b>black</b> — there is no red light for it to reflect.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>3. Colour filters</h3>
+      <p>A <b>colour filter</b> only lets its own colour pass through and absorbs the others. A <b>red filter</b> transmits only red light; a green filter transmits only green.</p>
+      <div class="ex"><b class="t">Example:</b> white light through a green filter comes out green (all other colours are absorbed).</div>
+    </div>
+  </section>
+
+  <!-- ===================== EYE ===================== -->
+  <section class="cat eye" id="cat-eye">
+    <h2 class="cathead">👁️ The Human Eye</h2>
+
+    <div class="lesson">
+      <h3>1. Parts of the eye and their jobs</h3>
+      <table class="r">
+        <tr><th>Part</th><th>Function</th></tr>
+        <tr><td>Cornea</td><td>Transparent front; does most of the bending (refraction) of light.</td></tr>
+        <tr><td>Iris</td><td>The coloured part; controls the size of the pupil.</td></tr>
+        <tr><td>Pupil</td><td>The hole that lets light in (widens in dim light, narrows in bright light).</td></tr>
+        <tr><td>Lens</td><td>Fine-focuses light onto the retina; changes shape (accommodation).</td></tr>
+        <tr><td>Ciliary muscles</td><td>Change the thickness/shape of the lens.</td></tr>
+        <tr><td>Retina</td><td>Light-sensitive screen where the image forms (real &amp; inverted).</td></tr>
+        <tr><td>Rods &amp; cones</td><td>Rods detect dim light; cones detect colour.</td></tr>
+        <tr><td>Optic nerve</td><td>Carries signals to the brain.</td></tr>
+        <tr><td>Blind spot</td><td>Where the optic nerve leaves — has no light receptors.</td></tr>
+      </table>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Accommodation</h3>
+      <p><b>Accommodation</b> is the eye's ability to focus on objects at different distances by changing the shape of the lens (using the ciliary muscles):</p>
+      <ul>
+        <li>For a <b>near</b> object, the lens becomes <b>thicker</b> (more curved, more powerful).</li>
+        <li>For a <b>distant</b> object, the lens becomes <b>thinner</b> (flatter).</li>
+      </ul>
+      <p>The <b>near point</b> of a normal eye is about <b>25 cm</b>; the <b>far point</b> is infinity.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>3. The eye compared with a camera</h3>
+      <table class="r">
+        <tr><th>Eye</th><th>Camera equivalent</th></tr>
+        <tr><td>Iris / pupil</td><td>Aperture / diaphragm</td></tr>
+        <tr><td>Lens</td><td>Lens</td></tr>
+        <tr><td>Retina</td><td>Film / image sensor</td></tr>
+        <tr><td>Eyelid</td><td>Shutter</td></tr>
+      </table>
+      <p>In both, the image formed is <b>real, inverted and smaller</b> than the object.</p>
+    </div>
+  </section>
+
+  <!-- ===================== INSTRUMENTS ===================== -->
+  <section class="cat instruments" id="cat-instruments">
+    <h2 class="cathead">🔭 Eye Defects &amp; Optical Instruments</h2>
+
+    <div class="lesson">
+      <h3>1. Common eye defects and their correction</h3>
+      <table class="r">
+        <tr><th>Defect</th><th>Problem</th><th>Correction</th></tr>
+        <tr><td>Short sight (myopia)</td><td>Can't see distant objects; image forms IN FRONT of the retina</td><td>A <b>concave (diverging) lens</b></td></tr>
+        <tr><td>Long sight (hypermetropia)</td><td>Can't see near objects; image forms BEHIND the retina</td><td>A <b>convex (converging) lens</b></td></tr>
+        <tr><td>Presbyopia</td><td>Old-age loss of accommodation (lens stiffens)</td><td>Reading / bifocal lenses</td></tr>
+        <tr><td>Astigmatism</td><td>Uneven curvature of the cornea/lens → blurred</td><td>A <b>cylindrical lens</b></td></tr>
+      </table>
+      <div class="analogy">🧠 Memory: short sight → the image falls SHORT of the retina (in front), fixed with a coN<b>C</b>ave lens; long sight → convex lens.</div>
+    </div>
+
+    <div class="lesson">
+      <h3>2. Optical instruments (quick guide)</h3>
+      <table class="r">
+        <tr><th>Instrument</th><th>What it does</th><th>Lens(es)</th></tr>
+        <tr><td>Simple microscope (magnifying glass)</td><td>Magnifies small nearby objects</td><td>One convex lens</td></tr>
+        <tr><td>Compound microscope</td><td>Very high magnification of tiny objects</td><td>Two convex lenses (objective + eyepiece)</td></tr>
+        <tr><td>Astronomical telescope</td><td>Views very distant objects (stars, planets)</td><td>Two convex lenses (objective + eyepiece)</td></tr>
+        <tr><td>Camera</td><td>Forms a real, inverted, diminished image on film/sensor</td><td>Convex lens</td></tr>
+        <tr><td>Projector</td><td>Throws a large real image on a screen</td><td>Convex lens</td></tr>
+      </table>
+      <p class="tip">A camera forms a <b>real, inverted, diminished</b> image; a magnifying glass forms a <b>virtual, upright, enlarged</b> image.</p>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="cat quiz" id="cat-quiz">
+    <h2 class="cathead">📝 Test Yourself — 30 Questions</h2>
+    <p class="tip">Click an option: green = correct, red = wrong, full explanation appears. Score tracks bottom-right.</p>
+    <button class="btn small" onclick="revealAll('quiz')">👁️ Show all answers</button>
+    <div id="quiz-questions"></div>
+  </section>
+
+</div>
+
+<div class="scorebox">Score: <b id="score">0</b> / <b id="attempted">0</b></div>
+
+<footer>
+  <p class="credit">⚡ Built by Ojochegbe ⚡</p>
+  <p class="tip">Red bends least, violet most; short sight → concave lens. Nail those and you're set. 🎓</p>
+</footer>
+
+<script>
+const DATA={quiz:[]};
+const letters=["A","B","C","D","E"];
+let score=0, attempted=0;
+function render(cat){
+  const wrap=document.getElementById(cat+"-questions");
+  if(!wrap) return;
+  DATA[cat].forEach((q,i)=>{
+    const card=document.createElement("div");
+    card.className="q";
+    let opts=q.o.map((opt,j)=>`<li data-i="${j}"><span class="lbl">${letters[j]}.</span>${opt}</li>`).join("");
+    card.innerHTML=`
+      <div class="stem"><span class="num">${i+1}</span>${q.s}</div>
+      <ul class="opts">${opts}</ul>
+      <div class="reveal">
+        <div class="ans">✔ Correct answer: ${letters[q.c]}. ${q.o[q.c]}</div>
+        <div class="exp">${q.e}</div>
+      </div>`;
+    const lis=card.querySelectorAll(".opts li");
+    const rev=card.querySelector(".reveal");
+    lis.forEach(li=>{
+      li.addEventListener("click",()=>{
+        if(card.dataset.done)return;
+        card.dataset.done="1";
+        const chosen=+li.dataset.i;
+        attempted++;
+        if(chosen===q.c) score++;
+        lis[q.c].classList.add("correct");
+        if(chosen!==q.c) li.classList.add("wrong");
+        rev.classList.add("show");
+        document.getElementById("score").textContent=score;
+        document.getElementById("attempted").textContent=attempted;
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+function revealAll(cat){
+  DATA[cat].forEach((q,idx)=>{
+    const card=document.querySelectorAll("#cat-"+cat+" .q")[idx];
+    if(!card) return;
+    card.querySelector(".reveal").classList.add("show");
+    const lis=card.querySelectorAll(".opts li");
+    if(lis[q.c]) lis[q.c].classList.add("correct");
+  });
+}
+
+DATA.quiz.push(
+{s:"The splitting of white light into its component colours is called…",o:["Dispersion","Reflection","Diffraction","Absorption"],c:0,e:"<span class='h'>💡 Idea</span>White light spreading into the spectrum (through a prism) is <b>dispersion</b>.<span class='h'>✅</span>Dispersion."},
+{s:"The correct order of colours in the spectrum (from a prism) is…",o:["Violet, blue, green, yellow, orange, indigo, red","Red, orange, yellow, green, blue, indigo, violet","Red, yellow, blue, green, orange, violet, indigo","Blue, green, red, yellow, indigo, orange, violet"],c:1,e:"<span class='h'>💡 Idea</span>ROYGBIV: <b>Red, Orange, Yellow, Green, Blue, Indigo, Violet</b>.<span class='h'>✅</span>Red, orange, yellow, green, blue, indigo, violet."},
+{s:"Which colour is refracted (bent) the MOST by a prism?",o:["Red","Green","Violet","Yellow"],c:2,e:"<span class='h'>💡 Idea</span><b>Violet</b> has the shortest wavelength and bends the most; red bends the least.<span class='h'>✅</span>Violet."},
+{s:"Which colour is refracted the LEAST by a prism?",o:["Violet","Blue","Indigo","Red"],c:3,e:"<span class='h'>💡 Idea</span><b>Red</b> has the longest wavelength, so it bends the least.<span class='h'>✅</span>Red."},
+{s:"White light can be recombined from the spectrum using…",o:["Newton's colour disc (or a second inverted prism)","A single lens","A red filter","A concave mirror only"],c:0,e:"<span class='h'>💡 Idea</span>Spinning <b>Newton's colour disc</b> (or a second inverted prism) merges the colours back to white.<span class='h'>✅</span>Newton's colour disc (or a second inverted prism)."},
+{s:"A rainbow is an example of…",o:["Reflection only","Dispersion of sunlight by raindrops","Diffraction of sound","Total absorption"],c:1,e:"<span class='h'>💡 Idea</span>Raindrops act as tiny prisms that disperse sunlight into colours — a rainbow.<span class='h'>✅</span>Dispersion of sunlight by raindrops."},
+{s:"The three primary colours of light are…",o:["Red, yellow, blue","Cyan, magenta, yellow","Red, green, blue","Black, white, grey"],c:2,e:"<span class='h'>💡 Idea</span>The primary colours of LIGHT are <b>Red, Green and Blue</b> (RGB).<span class='h'>✅</span>Red, green, blue."},
+{s:"When red, green and blue lights are added together, the result is…",o:["Black","Yellow","Brown","White"],c:3,e:"<span class='h'>💡 Idea</span>Adding the three primary light colours gives <b>white</b> light.<span class='h'>✅</span>White."},
+{s:"Red light added to green light produces…",o:["Yellow","Cyan","Magenta","White"],c:0,e:"<span class='h'>💡 Idea</span>Red + Green = <b>Yellow</b> (a secondary colour of light).<span class='h'>✅</span>Yellow."},
+{s:"Under white light, a red object appears red because it…",o:["Absorbs red and reflects the rest","Reflects red and absorbs the other colours","Reflects all colours","Absorbs all colours"],c:1,e:"<span class='h'>💡 Idea</span>An object's colour is the light it <b>reflects</b> — a red object reflects red, absorbs the rest.<span class='h'>✅</span>Reflects red and absorbs the other colours."},
+{s:"A white object appears white because it…",o:["Absorbs all colours","Reflects only red","Reflects all colours","Transmits all light"],c:2,e:"<span class='h'>💡 Idea</span>White objects <b>reflect all</b> the colours of light equally.<span class='h'>✅</span>Reflects all colours."},
+{s:"A black object appears black because it…",o:["Reflects all colours","Reflects only blue","Emits its own light","Absorbs all colours"],c:3,e:"<span class='h'>💡 Idea</span>Black surfaces <b>absorb all</b> colours and reflect none.<span class='h'>✅</span>Absorbs all colours."},
+{s:"A red object viewed in pure blue light appears…",o:["Black","Red","Blue","White"],c:0,e:"<span class='h'>💡 Idea</span>There is no red light to reflect and it absorbs blue, so it looks <b>black</b>.<span class='h'>✅</span>Black."},
+{s:"A red colour filter allows to pass through it only…",o:["Blue light","Red light","Green light","All colours"],c:1,e:"<span class='h'>💡 Idea</span>A colour filter transmits only its own colour — a red filter passes only <b>red light</b>.<span class='h'>✅</span>Red light."},
+{s:"Which part of the eye does most of the refraction (bending) of light?",o:["Retina","Iris","Cornea","Optic nerve"],c:2,e:"<span class='h'>💡 Idea</span>The transparent <b>cornea</b> at the front does most of the light-bending; the lens fine-tunes it.<span class='h'>✅</span>Cornea."},
+{s:"The coloured part of the eye that controls the size of the pupil is the…",o:["Retina","Lens","Cornea","Iris"],c:3,e:"<span class='h'>💡 Idea</span>The <b>iris</b> (the coloured ring) opens and closes the pupil to control light entering.<span class='h'>✅</span>Iris."},
+{s:"The light-sensitive layer of the eye where the image is formed is the…",o:["Retina","Cornea","Pupil","Iris"],c:0,e:"<span class='h'>💡 Idea</span>The image forms on the <b>retina</b> (real and inverted), which contains the rods and cones.<span class='h'>✅</span>Retina."},
+{s:"In the retina, colour is detected mainly by the…",o:["Rods","Cones","Iris","Blind spot"],c:1,e:"<span class='h'>💡 Idea</span><b>Cones</b> detect colour (in bright light); rods detect dim light in black-and-white.<span class='h'>✅</span>Cones."},
+{s:"The ability of the eye to focus on objects at different distances is called…",o:["Dispersion","Refraction","Accommodation","Adaptation"],c:2,e:"<span class='h'>💡 Idea</span>Changing the lens shape to focus near/far objects is <b>accommodation</b>.<span class='h'>✅</span>Accommodation."},
+{s:"The near point of a normal human eye is about…",o:["2.5 cm","1 m","infinity","25 cm"],c:3,e:"<span class='h'>💡 Idea</span>The closest an object can be and still be seen clearly (the near point) is about <b>25 cm</b>.<span class='h'>✅</span>25 cm."},
+{s:"The part of the retina with no light receptors, where the optic nerve leaves, is the…",o:["Blind spot","Fovea","Pupil","Iris"],c:0,e:"<span class='h'>💡 Idea</span>The <b>blind spot</b> is where the optic nerve exits — it has no rods or cones.<span class='h'>✅</span>Blind spot."},
+{s:"The retina of the eye corresponds to which part of a camera?",o:["The shutter","The film / image sensor","The aperture","The lens"],c:1,e:"<span class='h'>💡 Idea</span>Both capture the image: the <b>retina</b> is like the camera's <b>film/sensor</b>.<span class='h'>✅</span>The film / image sensor."},
+{s:"In short sight (myopia), the image of a distant object forms…",o:["On the retina","Behind the retina","In front of the retina","On the cornea"],c:2,e:"<span class='h'>💡 Idea</span>The eye is too powerful/long, so the image falls <b>in front of the retina</b>.<span class='h'>✅</span>In front of the retina."},
+{s:"Short sight (myopia) is corrected using a…",o:["Convex (converging) lens","Plane mirror","Cylindrical lens","Concave (diverging) lens"],c:3,e:"<span class='h'>💡 Idea</span>A <b>concave (diverging) lens</b> spreads the light so the image moves back onto the retina.<span class='h'>✅</span>Concave (diverging) lens."},
+{s:"Long sight (hypermetropia) is corrected using a…",o:["Convex (converging) lens","Concave (diverging) lens","Plane mirror","Prism"],c:0,e:"<span class='h'>💡 Idea</span>In long sight the image falls behind the retina; a <b>convex (converging) lens</b> brings it forward onto the retina.<span class='h'>✅</span>Convex (converging) lens."},
+{s:"The old-age condition where the lens loses its power of accommodation is…",o:["Astigmatism","Presbyopia","Myopia","Colour blindness"],c:1,e:"<span class='h'>💡 Idea</span><b>Presbyopia</b> is the age-related stiffening of the lens, reducing accommodation.<span class='h'>✅</span>Presbyopia."},
+{s:"A magnifying glass (simple microscope) uses a single…",o:["Concave lens","Plane mirror","Convex lens","Prism"],c:2,e:"<span class='h'>💡 Idea</span>A magnifying glass is one <b>convex lens</b> that gives a virtual, upright, enlarged image.<span class='h'>✅</span>Convex lens."},
+{s:"An instrument used to view very distant objects such as stars is the…",o:["Microscope","Periscope","Camera","Telescope"],c:3,e:"<span class='h'>💡 Idea</span>A <b>telescope</b> is designed to view distant objects (an astronomical telescope uses two convex lenses).<span class='h'>✅</span>Telescope."},
+{s:"The image formed on the film of a camera is…",o:["Real, inverted and diminished","Virtual, upright and enlarged","Virtual, inverted and the same size","Real, upright and enlarged"],c:0,e:"<span class='h'>💡 Idea</span>A camera's convex lens forms a <b>real, inverted, diminished</b> image on the film/sensor.<span class='h'>✅</span>Real, inverted and diminished."},
+{s:"A compound microscope uses…",o:["One concave lens","Two convex lenses (objective and eyepiece)","A plane mirror and a lens","One convex and one concave lens"],c:1,e:"<span class='h'>💡 Idea</span>A compound microscope uses <b>two convex lenses</b> — the objective and the eyepiece — for high magnification.<span class='h'>✅</span>Two convex lenses (objective and eyepiece)."}
+);
+
+["dispersion","colour","eye","instruments","quiz"].forEach(render);
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll("section.cat").forEach(x=>x.classList.remove("show"));
+    t.classList.add("active");
+    document.getElementById("cat-"+t.dataset.cat).classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
